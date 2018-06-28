@@ -115,6 +115,29 @@
             key: 'name',
             fixed: 'left',
             width: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'text',
+                    size: 'small'
+                  }
+                }, params.row.name),
+                h('Button', {
+                  props: {
+                    type: 'text',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.$router.push({
+                        path: '/ListInfo'
+                      })
+                    }
+                  }
+                }, '查看详情')
+              ]);
+            }
           },
           show: {
             title: '曾用名',
@@ -312,9 +335,6 @@
       },
       changeTableColumns () {
         this.tableColumns2 = this.getTable2Columns();
-      },
-      toggleFav (index) {
-        this.tableData2[index].fav = this.tableData2[index].fav === 0 ? 1 : 0;
       }
     },
     mounted () {

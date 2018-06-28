@@ -20,7 +20,7 @@
   .select_name::-webkit-input-placeholder {
     color:#bbbec4;
   }
-  .letter{
+  #letter{
     margin-right: 10px;width: 50px;margin-bottom: 10px;
   }
 </style>
@@ -210,6 +210,9 @@
       }
     },
     methods: {
+        ok:function () {
+
+        },
       extensionOptions() {
         this.sxExtension = (this.sxExtension === false) ? true : false;
       },

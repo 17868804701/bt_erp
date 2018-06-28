@@ -29,7 +29,7 @@
   <div >
     <Card style="width:100%">
       <p slot="title">员工列表查询</p>
-      <Button slot="extra" type="primary"  @click.prevent="extensionOptions">更多筛选</Button>
+      <Button slot="extra" type="primary" @click.prevent="extensionOptions">更多筛选</Button>
       <div>
 
         <!--基础查询-->
@@ -47,7 +47,7 @@
               <Button type="primary" size="small" :key="index" v-for="(item,index) in letterArray"  id="letter" @click="getLetter(item)">{{item}}</Button>
             </Modal>
             <FormItem label="按单位查询" style="margin-left: -50px;">
-              <CheckboxGroup v-model="jccxFormItem.dw_radio">
+              <CheckboxGroup v-model="jccxFormItem.dw_radio" @on-change="sxResultChange">
                 <Checkbox label="维修公司"></Checkbox>
                 <Checkbox label="集团公司"></Checkbox>
                 <Checkbox label="公交一公司"></Checkbox>
@@ -61,7 +61,7 @@
               </CheckboxGroup>
             </FormItem>
             <FormItem label="按岗位查询" style="margin-left: -50px;">
-              <Select v-model="jccxFormItem.gw_select" size="middle" style="width:100px">
+              <Select v-model="jccxFormItem.gw_select" style="width:100px" @on-change="sxResultChange">
                 <Option v-for="item in postList" :value="item" :key="item">{{ item }}</Option>
               </Select>
             </FormItem>
@@ -71,63 +71,68 @@
         <!--更多筛选-->
         <div v-if="sxExtension" style="margin-top: 20px;">
           <hr style="height:1px;border:none;border-top:1px solid lightgrey;margin-bottom: 10px; margin-top: 10px"/>
-          <Form :model="gesxFormItem" :label-width="120">
+          <Form :model="gdsxFormItem" :label-width="120">
             <FormItem label="键入搜索" style="margin-left: -50px;">
-              <input v-model="searchOption" type="text" placeholder="请输入搜索内容" class="select_name"/>
+              <input v-model="gdsxFormItem.input" type="text" placeholder="请输入搜索内容" class="select_name"/>
             </FormItem>
             <Row>
               <Col span="6" >
                 <FormItem label="合同自起" style="margin-left: -50px;">
-                  <DatePicker type="date" placeholder="请选择合同自起时间"></DatePicker>
+                  <DatePicker v-model="gdsxFormItem.htzq_date" type="date" placeholder="请选择合同自起时间"></DatePicker>
                 </FormItem>
               </Col>
               <Col span="6">
                 <FormItem label="合同终止" style="margin-left: -50px;">
-                  <DatePicker type="date" placeholder="请选择合同终止时间"></DatePicker>
+                  <DatePicker v-model="gdsxFormItem.htzz_date" type="date" placeholder="请选择合同终止时间"></DatePicker>
                 </FormItem>
               </Col>
             </Row>
           </Form>
 
           <Tabs type="card">
-            <TabPane label="民族">
-              <RadioGroup v-model="animal">
-                <Radio size="large" v-for="item in mzList" :key="item">{{item.name}}</Radio>
-              </RadioGroup>
-            </TabPane>
+            <!--<TabPane label="民族">-->
+              <!--<CheckboxGroup v-model="gdsxFormItem.mz_radios">-->
+                <!--<Checkbox v-for="item in mzList" :key="item">{{item.name}}</Checkbox>-->
+              <!--</CheckboxGroup>-->
+            <!--</TabPane>-->
             <TabPane label="部门">
-              <RadioGroup v-model="animal">
-                <Radio class="sxradioStyle" size="large" v-for="item in bmList" :key="item">{{item}}</Radio>
-              </RadioGroup>
+              <CheckboxGroup v-model="gdsxFormItem.bm_radios" @on-change="sxResultChange">
+                <Checkbox v-for="item in bmList" :label="item" :key="item"></Checkbox>
+              </CheckboxGroup>
             </TabPane>
             <TabPane label="公积金状态">
               <Col span="22">
-              <RadioGroup v-model="animal">
+              <RadioGroup v-model="gdsxFormItem.gjj_radios" @on-change="sxResultChange">
                 <Radio class="sxradioStyle" label="封存"></Radio>
                 <Radio class="sxradioStyle" label="正常"></Radio>
               </RadioGroup>
               </Col>
             </TabPane>
             <TabPane label="性别">
-              <RadioGroup v-model="animal">
+              <RadioGroup v-model="gdsxFormItem.xb_radios" @on-change="sxResultChange">
                 <Radio label="男"></Radio>
                 <Radio label="女"></Radio>
               </RadioGroup>
             </TabPane>
             <TabPane label="学历">
-              <RadioGroup v-model="animal">
-                <Radio size="large" v-for="item in xueliList" :key="item">{{item}}</Radio>
+              <CheckboxGroup v-model="gdsxFormItem.xueli_radios" @on-change="sxResultChange">
+                <Checkbox v-for="item in xueliList" :label="item" :key="item"></Checkbox>
+              </CheckboxGroup>
+            </TabPane>
+            <TabPane label="工作类型">
+              <RadioGroup v-model="gdsxFormItem.gzlx_radios" @on-change="sxResultChange">
+                <Radio v-for="item in gzlxList" :key="item" :label="item"></Radio>
               </RadioGroup>
             </TabPane>
             <TabPane label="工种职务">
-              <RadioGroup v-model="animal">
-                <Radio class="sxradioStyle" size="large" v-for="item in gzzwList" :key="item">{{item}}</Radio>
-              </RadioGroup>
+              <CheckboxGroup v-model="gdsxFormItem.gzzw_radios" @on-change="sxResultChange">
+                <Checkbox v-for="item in gzzwList" :label="item" :key="item"></Checkbox>
+              </CheckboxGroup>
             </TabPane>
             <TabPane label="路线">
-              <RadioGroup v-model="animal">
-                <Radio class="sxradioStyle" size="large" v-for="item in xlList" :key="item">{{item}}</Radio>
-              </RadioGroup>
+              <CheckboxGroup v-model="gdsxFormItem.xl_radios" @on-change="sxResultChange">
+                <Checkbox v-for="item in xlList" :label="item" :key="item"></Checkbox>
+              </CheckboxGroup>
             </TabPane>
           </Tabs>
         </div>
@@ -135,25 +140,55 @@
         <!--筛选结果-->
         <div>
           <hr style="height:1px;border:none;border-top:1px solid lightgrey;margin-bottom: 10px; margin-top: 10px"/>
-          <Row type="flex" align="middle" gutter="16">
+          <Row type="flex" align="middle">
             <Col>
-              筛选条件:
+              当前筛选条件:
             </Col>
-            <Col>
-              <Tag type="border" closable color="blue">标签一</Tag>
+            <Col v-for="(item, index) in jccxFormItem.dw_radio" :key="item">
+              <Tag type="border" closable color="blue">{{item}}</Tag>
             </Col>
-            <Col>
-              <Tag type="border" closable color="blue">标签一</Tag>
+            <Col v-for="(item, index) in jccxFormItem.szm_select" :key="item">
+              <Tag type="border" closable color="blue">{{item}}</Tag>
             </Col>
-            <Col>
-            <Tag type="border" closable color="blue">标签一</Tag>
+            <Col v-if="jccxFormItem.gw_select.length > 0">
+              <Tag type="border" closable color="blue">{{jccxFormItem.gw_select}}</Tag>
             </Col>
-            <Col>
-            <Tag type="border" closable color="blue">标签一</Tag>
+
+            <Col v-if="gdsxFormItem.input.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.input}}</Tag>
             </Col>
-            <Col>
-            <Tag type="border" closable color="blue">标签一</Tag>
+            <Col v-if="gdsxFormItem.htzq_date.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.htzq_date}}</Tag>
             </Col>
+            <Col v-if="gdsxFormItem.htzz_date.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.htzz_date}}</Tag>
+            </Col>
+            <Col v-if="gdsxFormItem.mz_radios.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.mz_radios}}</Tag>
+            </Col>
+            <Col v-for="(item, index) in gdsxFormItem.bm_radios" :key="item+index">
+              <Tag type="border" closable color="blue">{{item}}</Tag>
+            </Col>
+
+            <Col v-if="gdsxFormItem.gjj_radios.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.gjj_radios}}</Tag>
+            </Col>
+            <Col v-if="gdsxFormItem.xb_radios.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.xb_radios}}</Tag>
+            </Col>
+            <Col v-for="(item, index) in gdsxFormItem.xueli_radios" :key="item">
+              <Tag type="border" closable color="blue">{{item}}</Tag>
+            </Col>
+            <Col v-for="(item, index) in gdsxFormItem.gzzw_radios" :key="item">
+              <Tag type="border" closable color="blue">{{item}}</Tag>
+            </Col>
+            <Col v-if="gdsxFormItem.gzlx_radios.length > 0">
+              <Tag type="border" closable color="blue">{{gdsxFormItem.gzlx_radios}}</Tag>
+            </Col>
+            <Col v-for="(item, index) in gdsxFormItem.xl_radios" :key="item">
+              <Tag type="border" closable color="blue">{{item}}</Tag>
+            </Col>
+            
           </Row>
         </div>
 
@@ -170,18 +205,30 @@
         },
         modal1: false,
         jccxFormItem: {
-          szm_select: '',
+          szm_select: [],
           gw_select: '',
-          dw_radio: '',
+          dw_radio: [],
         },
-        value: '哈哈',
+        gdsxFormItem: {
+          input: '',
+          htzq_date: '',
+          htzz_date: '',
+          mz_radios: '',
+          bm_radios: [],
+          gjj_radios: '',
+          xb_radios: '',
+          xueli_radios: [],
+          gzzw_radios: [],
+          gzlx_radios: '',
+          xl_radios: [],
+        },
+        sxResult: [],
         nameSpell: '',
-        xueliList: ['博士', '硕士', '大学', '大专', '中专中技', '技校', '高中', '职高', '初中', '小学', '文盲或半文盲',],
+        xueliList: ['全部', '博士', '硕士', '大学', '大专', '中专中技', '技校', '高中', '职高', '初中', '小学', '文盲或半文盲',],
         postList: ['全部', '公司领导', '二级', '三级', '主任科员', '一般管理', '辅助', '司机', '修理', '其他在岗', '内退', '病假', '产假', '女工长假','下岗','工伤','待岗', '停薪', '外借','其他不在岗',],
         getLetters:[],
-        letterArray:['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','清除'],
+        letterArray:['全部','A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','清除'],
         searchOption: '',
-        bmList: [],
         postValue: '',
         sxExtension: false,
         mzList: [{"id":"01","name":"汉族"},{"id":"02","name":"蒙古族"},{"id":"03","name":"回族"},
@@ -203,10 +250,10 @@
           {"id":"49","name":"京族"},{"id":"50","name":"塔塔尔族"},{"id":"51","name":"独龙族"},
           {"id":"52","name":"鄂伦春族"},{"id":"53","name":"赫哲族"},{"id":"54","name":"门巴族"},
           {"id":"55","name":"珞巴族"},{"id":"56","name":"基诺族"}],
-        gzlxList: ['实习', '试用'],
-        bmList: ['运营部', '企管部', '技术部', '劳动人事部', '安全部', '燃油供应中心', '信息中心', '运营检验处（技检处）', '车辆统计', '经营管理处', '保养车间', '钢瓶检测', '技术处', '技术处'],
-        gzzwList: ['司机','站员', '清洁', '经警', '纪检委副书记', '监检室主任'],
-        xlList: ['21路','23路','24路','25路','26路','217','28路','34路','245路',],
+        gzlxList: ['全部','实习', '试用'],
+        bmList: ['全部','运营部', '企管部', '技术部', '劳动人事部', '安全部', '燃油供应中心', '信息中心', '运营检验处（技检处）', '车辆统计', '经营管理处', '保养车间', '钢瓶检测', '技术处'],
+        gzzwList: ['全部','司机','站员', '清洁', '经警', '纪检委副书记', '监检室主任'],
+        xlList: ['全部','21路','23路','24路','25路','26路','217','28路','34路','245路',],
       }
     },
     methods: {
@@ -226,6 +273,18 @@
           this.jccxFormItem.szm_select = letter;
         }
       },
+      sxResultChange(e) {
+        console.log(e);
+        console.log(this.jccxFormItem);
+        console.log(this.gdsxFormItem);
+        this.sxResult = [];
+        this.sxResult.push(this.jccxFormItem.gw_select.length > 0);
+        this.sxResult.push.apply(this.sxResult,this.jccxFormItem.dw_radio);
+        
+      },
+      ok() {
+
+      }
     }
   }
 </script>

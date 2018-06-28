@@ -30,6 +30,7 @@
     <Card style="width:100%">
       <p slot="title">员工列表查询</p>
       <Button slot="extra" type="primary" @click.prevent="extensionOptions">更多筛选</Button>
+      <Button slot="extra" type="primary" @click.prevent="tj" style="margin-left: 10px;">统计</Button>
       <div>
 
         <!--基础查询-->
@@ -188,7 +189,7 @@
             <Col v-for="(item, index) in gdsxFormItem.xl_radios" :key="item">
               <Tag type="border" closable color="blue">{{item}}</Tag>
             </Col>
-            
+
           </Row>
         </div>
 
@@ -280,10 +281,15 @@
         this.sxResult = [];
         this.sxResult.push(this.jccxFormItem.gw_select.length > 0);
         this.sxResult.push.apply(this.sxResult,this.jccxFormItem.dw_radio);
-        
+
       },
       ok() {
 
+      },
+      tj() {
+        this.$router.push({
+          path: '/UserStatistics'
+        })
       }
     }
   }

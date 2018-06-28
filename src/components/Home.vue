@@ -26,7 +26,7 @@
 <template>
   <div class="layout">
     <Layout>
-      <Header>
+      <Header style="height: 8vh">
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-logo"></div>
           <div class="layout-nav">
@@ -80,14 +80,9 @@
           </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 0px'}">
-          <Breadcrumb :style="{margin: '24px 0'}">
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            <BreadcrumbItem>Components</BreadcrumbItem>
-            <BreadcrumbItem>Layout</BreadcrumbItem>
-          </Breadcrumb>
-          <Content :style="{minHeight: fullHeight-64-48-45+'px', background: '#fff'}">
-            <div style="position: relative;overflow-y: hidden;">
-              <iframe src="http://localhost:8081/#/" frameborder="0" style="width: 100%;height: 600px;" scrolling="none" name="erp_main"></iframe>
+          <Content style="height: 90vh;margin-top: 10px;">
+            <div style="position: relative;overflow-y: hidden;height: 100%">
+              <iframe src="http://localhost:8081/#/" frameborder="0" style="width: 100%;height: 100%" scrolling="none" name="erp_main"></iframe>
             </div>
           </Content>
         </Layout>

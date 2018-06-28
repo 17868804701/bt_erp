@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/HelloWorld.vue'
-import SxcxArea from '../components/sxcxArea.vue'
-import ListInfo from '../components/ListInfo.vue'
+import List from '../peopleManger/List.vue'
+import SxcxArea from '../peopleManger/sxcxArea.vue'
+import ListInfo from '../peopleManger/ListInfo.vue'
 
 Vue.use(Router);
 
 export default[
   {
     path: '/',
-    component: Home
+    component: List
   },
   {
     path: '/SxcxArea',

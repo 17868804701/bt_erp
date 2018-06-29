@@ -96,7 +96,7 @@
                     :scale='1.2' ></vueshowpdf>
         <Icon type="document-text" class="file"></Icon>
         <span class="a_pdf"
-           @click="showPdf">14610801152313-黄森-基于微信小程序的移动端第二课堂学分管理系统的设计与实现（定稿）.pdf</span><br>
+           @click="modalPdf=true">14610801152313-黄森-基于微信小程序的移动端第二课堂学分管理系统的设计与实现（定稿）.pdf</span><br>
       </Card>
       <!--<Button type="primary" icon="paper-airplane" size="small" style="margin-top:10px;">公积金基本信息</Button>-->
       <Card class="card_file" style="margin-top: 10px">
@@ -261,14 +261,25 @@
           <Input v-model="formItem.input" placeholder="备用字段5" class="input_item"/>
         </FormItem>
       </div>
+
+      <Modal
+        v-model="modalPdf"
+        width="70%"
+        style="height:900px"
+        title="查看pdf">
+        <vuePdfjs url="http://cdn.mozilla.net/pdfjs/tracemonkey.pdf" :type="0">111111111111111111111</vuePdfjs>
+      </Modal>
+
     </Form>
   </div>
 </template>
 <script>
+  import vuePdfjs from 'vue-pdfjs'
   import vueshowpdf from 'vueshowpdf'
   export default {
     data () {
       return {
+        modalPdf:false,
         pdfurls:'',
         isshowpdf:false,
         value: '1',
@@ -286,14 +297,13 @@
       },
       closepdf(){
         this.isshowpdf = false;
-        console.log(111111111111)
       },
       pdferr(errurl) {
-        console.log(errurl);
+//        console.log(errurl);
       }
     },
     components:{
-      vueshowpdf
+      vuePdfjs
     },
     mounted () {
 

@@ -1,7 +1,11 @@
 <template>
   <div style="padding: 20px; height: 100%">
-    <sxcxArea/>
-    <Tabs type="card" style="margin-top: 10px;">
+    <h2>
+      人员信息管理
+    </h2>
+    <br>
+    <Button type="primary" size="small" slot="extra" style="margin-right: 10px;">新建人员信息</Button>
+    <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
       <Modal
         v-model="modal2"
         width="550"
@@ -41,20 +45,26 @@
           <Checkbox style="width: 150px;margin-left: 12px;" label="month20">备用字段5</Checkbox>
         </Checkbox-group>
       </Modal>
-      <TabPane label="集团人员查询">
-        <Table :data="tableData2" :columns="tableColumns2" border></Table>
+      <TabPane label="集团人员查询" name="name1">
+        <sxcxArea/>
+        <Table style="margin-top: 40px;" :data="tableData2" :columns="tableColumns2" border></Table>
       </TabPane>
-      <TabPane label="离职人员查询">标签二的内容</TabPane>
-      <Button type="primary" size="small" slot="extra" style="margin-right: 10px;">导出Excel</Button>
-      <Button type="primary" size="small" slot="extra" @click="modal2 = true" >列表字段扩展</Button>
+      <TabPane label="人员分布" name="name2">
+        <UserStatistics/>
+      </TabPane>
+      <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
+      <Button v-if="tabValue === 'name1'" type="primary" size="small" slot="extra" style="margin-right: 10px;">导出Excel</Button>
+      <Button v-if="tabValue === 'name1'" type="primary" size="small" slot="extra" @click="modal2 = true" >列表字段扩展</Button>
     </Tabs>
   </div>
 </template>
 <script>
   import sxcxArea from './sxcxArea.vue';
+  import UserStatistics from './UserStatistics.vue'
   export default {
     components: {
-      sxcxArea
+      sxcxArea,
+      UserStatistics
     },
     data () {
       return {
@@ -63,9 +73,13 @@
 //        tableColumnsChecked: ['曾用名', '性别', '民族', '出生年月', '工号', '统计', '身份证号', '保险档号', '公积金档号', '公积金状态', '服兵役', '工作时间', '退休时间', '单位', '部门', '学历', '毕业院校', '所学专业', '工种', '职务', '工作证号', '合同自起', '合同止','备注', '路队', '工作类型', '备用字段1', '备用字段2', '备用字段3','备用字段4','备用字段5'],
         tableColumnsChecked: ['show', 'weak', 'signin', 'click', 'active', 'day7', 'day30', 'tomorrow', 'day', 'week', 'month', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'month13', 'month14', 'month15', 'month16', 'month17', 'month18','month19','month20'],
         modal2: false,
+        tabValue: 'name1'
       }
     },
     methods: {
+      changeTab() {
+        console.log(this.tabValue);
+      },
       mockTableData2 () {
         let data = [];
         function getNum() {
@@ -335,6 +349,11 @@
       },
       changeTableColumns () {
         this.tableColumns2 = this.getTable2Columns();
+      },
+      tj() {
+        this.$router.push({
+          path: '/UserStatistics'
+        })
       }
     },
     mounted () {

@@ -4,7 +4,7 @@
       人员信息管理
     </h2>
     <br>
-    <Button type="primary" size="small" slot="extra" style="margin-right: 10px;">新建人员信息</Button>
+    <Button type="primary" size="default" slot="extra" style="margin-right: 10px;">新建人员信息</Button>
     <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
       <Modal
         v-model="modal2"
@@ -47,14 +47,14 @@
       </Modal>
       <TabPane label="集团人员查询" name="name1">
         <sxcxArea/>
-        <Table style="margin-top: 40px;" :data="tableData2" :columns="tableColumns2" border></Table>
+        <Table style="margin-top: 10px;" :data="tableData2" :columns="tableColumns2" border></Table>
       </TabPane>
       <TabPane label="人员分布" name="name2">
         <UserStatistics/>
       </TabPane>
       <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
-      <Button v-if="tabValue === 'name1'" type="primary" size="small" slot="extra" style="margin-right: 10px;">导出Excel</Button>
-      <Button v-if="tabValue === 'name1'" type="primary" size="small" slot="extra" @click="modal2 = true" >列表字段扩展</Button>
+      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" style="margin-right: 10px;">导出Excel</Button>
+      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true" >列表字段扩展</Button>
     </Tabs>
   </div>
 </template>

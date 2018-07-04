@@ -1,13 +1,14 @@
 <style scoped>
 
-  .layout{
+  .layout {
     /*border: 1px solid #d7dde4;*/
     background: #f5f7f9;
     position: relative;
     /*border-radius: 4px;*/
     overflow: hidden;
   }
-  .layout-logo{
+
+  .layout-logo {
     width: 100px;
     height: 30px;
     background: #5b6270;
@@ -15,9 +16,10 @@
     float: left;
     position: relative;
     top: 15px;
-    left: 20px;
+    .0 left: 20px;
   }
-  .layout-nav{
+
+  .layout-nav {
     width: 420px;
     margin: 0 auto;
     margin-right: 20px;
@@ -52,37 +54,56 @@
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
           <Menu active-name="1-1" theme="light" width="auto" :open-names="['1']">
+            <a href="http://localhost:8081/#/" target="erp_main">
+              <MenuItem name="1-1">人力资源管理</MenuItem>
+            </a>
             <Submenu name="1">
               <template slot="title">
                 <Icon type="ios-navigate"></Icon>
-                ERP办公系统
+                计划管理
               </template>
-              <MenuItem name="1-1"><a href="http://localhost:8081/#/" target="erp_main">人力资源管理</a></MenuItem>
-              <MenuItem name="1-2"><a href="http://180.76.242.39:8080/#/InformationGathering" target="erp_main">信息收集</a></MenuItem>
-              <MenuItem name="1-3"><a href="http://localhost:8081/#/SxcxArea" target="erp_main">测试</a></MenuItem>
+              <a href="http://localhost:8081/#/programManager" target="erp_main">
+                <MenuItem name="1-2">运营计划管理</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/programManager1" target="erp_main">
+                <MenuItem name="1-2">运营计划调整管理</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/programManager2" target="erp_main">
+                <MenuItem name="1-2">收入计划制定</MenuItem>
+              </a>
             </Submenu>
             <Submenu name="2">
               <template slot="title">
                 <Icon type="ios-keypad"></Icon>
-                Item 2
+                运营管理
               </template>
-              <MenuItem name="2-1">Option 1</MenuItem>
-              <MenuItem name="2-2">Option 2</MenuItem>
+              <a href="http://localhost:8081/#/fgsOperatingManger" target="erp_main">
+                <MenuItem name="2-1">分公司运营报表统计</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/jtgsOperatingManger" target="erp_main">
+                <MenuItem name="2-2">集团运营部报表统计</MenuItem>
+              </a>
             </Submenu>
             <Submenu name="3">
               <template slot="title">
                 <Icon type="ios-analytics"></Icon>
-                Item 3
+                能源信息管理
               </template>
-              <MenuItem name="3-1">Option 1</MenuItem>
-              <MenuItem name="3-2">Option 2</MenuItem>
+              <a href="http://localhost:8081/#/electricManger" target="erp_main">
+                <MenuItem name="3-1">电能消耗统计</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/pickingManger" target="erp_main">
+                <MenuItem name="3-2">领料管理</MenuItem>
+              </a>
+              <MenuItem name="3-3">天然气统计管理</MenuItem>
             </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 0px'}">
           <Content style="height: 90vh;margin-top: 10px;">
             <div style="position: relative;overflow-y: hidden;height: 100%">
-              <iframe src="http://localhost:8081/#/" frameborder="0" style="width: 100%;height: 100%" scrolling="none" name="erp_main"></iframe>
+              <iframe src="http://localhost:8081/#/" frameborder="0" style="width: 100%;height: 100%" scrolling="none"
+                      name="erp_main"></iframe>
             </div>
           </Content>
         </Layout>

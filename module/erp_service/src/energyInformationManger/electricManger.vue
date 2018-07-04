@@ -20,6 +20,7 @@
             </Row>
           </Form>
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
+          <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
         <TabPane label="集团电能消耗统计" name="name2">
           <Form :model="formItem" :label-width="80">
@@ -36,6 +37,7 @@
             </Row>
           </Form>
           <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
+          <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
       </Tabs>
     </div>

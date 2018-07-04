@@ -2,6 +2,7 @@
 <template>
     <div>
         <Table :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover></Table>
+      <Page :total="100" show-total style="margin-top: 10px;"></Page>
     </div>
 </template>
 

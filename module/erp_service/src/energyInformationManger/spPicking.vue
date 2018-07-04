@@ -3,6 +3,7 @@
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
       <Button type="ghost" icon="android-download" style="margin-top: -25px;">批量派发</Button>
       <Table :columns="columns11" :data="data10" ref="selection"  border height="500" style="margin-top: 20px;" size="small"></Table>
+      <Page :total="100" show-total style="margin-top: 10px;"></Page>
     </div>
 
     <!--增加领料-->

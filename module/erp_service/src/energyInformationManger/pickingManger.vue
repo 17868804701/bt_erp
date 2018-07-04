@@ -28,6 +28,7 @@
             </Row>
           </Form>
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
+          <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
         <TabPane label="领料审批记录" name="name2">
           <spPicking></spPicking>

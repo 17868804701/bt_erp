@@ -101,7 +101,7 @@
                     :scale='1.2' ></vueshowpdf>
         <Icon type="document-text" class="file"></Icon>
         <span class="a_pdf"
-           @click="modalPdf=true">14610801152313-黄森-基于微信小程序的移动端第二课堂学分管理系统的设计与实现（定稿）.pdf</span><br>
+           @click="modalPdf=true">附件：关于包头ERP项目的需求沟通.pdf</span><br>
       </Card>
       <!--<Button type="primary" icon="paper-airplane" size="small" style="margin-top:10px;">公积金基本信息</Button>-->
       <Card class="card_file" style="margin-top: 10px">

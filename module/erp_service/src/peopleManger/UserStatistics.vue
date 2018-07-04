@@ -8,15 +8,9 @@
 
 <template>
   <div>
-    <h2 style="margin: 30px;">
-      人员岗位统计
-    </h2>
-
-
-    <!--表格-->
-    <Table style="margin: 30px;" height="600" :data="tableData" border :columns="initTableColumns" border></Table>
-
-    <Row type="flex" justify="center" align="middle" style="margin-top: 0px;margin-bottom: 40px;">
+    <Table height="600" :data="tableData" border :columns="initTableColumns" border></Table>
+    <Page :total="100" show-total style="margin-top: 10px;"></Page>
+    <Row type="flex" justify="center" align="middle" style="margin-top: 0px;margin-bottom: 40px;margin-top: 20px;">
       <Col span="23">
         <!--饼状图-->
         <Card style="height: 800px;">

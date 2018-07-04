@@ -30,10 +30,6 @@
     width: 50px;
     margin-bottom: 10px;
   }
-
-  .inputBorderStyle {
-    width: 180px;
-  }
 </style>
 
 <template>
@@ -86,7 +82,6 @@
             </Row>
             <FormItem label="按单位查询" style="margin-left: -50px;">
               <CheckboxGroup v-model="jccxFormItem.dw_radio" @on-change="sxResultChange">
-                <Checkbox label="维修公司"></Checkbox>
                 <Checkbox label="集团公司"></Checkbox>
                 <Checkbox label="公交一公司"></Checkbox>
                 <Checkbox label="公交二公司"></Checkbox>
@@ -96,11 +91,12 @@
                 <Checkbox label="公交六公司"></Checkbox>
                 <Checkbox label="公交七公司"></Checkbox>
                 <Checkbox label="公交八公司"></Checkbox>
+                <Checkbox label="维修公司"></Checkbox>
+
               </CheckboxGroup>
             </FormItem>
           </Form>
         </div>
-
         <!--筛选结果-->
         <div style="width: 100%; text-align: center">
           <Button style="margin-right: 10px;" type="primary" slot="extra" @click="search">
@@ -111,12 +107,35 @@
             <Icon type="search"></Icon>
             搜索
           </Button>
+          <Button type="primary" size="default" slot="extra" style="float: right;">导出Excel</Button>
+          <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
+                  @click="exports=true">导入Excel
+          </Button>
+          <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
+                  @click="addPerson">新建人员信息
+          </Button>
+          <Modal
+            v-model="exports"
+            title="导入计划表"
+            width="400"
+            :mask-closable="false"
+            style="height: 500px;">
+            <Steps :current="0" direction="vertical">
+              <Step title="第一步" content="下载导入报表模板"></Step>
+              <Step title="第二步" content="上传报表"></Step>
+              <Step title="第三部" content="系统自动导入"></Step>
+            </Steps>
+            <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
+              <Button type="dashed" icon="android-download"
+                      style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载
+              </Button>
+              <Upload action="//jsonplaceholder.typicode.com/posts/">
+                <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传
+                </Button>
+              </Upload>
+            </div>
+          </Modal>
         </div>
-
-        <Row type="flex" align="middle" justify="center">
-
-        </Row>
-
       </div>
     </Card>
   </div>
@@ -125,6 +144,7 @@
   export default {
     data () {
       return {
+        exports: false,
         props: {
           row: Object
         },
@@ -162,6 +182,9 @@
     methods: {
       ok: function () {
 
+      },
+      addPerson: function () {
+        this.$router.push({path: '/ListInfo'});
       },
       extensionOptions() {
         this.sxExtension = (this.sxExtension === false) ? true : false;

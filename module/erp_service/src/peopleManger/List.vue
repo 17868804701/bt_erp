@@ -3,8 +3,6 @@
     <h2>
       人员信息管理
     </h2>
-    <br>
-    <Button type="primary" size="default" slot="extra" style="margin-right: 10px;">新建人员信息</Button>
     <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
       <Modal
         v-model="modal2"
@@ -48,12 +46,13 @@
       <TabPane label="集团人员查询" name="name1">
         <sxcxArea/>
         <Table style="margin-top: 10px;" :data="tableData2" :columns="tableColumns2" border></Table>
+        <Page :total="100" show-total style="margin-top: 10px;"></Page>
       </TabPane>
-      <TabPane label="人员分布" name="name2">
+      <TabPane label="人员岗位统计" name="name2">
         <UserStatistics/>
       </TabPane>
       <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
-      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" style="margin-right: 10px;">导出Excel</Button>
+
       <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true" >列表字段扩展</Button>
     </Tabs>
   </div>
@@ -85,7 +84,7 @@
         function getNum() {
           return Math.floor(Math.random () * 10000 + 1);
         }
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 10; i++) {
           data.push({
             name: 'Name ' + (i+1),
             show: getNum(),

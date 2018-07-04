@@ -28,28 +28,23 @@
 <template>
   <div class="layout">
     <Layout>
-      <Header style="height: 8vh">
-        <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
-          <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
-              Item 1
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>
-              Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>
-              Item 4
-            </MenuItem>
-          </div>
-        </Menu>
+      <Header style="height: 8vh;display: flex;justify-content: flex-start;align-items: center">
+        <div style="width: 300px;color: white;font-size:22px;font-weight: bold;margin-left: -32px;margin-top: 4px;">
+          <Icon type="social-twitter"></Icon>
+          <span>&nbsp;包头公交ERP</span>
+        </div>
+        <div class="demo-avatar" style="position: absolute;right: 150px;">
+          <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
+          <Dropdown style="margin-left: 10px;">
+            <span style="color: white">欢迎管理员</span>
+            <Icon type="arrow-down-b" style="color: white"></Icon>
+            <DropdownMenu slot="list">
+              <DropdownItem>我的收藏</DropdownItem>
+              <DropdownItem>个人信息</DropdownItem>
+              <DropdownItem>退出</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
       </Header>
       <Layout>
         <Sider hide-trigger :style="{background: '#fff'}">
@@ -95,7 +90,9 @@
               <a href="http://localhost:8081/#/pickingManger" target="erp_main">
                 <MenuItem name="3-2">领料管理</MenuItem>
               </a>
-              <MenuItem name="3-3">天然气统计管理</MenuItem>
+              <a href="http://localhost:8081/#/gasManger" target="erp_main">
+                <MenuItem name="3-3">天然气统计管理</MenuItem>
+              </a>
             </Submenu>
           </Menu>
         </Sider>

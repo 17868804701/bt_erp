@@ -87,6 +87,7 @@
       </div>
     </Modal>
     <Table stripe :columns="columns1" :data="data1" size="small" style="margin-top: 10px;"></Table>
+    <Page :total="100" show-total style="margin-top: 10px;"></Page>
   </div>
 </template>
 <script>

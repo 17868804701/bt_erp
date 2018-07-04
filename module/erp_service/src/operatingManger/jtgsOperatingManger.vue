@@ -1,54 +1,52 @@
+<style>
+  .border_line{
+    border-bottom: 1px solid #e9eaec;
+    padding-bottom: 15px;
+  }
+</style>
+
 <template>
   <div>
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
-      <h2 style="margin-left: 15px;">
-        集团公司运营部统计
-      </h2>
+      <div class="border_line">
+        <h2 style="margin-left: 15px;">
+          集团公司运营部统计
+        </h2>
+      </div>
+      <Form :model="formItem" :label-width="80" style="margin-top: 20px;">
+        <div style="display: flex;flex-wrap: wrap;margin-left: 10px;">
+          <FormItem label="按年份查询" style="margin: 0;">
+            <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
+                        v-model="formItem.date"></DatePicker>
+          </FormItem>
+          <FormItem class="formItem" label="路别">
+            <Select v-model="formItem.select" style="width: 195px;">
+              <Option value="beijing">1路</Option>
+              <Option value="shanghai">2路</Option>
+              <Option value="shenzhen">3路</Option>
+            </Select>
+          </FormItem>
+          <FormItem class="formItem" label="公司">
+            <Select v-model="formItem.select1" style="width: 195px;">
+              <Option value="beijing">公交一公司</Option>
+              <Option value="shanghai">公交二公司</Option>
+              <Option value="shenzhen">公交三公司</Option>
+            </Select>
+          </FormItem>
+          <div style="margin-left: 10px;margin-top: 1px;">
+            <Button type="primary" icon="ios-search">搜索</Button>
+          </div>
+        </div>
+      </Form>
+      <Button type="ghost" icon="android-download" style="position: absolute;right: 10px;margin-top: -44px;">导出Excel</Button>
       <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane label="线路车次正点统计报表" name="name1">
-          <Form :model="formItem" :label-width="80">
-            <div style="display: flex;flex-wrap: wrap">
-              <FormItem label="按年份查询" style="margin: 0;">
-                <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
-                            v-model="formItem.date"></DatePicker>
-              </FormItem>
-              <FormItem class="formItem" label="路别">
-                <Select v-model="formItem.select" style="width: 195px;">
-                  <Option value="beijing">1路</Option>
-                  <Option value="shanghai">2路</Option>
-                  <Option value="shenzhen">3路</Option>
-                </Select>
-              </FormItem>
-              <FormItem class="formItem" label="公司">
-                <Select v-model="formItem.select1" style="width: 195px;">
-                  <Option value="beijing">公交一公司</Option>
-                  <Option value="shanghai">公交二公司</Option>
-                  <Option value="shenzhen">公交三公司</Option>
-                </Select>
-              </FormItem>
-              <div style="margin-left: 10px;margin-top: 1px;">
-                <Button type="primary" icon="ios-search">搜索</Button>
-              </div>
-            </div>
-          </Form>
-          <Button type="ghost" icon="android-download" style="position: absolute;right: 10px;margin-top: -44px;">导出Excel</Button>
-          <Tabs value="name1" style="margin-top: -10px;">
-            <TabPane label="线路车次正点统计表" name="name1">
-              <Table :columns="columns11" :data="data10" border height="520" size="small"></Table>
-            </TabPane>
-            <TabPane label="各公司与集团汇总表" name="name2">
-              <Table :columns="columns12" :data="data12" border height="520"  size="small"></Table>
-            </TabPane>
-          </Tabs>
-          <!--<div style="width: 100%;text-align: center">-->
-            <!--<h2>线路车次正点统计表</h2>-->
-          <!--</div>-->
-          <!---->
-
-          <!--<div style="width: 100%;text-align: center;margin-top: 30px;">-->
-            <!--<h2>各公司与集团汇总表</h2>-->
-          <!--</div>-->
-
+        <TabPane label="线路车次正点统计表" name="name1">
+          <Table :columns="columns11" :data="data10" border height="520" size="small"></Table>
+          <Page :total="100" show-total style="margin-top: 10px;"></Page>
+        </TabPane>
+        <TabPane label="各公司与集团汇总表" name="name2">
+          <Table :columns="columns12" :data="data12" border height="520"  size="small"></Table>
+          <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
       </Tabs>
     </div>

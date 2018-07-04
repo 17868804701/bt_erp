@@ -17,6 +17,7 @@ import jtgsOperatingManger from '../operatingManger/jtgsOperatingManger.vue'
 // 能源管理
 import electricManger from '../energyInformationManger/electricManger.vue'
 import pickingManger from '../energyInformationManger/pickingManger.vue'
+import gasManger from '../energyInformationManger/gasManger.vue'
 Vue.use(Router);
 
 export default[
@@ -68,5 +69,8 @@ export default[
   {
     path: '/pickingManger',
     component: pickingManger
+  }, {
+    path: '/gasManger',
+    component: gasManger
   }
 ]

@@ -13,6 +13,12 @@ import addProgram from '../programManager/addProgram.vue'
 // 运营管理
 import fgsOperatingManger from '../operatingManger/fgsOperatingManger.vue'
 import jtgsOperatingManger from '../operatingManger/jtgsOperatingManger.vue'
+// 安全管理
+import ARList from '../securityManger/views/ARList.vue'
+import AccidentDetail from '../securityManger/views/AccidentDetail.vue'
+import AccidentMonthFee from '../securityManger/views/AccidentMonthFee.vue'
+import AccidentExamineReport from '../securityManger/views/AccidentExamineReport.vue'
+import ProductAnalyse from '../securityManger/views/ProductAnalyse.vue'
 
 // 能源管理
 import electricManger from '../energyInformationManger/electricManger.vue'
@@ -69,7 +75,28 @@ export default[
   {
     path: '/pickingManger',
     component: pickingManger
-  }, {
+  },
+  {
+    path: '/ARList',
+    component: ARList
+  },
+  {
+    path: '/AccidentDetail',
+    component: AccidentDetail
+  },
+  {
+    path: '/AccidentMonthFee',
+    component: AccidentMonthFee
+  },
+  {
+    path: '/AccidentExamineReport',
+    component: AccidentExamineReport
+  },
+  {
+    path: '/ProductAnalyse',
+    component: ProductAnalyse
+  },
+  {
     path: '/gasManger',
     component: gasManger
   }

@@ -94,6 +94,24 @@
                 <MenuItem name="3-3">天然气统计管理</MenuItem>
               </a>
             </Submenu>
+            <Submenu name="4">
+              <template slot="title">
+                <Icon type="ios-analytics"></Icon>
+                安全管理
+              </template>
+              <a href="http://localhost:8081/#/ARList" target="erp_main">
+                <MenuItem name="3-1">立案事故管理</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/AccidentMonthFee" target="erp_main">
+                <MenuItem name="4-2">事故情况汇总</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/AccidentExamineReport" target="erp_main">
+                <MenuItem name="4-3">安全管理月考核表管理</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/ProductAnalyse" target="erp_main">
+                <MenuItem name="4-4">安全生产情况分析</MenuItem>
+              </a>
+            </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '0 24px 0px'}">

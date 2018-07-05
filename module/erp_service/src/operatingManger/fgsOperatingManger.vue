@@ -5,7 +5,7 @@
         运营管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane label="分公司计划月报表" name="name1">
+        <TabPane label="分公司行车月报表" name="name1">
           <Form :model="formItem" :label-width="80">
             <Row>
               <Col span="24">

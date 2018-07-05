@@ -24,6 +24,9 @@ import ProductAnalyse from '../securityManger/views/ProductAnalyse.vue'
 import electricManger from '../energyInformationManger/electricManger.vue'
 import pickingManger from '../energyInformationManger/pickingManger.vue'
 import gasManger from '../energyInformationManger/gasManger.vue'
+
+// 企业管理
+import lhlctz from '../enterpriseManger/lhlctz.vue'
 Vue.use(Router);
 
 export default[
@@ -99,5 +102,8 @@ export default[
   {
     path: '/gasManger',
     component: gasManger
+  } ,{
+    path: '/lhlctz',
+    component: lhlctz
   }
 ]

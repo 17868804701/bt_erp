@@ -73,7 +73,7 @@
                 运营管理
               </template>
               <a href="http://localhost:8081/#/fgsOperatingManger" target="erp_main">
-                <MenuItem name="2-1">分公司运营报表统计</MenuItem>
+                <MenuItem name="2-1">分公司行车月报管理</MenuItem>
               </a>
               <a href="http://localhost:8081/#/jtgsOperatingManger" target="erp_main">
                 <MenuItem name="2-2">集团运营部报表统计</MenuItem>
@@ -97,19 +97,34 @@
             <Submenu name="4">
               <template slot="title">
                 <Icon type="ios-analytics"></Icon>
+                企业管理
+              </template>
+              <a href="http://localhost:8081/#/fgsOperatingManger" target="erp_main">
+                <MenuItem name="4-1">行车月报管理</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/lhlctz" target="erp_main">
+                <MenuItem name="4-2">能耗里程台账</MenuItem>
+              </a>
+              <a href="http://localhost:8081/#/" target="erp_main">
+                <MenuItem name="4-3">车次线路收入台账</MenuItem>
+              </a>
+            </Submenu>
+            <Submenu name="5">
+              <template slot="title">
+                <Icon type="ios-analytics"></Icon>
                 安全管理
               </template>
               <a href="http://localhost:8081/#/ARList" target="erp_main">
-                <MenuItem name="4-1">立案事故管理</MenuItem>
+                <MenuItem name="5-1">立案事故管理</MenuItem>
               </a>
               <a href="http://localhost:8081/#/AccidentMonthFee" target="erp_main">
-                <MenuItem name="4-2">事故情况汇总</MenuItem>
+                <MenuItem name="5-2">事故情况汇总</MenuItem>
               </a>
               <a href="http://localhost:8081/#/AccidentExamineReport" target="erp_main">
-                <MenuItem name="4-3">安全管理月考核表管理</MenuItem>
+                <MenuItem name="5-3">安全管理月考核表管理</MenuItem>
               </a>
               <a href="http://localhost:8081/#/ProductAnalyse" target="erp_main">
-                <MenuItem name="4-4">安全生产情况分析</MenuItem>
+                <MenuItem name="5-4">安全生产情况分析</MenuItem>
               </a>
             </Submenu>
           </Menu>

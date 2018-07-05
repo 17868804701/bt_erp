@@ -50,11 +50,11 @@
             <FormItem style="margin: 0px;display: flex;justify-content: flex-end">
               <Button  type="primary" @click="accidentModal = true">
                 <Icon type="plus-round"></Icon>
-                导出Excel
-              </Button>
-              <Button  type="primary" @click="accidentModal = true">
-                <Icon type="plus-round"></Icon>
                 新增
+              </Button>
+              <Button  type="primary">
+                <Icon type="plus-round"></Icon>
+                导出Excel
               </Button>
             </FormItem>
           </Col>

@@ -100,7 +100,7 @@
                 安全管理
               </template>
               <a href="http://localhost:8081/#/ARList" target="erp_main">
-                <MenuItem name="3-1">立案事故管理</MenuItem>
+                <MenuItem name="4-1">立案事故管理</MenuItem>
               </a>
               <a href="http://localhost:8081/#/AccidentMonthFee" target="erp_main">
                 <MenuItem name="4-2">事故情况汇总</MenuItem>

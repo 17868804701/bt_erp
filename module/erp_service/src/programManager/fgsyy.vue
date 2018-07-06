@@ -9,8 +9,8 @@
     @on-ok="ok"
     width="80%"
     :mask-closable="false"
+    style="height: auto"
     :scrollable="true"
-    style="height: 500px"
     @on-cancel="cancel">
   <addProgram></addProgram>
   </Modal>

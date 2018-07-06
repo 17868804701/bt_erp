@@ -17,8 +17,8 @@
             <Button type="primary" icon="android-download"
                     style="float: right;margin-right: 10px">导出Excel
             </Button>
-            <Button type="primary" icon="android-download" @click="addProgram=true"
-                    style="float: right;margin-right: 10px;">新增计划
+            <Button type="primary" icon="plus" @click="addProgram=true"
+                    style="float: right;margin-right: 10px;">新增
             </Button>
           </FormItem>
           </Col>
@@ -58,34 +58,28 @@
       style="height: 500px;"
       @on-cancel="cancel">
       <div style="height:auto">
-        <Form :model="formItem" :label-width="80">
+        <Form :model="formItem" :label-width="100">
           <FormItem class="formItem" label="单位">
-            <Input v-model="formItem.input" placeholder="单位" style="width: 195px;"/>
-          </FormItem>
-          <FormItem class="formItem" label="类别">
             <Select v-model="formItem.select" style="width: 195px;">
-              <Option value="beijing">一类</Option>
-              <Option value="shanghai">二类</Option>
-              <Option value="shenzhen">三类</Option>
+              <Option value="beijing">一公司</Option>
+              <Option value="shanghai">二公司</Option>
             </Select>
           </FormItem>
-          <FormItem class="formItem" label="年度计划">
+          <FormItem class="formItem" label="车辆类别">
+            <Select v-model="formItem.select" style="width: 195px;">
+              <Option value="beijing">中型</Option>
+              <Option value="shanghai">大型</Option>
+            </Select>
+          </FormItem>
+          <FormItem class="formItem" label="年度计划收入">
             <Input v-model="formItem.input" placeholder="年度计划" style="width: 195px;"/>
           </FormItem>
-          <FormItem class="formItem" label="编制单位">
-            <Input v-model="formItem.input" placeholder="编制单位" style="width: 195px;"/>
-          </FormItem>
-          <FormItem class="formItem" label="制定时间">
-            <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
-          </FormItem>
-          <FormItem class="formItem" label="计划时间">
-            <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
-          </FormItem>
+
         </Form>
       </div>
     </Modal>
     <Table stripe :columns="columns1" :data="data1" size="small" style="margin-top: 10px;"></Table>
-    <Page :total="100" show-total style="margin-top: 10px;"></Page>
+    <!--<Page :total="100" show-total style="margin-top: 10px;"></Page>-->
   </div>
 </template>
 <script>
@@ -143,7 +137,7 @@
                   style: {
                     marginRight: '5px'
                   },
-                }, '删除计划'),
+                }, '删除'),
               ]);
             }
           }
@@ -157,44 +151,6 @@
             zdTime: '2016-10-03',
             bzdw: '公交总公司',
             jhTime: '2017-10-03',
-          },
-          {
-            danwei: '公交一公司',
-            year:'2018',
-            type: '--',
-            ndjh: '200',
-            zdTime: '2016-10-03',
-            bzdw: '公交总公司',
-            jhTime: '2017-10-03'
-          },
-          {
-            danwei: '公交一公司',
-            year:'2018',
-            type: '--',
-            ndjh: '200',
-            zdTime: '2016-10-03',
-            bzdw: '公交总公司',
-            jhTime: '2017-10-03'
-          },
-
-          {
-            danwei: '公交一公司',
-            year:'2018',
-            type: '--',
-            ndjh: '200',
-            zdTime: '2016-10-03',
-            bzdw: '公交总公司',
-            jhTime: '2017-10-03'
-          },
-
-          {
-            danwei: '公交一公司',
-            year:'2018',
-            type: '--',
-            ndjh: '200',
-            zdTime: '2016-10-03',
-            bzdw: '公交总公司',
-            jhTime: '2017-10-03'
           }
         ]
       }

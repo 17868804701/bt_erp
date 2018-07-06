@@ -1,5 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
   .sxrowStyle {
     margin-bottom: 20px
   }
@@ -89,8 +89,11 @@
                 <Checkbox label="公交四公司"></Checkbox>
                 <Checkbox label="公交五公司"></Checkbox>
                 <Checkbox label="公交六公司"></Checkbox>
-                <Checkbox label="公交七公司"></Checkbox>
-                <Checkbox label="公交八公司"></Checkbox>
+                <Checkbox label="长客公司"></Checkbox>
+                <Checkbox label="点钞中心"></Checkbox>
+                <Checkbox label="培训中心"></Checkbox>
+                <Checkbox label="稽查大队"></Checkbox>
+                <Checkbox label="站管中心"></Checkbox>
                 <Checkbox label="维修公司"></Checkbox>
 
               </CheckboxGroup>
@@ -99,27 +102,23 @@
         </div>
         <!--筛选结果-->
         <div style="width: 100%; text-align: center">
-          <Button style="margin-right: 10px;" type="primary" slot="extra" @click="search">
-            <Icon type="search"></Icon>
-            重置
-          </Button>
           <Button type="primary" slot="extra" @click="search">
             <Icon type="search"></Icon>
             搜索
           </Button>
-          <Button type="primary" size="default" slot="extra" style="float: right;">导出Excel</Button>
+          <Button type="primary" size="default" slot="extra" style="float: right;"><Icon type="android-download"></Icon>导出Excel</Button>
           <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
-                  @click="exports=true">导入Excel
+                  @click="exports=true"><Icon type="android-upload"></Icon>导入Excel
           </Button>
           <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
-                  @click="addPerson">新建人员信息
+                  @click="addPerson"> <Icon type="plus"></Icon>新建
           </Button>
           <Modal
             v-model="exports"
             title="导入计划表"
             width="400"
             :mask-closable="false"
-            style="height: 500px;">
+            style="height:auto;">
             <Steps :current="0" direction="vertical">
               <Step title="第一步" content="下载导入报表模板"></Step>
               <Step title="第二步" content="上传报表"></Step>

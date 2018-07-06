@@ -1,95 +1,139 @@
 <template>
-  <div class="container">
+  <div class="main">
     <Button type="primary" icon="paper-airplane" size="small">人员详细信息</Button>
     <router-link to="/">
       <span class="back">返回列表页>></span>
     </router-link>
-
     <Form :model="formItem" :label-width="80" style="margin-top:10px;">
       <Card class="card_file">
         <p slot="title">人员基本信息</p>
-        <div style="display: flex;flex-direction: row">
-          <div class="jbxx_left">
-            <FormItem class="formItem" :label-width="120" label="姓名">
-              <Input v-model="formItem.input" placeholder="姓名" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="曾用名">
-              <Input v-model="formItem.input" placeholder="曾用名" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="性别">
-              <RadioGroup v-model="formItem.radio" style="width: 170px;">
-                <Radio label="男">男</Radio>
-                <Radio label="女">女</Radio>
-              </RadioGroup>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="民族">
-              <Select v-model="formItem.select" style="width: 170px;">
-                <Option value="汉族">汉族</Option>
-                <Option value="满族">满族</Option>
-              </Select>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="出生年月">
-              <DatePicker type="date" style="width: 170px;" placeholder="Select date"
-                          v-model="formItem.date"></DatePicker>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="籍贯">
-              <Input v-model="formItem.input" placeholder="陕西汉中" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="联系电话">
-              <Input v-model="formItem.input" placeholder="联系电话" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="政治面貌">
-              <Select v-model="formItem.select" style="width: 170px;">
-                <Option value="共青团员">共青团员</Option>
-                <Option value="中共党员">中共党员</Option>
-              </Select>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="学历">
-              <Input v-model="formItem.input" placeholder="学历" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="毕业院校">
-              <Input v-model="formItem.input" placeholder="毕业院校" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="所学专业">
-              <Input v-model="formItem.input" placeholder="所学专业" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="职称">
-              <Input v-model="formItem.input" placeholder="职称" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="职业资格技能">
-              <Input v-model="formItem.input" placeholder="职业资格技能" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="配偶情况">
-              <Input v-model="formItem.input" placeholder="配偶情况" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="身份证号">
-              <Input v-model="formItem.input" placeholder="身份证号" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="健康状况">
-              <Input v-model="formItem.input" placeholder="健康状况" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="服兵役">
-              <Input v-model="formItem.input" placeholder="服兵役" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="通讯地址">
-              <Input v-model="formItem.input" placeholder="通讯地址" class="input_item"/>
-            </FormItem>
-            <FormItem class="formItem" :label-width="120" label="入党时间">
-              <DatePicker type="date" style="width: 170px;" placeholder="Select date"
-                          v-model="formItem.date"></DatePicker>
-            </FormItem>
+        <Form :model="formItem" :label-width="80" style="margin-top:10px;">
+          <div style="display: flex">
+            <div class="jbxx_left">
+              <Row type="flex" justify="start" class="code-row-bg">
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="姓名">
+                  <Input v-model="formItem.input" placeholder="姓名" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="曾用名">
+                  <Input v-model="formItem.input" placeholder="曾用名" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="性别">
+                  <RadioGroup v-model="formItem.radio" style="width: 170px;">
+                    <Radio label="男">男</Radio>
+                    <Radio label="女">女</Radio>
+                  </RadioGroup>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="民族">
+                  <Select v-model="formItem.select" style="width: 170px;">
+                    <Option value="汉族">汉族</Option>
+                    <Option value="满族">满族</Option>
+                  </Select>
+                </FormItem>
+                </Col>
+              </Row>
+              <Row type="flex" justify="start" class="code-row-bg">
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="出生年月">
+                  <DatePicker type="date" style="width: 170px;" placeholder="Select date"
+                              v-model="formItem.date"></DatePicker>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="籍贯">
+                  <Input v-model="formItem.input" placeholder="陕西汉中" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="联系电话">
+                  <Input v-model="formItem.input" placeholder="联系电话" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="政治面貌">
+                  <Select v-model="formItem.select" style="width: 170px;">
+                    <Option value="共青团员">共青团员</Option>
+                    <Option value="中共党员">中共党员</Option>
+                  </Select>
+                </FormItem>
+                </Col>
+              </Row>
+              <Row type="flex" justify="start" class="code-row-bg">
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="学历">
+                  <Input v-model="formItem.input" placeholder="学历" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="毕业院校">
+                  <Input v-model="formItem.input" placeholder="毕业院校" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="所学专业">
+                  <Input v-model="formItem.input" placeholder="所学专业" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="职称">
+                  <Input v-model="formItem.input" placeholder="职称" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="职业资格技能">
+                  <Input v-model="formItem.input" placeholder="职业资格技能" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="配偶情况">
+                  <Input v-model="formItem.input" placeholder="配偶情况" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="身份证号">
+                  <Input v-model="formItem.input" placeholder="身份证号" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="健康状况">
+                  <Input v-model="formItem.input" placeholder="健康状况" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="服兵役">
+                  <Input v-model="formItem.input" placeholder="服兵役" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="通讯地址">
+                  <Input v-model="formItem.input" placeholder="通讯地址" class="input_item"/>
+                </FormItem>
+                </Col>
+                <Col span="6">
+                <FormItem class="formItem" :label-width="120" label="入党时间">
+                  <DatePicker type="date" style="width: 170px;" placeholder="Select date"
+                              v-model="formItem.date"></DatePicker>
+                </FormItem>
+                </Col>
+              </Row>
+            </div>
+            <div class="head jbxx_right">
+              <img class="head_img"
+                   src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530166672360&di=0d3b017d5285bae86c811371eca9cd11&imgtype=0&src=http%3A%2F%2Fpic14.photophoto.cn%2F20100127%2F0036036848818577_b.jpg"
+                   alt="">
+              <Upload action="//jsonplaceholder.typicode.com/posts/">
+                <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
+              </Upload>
+            </div>
           </div>
-          <div class="head jbxx_right">
-            <img class="head_img"
-                 src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530166672360&di=0d3b017d5285bae86c811371eca9cd11&imgtype=0&src=http%3A%2F%2Fpic14.photophoto.cn%2F20100127%2F0036036848818577_b.jpg"
-                 alt="">
-            <Upload action="//jsonplaceholder.typicode.com/posts/">
-              <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
-            </Upload>
-          </div>
-        </div>
+        </Form>
       </Card>
-
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">附件查看</p>
         <vueshowpdf @closepdf="closepdf"
@@ -98,10 +142,11 @@
                     @pdferr="pdferr"
                     :maxscale='4'
                     :minscale='0.6'
-                    :scale='1.2' ></vueshowpdf>
+                    :scale='1.2'></vueshowpdf>
         <Icon type="document-text" class="file"></Icon>
         <span class="a_pdf"
-           @click="modalPdf=true">附件：关于包头ERP项目的需求沟通.pdf</span><br>
+              @click="modalPdf=true">附件：员工资料.pdf</span><br>
+        <Button type="primary" icon="ios-cloud-upload-outline" style="margin-top: 10px;">上传员工资料PDF</Button>
       </Card>
       <!--<Button type="primary" icon="paper-airplane" size="small" style="margin-top:10px;">公积金基本信息</Button>-->
       <Card class="card_file" style="margin-top: 10px">
@@ -234,7 +279,6 @@
           </FormItem>
         </div>
       </Card>
-
       <!--<Button type="primary" icon="paper-airplane" size="small" style="margin-top:10px;">其他信息</Button>-->
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">其他信息</p>
@@ -273,7 +317,6 @@
           </FormItem>
         </div>
       </Card>
-
       <Modal
         v-model="modalPdf"
         width="70%"
@@ -290,9 +333,9 @@
   export default {
     data () {
       return {
-        modalPdf:false,
-        pdfurls:'',
-        isshowpdf:false,
+        modalPdf: false,
+        pdfurls: '',
+        isshowpdf: false,
         value: '1',
         formItem: {
           input: '',
@@ -303,7 +346,7 @@
       }
     },
     methods: {
-      showPdf:function () {
+      showPdf: function () {
         this.isshowpdf = true;
       },
       closepdf(){
@@ -313,7 +356,7 @@
 //        console.log(errurl);
       }
     },
-    components:{
+    components: {
       vuePdfjs
     },
     mounted () {
@@ -322,7 +365,7 @@
   }
 </script>
 <style>
-  .container {
+  .main {
     padding: 20px;
   }
 
@@ -331,19 +374,17 @@
   }
 
   .input_item {
-    width: 170px;
-    float: left;
-    border: 0 !important;
+    width: 170px !important;
   }
-  .a_pdf{
-    text-decoration: underline;margin-top: 7px;margin-left:2px;position: absolute;
+
+  .a_pdf {
+    text-decoration: underline;
+    margin-top: 7px;
+    margin-left: 2px;
+    position: absolute;
     color: blue;
     cursor: pointer;
   }
-  .formItem {
-    margin: 10px 30px 0 -44px;
-  }
-
   .back {
     color: blue;
     position: absolute;
@@ -359,15 +400,12 @@
   }
 
   .jbxx_left {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
     width: 80%;
   }
 
   .jbxx_right {
     height: 300px;
-    width: 8%;
+    width: 15%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -377,9 +415,5 @@
   .head_img {
     width: 150px;
     height: 200px
-  }
-
-  .ivu-input {
-    /*border: 0;*/
   }
 </style>

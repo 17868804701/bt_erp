@@ -91,7 +91,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
 .formItem{
   margin: 0 0 12px 0
 }

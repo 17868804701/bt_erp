@@ -77,7 +77,7 @@
             title: '地点',
             key: 'dd',
             align: 'center',
-            width: 100,
+            width: 200,
             sortable: true
           },
           {

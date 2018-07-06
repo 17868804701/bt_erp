@@ -35,7 +35,7 @@
               width="80%"
               :mask-closable="false"
               :scrollable="true"
-              style="height: 500px"
+              style="height: auto"
               @on-cancel="cancel">
               <addyyProgram></addyyProgram>
             </Modal>
@@ -48,7 +48,7 @@
               width="50%"
               :mask-closable="false"
               :scrollable="true"
-              style="height: 500px"
+              style="height: auto"
               @on-cancel="cancel">
               <Form :model="formItem" :label-width="90">
                 <div style="display: flex;flex-wrap: wrap">
@@ -81,12 +81,14 @@
                   <FormItem class="formItem" label="加气台数">
                     <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="配车数">
-                    <Input v-model="formItem.input" placeholder="班车" style="width: 195px;"/> <span style="color: red;margin-left: 5px;">*班车</span>
-                    <Input v-model="formItem.input" placeholder="备用" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*备用</span>
+                  <FormItem class="formItem" label="班车数">
+                    <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem class="formItem" label="备用车数">
+                    <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
                   </FormItem>
                   <FormItem class="formItem" label="出入库说明">
-                    <Input v-model="formItem.textarea" style="width: 195px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="出入库说明"></Input>
+                    <Input v-model="formItem.textarea" style="width: 32vw" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="出入库说明"></Input>
                   </FormItem>
                 </div>
               </Form>
@@ -121,7 +123,14 @@
             key: 'name',
             align: 'center',
             width: 100,
-            fixed: 'left',
+//            fixed: 'left',
+          },
+          {
+            title: '公司',
+            key: 'gs',
+            align: 'center',
+            width: 100,
+//            fixed: 'left',
           },
           {
             title: '路线长度',
@@ -329,8 +338,9 @@
     },
     mounted () {
       const data = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 1; i < 10; i++) {
         data.push({
+          gs:'公交'+i+'公司',
           key: i,
           name: '2018年',
           age: i + 1,

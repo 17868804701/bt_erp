@@ -1,8 +1,5 @@
 <!--立案事故管理-->
 
-
-<style>
-</style>
 <template>
   <div style="padding: 20px; height: 100%;">
     <Row type="flex" justify="space-between" style="border-bottom: 1px solid #e9eaec; padding-bottom: 5px;">
@@ -31,13 +28,13 @@
         <Row type="flex" align="middle" >
           <Col span="6">
             <FormItem label="搜索查询" style="margin: 0px;" v-model="searchOptions.xmorcarNo">
-              <Input placeholder="请输入拍照或姓名查询..." clearable style="width: 180px"></Input>
+              <Input placeholder="请输入牌照或姓名查询..." clearable style="width: 180px"></Input>
             </FormItem>
           </Col>
           <Col span="6">
             <FormItem label="立案时间" style="margin: 0px;"  v-model="searchOptions.lasj">
               <DatePicker style="width: 180px;" type="date"
-                          placeholder="请选择合同终止时间"></DatePicker>
+                          placeholder="请选择立案时间"></DatePicker>
             </FormItem>
           </Col>
           <Col span="6">

@@ -6,6 +6,7 @@
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
         <TabPane label="领料历史记录" name="name1">
+          <Card>
           <Form :model="formItem" :label-width="110">
             <Row>
               <Col span="24">
@@ -27,6 +28,7 @@
               </Col>
             </Row>
           </Form>
+          </Card>
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>

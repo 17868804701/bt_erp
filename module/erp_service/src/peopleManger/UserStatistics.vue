@@ -1,4 +1,4 @@
-<style>
+<style scoped>
   .back {
     color: #5cadff;
     font-size: 12px;

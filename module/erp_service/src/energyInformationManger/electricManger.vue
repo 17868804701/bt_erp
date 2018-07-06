@@ -6,36 +6,40 @@
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
         <TabPane label="分公司电能消耗统计" name="name1">
+          <Card>
           <Form :model="formItem" :label-width="80">
             <Row>
               <Col span="24">
               <FormItem label="按月查询" style="margin: 0;">
                 <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
                 <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="ghost" icon="android-download"
+                <Button type="primary" icon="android-download"
                         style="float: right;margin-right: 10px">导出Excel
                 </Button>
               </FormItem>
               </Col>
             </Row>
           </Form>
+          </Card>
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
         <TabPane label="集团电能消耗统计" name="name2">
+          <Card>
           <Form :model="formItem" :label-width="80">
             <Row>
               <Col span="24">
               <FormItem label="按月查询" style="margin: 0;">
                 <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
                 <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="ghost" icon="android-download"
+                <Button type="primary" icon="android-download"
                         style="float: right;margin-right: 10px">导出Excel
                 </Button>
               </FormItem>
               </Col>
             </Row>
           </Form>
+          </Card>
           <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>

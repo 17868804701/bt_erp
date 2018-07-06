@@ -278,7 +278,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .show-edit-btn{
     display: none;
     margin-left: -10px;

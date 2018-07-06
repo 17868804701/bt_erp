@@ -7,6 +7,7 @@
       <Modal
         v-model="modal2"
         width="550"
+        style="height: auto"
         :mask-closable="false"
         title="选择要显示的列字段" >
         <Checkbox-group v-model="tableColumnsChecked" @on-change="changeTableColumns">

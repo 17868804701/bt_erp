@@ -126,6 +126,7 @@
               <a href="http://localhost:8081/#/ProductAnalyse" target="erp_main">
                 <MenuItem name="5-4">安全生产情况分析</MenuItem>
               </a>
+
             </Submenu>
           </Menu>
         </Sider>

@@ -14,7 +14,7 @@
               <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
                           v-model="formItem.date"></DatePicker>
               <Button type="primary" icon="ios-search">搜索</Button>
-              <Button type="ghost" icon="android-download"
+              <Button type="primary" icon="android-download"
                       style="float: right;margin-right: 10px">导出Excel
               </Button>
             </FormItem>

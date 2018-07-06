@@ -8,19 +8,30 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
+                <div style="display: flex;width: 100%">
+                <FormItem label="公司" style="margin: 0">
+                  <Select v-model="formItem.select" style="width: 195px;">
+                    <Option value="beijing">公交一公司</Option>
+                    <Option value="shanghai">公交二公司</Option>
+                  </Select>
+                </FormItem>
                 <FormItem label="按年份查询" style="margin: 0;">
                   <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
                               v-model="formItem.date"></DatePicker>
                   <Button type="primary" icon="ios-search">搜索</Button>
 
-                  <Button type="primary" icon="android-download"
-                          style="float: right;margin-right: 10px">导出Excel
-                  </Button>
                 </FormItem>
+                  <Button type="primary" icon="android-download"
+                          style="right: 0;position: absolute;margin-top: 1px;margin-left: 50px;">导出Excel
+                  </Button>
+                </div>
                 </Col>
               </Row>
             </Form>
           </Card>
+          <div style="width: 100%;text-align: center;margin-top: 20px;">
+            <h2>公交二公司 2018年4月天然气汇总表</h2>
+          </div>
           <Table :columns="columns11" :data="data10" ref="selection" border height="500" style="margin-top: 20px;"
                  size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -75,7 +86,9 @@
               </Row>
             </Form>
           </Card>
-
+          <div style="width: 100%;text-align: center;margin-top: 20px;">
+            <h2>集团公司  2018年4月天然气月汇总表</h2>
+          </div>
           <Table :columns="columns12" :data="data12" ref="selection" border height="500" style="margin-top: 20px;"
                  size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>

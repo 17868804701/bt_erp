@@ -18,9 +18,10 @@
                   <Option value="shanghai">下派</Option>
                 </Select>
                 <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="ghost" icon="android-download"
+                <Button type="primary" icon="android-download"
                         style="float: right;margin-right: 10px">导出Excel
                 </Button>
+                <Button type="ghost" icon="android-download"  style="float: right;margin-right:10px">批量派发</Button>
                 <Button type="primary" icon="plus" style="float: right;margin-right:10px" @click="addPicking=true">
                   新增领料
                 </Button>
@@ -32,9 +33,9 @@
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
-        <TabPane label="领料审批记录" name="name2">
-          <spPicking></spPicking>
-        </TabPane>
+        <!--<TabPane label="领料审批记录" name="name2">-->
+          <!--<spPicking></spPicking>-->
+        <!--</TabPane>-->
       </Tabs>
 
       <!--增加领料-->
@@ -62,6 +63,11 @@
         },
 //        车号、车型、物品名称（轮胎、润滑油）、领料数量、领料规格、供货单位、品牌型号、规格、计量单位、单价、金额、附记、状态（采购、下派）
         columns11: [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
           {
             title: '车号',
             key: 'ch',
@@ -158,7 +164,21 @@
                       this.addPicking = true
                     }
                   }
-                }, '查看详情  /  修改'),
+                }, '修改'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                     alert("派发成功")
+                    }
+                  }
+                }, '派发'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -169,7 +189,7 @@
 
                     }
                   }
-                }, '删除记录')
+                }, '删除')
               ]);
             }
           }

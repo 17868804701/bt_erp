@@ -41,7 +41,7 @@
                 </div>
               </div>
             </Form>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;margin-top: -44px;">导出Excel</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px">导出Excel</Button>
           </Card>
           <Table :columns="columns11" :data="data10" border height="520" size="small" style="margin-top: 10px;"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -73,7 +73,7 @@
                 </div>
               </div>
             </Form>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:19px;">导出Excel</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px;">导出Excel</Button>
           </Card>
           <Table :columns="columns12" :data="data12" border height="520"  size="small" style="margin-top: 10px;"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>

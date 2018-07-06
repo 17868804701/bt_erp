@@ -99,13 +99,6 @@
       </Card>
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">附件查看</p>
-        <vueshowpdf @closepdf="closepdf"
-                    v-show="isshowpdf"
-                    pdfurl="http://cdn.mozilla.net/pdfjs/tracemonkey.pdf"
-                    @pdferr="pdferr"
-                    :maxscale='4'
-                    :minscale='0.6'
-                    :scale='1.2'></vueshowpdf>
         <Icon type="document-text" class="file"></Icon>
         <span class="a_pdf"
               @click="modalPdf=true">附件：员工资料.pdf</span><br>
@@ -262,21 +255,6 @@
           </FormItem>
           <FormItem :label-width="120" label="备注">
             <Input v-model="formItem.input" placeholder="变更原因" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="备用字段1">
-            <Input v-model="formItem.input" placeholder="备用字段1" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="备用字段2">
-            <Input v-model="formItem.input" placeholder="备用字段2" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="备用字段3">
-            <Input v-model="formItem.input" placeholder="备用字段3" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="备用字段4">
-            <Input v-model="formItem.input" placeholder="备用字段4" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="备用字段5">
-            <Input v-model="formItem.input" placeholder="备用字段5" class="input_item"/>
           </FormItem>
         </div>
       </Card>

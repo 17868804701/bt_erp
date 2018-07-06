@@ -27,10 +27,6 @@
     position: absolute;
     right: 20px;
   }
-
-  .formItem {
-    margin: 0 !important;
-  }
 </style>
 <template>
   <div class="container">
@@ -40,19 +36,19 @@
         <Card>
           <Form :model="formItem" :label-width="80">
             <div class="search">
-              <FormItem label="备用" class="formItem">
+              <FormItem label="备用" style="margin: 0">
                 <Input v-model="formItem.input" placeholder="备用字段" class="text_width"/>
               </FormItem>
-              <FormItem label="选择时间" class="formItem">
+              <FormItem label="选择时间" style="margin: 0">
                 <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择年份" class="formItem">
+              <FormItem label="选择年份" style="margin: 0">
                 <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择公司" class="formItem">
-                <Select v-model="formItem.select" :transfer="true" class="text_width">
+              <FormItem label="选择公司" style="margin: 0">
+                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
                   <Option value="beijing">公交一公司</Option>
                   <Option value="shanghai">公交二公司</Option>
                   <Option value="shenzhen">公交三公司</Option>

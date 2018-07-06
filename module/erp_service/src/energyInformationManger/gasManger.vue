@@ -31,25 +31,25 @@
             <div style="margin-left: 20px;">
               <Form :model="formItem" :label-width="90">
                 <div style="display: flex;flex-wrap: wrap">
-                  <FormItem class="formItem" label="线路">
+                  <FormItem label="线路">
                     <Select v-model="formItem.select" style="width: 195px;">
                       <Option value="beijing">1路</Option>
                       <Option value="shanghai">2路</Option>
                       <Option value="shenzhen">3路</Option>
                     </Select>
                   </FormItem>
-                  <FormItem class="formItem" label="数量">
+                  <FormItem label="数量">
                     <Input v-model="formItem.input" placeholder="数量" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="实际价格">
+                  <FormItem label="实际价格">
                     <Input v-model="formItem.input" placeholder="单价" style="width: 195px;"/> <span style="color: red;margin-left: 5px;">*单价</span> <br>
                     <Input v-model="formItem.input" placeholder="金额" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*金额</span>
                   </FormItem>
-                  <FormItem class="formItem" label="计划价格">
+                  <FormItem label="计划价格">
                     <Input v-model="formItem.input" placeholder="单价" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*单价</span> <br>
                     <Input v-model="formItem.input" placeholder="金额" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*金额</span>
                   </FormItem>
-                  <FormItem class="formItem" label="备注">
+                  <FormItem label="备注">
                     <Input v-model="formItem.input" placeholder="备注" style="width: 195px;"/>
                   </FormItem>
                 </div>
@@ -86,24 +86,24 @@
             <div style="margin-left: 20px;">
               <Form :model="formItem" :label-width="90">
                 <div style="display: flex;flex-wrap: wrap">
-                  <FormItem class="formItem" label="二级单位">
+                  <FormItem label="二级单位">
                     <Select v-model="formItem.select" style="width: 195px;">
                       <Option value="beijing">一公司</Option>
                       <Option value="shanghai">二公司</Option>
                       <Option value="shenzhen">三公司</Option>
                     </Select>
                   </FormItem>
-                  <FormItem class="formItem" label="中燃">
+                  <FormItem label="中燃">
                     <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*气量</span> <br>
                     <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*实际价</span>
                     <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*计划价</span>
                   </FormItem>
-                  <FormItem class="formItem" label="汇通">
+                  <FormItem label="汇通">
                     <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*气量</span> <br>
                     <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*实际价</span>
                     <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*计划价</span>
                   </FormItem>
-                  <FormItem class="formItem" label="合计">
+                  <FormItem label="合计">
                     <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*气量</span> <br>
                     <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*实际价</span>
                     <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*计划价</span>
@@ -112,8 +112,6 @@
               </Form>
             </div>
           </Modal>
-
-
         </TabPane>
       </Tabs>
     </div>

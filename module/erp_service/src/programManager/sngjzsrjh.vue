@@ -58,29 +58,29 @@
       @on-cancel="cancel">
       <div style="height:auto">
         <Form :model="formItem" :label-width="120">
-          <FormItem class="formItem" label="单位">
+          <FormItem label="单位">
             <Input v-model="formItem.input" placeholder="单位" style="width: 195px;"/>
           </FormItem>
-          <FormItem class="formItem" label="时间">
+          <FormItem label="时间">
             <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
           </FormItem>
-          <FormItem class="formItem" label="路别">
+          <FormItem label="路别">
             <Select v-model="formItem.select" style="width: 195px;">
               <Option value="beijing">102路</Option>
               <Option value="shanghai">103路</Option>
               <Option value="shenzhen">286路</Option>
             </Select>
           </FormItem>
-          <FormItem class="formItem" label="各年计划收入">
+          <FormItem label="各年计划收入">
             <Input v-model="formItem.input" placeholder="各年计划收入" style="width: 195px;"/>
           </FormItem>
-          <FormItem class="formItem" label="各年实际收入">
+          <FormItem label="各年实际收入">
             <Input v-model="formItem.input" placeholder="各年实际收入" style="width: 195px;"/>
           </FormItem>
-          <FormItem class="formItem" label="各年客运量">
+          <FormItem label="各年客运量">
             <Input v-model="formItem.input" placeholder="各年客运量" style="width: 195px;"/>
           </FormItem>
-          <FormItem class="formItem" label="每车次客运量">
+          <FormItem label="每车次客运量">
             <Input v-model="formItem.input" placeholder="每车次客运量" style="width: 195px;"/>
           </FormItem>
         </Form>

@@ -52,10 +52,10 @@
               @on-cancel="cancel">
               <Form :model="formItem" :label-width="90">
                 <div style="display: flex;flex-wrap: wrap">
-                  <FormItem class="formItem" label="年份">
+                  <FormItem label="年份">
                     <DatePicker type="year" placeholder="选择年份" style="width: 195px;" v-model="formItem.date"></DatePicker>
                   </FormItem>
-                  <FormItem class="formItem" label="公司">
+                  <FormItem label="公司">
                     <Select v-model="formItem.select" style="width: 195px;">
                       <Option value="beijing">1公司</Option>
                       <Option value="shanghai">2公司</Option>
@@ -63,31 +63,31 @@
                     </Select>
                   </FormItem>
 
-                  <FormItem class="formItem" label="日车次">
+                  <FormItem label="日车次">
                     <Input v-model="formItem.input" placeholder="日车次" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="合计">
+                  <FormItem label="合计">
                     <Input v-model="formItem.input" placeholder="合计" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="日车次">
+                  <FormItem label="日车次">
                     <Input v-model="formItem.input" placeholder="日车次" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="路线长度">
+                  <FormItem label="路线长度">
                     <Input v-model="formItem.input" placeholder="路线长度" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="出入库">
+                  <FormItem label="出入库">
                     <Input v-model="formItem.input" placeholder="出入库" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="加气台数">
+                  <FormItem label="加气台数">
                     <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="班车数">
+                  <FormItem label="班车数">
                     <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="备用车数">
+                  <FormItem label="备用车数">
                     <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
                   </FormItem>
-                  <FormItem class="formItem" label="出入库说明">
+                  <FormItem label="出入库说明">
                     <Input v-model="formItem.textarea" style="width: 32vw" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="出入库说明"></Input>
                   </FormItem>
                 </div>

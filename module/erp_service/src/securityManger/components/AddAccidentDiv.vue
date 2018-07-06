@@ -219,7 +219,7 @@
 </script>
 
 <style>
-  .formItem {
-    width: 180px;
-  }
+  /*.formItem {*/
+    /*width: 180px;*/
+  /*}*/
 </style>

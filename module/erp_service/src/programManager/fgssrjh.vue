@@ -59,19 +59,19 @@
       @on-cancel="cancel">
       <div style="height:auto">
         <Form :model="formItem" :label-width="100">
-          <FormItem class="formItem" label="单位">
+          <FormItem  label="单位">
             <Select v-model="formItem.select" style="width: 195px;">
               <Option value="beijing">一公司</Option>
               <Option value="shanghai">二公司</Option>
             </Select>
           </FormItem>
-          <FormItem class="formItem" label="车辆类别">
+          <FormItem  label="车辆类别">
             <Select v-model="formItem.select" style="width: 195px;">
               <Option value="beijing">中型</Option>
               <Option value="shanghai">大型</Option>
             </Select>
           </FormItem>
-          <FormItem class="formItem" label="年度计划收入">
+          <FormItem  label="年度计划收入">
             <Input v-model="formItem.input" placeholder="年度计划" style="width: 195px;"/>
           </FormItem>
 

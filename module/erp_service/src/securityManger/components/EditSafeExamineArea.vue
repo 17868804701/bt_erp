@@ -122,7 +122,7 @@
     data () {
       return {
         formValidate: {
-          zgaqjy: '',
+          zgaqjy: 0,
           aqxc: 0,
           aqlh: 0,
           xlaqjc: 0,

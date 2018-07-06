@@ -33,87 +33,93 @@
         },
         columns11: [
           {
-            title: '序号',
+            title: '追加事故经损说明管理',
             align: 'center',
-            type: 'index',
-            width: 100,
-          },
-          {
-            title: '追加公司',
-            key: 'zjgs',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '路别',
-            key: 'lb',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '车牌号',
-            key: 'cph',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '驾驶员',
-            key: 'jsy',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '事故日期',
-            key: 'sgrq',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '预估经损',
-            key: 'ygjs',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '结案经损',
-            key: 'jajs',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '追加车内',
-            key: 'zjcn',
-            align: 'center',
-            width: 120,
-            sortable: true,
-          },
-          {
-            title: '追加车损、三者',
-            key: 'zjcssz',
-            align: 'center',
-            width: 120,
-            sortable: true,
-          },
-          {
-            title: '合计追加',
-            key: 'hjzj',
-            align: 'center',
-            width: 120,
-            sortable: true,
-          },
-          {
-            title: '追加扣分',
-            key: 'zjkf',
-            align: 'center',
-            width: 120,
-            sortable: true,
+            children: [
+              {
+                title: '序号',
+                align: 'center',
+                type: 'index',
+                width: 100,
+              },
+              {
+                title: '追加公司',
+                key: 'zjgs',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '路别',
+                key: 'lb',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '车牌号',
+                key: 'cph',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '驾驶员',
+                key: 'jsy',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '事故日期',
+                key: 'sgrq',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '预估经损',
+                key: 'ygjs',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '结案经损',
+                key: 'jajs',
+                align: 'center',
+                width: 120,
+                sortable: true
+              },
+              {
+                title: '追加车内',
+                key: 'zjcn',
+                align: 'center',
+                width: 120,
+                sortable: true,
+              },
+              {
+                title: '追加车损、三者',
+                key: 'zjcssz',
+                align: 'center',
+                width: 120,
+                sortable: true,
+              },
+              {
+                title: '合计追加',
+                key: 'hjzj',
+                align: 'center',
+                width: 120,
+                sortable: true,
+              },
+              {
+                title: '追加扣分',
+                key: 'zjkf',
+                align: 'center',
+                width: 120,
+                sortable: true,
+              },
+            ]
           },
           {
             title: '备注',

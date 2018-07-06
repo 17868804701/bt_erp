@@ -12,9 +12,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -29,9 +30,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -46,9 +48,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -63,9 +66,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -80,9 +84,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -97,9 +102,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -114,9 +120,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>
@@ -131,9 +138,10 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button style="margin-left: 20px;" type="primary" icon="ios-search">搜索</Button>
+                <FormItem label="按月查询" style="margin: 0;">
+                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
                 </FormItem>
                 </Col>
               </Row>

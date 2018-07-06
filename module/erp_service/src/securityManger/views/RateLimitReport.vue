@@ -5,10 +5,10 @@
       <Form :model="formItem" :label-width="80">
         <Row>
           <Col span="24">
-          <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+          <FormItem label="按月查询" style="margin: 0;">
+            <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
             <Button type="primary" icon="ios-search">搜索</Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
+            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
           </FormItem>
           </Col>
         </Row>
@@ -33,20 +33,26 @@
         },
         columns11: [
           {
-            title: '单位',
+            title: '分公司限速运营月统计结果',
             align: 'center',
-            key: 'dw',
-          },
-          {
-            title: '线路',
-            align: 'center',
-            key: 'xl',
-          },
-          {
-            title: '≥40s',
-            align: 'center',
-            key: 'rate',
-          },
+            children: [
+              {
+                title: '单位',
+                align: 'center',
+                key: 'dw',
+              },
+              {
+                title: '线路',
+                align: 'center',
+                key: 'xl',
+              },
+              {
+                title: '≥40s',
+                align: 'center',
+                key: 'rate',
+              },
+            ]
+          }
         ],
         data10: [],
       }

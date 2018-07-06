@@ -4,7 +4,11 @@
   <div style="padding: 20px; height: 100%;">
     <h2>
       事故详情
+      <router-link to="/">
+        <Button type="primary" size="small" style="margin-right: 10px;"><<返回列表页</Button>
+      </router-link>
     </h2>
+
 
     <Card style="margin-top: 20px;">
       <p slot="title" >
@@ -148,5 +152,11 @@
 </script>
 
 <style>
-
+  .back {
+    color: blue;
+    position: absolute;
+    margin-top: 4px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
 </style>

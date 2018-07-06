@@ -60,7 +60,7 @@
       </Form>
     </Card>
     <!--表格-->
-    <Table style="margin-top: 10px;" height="535px" :data="tableData" border :columns="initTableColumns" border></Table>
+    <Table style="margin-top: 10px;" height="575px" :data="tableData" border :columns="initTableColumns" border></Table>
   </div>
 </template>
 <script>
@@ -98,7 +98,6 @@
             title: '牌照',
             key: 'pz',
             width: 150,
-            fixed: 'left',
           },
         ];
         for (let i = 0; i < this.columnsTitle.length; i++) {
@@ -109,7 +108,16 @@
             sortable: true
           });
         }
-        coulumns.push({
+
+        let newColumns = [
+          {
+            title: '集团公司立按事故表',
+            align: 'center',
+            children: coulumns,
+          }
+        ];
+
+        newColumns.push({
           title: '操作',
           key: 'action',
           width: 250,
@@ -160,7 +168,7 @@
           }
         });
 
-        return coulumns;
+        return newColumns;
       },
     },
     methods: {

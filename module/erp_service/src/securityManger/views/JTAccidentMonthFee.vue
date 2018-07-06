@@ -5,10 +5,10 @@
       <Form :model="formItem" :label-width="80">
         <Row>
           <Col span="24">
-          <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+          <FormItem label="按月查询" style="margin: 0;">
+            <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
             <Button type="primary" icon="ios-search">搜索</Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
+            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
           </FormItem>
           </Col>
         </Row>
@@ -33,156 +33,161 @@
         },
         columns11: [
           {
-            title: '序号',
-            align: 'center',
-            type: 'index',
-            width: 100,
-          },
-          {
-            title: '单位',
-            key: 'dw',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '牌照',
-            key: 'pz',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '自编号',
-            key: 'zbh',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '路别',
-            key: 'lb',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '时间',
-            key: 'sj',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '地点',
-            key: 'dd',
-            align: 'center',
-            width: 200,
-            sortable: true
-          },
-          {
-            title: '姓名',
-            key: 'xm',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '报案人',
-            key: 'bar',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '事故属性',
-            key: 'sgsx',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '事故性质',
-            key: 'sgxz',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '立案日期',
-            key: 'larq',
-            align: 'center',
-            width: 120,
-            sortable: true
-          },
-          {
-            title: '勘察人',
-            key: 'kcr',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '立案',
-            key: 'la',
-            align: 'center',
-            width: 100,
-            sortable: true
-          },
-          {
-            title: '估损',
+            title: '集团公司事故情况月汇总表',
             align: 'center',
             children: [
               {
-                title: '公积金车损',
-                key: 'gjj_cs',
+                title: '序号',
+                align: 'center',
+                type: 'index',
+                width: 100,
+              },
+              {
+                title: '单位',
+                key: 'dw',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '牌照',
+                key: 'pz',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '自编号',
+                key: 'zbh',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '路别',
+                key: 'lb',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '时间',
+                key: 'sj',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '地点',
+                key: 'dd',
+                align: 'center',
+                width: 200,
+                sortable: true
+              },
+              {
+                title: '姓名',
+                key: 'xm',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '报案人',
+                key: 'bar',
+                align: 'center',
+                width: 100,
+                sortable: true
+              },
+              {
+                title: '事故属性',
+                key: 'sgsx',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '公积金车内',
-                key: 'gjj_cn',
+                title: '事故性质',
+                key: 'sgxz',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '公积金三者',
-                key: 'gjj_sz',
+                title: '立案日期',
+                key: 'larq',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '公积金定损金额合计',
-                key: 'gjj_hj',
+                title: '勘察人',
+                key: 'kcr',
                 align: 'center',
-                width: 180,
+                width: 100,
                 sortable: true
               },
               {
-                title: '交强险损失',
-                key: 'jqxss',
+                title: '立案',
+                key: 'la',
                 align: 'center',
-                width: 120,
+                width: 100,
                 sortable: true
               },
               {
-                title: '事故总损失',
-                key: 'sgzss',
+                title: '估损',
                 align: 'center',
-                width: 120,
-                sortable: true
+                children: [
+                  {
+                    title: '公积金车损',
+                    key: 'gjj_cs',
+                    align: 'center',
+                    width: 120,
+                    sortable: true
+                  },
+                  {
+                    title: '公积金车内',
+                    key: 'gjj_cn',
+                    align: 'center',
+                    width: 120,
+                    sortable: true
+                  },
+                  {
+                    title: '公积金三者',
+                    key: 'gjj_sz',
+                    align: 'center',
+                    width: 120,
+                    sortable: true
+                  },
+                  {
+                    title: '公积金定损金额合计',
+                    key: 'gjj_hj',
+                    align: 'center',
+                    width: 180,
+                    sortable: true
+                  },
+                  {
+                    title: '交强险损失',
+                    key: 'jqxss',
+                    align: 'center',
+                    width: 120,
+                    sortable: true
+                  },
+                  {
+                    title: '事故总损失',
+                    key: 'sgzss',
+                    align: 'center',
+                    width: 120,
+                    sortable: true
+                  },
+                  {
+                    title: '责任',
+                    key: 'zr',
+                    align: 'center',
+                    width: 120,
+                  },
+                ]
               },
             ]
-          },
-          {
-            title: '责任',
-            key: 'zr',
-            align: 'center',
-            width: 120,
-            fixed: 'right',
           },
           {
             title: '备注',

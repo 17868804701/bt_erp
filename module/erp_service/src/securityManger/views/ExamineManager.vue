@@ -1,14 +1,24 @@
 <!--安全管理月考核表管理-->
 <template>
   <div>
+    <Modal
+      v-model="editModal"
+      title="编辑运营安全体系执行规范"
+      width="50%"
+      @on-ok="editDone"
+      @on-cancel="editCancle">
+      <EditSafeExamineArea/>
+    </Modal>
     <Card>
       <Form :model="formItem" :label-width="80">
         <Row>
           <Col span="24">
-          <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+          <FormItem label="按月查询" style="margin: 0;">
+            <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
             <Button type="primary" icon="ios-search">搜索</Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
+            <Button type="primary" icon="android-download"
+                    style="float: right;margin-right: 10px">导出Excel
+            </Button>
           </FormItem>
           </Col>
         </Row>
@@ -21,206 +31,215 @@
 
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
+  import EditSafeExamineArea from '../components/EditSafeExamineArea.vue'
   export default {
     components:{
-      canEditTable
+      canEditTable,
+      EditSafeExamineArea
     },
     data () {
       return {
+        editModal: false,
         formItem: {
           select: '',
           date: ''
         },
         columns11: [
           {
-            title: '行车事故',
+            title: '安全管理月考核表',
             align: 'center',
             children: [
               {
-                title: '单位',
-                key: 'dw',
-                align: 'center',
-                width: 100,
-                sortable: true
-              },
-              {
-                title: '运营里程(公里)',
-                key: 'yylc',
-                align: 'center',
-                width: 150,
-                sortable: true
-              },
-              {
-                title: '行车责任事故',
+                title: '行车事故',
                 align: 'center',
                 children: [
                   {
-                    title: '一般',
-                    key: 'sgjb_yb',
+                    title: '单位',
+                    key: 'dw',
                     align: 'center',
-                    width: 90,
+                    width: 100,
+                    sortable: true
                   },
                   {
-                    title: '一级轻微',
-                    key: 'sgjb_yj',
+                    title: '运营里程(公里)',
+                    key: 'yylc',
                     align: 'center',
-                    width: 90,
+                    width: 150,
+                    sortable: true
                   },
                   {
-                    title: '二级轻微',
-                    key: 'sgjb_ej',
+                    title: '行车责任事故',
                     align: 'center',
-                    width: 90,
+                    children: [
+                      {
+                        title: '一般',
+                        key: 'sgjb_yb',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '一级轻微',
+                        key: 'sgjb_yj',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '二级轻微',
+                        key: 'sgjb_ej',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '三级轻微',
+                        key: 'sgjb_sj',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '扣分',
+                        key: 'sgjb_kf',
+                        align: 'center',
+                        width: 90,
+                      },
+                    ]
                   },
                   {
-                    title: '三级轻微',
-                    key: 'sgjb_sj',
+                    title: '事故损失',
                     align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '扣分',
-                    key: 'sgjb_kf',
-                    align: 'center',
-                    width: 90,
+                    children: [
+                      {
+                        title: '经损含追加(元)',
+                        key: 'sgss_jshzj',
+                        align: 'center',
+                        width: 120,
+                      },
+                      {
+                        title: '经损率(元/万公里)',
+                        key: 'sgss_jsl',
+                        align: 'center',
+                        width: 120,
+                      },
+                      {
+                        title: '扣分',
+                        key: 'sgss_kf',
+                        align: 'center',
+                        width: 90,
+                      },
+                    ]
                   },
                 ]
               },
               {
-                title: '事故损失',
+                title: '运营安全体系执行规范',
                 align: 'center',
                 children: [
                   {
-                    title: '经损含追加(元)',
-                    key: 'sgss_jshzj',
+                    title: '安全教育及管理制度落实',
                     align: 'center',
-                    width: 120,
+                    children: [
+                      {
+                        title: '职工安全教育',
+                        key: 'aqjy_zgaqjy',
+                        align: 'center',
+                        width: 80,
+                      },
+                      {
+                        title: '安全宣传',
+                        key: 'aqjy_aqxc',
+                        align: 'center',
+                        width: 80,
+                      },
+                      {
+                        title: '安全例会',
+                        key: 'aqjy_aqlh',
+                        align: 'center',
+                        width: 80,
+                      },
+                      {
+                        title: '线路安全稽查',
+                        key: 'aqjy_xlaqjc',
+                        align: 'center',
+                        width: 80,
+                      },
+                      {
+                        title: '酒精检测',
+                        key: 'aqjy_jjjc',
+                        align: 'center',
+                        width: 80,
+                      },
+                      {
+                        title: '四不放过',
+                        key: 'aqjy_sbfg',
+                        align: 'center',
+                        width: 80,
+                      },
+                      {
+                        title: '安全标准化',
+                        key: 'aqjy_aqbzh',
+                        align: 'center',
+                        width: 80,
+                      },
+                    ]
                   },
                   {
-                    title: '经损率(元/万公里)',
-                    key: 'sgss_jsl',
+                    title: '驾驶员安全管理',
                     align: 'center',
-                    width: 120,
+                    children: [
+                      {
+                        title: '吸烟',
+                        key: 'jsyaq_xy',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '接打手机',
+                        key: 'jsyaq_jdsj',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '闯信号',
+                        key: 'jsyaq_cxh',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '未礼让斑马线',
+                        key: 'jsyaq_wlrbmx',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '超速行驶',
+                        key: 'jsyaq_csxs',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '驾驶中闲谈',
+                        key: 'jsyaq_jszxt',
+                        align: 'center',
+                        width: 90,
+                      },
+                    ]
                   },
                   {
-                    title: '扣分',
-                    key: 'sgss_kf',
+                    title: '车辆安全管理',
                     align: 'center',
-                    width: 90,
-                  },
-                ]
-              },
-            ]
-          },
-          {
-            title: '运营安全体系执行规范',
-            align: 'center',
-            children: [
-              {
-                title: '安全教育及管理制度落实',
-                align: 'center',
-                children: [
-                  {
-                    title: '职工安全教育',
-                    key: 'aqjy_zgaqjy',
-                    align: 'center',
-                    width: 80,
-                  },
-                  {
-                    title: '安全宣传',
-                    key: 'aqjy_aqxc',
-                    align: 'center',
-                    width: 80,
-                  },
-                  {
-                    title: '安全例会',
-                    key: 'aqjy_aqlh',
-                    align: 'center',
-                    width: 80,
-                  },
-                  {
-                    title: '线路安全稽查',
-                    key: 'aqjy_xlaqjc',
-                    align: 'center',
-                    width: 80,
-                  },
-                  {
-                    title: '酒精检测',
-                    key: 'aqjy_jjjc',
-                    align: 'center',
-                    width: 80,
-                  },
-                  {
-                    title: '四不放过',
-                    key: 'aqjy_sbfg',
-                    align: 'center',
-                    width: 80,
-                  },
-                  {
-                    title: '安全标准化',
-                    key: 'aqjy_aqbzh',
-                    align: 'center',
-                    width: 80,
-                  },
-                ]
-              },
-              {
-                title: '驾驶员安全管理',
-                align: 'center',
-                children: [
-                  {
-                    title: '吸烟',
-                    key: 'jsyaq_xy',
-                    align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '接打手机',
-                    key: 'jsyaq_jdsj',
-                    align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '闯信号',
-                    key: 'jsyaq_cxh',
-                    align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '未礼让斑马线',
-                    key: 'jsyaq_wlrbmx',
-                    align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '超速行驶',
-                    key: 'jsyaq_csxs',
-                    align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '驾驶中闲谈',
-                    key: 'jsyaq_jszxt',
-                    align: 'center',
-                    width: 90,
-                  },
-                ]
-              },
-              {
-                title: '车辆安全管理',
-                align: 'center',
-                children: [
-                  {
-                    title: '行车十检',
-                    key: 'claqgl_xcsj',
-                    align: 'center',
-                    width: 90,
-                  },
-                  {
-                    title: '车辆安全设施抽检',
-                    key: 'claqgl_sscj',
-                    align: 'center',
-                    width: 90,
+                    children: [
+                      {
+                        title: '行车十检',
+                        key: 'claqgl_xcsj',
+                        align: 'center',
+                        width: 90,
+                      },
+                      {
+                        title: '车辆安全设施抽检',
+                        key: 'claqgl_sscj',
+                        align: 'center',
+                        width: 90,
+                      },
+                    ]
                   },
                 ]
               },
@@ -250,6 +269,7 @@
                   on: {
                     click: () => {
                       console.log('编辑运营安全体系执行规范');
+                      this.editModal = true;
                     }
                   }
                 }, '编辑')
@@ -266,8 +286,13 @@
       },
       handleChange (val, index) {
         this.$Message.success('修改了第' + (index + 1) + '行数据');
-      }
+      },
+      editCancle() {
 
+      },
+      editDone() {
+
+      }
     },
     mounted () {
       const data = [];

@@ -11,80 +11,80 @@
           <div style="display: flex">
             <div class="jbxx_left">
 
-                <FormItem :label-width="120" label="姓名">
-                  <Input v-model="formItem.input" placeholder="姓名" class="input_item"/>
-                </FormItem>
+              <FormItem :label-width="120" label="姓名">
+                <Input v-model="formItem.input" placeholder="姓名" class="input_item"/>
+              </FormItem>
 
 
-                <FormItem :label-width="120" label="曾用名">
-                  <Input v-model="formItem.input" placeholder="曾用名" class="input_item"/>
-                </FormItem>
+              <FormItem :label-width="120" label="曾用名">
+                <Input v-model="formItem.input" placeholder="曾用名" class="input_item"/>
+              </FormItem>
 
 
-                <FormItem :label-width="120" label="性别">
-                  <RadioGroup v-model="formItem.radio" style="width: 170px;">
-                    <Radio label="男">男</Radio>
-                    <Radio label="女">女</Radio>
-                  </RadioGroup>
-                </FormItem>
+              <FormItem :label-width="120" label="性别">
+                <RadioGroup v-model="formItem.radio" style="width: 170px;">
+                  <Radio label="男">男</Radio>
+                  <Radio label="女">女</Radio>
+                </RadioGroup>
+              </FormItem>
 
 
-                <FormItem :label-width="120" label="民族">
-                  <Select v-model="formItem.select" style="width: 170px;">
-                    <Option value="汉族">汉族</Option>
-                    <Option value="满族">满族</Option>
-                  </Select>
-                </FormItem>
-                <FormItem :label-width="120" label="出生年月">
-                  <DatePicker type="date" style="width: 170px;" placeholder="Select date"
-                              v-model="formItem.date"></DatePicker>
-                </FormItem>
-                <FormItem :label-width="120" label="籍贯">
-                  <Input v-model="formItem.input" placeholder="陕西汉中" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="联系电话">
-                  <Input v-model="formItem.input" placeholder="联系电话" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="政治面貌">
-                  <Select v-model="formItem.select" style="width: 170px;">
-                    <Option value="共青团员">共青团员</Option>
-                    <Option value="中共党员">中共党员</Option>
-                  </Select>
-                </FormItem>
-                <FormItem :label-width="120" label="学历">
-                  <Input v-model="formItem.input" placeholder="学历" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="毕业院校">
-                  <Input v-model="formItem.input" placeholder="毕业院校" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="所学专业">
-                  <Input v-model="formItem.input" placeholder="所学专业" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="职称">
-                  <Input v-model="formItem.input" placeholder="职称" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="职业资格技能">
-                  <Input v-model="formItem.input" placeholder="职业资格技能" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="配偶情况">
-                  <Input v-model="formItem.input" placeholder="配偶情况" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="身份证号">
-                  <Input v-model="formItem.input" placeholder="身份证号" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="健康状况">
-                  <Input v-model="formItem.input" placeholder="健康状况" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="服兵役">
-                  <Input v-model="formItem.input" placeholder="服兵役" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="通讯地址">
-                  <Input v-model="formItem.input" placeholder="通讯地址" class="input_item"/>
-                </FormItem>
-                <FormItem :label-width="120" label="入党时间">
-                  <DatePicker type="date" style="width: 170px;" placeholder="Select date"
-                              v-model="formItem.date"></DatePicker>
-                </FormItem>
+              <FormItem :label-width="120" label="民族">
+                <Select v-model="formItem.select" style="width: 170px;">
+                  <Option value="汉族">汉族</Option>
+                  <Option value="满族">满族</Option>
+                </Select>
+              </FormItem>
+              <FormItem :label-width="120" label="出生年月">
+                <DatePicker type="date" style="width: 170px;" placeholder="Select date"
+                            v-model="formItem.date"></DatePicker>
+              </FormItem>
+              <FormItem :label-width="120" label="籍贯">
+                <Input v-model="formItem.input" placeholder="陕西汉中" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="联系电话">
+                <Input v-model="formItem.input" placeholder="联系电话" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="政治面貌">
+                <Select v-model="formItem.select" style="width: 170px;">
+                  <Option value="共青团员">共青团员</Option>
+                  <Option value="中共党员">中共党员</Option>
+                </Select>
+              </FormItem>
+              <FormItem :label-width="120" label="学历">
+                <Input v-model="formItem.input" placeholder="学历" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="毕业院校">
+                <Input v-model="formItem.input" placeholder="毕业院校" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="所学专业">
+                <Input v-model="formItem.input" placeholder="所学专业" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="职称">
+                <Input v-model="formItem.input" placeholder="职称" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="职业资格技能">
+                <Input v-model="formItem.input" placeholder="职业资格技能" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="配偶情况">
+                <Input v-model="formItem.input" placeholder="配偶情况" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="身份证号">
+                <Input v-model="formItem.input" placeholder="身份证号" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="健康状况">
+                <Input v-model="formItem.input" placeholder="健康状况" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="服兵役">
+                <Input v-model="formItem.input" placeholder="服兵役" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="通讯地址">
+                <Input v-model="formItem.input" placeholder="通讯地址" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="入党时间">
+                <DatePicker type="date" style="width: 170px;" placeholder="Select date"
+                            v-model="formItem.date"></DatePicker>
+              </FormItem>
             </div>
             <div class="head jbxx_right">
               <img class="head_img"
@@ -326,6 +326,7 @@
     color: blue;
     cursor: pointer;
   }
+
   .back {
     color: blue;
     position: absolute;

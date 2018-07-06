@@ -36,9 +36,9 @@
         <Card>
           <Form :model="formItem" :label-width="80">
             <div class="search">
-              <FormItem label="备用" style="margin: 0">
-                <Input v-model="formItem.input" placeholder="备用字段" class="text_width"/>
-              </FormItem>
+              <!--<FormItem label="备用" style="margin: 0">-->
+                <!--<Input v-model="formItem.input" placeholder="备用字段" class="text_width"/>-->
+              <!--</FormItem>-->
               <FormItem label="选择时间" style="margin: 0">
                 <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                             class="text_width"></DatePicker>

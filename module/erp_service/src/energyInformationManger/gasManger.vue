@@ -9,18 +9,18 @@
               <Row>
                 <Col span="24">
                 <div style="display: flex;width: 100%">
-                <FormItem label="公司" style="margin: 0">
-                  <Select v-model="formItem.select" style="width: 195px;">
-                    <Option value="beijing">公交一公司</Option>
-                    <Option value="shanghai">公交二公司</Option>
-                  </Select>
-                </FormItem>
-                <FormItem label="按年份查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
-                              v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
+                  <FormItem label="公司" style="margin: 0">
+                    <Select v-model="formItem.select" style="width: 195px;">
+                      <Option value="beijing">公交一公司</Option>
+                      <Option value="shanghai">公交二公司</Option>
+                    </Select>
+                  </FormItem>
+                  <FormItem label="按年份查询" style="margin: 0;">
+                    <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
+                                v-model="formItem.date"></DatePicker>
+                    <Button type="primary" icon="ios-search">搜索</Button>
 
-                </FormItem>
+                  </FormItem>
                   <Button type="primary" icon="android-download"
                           style="right: 0;position: absolute;margin-top: 1px;margin-left: 50px;">导出Excel
                   </Button>
@@ -29,9 +29,6 @@
               </Row>
             </Form>
           </Card>
-          <div style="width: 100%;text-align: center;margin-top: 20px;">
-            <h2>公交二公司 2018年4月天然气汇总表</h2>
-          </div>
           <Table :columns="columns11" :data="data10" ref="selection" border height="500" style="margin-top: 20px;"
                  size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -53,12 +50,16 @@
                     <Input v-model="formItem.input" placeholder="数量" style="width: 195px;"/>
                   </FormItem>
                   <FormItem label="实际价格">
-                    <Input v-model="formItem.input" placeholder="单价" style="width: 195px;"/> <span style="color: red;margin-left: 5px;">*单价</span> <br>
-                    <Input v-model="formItem.input" placeholder="金额" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*金额</span>
+                    <Input v-model="formItem.input" placeholder="单价" style="width: 195px;"/> <span
+                    style="color: red;margin-left: 5px;">*单价</span> <br>
+                    <Input v-model="formItem.input" placeholder="金额" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*金额</span>
                   </FormItem>
                   <FormItem label="计划价格">
-                    <Input v-model="formItem.input" placeholder="单价" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*单价</span> <br>
-                    <Input v-model="formItem.input" placeholder="金额" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*金额</span>
+                    <Input v-model="formItem.input" placeholder="单价" style="width: 195px;"/><span
+                    style="color: red;margin-left: 5px;">*单价</span> <br>
+                    <Input v-model="formItem.input" placeholder="金额" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*金额</span>
                   </FormItem>
                   <FormItem label="备注">
                     <Input v-model="formItem.input" placeholder="备注" style="width: 195px;"/>
@@ -86,9 +87,6 @@
               </Row>
             </Form>
           </Card>
-          <div style="width: 100%;text-align: center;margin-top: 20px;">
-            <h2>集团公司  2018年4月天然气月汇总表</h2>
-          </div>
           <Table :columns="columns12" :data="data12" ref="selection" border height="500" style="margin-top: 20px;"
                  size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -107,19 +105,28 @@
                     </Select>
                   </FormItem>
                   <FormItem label="中燃">
-                    <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*气量</span> <br>
-                    <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*实际价</span>
-                    <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*计划价</span>
+                    <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span
+                    style="color: red;margin-left: 5px;">*气量</span> <br>
+                    <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*实际价</span>
+                    <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*计划价</span>
                   </FormItem>
                   <FormItem label="汇通">
-                    <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*气量</span> <br>
-                    <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*实际价</span>
-                    <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*计划价</span>
+                    <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span
+                    style="color: red;margin-left: 5px;">*气量</span> <br>
+                    <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*实际价</span>
+                    <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*计划价</span>
                   </FormItem>
                   <FormItem label="合计">
-                    <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span style="color: red;margin-left: 5px;">*气量</span> <br>
-                    <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*实际价</span>
-                    <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span style="color: red;margin-left: 5px;">*计划价</span>
+                    <Input v-model="formItem.input" placeholder="气量" style="width: 195px;"/><span
+                    style="color: red;margin-left: 5px;">*气量</span> <br>
+                    <Input v-model="formItem.input" placeholder="实际价" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*实际价</span>
+                    <Input v-model="formItem.input" placeholder="计划价" style="width: 195px;margin-top: 10px;"/><span
+                    style="color: red;margin-left: 5px;">*计划价</span>
                   </FormItem>
                 </div>
               </Form>
@@ -136,253 +143,261 @@
   export default {
     data () {
       return {
-        modal1:false,
-        modal2:false,
+        modal1: false,
+        modal2: false,
         formItem: {
           date: '',
-          input:'',
-          textarea:'',
-          select:''
+          input: '',
+          textarea: '',
+          select: ''
         },
 //        车号、车型、物品名称（轮胎、润滑油）、领料数量、领料规格、供货单位、品牌型号、规格、计量单位、单价、金额、附记、状态（采购、下派）
         columns11: [
           {
-            title: '使用单位：',
-            key: 'ch',
+            title: '公交二公司 2018年4月天然气汇总表',
             align: 'center',
-            width: 100,
             children: [
               {
-                title: '线路',
-                key: 'xl',
+                title: '使用单位：',
+                key: 'ch',
                 align: 'center',
                 width: 100,
+                children: [
+                  {
+                    title: '线路',
+                    key: 'xl',
+                    align: 'center',
+                    width: 100,
+                  },
+                  {
+                    title: '单位',
+                    key: 'dw',
+                    align: 'center',
+                    width: 100,
+                  },
+                  {
+                    title: '数量',
+                    key: 'sl',
+                    align: 'center',
+                    width: 100,
+                  },
+                ]
               },
               {
-                title: '单位',
-                key: 'dw',
-                align: 'center',
-                width: 100,
-              },
-              {
-                title: '数量',
-                key: 'sl',
-                align: 'center',
-                width: 100,
-              },
-            ]
-          },
-          {
-            title: '实际价格',
-            key: 'sjjg',
-            align: 'center',
-            width: 150,
-            children: [
-              {
-                title: '单价',
-                key: 'dj',
-                align: 'center',
-                width: 150,
-              },
-              {
-                title: '金额',
-                key: 'je',
+                title: '实际价格',
+                key: 'sjjg',
                 align: 'center',
                 width: 150,
+                children: [
+                  {
+                    title: '单价',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '金额',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
               },
-            ]
-          },
-          {
-            title: '计划价格',
-            key: 'jhjg',
-            align: 'center',
-            width: 150,
-            children: [
               {
-                title: '单价',
-                key: 'dj',
+                title: '计划价格',
+                key: 'jhjg',
                 align: 'center',
                 width: 150,
+                children: [
+                  {
+                    title: '单价',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '金额',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
               },
               {
-                title: '金额',
-                key: 'je',
+                title: '备注',
+                key: 'bz',
                 align: 'center',
                 width: 150,
-              },
-            ]
-          },
-          {
-            title: '备注',
-            key: 'bz',
-            align: 'center',
-            width: 150,
-          }, {
-            title: '操作',
-            key: 'zt',
-            align: 'center',
+              }, {
+                title: '操作',
+                key: 'zt',
+                align: 'center',
 //            fixed: 'right',
-            width: 220,
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.modal1 = true
-                    }
-                  }
-                }, '查看详情  /  修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      alert("删除成功")
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
+                width: 220,
+                render: (h, params) => {
+                  return h('div', [
+                    h('Button', {
+                      props: {
+                        type: 'primary',
+                        size: 'small'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      },
+                      on: {
+                        click: () => {
+                          this.modal1 = true
+                        }
+                      }
+                    }, '查看详情  /  修改'),
+                    h('Button', {
+                      props: {
+                        type: 'error',
+                        size: 'small'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      },
+                      on: {
+                        click: () => {
+                          alert("删除成功")
+                        }
+                      }
+                    }, '删除')
+                  ]);
+                }
+              }
+            ]
           }
         ],
         data10: [],
 
 
-
-
-
-
         columns12: [
           {
-            title: '二级单位',
-            key: 'ejdw',
+            title: '集团公司  2018年4月天然气月汇总表',
             align: 'center',
-            width: 100,
-          },
-          {
-            title: '中燃',
-            key: 'zr',
-            align: 'center',
-            width: 150,
-            children: [
+            children:[
               {
-                title: '气量',
-                key: 'dj',
+                title: '二级单位',
+                key: 'ejdw',
                 align: 'center',
-                width: 150,
+                width: 100,
               },
               {
-                title: '实际价',
-                key: 'je',
+                title: '中燃',
+                key: 'zr',
                 align: 'center',
                 width: 150,
-              },  {
-                title: '计划价',
-                key: 'je',
-                align: 'center',
-                width: 150,
+                children: [
+                  {
+                    title: '气量',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '实际价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  }, {
+                    title: '计划价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
               },
+              {
+                title: '汇通',
+                key: 'zr',
+                align: 'center',
+                width: 150,
+                children: [
+                  {
+                    title: '气量',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '实际价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  }, {
+                    title: '计划价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
+              },
+              {
+                title: '合计',
+                key: 'zr',
+                align: 'center',
+                width: 150,
+                children: [
+                  {
+                    title: '气量',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '实际价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  }, {
+                    title: '计划价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
+              }, {
+                title: '操作',
+                key: 'zt',
+                align: 'center',
+                fixed: 'right',
+                width: 220,
+                render: (h, params) => {
+                  return h('div', [
+                    h('Button', {
+                      props: {
+                        type: 'primary',
+                        size: 'small'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      },
+                      on: {
+                        click: () => {
+                          this.modal2 = true
+                        }
+                      }
+                    }, '查看详情  /  修改'),
+                    h('Button', {
+                      props: {
+                        type: 'error',
+                        size: 'small'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      },
+                      on: {
+                        click: () => {
+                          alert("删除成功")
+                        }
+                      }
+                    }, '删除')
+                  ]);
+                }
+              }
             ]
-          },
-          {
-            title: '汇通',
-            key: 'zr',
-            align: 'center',
-            width: 150,
-            children: [
-              {
-                title: '气量',
-                key: 'dj',
-                align: 'center',
-                width: 150,
-              },
-              {
-                title: '实际价',
-                key: 'je',
-                align: 'center',
-                width: 150,
-              },  {
-                title: '计划价',
-                key: 'je',
-                align: 'center',
-                width: 150,
-              },
-            ]
-          },
-          {
-            title: '合计',
-            key: 'zr',
-            align: 'center',
-            width: 150,
-            children: [
-              {
-                title: '气量',
-                key: 'dj',
-                align: 'center',
-                width: 150,
-              },
-              {
-                title: '实际价',
-                key: 'je',
-                align: 'center',
-                width: 150,
-              },  {
-                title: '计划价',
-                key: 'je',
-                align: 'center',
-                width: 150,
-              },
-            ]
-          }, {
-            title: '操作',
-            key: 'zt',
-            align: 'center',
-            fixed: 'right',
-            width: 220,
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.modal2 = true
-                    }
-                  }
-                }, '查看详情  /  修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      alert("删除成功")
-                    }
-                  }
-                }, '删除')
-              ]);
-            }
           }
         ],
         data12: []
@@ -418,13 +433,10 @@
       this.data10 = data;
 
 
-
-
-
       const data1 = [];
       for (let i = 1; i < 11; i++) {
         data1.push({
-          ejdw:'公交'+i+'公司',
+          ejdw: '公交' + i + '公司',
           xl: i + '2路',
           dw: '立方米',
           sl: i * 1254 + '22',

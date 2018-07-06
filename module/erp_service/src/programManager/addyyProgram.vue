@@ -3,7 +3,7 @@
     <Form :model="formItem" :label-width="90">
       <div style="display: flex;flex-wrap: wrap">
         <FormItem  label="年份">
-          <DatePicker type="year" placeholder="选择年份" v-model="formItem.date"></DatePicker>
+          <DatePicker type="year" placeholder="选择年份" v-model="formItem.date" style="width: 195px;"></DatePicker>
         </FormItem>
         <FormItem  label="路别">
           <Select v-model="formItem.select" style="width: 195px;">

@@ -167,19 +167,19 @@
                     title: '线路',
                     key: 'xl',
                     align: 'center',
-                    width: 100,
+                    width: 150,
                   },
                   {
                     title: '单位',
                     key: 'dw',
                     align: 'center',
-                    width: 100,
+                    width: 150,
                   },
                   {
                     title: '数量',
                     key: 'sl',
                     align: 'center',
-                    width: 100,
+                    width: 150,
                   },
                 ]
               },
@@ -193,13 +193,13 @@
                     title: '单价',
                     key: 'dj',
                     align: 'center',
-                    width: 150,
+                    width:200,
                   },
                   {
                     title: '金额',
                     key: 'je',
                     align: 'center',
-                    width: 150,
+                    width: 200,
                   },
                 ]
               },
@@ -213,13 +213,13 @@
                     title: '单价',
                     key: 'dj',
                     align: 'center',
-                    width: 150,
+                    width: 200,
                   },
                   {
                     title: '金额',
                     key: 'je',
                     align: 'center',
-                    width: 150,
+                    width: 200,
                   },
                 ]
               },
@@ -227,47 +227,48 @@
                 title: '备注',
                 key: 'bz',
                 align: 'center',
-                width: 150,
-              }, {
-                title: '操作',
-                key: 'zt',
-                align: 'center',
-//            fixed: 'right',
-                width: 220,
-                render: (h, params) => {
-                  return h('div', [
-                    h('Button', {
-                      props: {
-                        type: 'primary',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                          this.modal1 = true
-                        }
-                      }
-                    }, '查看详情  /  修改'),
-                    h('Button', {
-                      props: {
-                        type: 'error',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                          alert("删除成功")
-                        }
-                      }
-                    }, '删除')
-                  ]);
-                }
+                width: 200,
               }
             ]
+          },
+          {
+            title: '操作',
+            key: 'zt',
+            align: 'center',
+            fixed: 'right',
+            width: 220,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.modal1 = true
+                    }
+                  }
+                }, '查看详情  /  修改'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      alert("删除成功")
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
           }
         ],
         data10: [],
@@ -358,46 +359,32 @@
                     width: 150,
                   },
                 ]
-              }, {
-                title: '操作',
-                key: 'zt',
-                align: 'center',
-                fixed: 'right',
-                width: 220,
-                render: (h, params) => {
-                  return h('div', [
-                    h('Button', {
-                      props: {
-                        type: 'primary',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                          this.modal2 = true
-                        }
-                      }
-                    }, '查看详情  /  修改'),
-                    h('Button', {
-                      props: {
-                        type: 'error',
-                        size: 'small'
-                      },
-                      style: {
-                        marginRight: '5px'
-                      },
-                      on: {
-                        click: () => {
-                          alert("删除成功")
-                        }
-                      }
-                    }, '删除')
-                  ]);
-                }
               }
             ]
+          },
+          {
+            title: '操作',
+            align: 'center',
+            fixed: 'right',
+            width: 220,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.modal2 = true
+                    }
+                  }
+                }, '查看详情  /  修改'),
+              ]);
+            }
           }
         ],
         data12: []

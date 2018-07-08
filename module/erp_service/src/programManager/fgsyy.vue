@@ -57,6 +57,12 @@
             fixed: 'left',
           },
           {
+            title: '路别',
+            key: 'lb',
+            width: 100,
+            align: 'center',
+          },
+          {
             title: '路线长度',
             key: 'age',
             align: 'center',
@@ -246,6 +252,7 @@
       const data = [];
       for (let i = 0; i < 10; i++) {
         data.push({
+          lb:'1'+i+'2',
           key: i,
           name: '2018年',
           age: i + 1,

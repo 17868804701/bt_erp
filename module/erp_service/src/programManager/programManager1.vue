@@ -31,12 +31,10 @@
             <Modal
               v-model="addyyProgram"
               title="新增计划"
-              @on-ok="ok"
               width="80%"
               :mask-closable="false"
               :scrollable="true"
-              style="height: auto"
-              @on-cancel="cancel">
+              style="height: auto">
               <addyyProgram></addyyProgram>
             </Modal>
             <!--时间（年月日）、公司、配车数（包括班车、备用）、日车次、路线长度、出入库和加气台数、出入库说明-->
@@ -44,12 +42,11 @@
             <Modal
               v-model="editZd"
               title="修改部分字段"
-              @on-ok="ok"
               width="50%"
               :mask-closable="false"
               :scrollable="true"
               style="height: auto"
-              @on-cancel="cancel">
+            >
               <Form :model="formItem" :label-width="90">
                 <div style="display: flex;flex-wrap: wrap">
                   <FormItem label="年份">
@@ -121,6 +118,13 @@
           {
             title: '年份',
             key: 'name',
+            align: 'center',
+            width: 100,
+//            fixed: 'left',
+          },
+          {
+            title: '路别',
+            key: 'lb',
             align: 'center',
             width: 100,
 //            fixed: 'left',
@@ -342,6 +346,7 @@
         data.push({
           gs:'公交'+i+'公司',
           key: i,
+          lb:'1'+i+'2',
           name: '2018年',
           age: i + 1,
           street: 'Lake Park',

@@ -12,10 +12,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -30,10 +28,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -48,10 +44,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -66,10 +60,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -84,10 +76,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -102,10 +92,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -120,10 +108,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -138,10 +124,8 @@
             <Form :model="formItem" :label-width="80">
               <Row>
                 <Col span="24">
-                <FormItem label="按月查询" style="margin: 0;">
-                  <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                  <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+                <FormItem label="按季度查询" style="margin: 0;">
+                  <QuarterQuery/>
                 </FormItem>
                 </Col>
               </Row>
@@ -159,9 +143,11 @@
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
   import PATableData from './PATableData.js';
+  import QuarterQuery from '../components/QuarterQuery.vue';
   export default {
     components: {
       canEditTable,
+      QuarterQuery
     },
     data () {
       return {

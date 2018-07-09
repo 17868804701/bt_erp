@@ -4,7 +4,7 @@
   <div style="padding: 20px; height: 100%;">
     <h2>
       事故详情
-      <router-link to="/">
+      <router-link to="/ARList">
         <Button type="primary" size="small" style="margin-right: 10px;"><<返回列表页</Button>
       </router-link>
     </h2>

@@ -126,7 +126,24 @@
               <a href="http://localhost:8081/bterp/#/ProductAnalyse" target="erp_main">
                 <MenuItem name="5-4">安全生产情况分析</MenuItem>
               </a>
-
+            </Submenu>
+            <Submenu name="6">
+              <template slot="title">
+                <Icon type="ios-analytics"></Icon>
+                维修养护
+              </template>
+              <a href="http://localhost:8081/bterp/#/MMList" target="erp_main">
+                <MenuItem name="6-1">保养管理</MenuItem>
+              </a>
+              <a href="http://localhost:8081/bterp/#/GPCheckList" target="erp_main">
+                <MenuItem name="6-2">钢瓶检测</MenuItem>
+              </a>
+              <a href="http://localhost:8081/bterp/#/DeviceList" target="erp_main">
+                <MenuItem name="6-3">设备保养记录</MenuItem>
+              </a>
+              <a href="http://localhost:8081/bterp/#/ReportList" target="erp_main">
+                <MenuItem name="6-4">报表管理</MenuItem>
+              </a>
             </Submenu>
           </Menu>
         </Sider>

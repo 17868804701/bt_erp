@@ -27,6 +27,14 @@ import gasManger from '../energyInformationManger/gasManger.vue'
 
 // 企业管理
 import lhlctz from '../enterpriseManger/lhlctz.vue'
+
+// 维修养护管理
+import MMList from '../maintenanceMaintenanceManger/MMList.vue'
+import GPCheckList from '../maintenanceMaintenanceManger/GPCheckList.vue'
+import DeviceList from '../maintenanceMaintenanceManger/DeviceList.vue'
+import ReportList from '../maintenanceMaintenanceManger/ReportList.vue'
+
+
 Vue.use(Router);
 
 export default[
@@ -102,8 +110,25 @@ export default[
   {
     path: '/gasManger',
     component: gasManger
-  } ,{
+  } ,
+  {
     path: '/lhlctz',
     component: lhlctz
+  },
+  {
+    path: '/MMList',
+    component: MMList
+  },
+  {
+    path: '/GPCheckList',
+    component: GPCheckList
+  },
+  {
+    path: '/DeviceList',
+    component: DeviceList
+  },
+  {
+    path: '/ReportList',
+    component: ReportList
   }
 ]

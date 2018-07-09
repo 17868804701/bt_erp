@@ -29,10 +29,10 @@ import gasManger from '../energyInformationManger/gasManger.vue'
 import lhlctz from '../enterpriseManger/lhlctz.vue'
 
 // 维修养护管理
-import MMList from '../maintenanceMaintenanceManger/MMList.vue'
-import GPCheckList from '../maintenanceMaintenanceManger/GPCheckList.vue'
-import DeviceList from '../maintenanceMaintenanceManger/DeviceList.vue'
-import ReportList from '../maintenanceMaintenanceManger/ReportList.vue'
+import MMList from '../maintenanceMaintenanceManger/views/MMList.vue'
+import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
+import DeviceList from '../maintenanceMaintenanceManger/views/DeviceList.vue'
+import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
 
 
 Vue.use(Router);

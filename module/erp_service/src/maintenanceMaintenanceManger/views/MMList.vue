@@ -1,50 +1,31 @@
 <!--保养管理-->
 
 <template>
-  <div style="padding: 20px; height: 100%;">
-    <Row type="flex" justify="space-between" style="border-bottom: 1px solid #e9eaec; padding-bottom: 5px;">
-      <h2>
-        保养管理
-      </h2>
-    </Row>
-    <!--<Card style="width:100%; margin-top: 20px;">-->
-    <!--<Form v-model="searchOptions">-->
-    <!--<Row type="flex" align="middle" >-->
-    <!--<Col span="6">-->
-    <!--<FormItem label="搜索查询" style="margin: 0px;" v-model="searchOptions.xmorcarNo">-->
-    <!--<Input placeholder="请输入牌照或姓名查询..." clearable style="width: 180px"></Input>-->
-    <!--</FormItem>-->
-    <!--</Col>-->
-    <!--<Col span="6">-->
-    <!--<FormItem label="立案时间" style="margin: 0px;"  v-model="searchOptions.lasj">-->
-    <!--<DatePicker style="width: 180px;" type="date"-->
-    <!--placeholder="请选择立案时间"></DatePicker>-->
-    <!--</FormItem>-->
-    <!--</Col>-->
-    <!--<Col span="6">-->
-    <!--<Button type="primary" @click="search">-->
-    <!--<Icon type="search"></Icon>-->
-    <!--搜索-->
-    <!--</Button>-->
-    <!--</Col>-->
-    <!--<Col span="6">-->
-    <!--<FormItem style="margin: 0px;display: flex;justify-content: flex-end">-->
-    <!--<Button  type="primary" @click="accidentModal = true">-->
-    <!--<Icon type="plus-round"></Icon>-->
-    <!--新增-->
-    <!--</Button>-->
-    <!--<Button  type="primary">-->
-    <!--<Icon type="plus-round"></Icon>-->
-    <!--导出Excel-->
-    <!--</Button>-->
-    <!--</FormItem>-->
-    <!--</Col>-->
-
-    <!--</Row>-->
-    <!--</Form>-->
-    <!--</Card>-->
-    <!--表格-->
-    <Table style="margin-top: 10px;" height="575px" :data="tableData" border :columns="initTableColumns" border></Table>
+  <div>
+    <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
+      <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;margin-bottom: 15px;">
+        <h2 style="margin-left: 15px;">
+          车辆保养
+        </h2>
+      </div>
+      <Card>
+        <Form :model="formItem">
+          <Row>
+            <Col span="24">
+            <FormItem label="按进厂时间查询" style="margin: 0;">
+              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
+                          v-model="formItem.date"></DatePicker>
+              <Button type="primary" icon="ios-search">搜索</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+              <Button type="primary" icon="plus" style="float: right;margin-right: 10px">新增</Button>
+            </FormItem>
+            </Col>
+          </Row>
+        </Form>
+      </Card>
+      <Table style="margin-top: 10px;" height="521px" :data="tableData" border :columns="columns" border></Table>
+      <Page :total="100" show-total style="margin-top: 10px;"></Page>
+    </div>
   </div>
 </template>
 <script>
@@ -53,94 +34,96 @@
     },
     data () {
       return {
-        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案', '估损', '责任','备注'],
-        columnsCode: ['dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','la','gs','zr','bz'],
+        columns: [
+          {
+            title: '登记编号',
+            align: 'center',
+            key: 'djbh'
+          },
+          {
+            title: '车辆自编号',
+            align: 'center',
+            key: 'clzbh'
+          },
+          {
+            title: '车牌号',
+            align: 'center',
+            key: 'cph'
+          },
+          {
+            title: '线路',
+            align: 'center',
+            key: 'xl'
+          },
+          {
+            title: '分公司',
+            align: 'center',
+            key: 'fgs'
+          },
+          {
+            title: '进厂时间',
+            align: 'center',
+            key: 'jcsj'
+          },
+          {
+            title: '送修人',
+            align: 'center',
+            key: 'sxr'
+          },
+          {
+            title: '检验员',
+            align: 'center',
+            key: 'jyy'
+          },
+          {
+            title: '保养类别',
+            align: 'center',
+            key: 'bylb'
+          },
+          {
+            title: '操作',
+            key: 'action',
+            align: 'center',
+            fixed: 'right',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+
+                    }
+                  }
+                }, '查看'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
+          },
+        ],
         tableData:this.mockTableData(),
-        searchOptions: {
-          xmorcarNo: '',
-          lasj: '',
+        formItem: {
+          date: '',
         },
       }
     },
     computed: {
-      initTableColumns() {
-        let coulumns = [
-          {
-            title: '牌照',
-            key: 'pz',
-            width: 150,
-          },
-        ];
-        for (let i = 0; i < this.columnsTitle.length; i++) {
-          coulumns.push({
-            title: this.columnsTitle[i],
-            key: this.columnsCode[i],
-            width: 120,
-            sortable: true
-          });
-        }
 
-        let newColumns = [
-          {
-            title: '集团公司立按事故表',
-            align: 'center',
-            children: coulumns,
-          }
-        ];
-
-        newColumns.push({
-          title: '操作',
-          key: 'action',
-          width: 250,
-          fixed: 'right',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '20px'
-                },
-                on: {
-                  click: () => {
-                    this.showDetail(params.index)
-                  }
-                }
-              }, '查看'),
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '20px'
-                },
-                on: {
-                  click: () => {
-                    this.lossModal = true;
-                  }
-                }
-              }, '追加经损'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.delete(params.index)
-                  }
-                }
-              }, '删除'),
-            ]);
-          }
-        });
-
-        return newColumns;
-      },
     },
     methods: {
 
@@ -151,22 +134,15 @@
         }
         for (let i = 0; i < 10; i++) {
           data.push({
-            dw: '单位'+ i,
-            pz: '蒙A123456',
-            zbh: getNum(),
-            lb: '706路',
-            lasj: '2018-09-10',
-            dd: getNum(),
-            jsyxm: '大黄',
-            bar: '大黄',
-            sgsx: '交强、车损、车内',
-            sgxz: '重大事故',
-            larq: getNum(),
-            kcr: '阿俊',
-            la: '立案',
-            gs: '20万元',
-            zr: getNum(),
-            bz: getNum(),
+            djbh: '单位'+ i,
+            clzbh: 'XS332',
+            cph: '蒙A123456',
+            xl: '706路',
+            fgs: '公交'+ i + '公司',
+            jcsj: '2018-09-10',
+            sxr: '大黄',
+            jyy: '大黄',
+            bylb: '三养',
           })
         }
         return data;

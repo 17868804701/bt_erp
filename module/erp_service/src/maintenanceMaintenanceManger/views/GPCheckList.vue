@@ -7,44 +7,6 @@
         钢瓶检测
       </h2>
     </Row>
-    <!--<Card style="width:100%; margin-top: 20px;">-->
-    <!--<Form v-model="searchOptions">-->
-    <!--<Row type="flex" align="middle" >-->
-    <!--<Col span="6">-->
-    <!--<FormItem label="搜索查询" style="margin: 0px;" v-model="searchOptions.xmorcarNo">-->
-    <!--<Input placeholder="请输入牌照或姓名查询..." clearable style="width: 180px"></Input>-->
-    <!--</FormItem>-->
-    <!--</Col>-->
-    <!--<Col span="6">-->
-    <!--<FormItem label="立案时间" style="margin: 0px;"  v-model="searchOptions.lasj">-->
-    <!--<DatePicker style="width: 180px;" type="date"-->
-    <!--placeholder="请选择立案时间"></DatePicker>-->
-    <!--</FormItem>-->
-    <!--</Col>-->
-    <!--<Col span="6">-->
-    <!--<Button type="primary" @click="search">-->
-    <!--<Icon type="search"></Icon>-->
-    <!--搜索-->
-    <!--</Button>-->
-    <!--</Col>-->
-    <!--<Col span="6">-->
-    <!--<FormItem style="margin: 0px;display: flex;justify-content: flex-end">-->
-    <!--<Button  type="primary" @click="accidentModal = true">-->
-    <!--<Icon type="plus-round"></Icon>-->
-    <!--新增-->
-    <!--</Button>-->
-    <!--<Button  type="primary">-->
-    <!--<Icon type="plus-round"></Icon>-->
-    <!--导出Excel-->
-    <!--</Button>-->
-    <!--</FormItem>-->
-    <!--</Col>-->
-
-    <!--</Row>-->
-    <!--</Form>-->
-    <!--</Card>-->
-    <!--表格-->
-    <Table style="margin-top: 10px;" height="575px" :data="tableData" border :columns="initTableColumns" border></Table>
   </div>
 </template>
 <script>

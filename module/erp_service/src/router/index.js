@@ -27,6 +27,10 @@ import gasManger from '../energyInformationManger/gasManger.vue'
 
 // 企业管理
 import lhlctz from '../enterpriseManger/lhlctz.vue'
+import ccsrtz from '../enterpriseManger/ccsrtz.vue'
+import yyscyl from '../enterpriseManger/yyscyl.vue'
+import xlxyhjjhdfx from '../enterpriseManger/xlxyhjjhdfx.vue'
+import jjzbwcqk from '../enterpriseManger/jjzbwcqk.vue'
 
 // 维修养护管理
 import MMList from '../maintenanceMaintenanceManger/views/MMList.vue'
@@ -130,5 +134,19 @@ export default[
   {
     path: '/ReportList',
     component: ReportList
+  },
+  {
+    path: '/ccsrtz',
+    component: ccsrtz
+  },
+  {
+    path: '/yyscyl',
+    component: yyscyl
+  },{
+    path: '/xlxyhjjhdfx',
+    component: xlxyhjjhdfx
+  },{
+    path: '/jjzbwcqk',
+    component: jjzbwcqk
   }
 ]

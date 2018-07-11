@@ -30,9 +30,9 @@
 </style>
 <template>
   <div class="container">
-    <h2>能耗里程台账</h2>
+    <h2>车次线路收入台账</h2>
     <Tabs value="name1">
-      <TabPane label="集团公司能耗里程台账" name="name1">
+      <TabPane label="集团公司车次线路收入台账" name="name1">
         <Card>
           <Form :model="formItem" :label-width="80">
             <div class="search">
@@ -62,7 +62,7 @@
             </div>
           </Form>
         </Card>
-        <h4 style="margin-top: 10px;">指标名称：线路耗能、能耗（XX公司）</h4>
+        <h4 style="margin-top: 10px;">指标名称：线路收入、收入（XX公司）</h4>
         <Table :columns="columns11" :data="data10" border height="560" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
       <TabPane label="分公司车次线路收入台账" name="name2">
@@ -96,7 +96,7 @@
             </div>
           </Form>
         </Card>
-        <h4 style="margin-top: 10px;">指标名称：线路耗能、能耗（XX公司）</h4>
+        <h4 style="margin-top: 10px;">指标名称：线路收入、收入（XX公司）</h4>
         <Table :columns="columns12" :data="data12" border height="560" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
     </Tabs>
@@ -126,18 +126,91 @@
             align: 'center',
           },
           {
-            title: '项目',
+            title: '客运量',
             align: 'center',
             children: [
               {
-                title: '本年行驶里程',
-                key: 'bnxslc',
+                title: '本年普票',
+                key: 'bnpp',
                 width:150,
                 align: 'center',
               },
               {
-                title: '去年行驶里程',
-                key: 'qnxslc',
+                title: '本年IC卡',
+                key: 'bnick',
+                width:150,
+                align: 'center',
+              }, {
+                title: '本年小计',
+                key: 'bnxj',
+                width:150,
+                align: 'center',
+              }, {
+                title: '去年',
+                key: 'qn',
+                width:150,
+                align: 'center',
+              }, {
+                title: '较去年节超',
+                key: 'jqnjc',
+                width:150,
+                align: 'center',
+              }
+            ]
+          },
+          {
+            title: '普票收入',
+            align: 'center',
+            children: [
+              {
+                title: '本年普票',
+                key: 'bnpp1',
+                width:150,
+                align: 'center',
+              },
+              {
+                title: '本年IC卡收入优惠后金额',
+                key: 'bnick1',
+                width:150,
+                align: 'center',
+              }, {
+                title: '本年IC卡补贴',
+                key: 'bnickbt',
+                width:150,
+                align: 'center',
+              }, {
+                title: '本年小计',
+                key: 'bnxj',
+                width:150,
+                align: 'center',
+              }, {
+                title: '去年',
+                key: 'qn',
+                width:150,
+                align: 'center',
+              }, {
+                title: '较去年节超',
+                key: 'jqnjc',
+                width:150,
+                align: 'center',
+              }
+            ]
+          },
+
+
+          {
+            title: '行驶车次',
+            align: 'center',
+            children: [
+              {
+                title: '本年',
+                key: 'bn',
+                width:150,
+                align: 'center',
+              },
+              {
+                title: '去年',
+                key: 'qn',
                 width:150,
                 align: 'center',
               }, {
@@ -145,44 +218,11 @@
                 key: 'jc',
                 width:150,
                 align: 'center',
-              }, {
-                title: '本年实耗天然气',
-                key: 'bnshtrq',
-                width:150,
-                align: 'center',
-              }, {
-                title: '去年实耗天然气',
-                key: 'qnshtrq',
-                width:150,
-                align: 'center',
-              }, {
-                title: '公司本年定额',
-                key: 'gsbnde',
-                width:150,
-                align: 'center',
-              }, {
-                title: '公司去年定额',
-                key: 'gsqnde',
-                width:150,
-                align: 'center',
-              }, {
-                title: '较公司定额本年',
-                key: 'jgsdebn',
-                width:150,
-                align: 'center',
-              }, {
-                title: '较公司定额去年',
-                key: 'jgsdeqn',
-                width:150,
-                align: 'center',
-              }, {
-                title: '百公里气耗',
-                key: 'bglqh',
-                width:150,
-                align: 'center',
-              },
+              }
             ]
           },
+
+
           {
             title: '月别',
             align: 'center',
@@ -308,9 +348,6 @@
         data10: [],
 
 
-
-
-
         columns12: [
           {
             title: '年份',
@@ -326,18 +363,91 @@
             align: 'center',
           },
           {
-            title: '项目',
+            title: '客运量',
             align: 'center',
             children: [
               {
-                title: '本年行驶里程',
-                key: 'bnxslc',
+                title: '本年普票',
+                key: 'bnpp',
                 width:150,
                 align: 'center',
               },
               {
-                title: '去年行驶里程',
-                key: 'qnxslc',
+                title: '本年IC卡',
+                key: 'bnick',
+                width:150,
+                align: 'center',
+              }, {
+                title: '本年小计',
+                key: 'bnxj',
+                width:150,
+                align: 'center',
+              }, {
+                title: '去年',
+                key: 'qn',
+                width:150,
+                align: 'center',
+              }, {
+                title: '较去年节超',
+                key: 'jqnjc',
+                width:150,
+                align: 'center',
+              }
+            ]
+          },
+          {
+            title: '普票收入',
+            align: 'center',
+            children: [
+              {
+                title: '本年普票',
+                key: 'bnpp1',
+                width:150,
+                align: 'center',
+              },
+              {
+                title: '本年IC卡收入优惠后金额',
+                key: 'bnick1',
+                width:150,
+                align: 'center',
+              }, {
+                title: '本年IC卡补贴',
+                key: 'bnickbt',
+                width:150,
+                align: 'center',
+              }, {
+                title: '本年小计',
+                key: 'bnxj',
+                width:150,
+                align: 'center',
+              }, {
+                title: '去年',
+                key: 'qn',
+                width:150,
+                align: 'center',
+              }, {
+                title: '较去年节超',
+                key: 'jqnjc',
+                width:150,
+                align: 'center',
+              }
+            ]
+          },
+
+
+          {
+            title: '行驶车次',
+            align: 'center',
+            children: [
+              {
+                title: '本年',
+                key: 'bn',
+                width:150,
+                align: 'center',
+              },
+              {
+                title: '去年',
+                key: 'qn',
                 width:150,
                 align: 'center',
               }, {
@@ -345,44 +455,11 @@
                 key: 'jc',
                 width:150,
                 align: 'center',
-              }, {
-                title: '本年实耗天然气',
-                key: 'bnshtrq',
-                width:150,
-                align: 'center',
-              }, {
-                title: '去年实耗天然气',
-                key: 'qnshtrq',
-                width:150,
-                align: 'center',
-              }, {
-                title: '公司本年定额',
-                key: 'gsbnde',
-                width:150,
-                align: 'center',
-              }, {
-                title: '公司去年定额',
-                key: 'gsqnde',
-                width:150,
-                align: 'center',
-              }, {
-                title: '较公司定额本年',
-                key: 'jgsdebn',
-                width:150,
-                align: 'center',
-              }, {
-                title: '较公司定额去年',
-                key: 'jgsdeqn',
-                width:150,
-                align: 'center',
-              }, {
-                title: '百公里气耗',
-                key: 'bglqh',
-                width:150,
-                align: 'center',
-              },
+              }
             ]
           },
+
+
           {
             title: '月别',
             align: 'center',
@@ -505,26 +582,25 @@
             ]
           }
         ],
-        data12:[]
+        data12: []
       }
     },
     methods: {},
     mounted () {
       const data = [];
-      for (let i = 0; i <10; i++) {
+      for (let i = 0; i < 10; i++) {
         data.push({
           key: i,
           nf:'201'+i,
           jldw:'立方米',
-          bnxslc:'15551651',
-          qnxslc:'115456',
-          jc:'145',
-          bnshtrq:'55481',
-          qnshtrq:'155481',
-          jgsdebn:'15188',
-          jgsdeqn:'12188',
-          gsbnde:'15188',
-          gsqnde:'15188',
+          bnpp:'1451',
+          bnick:'15645',
+          bnxj:'115645',
+          qn:'315645',
+          jqnjc:'5645',
+          bnpp1:'645',
+          bnick1:'7784',
+          bnickbt:'55564',
           name: 'John Brown',
           age: i + 1,
           street: 'Lake Park',
@@ -538,22 +614,20 @@
       this.data10 = data;
 
 
-
       const data2 = [];
-      for (let i = 0; i <10; i++) {
+      for (let i = 0; i < 10; i++) {
         data2.push({
           key: i,
           nf:'201'+i,
           jldw:'立方米',
-          bnxslc:'15551651',
-          qnxslc:'115456',
-          jc:'145',
-          bnshtrq:'55481',
-          qnshtrq:'155481',
-          jgsdebn:'15188',
-          jgsdeqn:'12188',
-          gsbnde:'15188',
-          gsqnde:'15188',
+          bnpp:'1451',
+          bnick:'15645',
+          bnxj:'115645',
+          qn:'315645',
+          jqnjc:'5645',
+          bnpp1:'645',
+          bnick1:'7784',
+          bnickbt:'55564',
           name: 'John Brown',
           cname: 'SoftLake Co',
           gender: 'M',

@@ -97,7 +97,9 @@
                   },
                   on: {
                     click: () => {
-
+                      this.$router.push({
+                        path: '/AddMM'
+                      })
                     }
                   }
                 }, '查看'),
@@ -134,7 +136,7 @@
         }
         for (let i = 0; i < 10; i++) {
           data.push({
-            djbh: '单位'+ i,
+            djbh: '登记编号'+ i,
             clzbh: 'XS332',
             cph: '蒙A123456',
             xl: '706路',

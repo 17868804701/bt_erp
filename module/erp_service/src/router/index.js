@@ -37,6 +37,7 @@ import MMList from '../maintenanceMaintenanceManger/views/MMList.vue'
 import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
 import DeviceList from '../maintenanceMaintenanceManger/views/DeviceList.vue'
 import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
+import AddMM from '../maintenanceMaintenanceManger/views/AddMM.vue'
 
 // 服务管理
 import kfxxList from '../serviceManger/kfxxList.vue'
@@ -154,6 +155,10 @@ export default[
   },{
     path: '/jjzbwcqk',
     component: jjzbwcqk
+  },
+  {
+    path: '/AddMM',
+    component: AddMM
   },{
     path: '/kfxxList',
     component: kfxxList

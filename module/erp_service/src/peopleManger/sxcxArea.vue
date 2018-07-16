@@ -58,13 +58,7 @@
                 </Button>
               </Modal>
               </Col>
-              <Col span="7">
-              <FormItem label="按岗位查询" style="margin-left: -50px;">
-                <Select v-model="jccxFormItem.gw_select" style="width:180px" @on-change="sxResultChange">
-                  <Option v-for="item in postList" :value="item" :key="item">{{ item }}</Option>
-                </Select>
-              </FormItem>
-              </Col>
+
               <Col span="7">
               <FormItem label="按岗位状态查询" style="margin-left: -50px;">
                 <Select v-model="jccxFormItem.gw_select1" style="width:180px" @on-change="sxResultChange">
@@ -88,6 +82,11 @@
               </FormItem>
               </Col>
             </Row>
+            <FormItem label="按岗位查询" style="margin-left: -50px;">
+              <CheckboxGroup v-model="jccxFormItem.gw_select" @on-change="sxResultChange">
+                <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
+              </CheckboxGroup>
+            </FormItem>
             <FormItem label="按单位查询" style="margin-left: -50px;">
               <CheckboxGroup v-model="jccxFormItem.dw_radio" @on-change="sxResultChange">
                 <Checkbox label="集团公司"></Checkbox>

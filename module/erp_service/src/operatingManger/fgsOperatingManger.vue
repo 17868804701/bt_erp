@@ -1,3 +1,33 @@
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .container {
+    padding: 10px;
+  }
+
+  .container h2 {
+    margin-left: 15px;
+  }
+
+  .search_btn {
+    margin-left: 10px;
+  }
+
+  .text_width {
+    width: 195px;
+  }
+
+  .search {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -30px;
+    align-items: center;
+  }
+
+  .btn {
+    position: absolute;
+    right: 20px;
+  }
+</style>
 <template>
   <div>
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
@@ -6,20 +36,25 @@
           分公司行车月报表
         </h2>
       </div>
-      <Card>
+      <Card style="padding-left: 15px;">
         <Form :model="formItem" :label-width="80">
-          <Row>
-            <Col span="24">
-            <FormItem label="按年份查询" style="margin: 0;">
-              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
-                          v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search">搜索</Button>
-              <Button type="primary" icon="android-download"
-                      style="float: right;margin-right: 10px">导出Excel
-              </Button>
+          <div class="search">
+            <FormItem label="选择年份" style="margin: 0">
+              <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                          class="text_width"></DatePicker>
             </FormItem>
-            </Col>
-          </Row>
+            <FormItem label="选择公司" style="margin: 0">
+              <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                <Option value="beijing">公交一公司</Option>
+                <Option value="shanghai">公交二公司</Option>
+                <Option value="shenzhen">公交三公司</Option>
+              </Select>
+            </FormItem>
+            <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+            <div class="btn">
+              <Button type="primary" icon="android-download">导出Excel</Button>
+            </div>
+          </div>
         </Form>
       </Card>
       <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
@@ -38,6 +73,12 @@
           {
             title: '路别',
             key: 'lubie',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '单位',
+            key: 'danwei',
             align: 'center',
             width: 100,
           },
@@ -196,6 +237,7 @@
           gzcr: i * 10521 + 156144,
           xccs: i * 4521 + 156144,
           key: i,
+          danwei:'公交'+i+'公司',
           name: 'John Brown',
           age: i + 1,
           street: 'Lake Park',

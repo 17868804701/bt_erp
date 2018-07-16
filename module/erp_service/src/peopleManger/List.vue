@@ -71,7 +71,7 @@
         tableData2: this.mockTableData2(),
         tableColumns2: [],
 //        tableColumnsChecked: ['曾用名', '性别', '民族', '出生年月', '工号', '统计', '身份证号', '保险档号', '公积金档号', '公积金状态', '服兵役', '工作时间', '退休时间', '单位', '部门', '学历', '毕业院校', '所学专业', '工种', '职务', '工作证号', '合同自起', '合同止','备注', '路队', '工作类型', '备用字段1', '备用字段2', '备用字段3','备用字段4','备用字段5'],
-        tableColumnsChecked: ['show', 'weak', 'signin', 'click', 'active', 'day7', 'day30', 'tomorrow', 'day', 'week', 'month', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'month13', 'month14', 'month15', 'month16', 'month17', 'month18','month19','month20','cz'],
+        tableColumnsChecked: ['show', 'gwzt','weak', 'signin', 'click', 'active', 'day7', 'day30', 'tomorrow', 'day', 'week', 'month', 'month1', 'month2', 'month3', 'month4', 'month5', 'month6', 'month7', 'month8', 'month9', 'month10', 'month11', 'month12', 'month13', 'month14', 'month15', 'month16', 'month17', 'month18','month19','month20','cz'],
         modal2: false,
         tabValue: 'name1'
       }
@@ -98,6 +98,7 @@
             tomorrow: getNum(),
             day: getNum(),
             week: getNum(),
+            gwzt: '在职',
             month: getNum(),
             month1: getNum(),
             month2: getNum(),
@@ -284,6 +285,12 @@
             width: 150,
             sortable: true
           },
+          gwzt: {
+            title: '岗位状态',
+            key: 'gwzt',
+            width: 150,
+            sortable: true
+          },
           month14: {
             title: '备用字段1',
             key: 'month14',
@@ -329,13 +336,14 @@
           cz: {
             title: '操作',
             key: 'month20',
+            align:'center',
             fixed: 'right',
-            width: 150,
+            width: 200,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
                   props: {
-                    type: 'text',
+                    type: 'primary',
                     size: 'small'
                   },
                   on: {
@@ -345,7 +353,21 @@
                       })
                     }
                   }
-                }, '查看详情')
+                }, '详情'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginLeft: '5px'
+                  },
+                  on: {
+                    click: () => {
+                     alert("删除成功")
+                    }
+                  }
+                }, '删除')
               ]);
             }
           }

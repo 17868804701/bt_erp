@@ -38,6 +38,12 @@ import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
 import DeviceList from '../maintenanceMaintenanceManger/views/DeviceList.vue'
 import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
 
+// 服务管理
+import kfxxList from '../serviceManger/kfxxList.vue'
+import addKfxx from '../serviceManger/addKfxx.vue'
+import zrxts from '../serviceManger/zrxts.vue'
+import kfclqktj from '../serviceManger/kfclqktj.vue'
+import xjpj from '../serviceManger/xjpj.vue'
 
 Vue.use(Router);
 
@@ -148,5 +154,20 @@ export default[
   },{
     path: '/jjzbwcqk',
     component: jjzbwcqk
+  },{
+    path: '/kfxxList',
+    component: kfxxList
+  },{
+    path: '/addKfxx',
+    component: addKfxx
+  },{
+    path: '/zrxts',
+    component: zrxts
+  },{
+    path: '/kfclqktj',
+    component: kfclqktj
+  },{
+    path: '/xjpj',
+    component: xjpj
   }
 ]

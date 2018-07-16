@@ -33,7 +33,7 @@
     <h2>能耗里程台账</h2>
     <Tabs value="name1">
       <TabPane label="集团公司能耗里程台账" name="name1">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <!--<FormItem label="备用" style="margin: 0">-->
@@ -67,7 +67,7 @@
       </TabPane>
       <TabPane label="分公司车次线路收入台账" name="name2">
 
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <!--<FormItem label="备用" style="margin: 0">-->

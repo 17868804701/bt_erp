@@ -33,7 +33,7 @@
     <h2>线路效益和经济活动分析</h2>
     <Tabs value="name1">
       <TabPane label="线路效益分析" name="name1">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">

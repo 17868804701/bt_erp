@@ -42,7 +42,7 @@
         <div>
           <Form :model="jccxFormItem" :label-width="120">
             <Row>
-              <Col span="6">
+              <Col span="7">
               <FormItem label="首字母查询" style="margin-left: -50px;">
                 <input v-model="jccxFormItem.szm_select" type="text" @focus="modal1 = true" placeholder="按照姓名首字母查询"
                        class="select_name">
@@ -58,22 +58,30 @@
                 </Button>
               </Modal>
               </Col>
-              <Col span="6">
+              <Col span="7">
               <FormItem label="按岗位查询" style="margin-left: -50px;">
                 <Select v-model="jccxFormItem.gw_select" style="width:180px" @on-change="sxResultChange">
                   <Option v-for="item in postList" :value="item" :key="item">{{ item }}</Option>
                 </Select>
               </FormItem>
               </Col>
+              <Col span="7">
+              <FormItem label="按岗位状态查询" style="margin-left: -50px;">
+                <Select v-model="jccxFormItem.gw_select1" style="width:180px" @on-change="sxResultChange">
+                  <Option :value="在职" :key="在职">在职</Option>
+                  <Option :value="离职" :key="离职">离职</Option>
+                </Select>
+              </FormItem>
+              </Col>
             </Row>
             <Row>
-              <Col span="6">
+              <Col span="7">
               <FormItem label="合同自起" style="margin-left: -50px;">
                 <DatePicker style="width: 180px;" v-model="gdsxFormItem.htzq_date" type="date"
                             placeholder="请选择合同自起时间"></DatePicker>
               </FormItem>
               </Col>
-              <Col span="6">
+              <Col span="7">
               <FormItem label="合同终止" style="margin-left: -50px;">
                 <DatePicker style="width: 180px;" v-model="gdsxFormItem.htzz_date" type="date"
                             placeholder="请选择合同终止时间"></DatePicker>
@@ -95,7 +103,6 @@
                 <Checkbox label="稽查大队"></Checkbox>
                 <Checkbox label="站管中心"></Checkbox>
                 <Checkbox label="维修公司"></Checkbox>
-
               </CheckboxGroup>
             </FormItem>
           </Form>
@@ -151,6 +158,7 @@
         jccxFormItem: {
           szm_select: [],
           gw_select: '',
+          gw_select1:'',
           dw_radio: [],
           htzq_date: '',
           htzz_date: '',

@@ -33,7 +33,7 @@
     <h2>经济指标完成情况</h2>
     <Tabs value="name1">
       <TabPane label="经济指标完成情况（表一）" name="name1">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
@@ -66,7 +66,7 @@
         <Table :columns="columns11" :data="data11" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
       <TabPane label="经济指标完成情况（表二）" name="name2">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
@@ -99,7 +99,7 @@
         <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
       <TabPane label="各单位星级考核结果(表三)" name="name3">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
@@ -133,7 +133,7 @@
       </TabPane>
 
       <TabPane label="经济指标完成情况（表四）" name="name4">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
@@ -167,7 +167,7 @@
       </TabPane>
 
       <TabPane label="经济指标完成情况（表五）" name="name5">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">

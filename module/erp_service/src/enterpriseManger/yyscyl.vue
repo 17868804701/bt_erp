@@ -33,7 +33,7 @@
     <h2>运营生产原始资料汇总</h2>
     <Tabs value="name1">
       <TabPane label="车次里程耗油季度汇总" name="name1">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
@@ -59,7 +59,7 @@
       </TabPane>
       <TabPane label="客运量与总收入季度汇总" name="name2">
 
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
@@ -85,7 +85,7 @@
         <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
       <TabPane label="车次里程耗油月度分析" name="name3">
-        <Card>
+        <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">

@@ -167,11 +167,17 @@
                 <Icon type="ios-analytics"></Icon>
                 服务管理
               </template>
-              <a :href="url+'MMList'" target="erp_main">
-                <MenuItem name="7-1">保养管理</MenuItem>
+              <a :href="url+'kfxxList'" target="erp_main">
+                <MenuItem name="7-1">客服信息列表页面</MenuItem>
               </a>
-              <a :href="url+'GPCheckList'" target="erp_main">
-                <MenuItem name="7-2">钢瓶检测</MenuItem>
+              <a :href="url+'zrxts'" target="erp_main">
+                <MenuItem name="7-2">责任性投诉反馈</MenuItem>
+              </a>
+              <a :href="url+'kfclqktj'" target="erp_main">
+                <MenuItem name="7-3">客服处理情况统计</MenuItem>
+              </a>
+              <a :href="url+'xjpj'" target="erp_main">
+                <MenuItem name="7-4">星级评价</MenuItem>
               </a>
             </Submenu>
           </Menu>

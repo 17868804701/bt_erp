@@ -228,6 +228,30 @@
             width: 220,
             fixed: 'right',
             editable: true
+          },
+          {
+            title: '操作',
+            align: 'center',
+            width: 100,
+            fixed: 'right',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.show(params.index)
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
           }
         ],
         data10: []

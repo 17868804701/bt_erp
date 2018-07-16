@@ -7,6 +7,14 @@
     <Form :model="formItem" :label-width="80" style="margin-top:10px;">
       <Card class="card_file">
         <p slot="title">人员基本信息</p>
+        <!--<div slot="extra">-->
+          <!--<FormItem :label-width="120" label="选择历史版本">-->
+            <!--<Select v-model="formItem.select" style="width: 170px;">-->
+              <!--<Option value="上一次">上一次</Option>-->
+              <!--<Option value="上上次">上上次</Option>-->
+            <!--</Select>-->
+          <!--</FormItem>-->
+        <!--</div>-->
         <Form :model="formItem" :label-width="80" style="margin-top:10px;">
           <div style="display: flex">
             <div class="jbxx_left">
@@ -65,6 +73,10 @@
               </FormItem>
               <FormItem :label-width="120" label="职业资格技能">
                 <Input v-model="formItem.input" placeholder="职业资格技能" class="input_item"/>
+              </FormItem>
+              <FormItem :label-width="120" label="录入时间">
+                <DatePicker type="date" style="width: 170px;" placeholder="Select date"
+                            v-model="formItem.date"></DatePicker>
               </FormItem>
               <FormItem :label-width="120" label="配偶情况">
                 <Input v-model="formItem.input" placeholder="配偶情况" class="input_item"/>
@@ -136,12 +148,6 @@
           <FormItem :label-width="120" label="人员编号">
             <Input v-model="formItem.input" placeholder="人员编号" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="统计号">
-            <Input v-model="formItem.input" placeholder="统计号" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="统计">
-            <Input v-model="formItem.input" placeholder="统计" class="input_item"/>
-          </FormItem>
           <FormItem :label-width="120" label="单位">
             <Input v-model="formItem.input" placeholder="单位" class="input_item"/>
           </FormItem>
@@ -192,10 +198,12 @@
             <Input v-model="formItem.input" placeholder="工伤保险" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="岗位状态">
-            <RadioGroup v-model="formItem.radio" style="width: 170px;">
-              <Radio label="在职">在职</Radio>
-              <Radio label="离职">离职</Radio>
-            </RadioGroup>
+            <Select v-model="formItem.select" style="width: 170px;">
+              <Option value="正式">正式</Option>
+              <Option value="试用">试用</Option>
+              <Option value="退休">退休</Option>
+              <Option value="离职">离职</Option>
+            </Select>
           </FormItem>
           <FormItem :label-width="120" label="职工身份">
             <Input v-model="formItem.input" placeholder="职工身份" class="input_item"/>
@@ -249,10 +257,7 @@
             <DatePicker type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.date"></DatePicker>
           </FormItem>
-          <FormItem :label-width="120" label="录入时间">
-            <DatePicker type="date" style="width: 170px;" placeholder="Select date"
-                        v-model="formItem.date"></DatePicker>
-          </FormItem>
+
           <FormItem :label-width="120" label="备注">
             <Input v-model="formItem.input" placeholder="变更原因" class="input_item"/>
           </FormItem>

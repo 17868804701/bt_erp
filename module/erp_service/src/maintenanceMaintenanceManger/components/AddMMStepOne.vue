@@ -85,47 +85,42 @@
       <p slot="title" >
         发动机进厂技术记录
       </p>
-      <p slot="extra">
-        检验员: {{fdjData.jyy}}
-      </p>
+      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="fdjEditIcon" @click="fdjDataIsEdit = !fdjDataIsEdit">{{fdjEditText}}</Button>
+      <Button v-if="fdjDataIsEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="saveFDJData">保存</Button>
         <Form v-model="fdjData" :label-width="70">
           <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
-            <FormItem label="机厂车号:">
-              <div style="width: 120px;">
-                {{fdjData.jcch}}
-              </div>
-            </FormItem>
-            <FormItem label="发动机号:">
-              <div style="width: 120px;">
-                {{fdjData.fdjh}}
-              </div>
-            </FormItem>
-            <FormItem label="车型:">
-              <div style="width: 120px;">
-                {{fdjData.cx}}
-              </div>
-            </FormItem>
-            <FormItem label="进厂时间:">
-              <div style="width: 120px;">
-                {{fdjData.jcsj}}
-              </div>
-            </FormItem>
-            <FormItem label="是否镶接:">
-              <div style="width: 120px;">
-                {{fdjData.sfxj}}
-              </div>
-            </FormItem>
-            <FormItem label="承修人:">
-              <div style="width: 120px;">
-                {{fdjData.cxr}}
-              </div>
+            <FormItem v-for="(item, index) in fdjDataColumns" :key="item+index" :label="fdjDataColumns[index].nameText" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjDataColumns[index].value" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjDataColumns[index].value}}</div>
             </FormItem>
           </div>
         </Form>
       <Input v-model="fdjData.bz" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入说明备注..."></Input>
-      <Table border style="margin-top: 10px;" :data="FDJ_QG_DATA" :columns="FDJ_QG_COLUMNS"></Table>
-      <Table border style="margin-top: 20px;" :data="FDJ_QZ_DATA" :columns="FDJ_QZ_COLUMNS"></Table>
+
+      <Button type="primary" size="small" style="margin-top: 10px;position: absolute;right: 20px;" icon="plus" @click="fdjQGModal=true">添加</Button>
+      <Table border style="margin-top: 50px;" :data="FDJ_QG_DATA" :columns="FDJ_QG_COLUMNS"></Table>
+
+      <Button type="primary" size="small" style="margin-top: 10px;position: absolute;right: 20px;" icon="plus" @click="fdjQZModal=true">添加</Button>
+      <Table border style="margin-top: 50px;" :data="FDJ_QZ_DATA" :columns="FDJ_QZ_COLUMNS"></Table>
     </Card>
+    <!--新增气缸凸轮轴-->
+    <Modal
+      v-model="fdjQGModal"
+      title="新增气缸凸轮轴检测数据"
+      width="50%"
+      @on-ok="addFDJQGData"
+      @on-cancel="cancleAddFDJQGData">
+      <AddFDJQGView :qgData="fdjQGData"/>
+    </Modal>
+    <!--新增曲轴-->
+    <Modal
+      v-model="fdjQZModal"
+      title="新增曲轴检测数据"
+      width="50%"
+      @on-ok="addFDJQZData"
+      @on-cancel="cancleAddFDJQZData">
+      <AddFDJQZView :qzData="fdjQZData"/>
+    </Modal>
 
     <!--超养作业记录-->
     <Card v-if="basicData.cySwitchValue" style="margin-top: 20px;">
@@ -180,13 +175,19 @@
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
   import FDJData from './StepOneTableData'
+  import AddFDJQZView from './AddFDJQZView.vue'
+  import AddFDJQGView from './AddFDJQGView.vue'
   export default {
     name: 'AddMMStepOne',
     components: {
-      canEditTable
+      canEditTable,
+      AddFDJQZView,
+      AddFDJQGView
     },
     data () {
       return {
+
+        // **************** 车辆基本数据 ************** //
         basicData: {
           djbh: '20170909-011',
           clzbh: '3-231',
@@ -251,6 +252,12 @@
             value: '三养'
           },
         ],
+
+        // **************** 发动机数据 ************** //
+        FDJ_QG_COLUMNS: [],
+        FDJ_QG_DATA: [],
+        FDJ_QZ_COLUMNS: [],
+        FDJ_QZ_DATA: [],
         fdjData: {
           jcch: '1-2188',
           fdjh: '559',
@@ -261,6 +268,63 @@
           bz: '',
           jyy: '小黄'
         },
+        fdjQGData: {
+          qg_sb_qh: '101.67',
+          qg_sb_zy: '101.68',
+          qg_zb_qh: '101.68',
+          qg_zb_zy: '101.67',
+          qg_xb_qh: '101.68',
+          qg_xb_zy: '101.68',
+          hscc: '101.59',
+          tlz_jq: '7.24',
+          tlz_pq: '7.23',
+        },
+        fdjQZData: {
+          qz_qzj_zj: '74.991111111',
+          qz_qzj_yd: '0.01',
+          qz_qzj_yzd: '-',
+
+          qz_lgj_zj: '61.99',
+          qz_lgj_yd: '0.01',
+          qz_lgj_yzd: '-',
+        },
+        fdjDataIsEdit: false,
+        fdjQZModal: false,
+        fdjQGModal: false,
+        fdjDataColumns: [
+          {
+            nameCode: 'jcch',
+            nameText: '机厂车号:',
+            value: '1-2188'
+          },
+          {
+            nameCode: 'fdjh',
+            nameText: '发动机号:',
+            value: '559'
+          },
+          {
+            nameCode: 'cx',
+            nameText: '车型:',
+            value: '141'
+          },
+          {
+            nameCode: 'sfxj',
+            nameText: '是否镶嵌:',
+            value: '下套+0.00'
+          },
+          {
+            nameCode: 'cxr',
+            nameText: '承修人:',
+            value: '李光'
+          },
+          {
+            nameCode: 'jyy',
+            nameText: '检验员:',
+            value: '小黄'
+          },
+        ],
+
+        // **************** 丢失件修配数据 ************** //
         dsjColumns: [
           {
             key: 'mc',
@@ -307,6 +371,7 @@
           xpjg: '',
         },
 
+        // **************** 超养作业记录数据 ************** //
         cyColumns: [
           {
             key: 'xm',
@@ -351,12 +416,6 @@
           sl: '',
           xfff: '',
         },
-
-        FDJ_QG_COLUMNS: [],
-        FDJ_QG_DATA: this.getListData(FDJData.FDJ_QG_DATA),
-
-        FDJ_QZ_COLUMNS: [],
-        FDJ_QZ_DATA: this.getListData(FDJData.FDJ_QZ_DATA),
       }
     },
     computed: {
@@ -369,6 +428,20 @@
       },
       editIcon() {
         if (!this.basicDataIsEdit) {
+          return 'edit';
+        }else{
+          return 'close';
+        }
+      },
+      fdjEditText() {
+        if (!this.fdjDataIsEdit) {
+          return '编辑';
+        }else{
+          return '取消';
+        }
+      },
+      fdjEditIcon() {
+        if (!this.fdjDataIsEdit) {
           return 'edit';
         }else{
           return 'close';
@@ -386,7 +459,7 @@
       clickAddDSJAction() {
 
       },
-      addDSJ() {
+      addDSJ() { // 确认添加丢失件
         this.dsjList.push(this.dsj);
         this.dsj = {
           mc: '',
@@ -395,10 +468,10 @@
         };
         console.log('确认添加');
       },
-      cancleAddDSJ() {
+      cancleAddDSJ() { // 取消添加丢失件
         console.log('取消添加');
       },
-      addCYZY() {
+      addCYZY() { // 添加超养记录
         this.cyList.push(this.cyItem);
         this.cyItem = {
           xm: '',
@@ -411,6 +484,47 @@
         console.log('取消添加超养作业记录');
       },
 
+      saveFDJData() { // 修改保存 发动机基本信息
+        this.fdjDataIsEdit = false;
+      },
+      addFDJQGData() {
+        //FDJ_QZ_DATA
+        //fdjQZData
+        this.FDJ_QG_DATA.push(this.fdjQGData);
+        this.fdjQGData = {
+          qg_sb_qh: '101.67',
+          qg_sb_zy: '101.68',
+          qg_zb_qh: '101.68',
+          qg_zb_zy: '101.67',
+          qg_xb_qh: '101.68',
+          qg_xb_zy: '101.68',
+          hscc: '101.59',
+          tlz_jq: '7.24',
+          tlz_pq: '7.23',
+        };
+        console.log('添加气缸凸轮轴检测数据');
+      },
+      cancleAddFDJQGData() {
+        console.log('取消添加气缸凸轮轴检测数据');
+      },
+      addFDJQZData() {
+        //FDJ_QZ_DATA
+        //fdjQZData
+        this.FDJ_QZ_DATA.push(this.fdjQZData);
+        this.fdjQZData = {
+          qz_qzj_zj: '',
+          qz_qzj_yd: '',
+          qz_qzj_yzd: '',
+
+          qz_lgj_zj: '',
+          qz_lgj_yd: '',
+          qz_lgj_yzd: '',
+        };
+        console.log('添加曲轴检测数据');
+      },
+      cancleAddFDJQZData() {
+        console.log('取消添加曲轴检测数据');
+      },
 
       handleCellChange (val, index, key) {
         this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');

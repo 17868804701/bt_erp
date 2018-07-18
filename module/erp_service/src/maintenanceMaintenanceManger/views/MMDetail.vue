@@ -1,4 +1,3 @@
-<!--添加维修养护 , 还未出厂页面-->
 <template>
   <div style="padding: 20px; height: 100%;">
     <h2>
@@ -17,18 +16,24 @@
     </div>
 
     <AddMMStepOne v-if="this.currentStep === 0 || this.currentStep === 1 || this.currentStep === 2"></AddMMStepOne>
+    <AddMMStepTwo v-if="this.currentStep === 1 || this.currentStep === 2"></AddMMStepTwo>
+    <AddMMStepThree v-if="this.currentStep === 2"></AddMMStepThree>
 
     <div style="margin-top: 20px;width: 100%;display: flex;justify-content: center">
-      <Button type="primary" @click="nextStep">开始维修</Button>
+      <Button v-if="this.currentStep === 0 || this.currentStep === 1" type="primary" @click="nextStep">{{nextStepText}}</Button>
     </div>
 
   </div>
 </template>
 <script>
   import AddMMStepOne from '../components/AddMMStepOne.vue'
+  import AddMMStepTwo from '../components/AddMMStepTwo.vue'
+  import AddMMStepThree from '../components/AddMMStepThree.vue'
   export default {
     components: {
       AddMMStepOne,
+      AddMMStepTwo,
+      AddMMStepThree
     },
     data () {
       return {
@@ -36,7 +41,15 @@
       }
     },
     computed: {
-
+      nextStepText() {
+        if (this.currentStep == 0) {
+          return '检验完毕, 开始维修';
+        } else if (this.currentStep == 1) {
+          return '维修验收结束, 进行路测出厂';
+        } else {
+          return '';
+        }
+      }
     },
     methods: {
       nextStep() {

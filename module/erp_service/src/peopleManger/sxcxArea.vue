@@ -62,8 +62,8 @@
               <Col span="7">
               <FormItem label="按岗位状态查询" style="margin-left: -50px;">
                 <Select v-model="jccxFormItem.gw_select1" style="width:180px" @on-change="sxResultChange">
-                  <Option :value="在职" :key="在职">在职</Option>
-                  <Option :value="离职" :key="离职">离职</Option>
+                  <Option value="beijing">在职</Option>
+                  <Option value="shanghai">离职</Option>
                 </Select>
               </FormItem>
               </Col>
@@ -149,6 +149,7 @@
   export default {
     data () {
       return {
+        gw_select1:'',
         exports: false,
         props: {
           row: Object
@@ -156,8 +157,8 @@
         modal1: false,
         jccxFormItem: {
           szm_select: [],
-          gw_select: '',
-          gw_select1:'',
+          gw_select: [],
+          gw_select1:[],
           dw_radio: [],
           htzq_date: '',
           htzz_date: '',

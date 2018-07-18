@@ -6,39 +6,73 @@
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
         <TabPane label="分公司电能消耗统计" name="name1">
-          <Card>
-          <Form :model="formItem" :label-width="80">
-            <Row>
-              <Col span="24">
-              <FormItem label="按月查询" style="margin: 0;">
-                <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="primary" icon="android-download"
-                        style="float: right;margin-right: 10px">导出Excel
-                </Button>
-              </FormItem>
-              </Col>
-            </Row>
-          </Form>
+          <Card style="padding-left: 15px;">
+            <Form :model="formItem" :label-width="80">
+              <div class="search">
+
+                <FormItem label="选择时间" style="margin: 0">
+                  <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                              class="text_width"></DatePicker>
+                </FormItem>
+                <FormItem label="选择线路" style="margin: 0">
+                  <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                    <Option value="beijing">1路</Option>
+                    <Option value="shanghai">2路</Option>
+                    <Option value="shenzhen">3路</Option>
+                  </Select>
+                </FormItem>
+                <FormItem label="选择公司" style="margin: 0">
+                  <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                    <Option value="beijing">公交一公司</Option>
+                    <Option value="shanghai">公交二公司</Option>
+                    <Option value="shenzhen">公交三公司</Option>
+                  </Select>
+                </FormItem>
+                <FormItem label="车牌号" style="margin: 0">
+                  <Input v-model="formItem.input" placeholder="车牌号" class="text_width"/>
+                </FormItem>
+                <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+                <div class="btn">
+                  <Button type="primary" icon="android-download">导出Excel</Button>
+                </div>
+              </div>
+            </Form>
           </Card>
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
         </TabPane>
         <TabPane label="集团电能消耗统计" name="name2">
-          <Card>
-          <Form :model="formItem" :label-width="80">
-            <Row>
-              <Col span="24">
-              <FormItem label="按月查询" style="margin: 0;">
-                <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-                <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="primary" icon="android-download"
-                        style="float: right;margin-right: 10px">导出Excel
-                </Button>
-              </FormItem>
-              </Col>
-            </Row>
-          </Form>
+          <Card style="padding-left: 15px;">
+            <Form :model="formItem" :label-width="80">
+              <div class="search">
+
+                <FormItem label="选择时间" style="margin: 0">
+                  <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                              class="text_width"></DatePicker>
+                </FormItem>
+                <FormItem label="选择线路" style="margin: 0">
+                  <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                    <Option value="beijing">1路</Option>
+                    <Option value="shanghai">2路</Option>
+                    <Option value="shenzhen">3路</Option>
+                  </Select>
+                </FormItem>
+                <FormItem label="选择公司" style="margin: 0">
+                  <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                    <Option value="beijing">公交一公司</Option>
+                    <Option value="shanghai">公交二公司</Option>
+                    <Option value="shenzhen">公交三公司</Option>
+                  </Select>
+                </FormItem>
+                <FormItem label="车牌号" style="margin: 0">
+                  <Input v-model="formItem.input" placeholder="车牌号" class="text_width"/>
+                </FormItem>
+                <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+                <div class="btn">
+                  <Button type="primary" icon="android-download">导出Excel</Button>
+                </div>
+              </div>
+            </Form>
           </Card>
           <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -52,7 +86,9 @@
     data () {
       return {
         formItem:{
-          date:''
+          date:'',
+          select:'',
+          input:''
         },
         columns11: [
           {
@@ -294,3 +330,37 @@
     }
   }
 </script>
+
+
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .container {
+    padding: 10px;
+  }
+
+  .container h2 {
+    margin-left: 15px;
+  }
+
+  .search_btn {
+    margin-left: 10px;
+  }
+
+  .text_width {
+    width: 195px;
+  }
+
+  .search {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -30px;
+    align-items: center;
+  }
+
+  .btn {
+    position: absolute;
+    right: 20px;
+  }
+</style>
+

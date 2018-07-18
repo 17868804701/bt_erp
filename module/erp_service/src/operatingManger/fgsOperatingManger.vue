@@ -52,7 +52,17 @@
             </FormItem>
             <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
             <div class="btn">
-              <Button type="primary" icon="android-download">导出Excel</Button>
+              <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
+              <Modal
+                v-model="modal1"
+                title="填写导出说明"
+                >
+                <Form :model="formItem" :label-width="80">
+                  <FormItem label="导出说明">
+                    <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入导出说明"></Input>
+                  </FormItem>
+                </Form>
+              </Modal>
             </div>
           </div>
         </Form>
@@ -66,8 +76,10 @@
   export default {
     data () {
       return {
+        modal1:false,
         formItem: {
-          date: ''
+          date: '',
+          textarea:''
         },
         columns11: [
           {

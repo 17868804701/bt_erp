@@ -29,7 +29,8 @@
               </Row>
             </Form>
           </Card>
-          <Table :columns="columns11" :data="data10" ref="selection" border height="500" style="margin-top: 20px;"
+          <Tag checkable color="blue" style="position: absolute;right:15px;margin-top: 6px;">公司总金额：67.4万元</Tag>
+          <Table :columns="columns11" :data="data10" ref="selection" border height="500" style="margin-top: 35px;"
                  size="small"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
           <Modal
@@ -224,6 +225,56 @@
                 ]
               },
               {
+                title: '中燃',
+                key: 'zr',
+                align: 'center',
+                width: 150,
+                children: [
+                  {
+                    title: '气量',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '实际价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  }, {
+                    title: '计划价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
+              },
+              {
+                title: '汇通',
+                key: 'zr',
+                align: 'center',
+                width: 150,
+                children: [
+                  {
+                    title: '气量',
+                    key: 'dj',
+                    align: 'center',
+                    width: 150,
+                  },
+                  {
+                    title: '实际价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  }, {
+                    title: '计划价',
+                    key: 'je',
+                    align: 'center',
+                    width: 150,
+                  },
+                ]
+              },
+              {
                 title: '备注',
                 key: 'bz',
                 align: 'center',
@@ -236,7 +287,7 @@
             key: 'zt',
             align: 'center',
             fixed: 'right',
-            width: 220,
+            width: 180,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -253,20 +304,6 @@
                     }
                   }
                 }, '查看详情  /  修改'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      alert("删除成功")
-                    }
-                  }
-                }, '删除')
               ]);
             }
           }

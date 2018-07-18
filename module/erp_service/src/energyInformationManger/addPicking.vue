@@ -38,6 +38,9 @@
           <FormItem label="领料规格">
             <Input v-model="formItem.input" placeholder="领料规格" style="width: 195px;"/>
           </FormItem>
+          <FormItem label="物品编号">
+            <Input v-model="formItem.input" placeholder="物品编号" style="width: 195px;"/>
+          </FormItem>
           <FormItem label="供货单位">
             <Select v-model="formItem.select" style="width: 195px;">
               <Option value="beijing">产品1公司</Option>
@@ -71,7 +74,7 @@
             </Select>
           </FormItem>
           <FormItem label="附记">
-            <Input v-model="formItem.input" placeholder="附记"  style="width: 440px;"/>
+            <Input v-model="formItem.input" placeholder="附记"  style="width: 470px;"/>
           </FormItem>
         </div>
       </Form>

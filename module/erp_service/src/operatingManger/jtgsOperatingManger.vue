@@ -41,7 +41,17 @@
                 </div>
               </div>
             </Form>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px">导出Excel</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px" @click="modal1=true">导出Excel</Button>
+            <Modal
+              v-model="modal1"
+              title="填写导出说明"
+            >
+              <Form :model="formItem" :label-width="80">
+                <FormItem label="导出说明">
+                  <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入导出说明"></Input>
+                </FormItem>
+              </Form>
+            </Modal>
           </Card>
           <Table :columns="columns11" :data="data10" border height="520" size="small" style="margin-top: 10px;"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -73,7 +83,17 @@
                 </div>
               </div>
             </Form>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px;">导出Excel</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px;" @click="modal2=true">导出Excel</Button>
+            <Modal
+              v-model="modal2"
+              title="填写导出说明"
+            >
+              <Form :model="formItem" :label-width="80">
+                <FormItem label="导出说明">
+                  <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入导出说明"></Input>
+                </FormItem>
+              </Form>
+            </Modal>
           </Card>
           <Table :columns="columns12" :data="data12" border height="520"  size="small" style="margin-top: 10px;"></Table>
           <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -86,8 +106,11 @@
   export default {
     data () {
       return {
+        modal1:false,
+        modal2:false,
         formItem: {
           date: '',
+          textarea:'',
           select: '',
           select1: ''
         },

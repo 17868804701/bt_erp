@@ -21,7 +21,7 @@
                 <Button type="primary" icon="android-download"
                         style="float: right;margin-right: 10px">导出Excel
                 </Button>
-                <Button type="ghost" icon="android-download"  style="float: right;margin-right:10px">批量派发</Button>
+                <!--<Button type="ghost" icon="android-download"  style="float: right;margin-right:10px">批量派发</Button>-->
                 <Button type="primary" icon="plus" style="float: right;margin-right:10px" @click="addPicking=true">
                   新增领料
                 </Button>
@@ -102,6 +102,11 @@
             key: 'llgg',
             align: 'center',
             width: 120,
+          },{
+            title: '物品编号',
+            key: 'wpbh',
+            align: 'center',
+            width: 120,
           },
           {
             title: '供货单位',
@@ -118,7 +123,7 @@
             key: 'gg',
             align: 'center',
             width: 120,
-          }, {
+          },  {
             title: '计量单位',
             key: 'jldw',
             align: 'center',
@@ -148,7 +153,7 @@
             key: 'zt',
             align: 'center',
             fixed: 'right',
-            width: 220,
+            width: 180,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -165,20 +170,6 @@
                     }
                   }
                 }, '修改'),
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                     alert("派发成功")
-                    }
-                  }
-                }, '派发'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -208,6 +199,7 @@
           ch: i + '号车',
           cx: '中型公交',
           wpmc: '轮胎',
+          wpbh:'c-0901',
           llsj: '201' + i + '-10-11',
           llsl: i * 15 + 78,
           llgg: '10个/件',

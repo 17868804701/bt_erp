@@ -8,6 +8,83 @@
           车辆保养
         </h2>
       </div>
+
+      <!--新增进场登记弹框-->
+      <Modal
+        ok-text="登记进场"
+        v-model="newRecordModal"
+        title="新增车辆基本信息"
+        width="50%">
+        <div slot="footer" style="height: 30px;">
+          <Button type="primary" style="float: right;margin-right: 10px" @click="startMaintain('basicData')">登记进场</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="cancle">取消</Button>
+        </div>
+        <div style="padding: 0px; height: 100%;">
+          <Form :model="basicData" ref="basicData" :rules="ruleValidate" :label-width="90">
+            <Row>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="djbh" label="登记编号" style="margin-top: 0px;">
+                <Input v-model="basicData.djbh" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="clzbh" label="车辆自编号" style="margin-top: 0px;">
+                <Input v-model="basicData.clzbh" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="cph" label="车牌号" style="margin-top: 0px;">
+                <Input v-model="basicData.cph" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="clxh" label="车辆型号" style="margin-top: 0px;">
+                <Input v-model="basicData.clxh" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="xl" label="线路" style="margin-top: 0px;">
+                <Input v-model="basicData.xl" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="fgs" label="分公司" style="margin-top: 0px;">
+                <Input v-model="basicData.fgs" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+            </Row>
+
+            <Row align="middle" style="flex-wrap: wrap">
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="jcsj" label="进厂时间" style="margin-top: 0px;">
+                <Input v-model="basicData.jcsj" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="sxr" label="送修人" style="margin-top: 0px;">
+                <Input v-model="basicData.sxr" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="jyy" label="检验员" style="margin-top: 0px;">
+                <Input v-model="basicData.jyy" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+            </Row>
+
+            <Row align="middle" style="flex-wrap: wrap">
+              <Col span="8" style="height: 60px;">
+              <FormItem prop="bylb" label="保养类别" style="margin-top: 0px;">
+                <Input v-model="basicData.bylb" style="width: 100px;"></Input>
+              </FormItem>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      </Modal>
       <Card>
         <Form :model="formItem">
           <Row>
@@ -17,7 +94,7 @@
                           v-model="formItem.date"></DatePicker>
               <Button type="primary" icon="ios-search">搜索</Button>
               <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
-              <Button type="primary" icon="plus" style="float: right;margin-right: 10px">新增</Button>
+              <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="newRecordModal = true">新增</Button>
             </FormItem>
             </Col>
           </Row>
@@ -34,6 +111,50 @@
     },
     data () {
       return {
+        basicData: {
+          djbh: '',
+          clzbh: '',
+          cph: '',
+          clxh: '',
+          xl: '',
+          gfs: '',
+          jcsj: '',
+          sxr: '',
+          jyy: '',
+          bylb: '',
+        },
+        ruleValidate: {
+          djbh: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          clzbh: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          cph: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          clxh: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          xl: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          fgs: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          jcsj: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          sxr: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          jyy: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          bylb: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+        },
         columns: [
           {
             title: '登记编号',
@@ -97,8 +218,9 @@
                   },
                   on: {
                     click: () => {
+                      console.log('查看详情');
                       this.$router.push({
-                        path: '/AddMM'
+                        path: '/MMDetail'
                       })
                     }
                   }
@@ -110,7 +232,7 @@
                   },
                   on: {
                     click: () => {
-
+                      console.log('删除');
                     }
                   }
                 }, '删除')
@@ -122,6 +244,8 @@
         formItem: {
           date: '',
         },
+        newRecordModal: false,
+        loading: true,
       }
     },
     computed: {
@@ -149,6 +273,34 @@
         }
         return data;
       },
+
+      startMaintain(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$Message.success('登记成功, 请在列表查看!');
+            this.newRecordModal = false;
+            this.basicData = {
+              djbh: '',
+                clzbh: '',
+                cph: '',
+                clxh: '',
+                xl: '',
+                gfs: '',
+                jcsj: '',
+                sxr: '',
+                jyy: '',
+                bylb: '',
+                switchValue: false,
+                dsjSwitchValue: false,
+            }
+          } else {
+            this.$Message.error('请按照规则来填写内容!');
+          }
+        })
+      },
+      cancle() {
+        this.newRecordModal = false;
+      }
     },
     mounted () {
 

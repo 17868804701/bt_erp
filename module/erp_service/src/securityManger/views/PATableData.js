@@ -285,6 +285,11 @@ export const PA_Economic_Losses = [
     align: 'center',
     children: [
       {
+        title: '单位',
+        key: 'dw',
+        align: 'center'
+      },
+      {
         title: '本期',
         key: 'bq',
         align: 'center',
@@ -314,6 +319,7 @@ export const PA_Economic_Losses = [
 ]
 // 经济损失 --- 静态数据
 export const PA_Economic_Losses_Data = {
+  dw: '公交一公司',
   bq: '155.81',
   qntq: '96.17',
   qs: '上升',

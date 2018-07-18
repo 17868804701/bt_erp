@@ -73,7 +73,7 @@
         function getNum() {
           return Math.floor(Math.random () * 100 + 1);
         }
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 1; i++) {
           data.push({
             zjgs: '单位'+ i,
             pz: '蒙A123456',

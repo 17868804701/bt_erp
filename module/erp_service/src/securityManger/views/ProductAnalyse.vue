@@ -83,6 +83,9 @@
               </Row>
             </Form>
           </Card>
+          <!--<div style="width: 100%;height: 40px;display: flex;justify-content: flex-end" >-->
+            <!--<Button type="primary" icon="gear-a" style="margin-top:10px;margin-right: 10px;">配置计划值</Button>-->
+          <!--</div>-->
           <Table border style="margin-top: 10px;" :data="PA_XCZR_Rate_Data" :columns="PA_XCZR_Rate">
           </Table>
         </TabPane>

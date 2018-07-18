@@ -88,7 +88,7 @@
           lasj: '',
         },
         accidentModal: false,
-        lossModal: false
+        lossModal: false,
       }
     },
     computed: {
@@ -120,7 +120,7 @@
         newColumns.push({
           title: '操作',
           key: 'action',
-          width: 250,
+          width: 350,
           fixed: 'right',
           align: 'center',
           render: (h, params) => {
@@ -153,6 +153,20 @@
                   }
                 }
               }, '追加经损'),
+              h('Button', {
+                props: {
+                  type: 'warning',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '20px'
+                },
+                on: {
+                  click: () => {
+                    console.log('修改立案状态');
+                  }
+                }
+              }, '修改立案状态'),
               h('Button', {
                 props: {
                   type: 'error',

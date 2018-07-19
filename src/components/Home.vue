@@ -153,6 +153,9 @@
                 <a :href="url+'GPCheckList'" target="erp_main">
                   <MenuItem name="6-2">钢瓶检测</MenuItem>
                 </a>
+                <a :href="url+'JCfyjs'" target="erp_main">
+                  <MenuItem name="6-5">检测费用结算</MenuItem>
+                </a>
                 <a :href="url+'DeviceList'" target="erp_main">
                   <MenuItem name="6-3">设备保养记录</MenuItem>
                 </a>

@@ -94,7 +94,42 @@
                 <!--</Select>-->
               <!--</FormItem>-->
               <!--<Button type="primary" icon="ios-search" class="search_btn">查询</Button>-->
-              <Button type="primary" icon="plus" @click="modal2=true" style="margin-left: 20px;">新增</Button>
+              <Button type="primary" icon="plus" @click="modal2=true" style="margin-left: 20px;">进厂登记</Button>
+
+              <!--进厂登记-->
+              <Modal
+                v-model="modal2"
+                width="320"
+                title="进厂登记">
+                <Form :model="formItem" :label-width="80">
+                  <FormItem label="单位名称" style="margin: 0 0 10px 0">
+                    <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                      <Option value="beijing">一公司</Option>
+                      <Option value="shanghai">二公司</Option>
+                      <Option value="shenzhen">三公司</Option>
+                    </Select>
+                  </FormItem>
+                  <FormItem label="车牌号" style="margin: 0 0 10px 0">
+                    <Input v-model="formItem.input" placeholder="车牌号" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="自编号" style="margin: 0 0 10px 0">
+                    <Input v-model="formItem.input" placeholder="自编号" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="车型" style="margin: 0 0 10px 0">
+                    <Input v-model="formItem.input" placeholder="车型" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="检测日期" style="margin: 0 0 10px 0">
+                    <DatePicker type="date" placeholder="本次检测日期" :transfer="true" v-model="formItem.date"
+                                style="width: 195px;"></DatePicker>
+                  </FormItem>
+                  <FormItem label="接车日期" style="margin: 0 0 10px 0">
+                    <DatePicker type="date" placeholder="接车日期" :transfer="true" v-model="formItem.date"
+                                style="width: 195px;"></DatePicker>
+                  </FormItem>
+                </Form>
+              </Modal>
+
+
               <!--<FormItem label="" style="margin: 0">-->
               <!--</FormItem>-->
             </div>
@@ -177,10 +212,6 @@
             key: 'dwmc'
           },
           {
-            title: '体积',
-            key: 'tj'
-          },
-          {
             title: '车牌号',
             key: 'cph'
           },
@@ -204,6 +235,20 @@
             key: 'time',
             render: (h, params) => {
               return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.$router.push({path: '/gpjcInfo'});
+                    }
+                  }
+                }, '详情'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -238,6 +283,24 @@
         });
       }
       this.data1 = data;
+
+
+
+
+      const data1 = [];
+      for (let i = 0; i < 10; i++) {
+        data1.push({
+          dwmc: i+'单位',
+          cph: '蒙B'+116518,
+          cx: '客车',
+          bz: '大客车用',
+          bcjcrq:'2018-02-05',
+          jcrq:'2018-02-04',
+          zbh:'16468165',
+          time: '2016-10-03'
+        });
+      }
+      this.data2 = data1;
     }
   }
 </script>

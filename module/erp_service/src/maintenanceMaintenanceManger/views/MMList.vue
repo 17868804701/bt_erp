@@ -1,13 +1,8 @@
-<!--保养管理-->
 
 <template>
   <div>
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
-      <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;margin-bottom: 15px;">
-        <h2 style="margin-left: 15px;">
-          车辆保养
-        </h2>
-      </div>
+
 
       <!--新增进场登记弹框-->
       <Modal

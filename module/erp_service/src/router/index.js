@@ -33,7 +33,7 @@ import xlxyhjjhdfx from '../enterpriseManger/xlxyhjjhdfx.vue'
 import jjzbwcqk from '../enterpriseManger/jjzbwcqk.vue'
 
 // 维修养护管理
-import MMList from '../maintenanceMaintenanceManger/views/MMList.vue'
+import MainMM from '../maintenanceMaintenanceManger/views/MainMM.vue'
 import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
 import DeviceList from '../maintenanceMaintenanceManger/views/DeviceList.vue'
 import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
@@ -129,8 +129,8 @@ export default[
     component: lhlctz
   },
   {
-    path: '/MMList',
-    component: MMList
+    path: '/MainMM',
+    component: MainMM
   },
   {
     path: '/GPCheckList',

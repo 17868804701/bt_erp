@@ -2,7 +2,7 @@
   <div style="padding: 20px; height: 100%;">
     <h2>
       新增车辆维修养护
-      <router-link to="/MMList">
+      <router-link to="/MainMM">
         <Button type="primary" size="small" style="margin-right: 10px;"><<返回列表页</Button>
       </router-link>
     </h2>
@@ -45,7 +45,7 @@
         if (this.currentStep == 0) {
           return '检验完毕, 开始维修';
         } else if (this.currentStep == 1) {
-          return '维修验收结束, 进行路测出厂';
+          return '维修验收结束, 进行出厂登记';
         } else {
           return '';
         }

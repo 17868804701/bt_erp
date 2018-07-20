@@ -60,9 +60,9 @@
       <!--this.jysmData-->
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <div v-for="(item, itemIndex) in this.jysmData" :key="itemIndex">
-          <Tooltip v-for="(subItem, subItemIndex) in item">
+          <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">
             <div slot="content">{{JYSMOptions[itemIndex].value}}</div>
-            <Tag style="margin-bottom: 10px;margin-right: 20px;" type="border" closable color="blue" :key="subItem+subItemIndex">{{subItem}}</Tag>
+            <Tag style="margin-bottom: 10px;margin-right: 20px;" type="dot" color="green">{{subItem}}</Tag>
           </Tooltip>
         </div>
       </div>
@@ -93,6 +93,16 @@
       <p slot="title" >
         车辆三级维护项目验收
       </p>
+      <Collapse>
+        <Panel  v-for="(item, index) in YSXMOptions" :name="item+index" :key="item+index">
+          {{item.title}}
+          <Tag style="margin-left: 10px;" type="dot" color="green">已完成验收 ({{ysxmData[index].length}}/{{item.items.length}})</Tag>
+
+          <CheckboxGroup slot="content" v-model="ysxmData[index]" @on-change="checkYSXM">
+            <Checkbox v-for="(subItem, subIndex) in item.items" :key="subItem+subIndex" :label="subItem"></Checkbox>
+          </CheckboxGroup>
+        </Panel>
+      </Collapse>
     </Card>
 
 
@@ -192,14 +202,19 @@
         ],
         // 材料名称、数量、备注、说明、日期、检验员姓名
 
-
         jysmModal: false,
         jysmData: [],
+
+        // 验收项目数据
+        ysxmData: [],
       }
     },
     computed: {
       JYSMOptions() {
         return StepTwoTableData.WXYH_JYXM;
+      },
+      YSXMOptions() {
+        return StepTwoTableData.WXYH_YSD;
       },
     },
     methods: {
@@ -235,19 +250,32 @@
       cancleAddJYSM() {
         console.log('取消添加维修养护过程检验项目记录');
       },
-      getTmpData() {
+      getJYSMData() {
         let itemResults = [];
-        for (let i = 0; i < StepTwoTableData.WXYH_JYXM.count; i++){
+        for (let i = 0; i < StepTwoTableData.WXYH_JYXM.length; i++){
           itemResults.push([]);
         }
         return itemResults;
+      },
+      getYSXMData() {
+        let itemResults = [];
+        for (let i = 0; i < StepTwoTableData.WXYH_YSD.length; i++){
+          let tmpArray = [];
+          itemResults.push([]);
+        }
+        return itemResults;
+      },
+      checkYSXM() {
+        console.log('选择了验收项目');
+        console.log(this.ysxmData);
       }
     },
     mounted () {
 
     },
     created () {
-      this.jysmData = this.getTmpData();
+      this.jysmData = this.getJYSMData();
+      this.ysxmData = this.getYSXMData();
     },
   }
 </script>

@@ -203,6 +203,7 @@
       return {
         theme2:'dark',
 //        url:'http://106.12.19.134:8080/bterp/#/',
+//        url:'http://106.12.19.134:8080/bterp/l/#/',
         url:'http://localhost:8081/#/',
         fullHeight: document.documentElement.clientHeight
       }

@@ -199,29 +199,29 @@ export const PA_Quarter_Data = {
   lasg: '54',
   khsg: '24',
   cnsg: '21',
-  
+
   lasgbj_qntq: '54',
   lasgbj_qs: '持平',
   lasgbj_qsz: '0',
   lasgbj_fd: '0.00%',
-  
+
   cnsgbj_qntq: '18',
   cnsgbj_qs: '上升',
   cnsgbj_qsz: '3',
   cnsgbj_fd: '16.67%',
-  
+
   khybsgbj_bq: '0',
   khybsgbj_qntq: '0',
   khybsgbj_qs: '0',
   khybsgbj_qsz: '0',
   khybsgbj_fd: '0.00%',
-  
+
   khejsgbj_bq: '8',
   khejsgbj_qntq: '27',
   khejsgbj_qs: '下降',
   khejsgbj_qsz: '19',
   khejsgbj_fd: '70.37%',
-  
+
   khsjsgbj_bq: '16',
   khsjsgbj_qntq: '27',
   khsjsgbj_qs: '下降',
@@ -440,11 +440,11 @@ export const PA_XCZR_Rate = [
 export const PA_XCZR_Rate_Data = {
   dw: '公交一公司',
   xczr_rate: '0.85次/百万公里',
-  
+
   jhbj_jh: '1.6次/百万公里',
   jhbj_qs: '下降',
   jhbj_qsz: '0.75次/百万公里',
-  
+
   qntqbj_qntq: '2.13次/百万公里',
   qntqbj_qs: '下降',
   qntqbj_qsz: '1.28次/百万公里',
@@ -533,11 +533,11 @@ export const PA_LASG_LossRateTarget_Data = {
   sg: '16',
   js: '54.64',
   jsl: '1164.81',
-  
+
   jhbj_jh: '900',
   jhbj_qs: '增加',
   jhbj_qsz: '264.81',
-  
+
   qntqbj_qntq: '159',
   qntqbj_qs: '增加',
   qntqbj_qsz: '1005.81',

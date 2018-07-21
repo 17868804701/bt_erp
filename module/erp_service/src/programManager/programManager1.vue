@@ -95,7 +95,6 @@
     </Card>
     <can-edit-table style="margin-top: 10px;" v-model="data10" :columnsList="columns11" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
     </can-edit-table>
-    <!--<Table :columns="columns11" :data="data10" border height="515" size="small" style="margin-top: 20px;"></Table>-->
   </div>
 </template>
 <script>

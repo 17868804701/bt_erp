@@ -2,11 +2,45 @@
 
 <template>
   <div style="padding: 20px; height: 100%;">
-    <Row type="flex" justify="space-between" style="border-bottom: 1px solid #e9eaec; padding-bottom: 5px;">
-      <h2>
-        报表管理
-      </h2>
-    </Row>
+    <h2>
+      报表管理
+    </h2>
+    <Tabs value="name1" style="margin-top: 5px;">
+      <TabPane label="三级保养台账" name="name1">
+        <Card>
+          <Form :model="formItem">
+            <Row>
+              <Col span="24">
+              <FormItem label="按月查询" style="margin: 0;">
+                <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.tzDate"></DatePicker>
+                <Button type="primary" icon="ios-search">搜索</Button>
+                <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+              </FormItem>
+              </Col>
+            </Row>
+          </Form>
+        </Card>
+        <Table style="margin-top: 10px;" :data="tzData" border :columns="tzColumns" border></Table>
+        <Page :total="100" show-total style="margin-top: 10px;"></Page>
+      </TabPane>
+      <TabPane label="三级维护材料使用情况" name="name2">
+        <Card>
+          <Form :model="formItem">
+            <Row>
+              <Col span="24">
+              <FormItem label="按月查询" style="margin: 0;">
+                <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.clDate"></DatePicker>
+                <Button type="primary" icon="ios-search">搜索</Button>
+                <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+              </FormItem>
+              </Col>
+            </Row>
+          </Form>
+        </Card>
+        <Table style="margin-top: 10px;" :data="clData" border :columns="clColumns" border></Table>
+        <Page :total="100" show-total style="margin-top: 10px;"></Page>
+      </TabPane>
+    </Tabs>
   </div>
 </template>
 <script>
@@ -15,124 +49,194 @@
     },
     data () {
       return {
-        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案', '估损', '责任','备注'],
-        columnsCode: ['dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','la','gs','zr','bz'],
-        tableData:this.mockTableData(),
-        searchOptions: {
-          xmorcarNo: '',
-          lasj: '',
+        formItem: {
+          tzDate: '',
+          clDate: '',
         },
+        tzColumns: [
+          {
+            title: '序号',
+            type: 'index',
+            align: 'center',
+          },
+          {
+            title: '车号',
+            align: 'center',
+            key: 'ch',
+          },
+          {
+            title: '车型',
+            align: 'center',
+            key: 'cx',
+          },
+          {
+            title: '修别',
+            align: 'center',
+            key: 'xb',
+          },
+          {
+            title: '备注',
+            align: 'center',
+            key: 'bz',
+          }
+        ],
+        tzData: [
+          {
+            ch: '蒙A123456',
+            cx: 'WG6110N',
+            xb: '三养、换发动机',
+            bz: '备注',
+          },
+          {
+            ch: '蒙A123456',
+            cx: 'WG6110N',
+            xb: '三养、换发动机',
+            bz: '备注',
+          },
+          {
+            ch: '蒙A123456',
+            cx: 'WG6110N',
+            xb: '三养、换发动机',
+            bz: '备注',
+          },
+          {
+            ch: '蒙A123456',
+            cx: 'WG6110N',
+            xb: '三养、换发动机',
+            bz: '备注',
+          },
+          {
+            ch: '蒙A123456',
+            cx: 'WG6110N',
+            xb: '三养、换发动机',
+            bz: '备注',
+          },
+        ],
+        // 车号、车型、材料费、发动机大修材料费、费用合计、维修台数合计
+        clColumns: [
+          {
+            title: '序号',
+            type: 'index',
+            align: 'center'
+          },
+          {
+            title: '车号',
+            align: 'center',
+            key: 'ch'
+          },
+          {
+            title: '车型',
+            align: 'center',
+            key: 'cx'
+          },
+          {
+            title: '材料费',
+            align: 'center',
+            key: 'clf'
+          },
+          {
+            title: '发动机大修材料费',
+            align: 'center',
+            key: 'fdjclf'
+          },
+          {
+            title: '费用合计',
+            align: 'center',
+            key: 'fyhj'
+          },
+          {
+            title: '维修台数合计',
+            align: 'center',
+            key: 'tshj'
+          },
+        ],
+        clData: [
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+          {
+            ch: '蒙A123456',
+            cx: '大型车',
+            clf: '500元',
+            fdjclf: '500元',
+            fyhj: '1000元',
+            tshj: '10台',
+          },
+        ],
       }
     },
     computed: {
-      initTableColumns() {
-        let coulumns = [
-          {
-            title: '牌照',
-            key: 'pz',
-            width: 150,
-          },
-        ];
-        for (let i = 0; i < this.columnsTitle.length; i++) {
-          coulumns.push({
-            title: this.columnsTitle[i],
-            key: this.columnsCode[i],
-            width: 120,
-            sortable: true
-          });
-        }
-
-        let newColumns = [
-          {
-            title: '集团公司立按事故表',
-            align: 'center',
-            children: coulumns,
-          }
-        ];
-
-        newColumns.push({
-          title: '操作',
-          key: 'action',
-          width: 250,
-          fixed: 'right',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '20px'
-                },
-                on: {
-                  click: () => {
-                    this.showDetail(params.index)
-                  }
-                }
-              }, '查看'),
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                style: {
-                  marginRight: '20px'
-                },
-                on: {
-                  click: () => {
-                    this.lossModal = true;
-                  }
-                }
-              }, '追加经损'),
-              h('Button', {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.delete(params.index)
-                  }
-                }
-              }, '删除'),
-            ]);
-          }
-        });
-
-        return newColumns;
-      },
     },
     methods: {
-
-      mockTableData () {
-        let data = [];
-        function getNum() {
-          return Math.floor(Math.random () * 100 + 1);
-        }
-        for (let i = 0; i < 10; i++) {
-          data.push({
-            dw: '单位'+ i,
-            pz: '蒙A123456',
-            zbh: getNum(),
-            lb: '706路',
-            lasj: '2018-09-10',
-            dd: getNum(),
-            jsyxm: '大黄',
-            bar: '大黄',
-            sgsx: '交强、车损、车内',
-            sgxz: '重大事故',
-            larq: getNum(),
-            kcr: '阿俊',
-            la: '立案',
-            gs: '20万元',
-            zr: getNum(),
-            bz: getNum(),
-          })
-        }
-        return data;
-      },
     },
     mounted () {
 

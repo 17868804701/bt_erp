@@ -48,14 +48,17 @@
           </Row>
         </Form>
       </Card>
-      <Table style="margin-top: 10px;" :data="data1" :columns="columns" border></Table>
+      <can-edit-table style="margin-top: 10px;" v-model="data1" :columnsList="columns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
+      </can-edit-table>
       <Page :total="100" show-total style="margin-top: 10px;"></Page>
     </div>
   </div>
 </template>
 <script>
+  import canEditTable from '../../components/common/canEditTable.vue'
   export default {
     components: {
+      canEditTable
     },
     data () {
       return {
@@ -87,6 +90,7 @@
             title: '车型',
             key: 'cx',
             align: 'center',
+
           },
           {
             title: '返修进厂时间',
@@ -102,11 +106,13 @@
             title: '返修原因',
             key: 'fxyy',
             align: 'center',
+            editable: true
           },
           {
             title: '备注',
             key: 'bz',
             align: 'center',
+            editable: true
           },
           {
             title: '操作',
@@ -114,20 +120,6 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.clickAction(params, 'reset')
-                    }
-                  }
-                }, '修改'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -208,6 +200,12 @@
       clickAction(params, type) {
         console.log('操作返修记录');
         console.log(params + type);
+      },
+      handleCellChange (val, index, key) {
+        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
+      },
+      handleChange (val, index) {
+        this.$Message.success('修改了第' + (index + 1) + '行数据');
       }
     },
     mounted () {

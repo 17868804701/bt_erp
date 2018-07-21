@@ -71,16 +71,6 @@
             align: 'center',
           },
           {
-            title: '承修人',
-            key: 'cxr',
-            align: 'center',
-          },
-          {
-            title: '是否合格',
-            key: 'sfhg',
-            align: 'center',
-          },
-          {
             title: '验收时间',
             key: 'yssj',
             align: 'center',

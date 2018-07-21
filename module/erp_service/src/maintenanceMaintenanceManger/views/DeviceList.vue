@@ -9,6 +9,34 @@
           设备维修保养记录
         </h2>
       </div>
+      <Modal
+        v-model="addModal"
+        title="新增设备保养记录"
+        width="50%"
+        @on-ok="confirmAddDevice"
+        @on-cancel="cancleAddDevice">
+        <div>
+          <Form v-model="deviceItem" :label-width="90">
+            <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+              <FormItem label="设备名称:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.device_time" style="width:120px;"></Input>
+              </FormItem>
+              <FormItem label="设备型号:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.sbxh" style="width:120px;"></Input>
+              </FormItem>
+              <FormItem label="养护日期:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.yhrq" style="width:120px;"></Input>
+              </FormItem>
+              <FormItem label="维修人员:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.wxry" style="width:120px;"></Input>
+              </FormItem>
+              <FormItem label="养护内容:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.yhnr" style="width:120px;"></Input>
+              </FormItem>
+            </div>
+          </Form>
+        </div>
+      </Modal>
       <Card>
         <Form :model="formItem">
           <Row>
@@ -20,25 +48,39 @@
               <Button type="primary" icon="android-download"
                       style="float: right;margin-right: 10px">导出Excel
               </Button>
+              <Button type="primary" icon="plus"
+                      style="float: right;margin-right: 10px" @click="addModal=true">新增
+              </Button>
             </FormItem>
             </Col>
           </Row>
         </Form>
       </Card>
-      <Table style="margin-top: 10px;" :data="data1" :columns="columns" border></Table>
+      <can-edit-table style="margin-top: 10px;" v-model="data1" :columnsList="columns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
+      </can-edit-table>
       <Page :total="100" show-total style="margin-top: 10px;"></Page>
     </div>
   </div>
 </template>
 <script>
+  import canEditTable from '../../components/common/canEditTable.vue'
   export default {
     components: {
+      canEditTable
     },
     data () {
       return {
         formItem: {
           date: '',
         },
+        deviceItem: {
+          device_time: '叉车',
+          sbxh: '3T',
+          yhrq: '2018-02-01',
+          wxry: '王松',
+          yhnr: '更换机油'
+        },
+        addModal: false,
         columns: [
           {
             type: 'index',
@@ -49,26 +91,31 @@
             title: '设备名称',
             key: 'device_time',
             align: 'center',
+            editable: true
           },
           {
             title: '设备型号',
             key: 'sbxh',
             align: 'center',
+            editable: true
           },
           {
             title: '养护日期',
             key: 'yhrq',
             align: 'center',
+            editable: true
           },
           {
             title: '维修人员',
             key: 'wxry',
             align: 'center',
+            editable: true
           },
           {
             title: '养护内容',
             key: 'yhnr',
             align: 'center',
+            editable: true
           },
           {
             title: '操作',
@@ -76,20 +123,6 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.clickAction(params, 'reset')
-                    }
-                  }
-                }, '修改'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -169,7 +202,18 @@
 
     },
     methods: {
-
+      handleCellChange (val, index, key) {
+        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
+      },
+      handleChange (val, index) {
+        this.$Message.success('修改了第' + (index + 1) + '行数据');
+      },
+      confirmAddDevice() {
+        console.log('确认添加设备维修记录');
+      },
+      cancleAddDevice() {
+        console.log('取消添加设备维修记录');
+      },
     },
     mounted () {
 

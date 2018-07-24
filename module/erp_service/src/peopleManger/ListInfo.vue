@@ -151,9 +151,6 @@
           <FormItem :label-width="120" label="单位">
             <Input v-model="formItem.input" placeholder="单位" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="单位号">
-            <Input v-model="formItem.input" placeholder="单位号" class="input_item"/>
-          </FormItem>
           <FormItem :label-width="120" label="部门">
             <Input v-model="formItem.input" placeholder="部门" class="input_item"/>
           </FormItem>
@@ -167,12 +164,6 @@
           <FormItem :label-width="120" label="退离类别">
             <Input v-model="formItem.input" placeholder="退离类别" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="临时工">
-            <Input v-model="formItem.input" placeholder="临时工" class="input_item"/>
-          </FormItem>
-          <FormItem :label-width="120" label="待遇">
-            <Input v-model="formItem.input" placeholder="待遇" class="input_item"/>
-          </FormItem>
           <FormItem :label-width="120" label="工种">
             <Input v-model="formItem.input" placeholder="工种" class="input_item"/>
           </FormItem>
@@ -185,24 +176,26 @@
           <FormItem :label-width="120" label="证件情况">
             <Input v-model="formItem.input" placeholder="证件情况" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="工作类型">
-            <RadioGroup v-model="formItem.radio" style="width: 170px;">
-              <Radio label="实习">实习</Radio>
-              <Radio label="试用">试用</Radio>
-            </RadioGroup>
-          </FormItem>
           <FormItem :label-width="120" label="路队">
             <Input v-model="formItem.input" placeholder="路队" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="工伤保险">
             <Input v-model="formItem.input" placeholder="工伤保险" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="岗位状态">
+          <FormItem :label-width="120" label="在职情况">
             <Select v-model="formItem.select" style="width: 170px;">
               <Option value="正式">正式</Option>
               <Option value="试用">试用</Option>
               <Option value="退休">退休</Option>
               <Option value="离职">离职</Option>
+            </Select>
+          </FormItem>
+          <FormItem :label-width="120" label="岗位状态">
+            <Select v-model="formItem.select" style="width: 170px;">
+              <Option value="正式">一般管理</Option>
+              <Option value="试用">辅助</Option>
+              <Option value="退休">司机</Option>
+              <Option value="离职">修理</Option>
             </Select>
           </FormItem>
           <FormItem :label-width="120" label="职工身份">
@@ -257,9 +250,8 @@
             <DatePicker type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.date"></DatePicker>
           </FormItem>
-
-          <FormItem :label-width="120" label="备注">
-            <Input v-model="formItem.input" placeholder="变更原因" class="input_item"/>
+          <FormItem :label-width="120" label="变更内容">
+            <Input v-model="formItem.input" placeholder="变更内容" class="input_item"/>
           </FormItem>
         </div>
       </Card>

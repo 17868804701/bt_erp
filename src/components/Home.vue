@@ -210,6 +210,12 @@
         url:'http://localhost:8081/#/',
         fullHeight: document.documentElement.clientHeight
       }
+    },
+    mounted () {
+        this.$Loading.start();
+      setTimeout(function () {
+        this.$Loading.finish();
+      },1000)
     }
   }
 </script>

@@ -60,7 +60,7 @@
               </Col>
 
               <Col span="7">
-              <FormItem label="按岗位状态查询" style="margin-left: -50px;">
+              <FormItem label="在职情况" style="margin-left: -50px;">
                 <Select v-model="jccxFormItem.gw_select1" style="width:180px" @on-change="sxResultChange">
                   <Option value="beijing">在职</Option>
                   <Option value="shanghai">离职</Option>
@@ -82,7 +82,7 @@
               </FormItem>
               </Col>
             </Row>
-            <FormItem label="按岗位查询" style="margin-left: -50px;">
+            <FormItem label="岗位状态" style="margin-left: -50px;">
               <CheckboxGroup v-model="jccxFormItem.gw_select" @on-change="sxResultChange">
                 <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
               </CheckboxGroup>

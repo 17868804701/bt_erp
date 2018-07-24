@@ -42,12 +42,6 @@
       initTableColumns() {
         let coulumns = [
           {
-            title: '单位号',
-            key: 'dwh',
-            width: 150,
-            fixed: 'left'
-          },
-          {
             title: '单位',
             key: 'dw',
             width: 150,

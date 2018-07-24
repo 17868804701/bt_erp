@@ -7,11 +7,16 @@ import vueshowpdf from 'vueshowpdf'
 import vuePdfjs from 'vue-pdfjs'
 import 'iview/dist/styles/iview.css';
 import VueCookie from 'vue-cookie'
-import Api from "../utils/http";
-global.Api = Api;
 
-import axios from 'axios'
+// 网络相关 全局变量
+import {post,fetch,patch,put} from '../utils/http';
+import URLUntil from '../utils/NetworkDefine';
 
+Vue.prototype.$url=URLUntil;
+Vue.prototype.$post=post;
+Vue.prototype.$fetch=fetch;
+Vue.prototype.$patch=patch;
+Vue.prototype.$put=put;
 
 Vue.use(VueCookie)
 

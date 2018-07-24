@@ -1,24 +1,146 @@
-import Api from "wzn-api";
-let api = new Api();
+import axios from 'axios';
+import iView from 'iview';
 
-// 添加请求拦截器
-api.interceptors.request.use(
+axios.defaults.timeout = 5000;
+axios.defaults.baseURL ='http://10.50.0.144:8702';
+
+
+//http request 拦截器
+axios.interceptors.request.use(
   config => {
+    iView.LoadingBar.start();
+    // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
+    config.data = JSON.stringify(config.data);
+    config.headers = {
+      'Content-Type':'application/json'
+    }
+    // if(token){
+    //   config.params = {'token':token}
+    // }
     return config;
   },
   error => {
-    return Promise.reject(error);
+    iView.LoadingBar.error();
+    return Promise.reject(err);
   }
 );
 
-// 添加响应拦截器
-api.interceptors.response.use(
+//http response 拦截器
+axios.interceptors.response.use(
   response => {
-    return response.data;
+    iView.LoadingBar.finish();
+    if(response.data.errCode ==2){
+      router.push({
+        path:"/login",
+        querry:{redirect:router.currentRoute.fullPath}//从哪个页面跳转
+      })
+    }
+    return response;
   },
   error => {
-    // 对响应错误做点什么
-    return Promise.reject(error);
+    iView.LoadingBar.error();
+    if (error.response) {
+      switch (error.response.status) {
+        case 400:
+          console.log('参数不合法');
+          break;
+        case 401:            /**token未授权或token授权失败，过期等等**/
+        // 401 清除token信息并跳转到登录页面
+        store.commit(types.LOGOUT);
+          routers.replace({
+            path: 'login',
+            query: {redirect: routers.currentRoute.fullPath}
+          });
+          break;
+        case 404:            /**未找到页面**/
+        // 404 跳转到404页面
+        routers.push({
+          path: 'notfound'
+        });
+          break;
+        case 500:
+          console.log('服务器错误');
+          break;
+      }
+    }
+    return Promise.reject(error)
   }
-);
-export default api;
+)
+
+
+/**
+ * 封装get方法
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function fetch(url,params={}){
+  return new Promise((resolve,reject) => {
+    axios.get(url,{
+      params:params
+    })
+    .then(response => {
+      resolve(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+      reject(err)
+    })
+  })
+}
+
+
+/**
+ * 封装post请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function post(url,data = {}){
+  return new Promise((resolve,reject) => {
+    axios.post(url,data)
+    .then(response => {
+      resolve(response.data);
+    },err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * 封装patch请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function patch(url,data = {}){
+  return new Promise((resolve,reject) => {
+    axios.patch(url,data)
+    .then(response => {
+      resolve(response.data);
+    },err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * 封装put请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function put(url,data = {}){
+  return new Promise((resolve,reject) => {
+    axios.put(url,data)
+    .then(response => {
+      resolve(response.data);
+    },err => {
+      reject(err)
+    })
+  })
+}

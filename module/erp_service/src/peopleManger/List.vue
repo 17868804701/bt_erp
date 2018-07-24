@@ -390,20 +390,11 @@
     },
     mounted () {
       this.changeTableColumns();
-      this.$Loading.start();
-      Api.post('/mockjsdata/11793/test').then(res => {
-        console.log(res.statusCode);
-        let _this = this;
-        if(res.statusCode===0){
-          this.$Loading.finish()
-        }else {
-            setTimeout(function () {
-              _this.$Loading.finish()
-            },8000)
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
+//      this.$Loading.start();
+      this.$fetch(this.$url.InterfacePeopleList, {curren: 1,size: 10})
+      .then(res => {
+        console.log(res);
+      })
     }
   }
 </script>

@@ -48,7 +48,7 @@
       </Form>
     </Card>
     <Collapse v-model="value1" style="width: 98%;margin-left: 1%;margin-top: 10px;">
-      <Panel v-for="(item, index) in XJPJ_QG_DATA" :name="item+index" :kye="item+index">
+      <Panel v-for="(item, index) in XJPJ_QG_DATA" :name="item+index" :key="item+index">
         {{item.tableTitle}}
         <table slot="content">
           <tr>

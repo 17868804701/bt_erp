@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/": {
-        target: "http://rap.taobao.org/",
+        target: "http://10.50.0.144:8702/",
         pathRewrite: { "^/": "" }
       }
     },

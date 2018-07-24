@@ -55,7 +55,7 @@
     <Modal
       v-model="modal1"
       width="320"
-      title="更换钢瓶登记">
+      title="更换钢瓶/加气登记">
       <Form :model="formItem" :label-width="80">
         <FormItem label="钢瓶重量" style="margin: 0 0 10px 0">
           <Input v-model="formItem.input" placeholder="钢瓶重量" style="width: 195px;"/>
@@ -80,7 +80,18 @@
         <Button type="primary" icon="plus" @click="modal1=true"  size="small">增加</Button>
       </div>
       <Table :columns="columns2" :data="data2" size="small" border style="margin-top: 10px;"></Table>
-      <Page :total="100" show-total style="margin-top: 10px;"></Page>
+    </Card>
+    <Card style="width:98%;margin: 10px 1%">
+      <p slot="title">钢瓶更换记录</p>
+      <Tabs value="name1" style="margin-top: -15px;">
+        <TabPane label="加气记录" name="name1">
+          <Table :columns="columns3" :data="data3" size="small" border style="margin-top: 10px;"></Table>
+        </TabPane>
+        <TabPane label="换瓶记录" name="name2">
+          <Table :columns="columns4" :data="data4" size="small" border style="margin-top: 10px;"></Table>
+        </TabPane>
+      </Tabs>
+
     </Card>
   </div>
 </template>
@@ -131,18 +142,167 @@
                     this.modal1=true
                     }
                   }
-                }, '修改'),
+                }, '加气'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.modal1=true
+                    }
+                  }
+                }, '换瓶'),
               ]);
             }
           }
         ],
-        data2: []
+        data2: [],
+
+
+
+
+
+        columns3: [
+          {
+            title: '钢瓶重量',
+            key: 'gpzl'
+          },
+          {
+            title: '体积',
+            key: 'tj'
+          },
+          {
+            title: '瓶号',
+            key: 'ph'
+          },
+          {
+            title: '加气日期',
+            key: 'scrq'
+          },
+          {
+            title: '总价',
+            key: 'zj'
+          },
+//          {
+//            title: '操作',
+//            align: 'center',
+//            key: 'time',
+//            render: (h, params) => {
+//              return h('div', [
+//                h('Button', {
+//                  props: {
+//                    type: 'primary',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginRight: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      this.modal1=true
+//                    }
+//                  }
+//                }, '加气'),
+//                h('Button', {
+//                  props: {
+//                    type: 'primary',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginRight: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      this.modal1=true
+//                    }
+//                  }
+//                }, '换瓶'),
+//              ]);
+//            }
+//          }
+        ],
+        data3: [],
+
+
+
+
+
+        columns4: [
+          {
+            title: '钢瓶重量',
+            key: 'gpzl'
+          },
+          {
+            title: '体积',
+            key: 'tj'
+          },
+          {
+            title: '瓶号',
+            key: 'ph'
+          },
+          {
+            title: '更换钢瓶体积',
+            key: 'ghgptj'
+          },
+          {
+            title: '更换日期',
+            key: 'scrq'
+          },
+          {
+            title: '总价',
+            key: 'zj'
+          },
+//          {
+//            title: '操作',
+//            align: 'center',
+//            key: 'time',
+//            render: (h, params) => {
+//              return h('div', [
+//                h('Button', {
+//                  props: {
+//                    type: 'primary',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginRight: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      this.modal1=true
+//                    }
+//                  }
+//                }, '加气'),
+//                h('Button', {
+//                  props: {
+//                    type: 'primary',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginRight: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      this.modal1=true
+//                    }
+//                  }
+//                }, '换瓶'),
+//              ]);
+//            }
+//          }
+        ],
+        data4: []
       }
     },
-    methods: {},
+    methods: {
+    },
     mounted () {
       const data1 = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 8; i++) {
         data1.push({
           gpzl: '40kg',
           tj: '12L',
@@ -155,6 +315,48 @@
         });
       }
       this.data2 = data1;
+
+
+
+
+
+      const data2 = [];
+      for (let i = 0; i < 8; i++) {
+        data2.push({
+          gpzl: '40kg',
+          tj: '12L',
+          ph: '1510'+i,
+          bz: '大客车用',
+          scrq:'2018-02-05',
+          jcrq:'2018-02-04',
+          zbh:'16468165',
+          time: '2016-10-03',
+          zj:'4651元'
+        });
+      }
+      this.data3 = data2;
+
+
+
+      const data3 = [];
+      for (let i = 0; i < 8; i++) {
+        data3.push({
+          gpzl: '40kg',
+          tj: '12L',
+          ph: '1510'+i,
+          bz: '大客车用',
+          scrq:'2018-02-05',
+          jcrq:'2018-02-04',
+          zbh:'16468165',
+          time: '2016-10-03',
+          zj:'4651元',
+          ghgptj:'130L'
+        });
+      }
+      this.data4 = data3;
+
+
+      console.log(this.$server);
     }
   }
 </script>

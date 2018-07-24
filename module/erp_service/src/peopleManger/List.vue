@@ -390,6 +390,20 @@
     },
     mounted () {
       this.changeTableColumns();
+      this.$Loading.start();
+      Api.post('/mockjsdata/11793/test').then(res => {
+        console.log(res.statusCode);
+        let _this = this;
+        if(res.statusCode===0){
+          this.$Loading.finish()
+        }else {
+            setTimeout(function () {
+              _this.$Loading.finish()
+            },8000)
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 </script>

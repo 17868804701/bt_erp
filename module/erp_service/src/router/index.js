@@ -47,6 +47,7 @@ import addKfxx from '../serviceManger/addKfxx.vue'
 import zrxts from '../serviceManger/zrxts.vue'
 import kfclqktj from '../serviceManger/kfclqktj.vue'
 import xjpj from '../serviceManger/xjpj.vue'
+import tableTemp from '../serviceManger/tableTemp.vue'
 
 Vue.use(Router);
 
@@ -182,5 +183,8 @@ export default[
   },{
     path: '/gpjcInfo',
     component: gpjcInfo
+  },{
+    path: '/tableTemp',
+    component: tableTemp
   }
 ]

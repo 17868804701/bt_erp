@@ -63,7 +63,7 @@
         <Table :columns="columns11" :data="data10" border height="470" style="margin-top: 10px;" size="small"></Table>
         <Page :total="100" show-total style="margin-top: 10px;"></Page>
       </TabPane>
-      <TabPane label="分公司车次线路收入台账" name="name2">分公司车次线路收入台账</TabPane>
+      <!--<TabPane label="分公司车次线路收入台账" name="name2">分公司车次线路收入台账</TabPane>-->
     </Tabs>
   </div>
 </template>

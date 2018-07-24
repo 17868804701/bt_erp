@@ -182,6 +182,9 @@
               <a :href="url+'xjpj'" target="erp_main">
                 <MenuItem name="7-4">星级评价</MenuItem>
               </a>
+              <!--<a :href="url+'tableTemp'" target="erp_main">-->
+                <!--<MenuItem name="7-5">表格模板</MenuItem>-->
+              <!--</a>-->
             </Submenu>
           </Menu>
         </Sider>

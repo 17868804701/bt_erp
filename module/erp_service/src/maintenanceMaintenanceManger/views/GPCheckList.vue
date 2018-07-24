@@ -57,12 +57,8 @@
                   <FormItem label="名称" style="margin: 0 0 10px 0">
                     <Input v-model="formItem.input" placeholder="名称" class="text_width"/>
                   </FormItem>
-                  <FormItem label="选择体积" style="margin: 0 0 10px 0">
-                    <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                      <Option value="beijing">8L</Option>
-                      <Option value="shanghai">16L</Option>
-                      <Option value="shenzhen">32L</Option>
-                    </Select>
+                  <FormItem label="体积" style="margin: 0 0 10px 0">
+                    <Input v-model="formItem.input" placeholder="体积" class="text_width"/>
                   </FormItem>
                   <FormItem label="单价" style="margin: 0 0 10px 0">
                     <Input v-model="formItem.input" placeholder="单价" class="text_width"/>
@@ -192,7 +188,21 @@
                       this.show(params.index)
                     }
                   }
-                }, '删除')
+                }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.show(params.index)
+                    }
+                  }
+                }, '修改')
               ]);
             }
           }

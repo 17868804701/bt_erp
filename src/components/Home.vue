@@ -212,9 +212,9 @@
       }
     },
     mounted () {
-        this.$Loading.start();
+//        this.$Loading.start();
       setTimeout(function () {
-        this.$Loading.finish();
+//        this.$Loading.finish();
       },1000)
     }
   }

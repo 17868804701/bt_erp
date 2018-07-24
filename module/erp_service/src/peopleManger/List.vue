@@ -391,7 +391,7 @@
     mounted () {
       this.changeTableColumns();
 //      this.$Loading.start();
-      this.$fetch(this.$url.InterfacePeopleList, {curren: 1,size: 10})
+      this.$fetch(this.$url.userManager_userList, {curren: 1,size: 10})
       .then(res => {
         console.log(res);
       })

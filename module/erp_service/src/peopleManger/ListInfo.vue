@@ -298,7 +298,7 @@
       vuePdfjs
     },
     mounted () {
-
+      this.$post(this).then();
     }
   }
 </script>

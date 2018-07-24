@@ -271,16 +271,69 @@
   export default {
     data () {
       return {
+        formItem: {
+          // 基本信息
+          xm: "string",
+          cym: "string",
+          xb: "string",
+          mz: "string",
+          csny: "2018-07-24T03:52:24.860Z",
+          jg: "string",
+          lxdh: "string",
+          zzmm: "string",
+          xl: "string",
+          byyx: "string",
+          sxzy: "string",
+          zc: "string",
+          zyzgjn: "string",
+          lrsj: "2018-07-24T03:52:24.861Z",
+          poqk: "string",
+          sfzh: "string",
+          jkzk: "string",
+          fby: "string",
+          txdz: "string",
+          rdsj: "2018-07-24T03:52:24.861Z",
+          // 公积金信息
+          gjjzh: "string",
+          gjjkhsj: "2018-07-24T03:52:24.860Z",
+          gjjjcbz: "string",
+          gjjdh: "string",
+          gjjzt: "string",
+          // 单位信息
+          rybh: "string",
+          gh: "string", // 添加 工号
+          sscj: "string", // 所属车间
+          wxbz: "string", // 维修班组
+          dw: "string",
+          bm: "string",
+          zyjszc: "string",
+          qdsj: "2018-07-24T03:52:24.861Z",
+          txlb: "string",
+          gzzw: "string",
+          gzzh: "string",
+          //证件情况
+          ld: "string",
+          gsbx: "string",
+          zzqk: "string",
+          gwzt: "string",
+          zgsf: "string",
+          bxdh: "string",
+          ylbx: "string",
+          ylzh: "string",
+          gzsj: "2018-07-24T03:52:24.860Z",
+          bdwgzsj: "2018-07-24T03:52:24.860Z",
+          txsj: "2018-07-24T03:52:24.861Z",
+          htkssj: "2018-07-24T03:52:24.861Z",
+          htjssj: "2018-07-24T03:52:24.861Z",
+          bz: "string", // 备注
+          xmszm: "string", // 姓名首字母
+          ygfz: "string", // 员工附件
+          zpdz: "string", // 照片地址
+        },
         modalPdf: false,
         pdfurls: '',
         isshowpdf: false,
         value: '1',
-        formItem: {
-          input: '',
-          radio: '',
-          select: '',
-          date: ''
-        }
       }
     },
     methods: {
@@ -298,7 +351,7 @@
       vuePdfjs
     },
     mounted () {
-      this.$post(this).then();
+//      this.$post(this).then();
     }
   }
 </script>
@@ -359,63 +412,3 @@
   }
 </style>
 
-
-<!--
-  {
-  "bdwgzsj": "2018-07-24T03:52:24.860Z",
-  "bm": "string",
-  "bxdh": "string",
-  "byyx": "string",
-  "bz": "string",
-  "csny": "2018-07-24T03:52:24.860Z",
-  "cym": "string",
-  "dw": "string",
-  "fby": "string",
-  "gh": "string",
-  "gjjdh": "string",
-  "gjjjcbz": "string",
-  "gjjkhsj": "2018-07-24T03:52:24.860Z",
-  "gjjzh": "string",
-  "gjjzt": "string",
-  "gsbx": "string",
-  "gwzt": "string",
-  "gzsj": "2018-07-24T03:52:24.860Z",
-  "gzzh": "string",
-  "gzzw": "string",
-  "htjssj": "2018-07-24T03:52:24.861Z",
-  "htkssj": "2018-07-24T03:52:24.861Z",
-  "id": "string",
-  "jg": "string",
-  "jkzk": "string",
-  "ld": "string",
-  "lrsj": "2018-07-24T03:52:24.861Z",
-  "lxdh": "string",
-  "mz": "string",
-  "poqk": "string",
-  "qdsj": "2018-07-24T03:52:24.861Z",
-  "rdsj": "2018-07-24T03:52:24.861Z",
-  "rybgqk": "string",
-  "rybh": "string",
-  "sfzh": "string",
-  "sscj": "string",
-  "sxzy": "string",
-  "txdz": "string",
-  "txlb": "string",
-  "txsj": "2018-07-24T03:52:24.861Z",
-  "wxbz": "string",
-  "xb": "string",
-  "xl": "string",
-  "xm": "string",
-  "xmszm": "string",
-  "ygfz": "string",
-  "ylbx": "string",
-  "ylzh": "string",
-  "zc": "string",
-  "zgsf": "string",
-  "zpdz": "string",
-  "zyjszc": "string",
-  "zyzgjn": "string",
-  "zzmm": "string",
-  "zzqk": "string"
-}
--->

@@ -46,17 +46,9 @@ axios.interceptors.response.use(
           break;
         case 401:            /**token未授权或token授权失败，过期等等**/
         // 401 清除token信息并跳转到登录页面
-        store.commit(types.LOGOUT);
-          routers.replace({
-            path: 'login',
-            query: {redirect: routers.currentRoute.fullPath}
-          });
           break;
         case 404:            /**未找到页面**/
         // 404 跳转到404页面
-        routers.push({
-          path: 'notfound'
-        });
           break;
         case 500:
           console.log('服务器错误');

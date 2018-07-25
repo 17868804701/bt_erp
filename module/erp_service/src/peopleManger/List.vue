@@ -393,7 +393,7 @@
 //      this.$Loading.start();
       this.$fetch(this.$url.userManager_userList, {curren: 1,size: 10})
       .then(res => {
-        console.log(res);
+        this.$Message.info('查询成功')
       })
     }
   }

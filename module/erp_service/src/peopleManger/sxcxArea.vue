@@ -191,7 +191,7 @@
 
       },
       addPerson: function () {
-        this.$router.push({path: '/ListInfo'});
+        this.$router.push({path: '/ListInfo',query:{tip:'add'}});
       },
       extensionOptions() {
         this.sxExtension = (this.sxExtension === false) ? true : false;

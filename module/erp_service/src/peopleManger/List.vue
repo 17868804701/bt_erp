@@ -1,3 +1,20 @@
+<style>
+  .select_name {
+    width: 180px;
+    border: 1px solid #dddee1;
+    border-radius: 5px;
+    height: 32px;
+    padding-left: 7px;
+  }
+  .select_name::-webkit-input-placeholder {
+    color: #bbbec4;
+  }
+  #letter {
+    margin-right: 10px;
+    width: 50px;
+    margin-bottom: 10px;
+  }
+</style>
 <template>
   <div style="padding: 20px; height: 100%">
     <h2>
@@ -66,9 +83,114 @@
         </Checkbox-group>
       </Modal>
       <TabPane label="集团人员查询" name="name1">
-        <sxcxArea/>
+        <Card style="width:100%">
+          <p slot="title">员工列表查询</p>
+          <div>
+            <div>
+              <Form :model="cxItem" :label-width="120">
+                <div style="display: flex;flex-wrap: wrap">
+                  <FormItem label="首字母查询" style="margin-left: -50px;">
+                    <input v-model="cxItem.xmszm" type="text" @focus="modal1 = true" placeholder="按照姓名首字母查询"
+                           class="select_name">
+                  </FormItem>
+                  <Modal
+                    v-model="modal1"
+                    width="300"
+                    @on-ok="ok"
+                    :mask-closable="false"
+                    title="选择姓名首字母" style="text-align: center">
+                    <Button type="primary" size="small" v-for="(item,index) in letterArray" :key="item+index" id="letter"
+                            @click="getLetter(item)">{{item}}
+                    </Button>
+                  </Modal>
+                  <FormItem label="在职情况" style="margin-left: 10px;">
+                    <Select v-model="cxItem.zzqk" style="width:180px">
+                      <Option value="在职">在职</Option>
+                      <Option value="离职">离职</Option>
+                    </Select>
+                  </FormItem>
+                </div>
+                <div style="display: flex;flex-wrap: wrap">
+                  <FormItem label="合同自起" style="margin-left: -50px;">
+                    <DatePicker style="width: 180px;" v-model="cxItem.htkssj" type="date"
+                                placeholder="请选择合同自起时间"></DatePicker>
+                  </FormItem>
+                  <FormItem label="合同终止" style="margin-left: 10px;">
+                    <DatePicker style="width: 180px;" v-model="cxItem.htjssj" type="date"
+                                placeholder="请选择合同终止时间"></DatePicker>
+                  </FormItem>
+                </div>
+                <FormItem label="岗位状态" style="margin-left: -50px;">
+                  <CheckboxGroup v-model="cxItem.gwzt">
+                    <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
+                  </CheckboxGroup>
+                </FormItem>
+                <FormItem label="按单位查询" style="margin-left: -50px;">
+                  <CheckboxGroup v-model="cxItem.dw">
+                    <Checkbox label="集团公司"></Checkbox>
+                    <Checkbox label="公交一公司"></Checkbox>
+                    <Checkbox label="公交二公司"></Checkbox>
+                    <Checkbox label="公交三公司"></Checkbox>
+                    <Checkbox label="公交四公司"></Checkbox>
+                    <Checkbox label="公交五公司"></Checkbox>
+                    <Checkbox label="公交六公司"></Checkbox>
+                    <Checkbox label="长客公司"></Checkbox>
+                    <Checkbox label="点钞中心"></Checkbox>
+                    <Checkbox label="培训中心"></Checkbox>
+                    <Checkbox label="稽查大队"></Checkbox>
+                    <Checkbox label="站管中心"></Checkbox>
+                    <Checkbox label="维修公司"></Checkbox>
+                  </CheckboxGroup>
+                </FormItem>
+              </Form>
+            </div>
+            <!--筛选结果-->
+            <div style="width: 100%; text-align: center">
+              <Button type="primary" slot="extra" @click="search">
+                <Icon type="search"></Icon>
+                搜索
+              </Button>
+              <Button type="primary" size="default" slot="extra" style="float: right;">
+                <Icon type="android-download"></Icon>
+                导出Excel
+              </Button>
+              <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
+                      @click="exports=true">
+                <Icon type="android-upload"></Icon>
+                导入Excel
+              </Button>
+              <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
+                      @click="addPerson">
+                <Icon type="plus"></Icon>
+                新建
+              </Button>
+              <!--报表导入-->
+              <Modal
+                v-model="exports"
+                title="导入计划表"
+                width="400"
+                :mask-closable="false"
+                style="height:auto;">
+                <Steps :current="0" direction="vertical">
+                  <Step title="第一步" content="下载导入报表模板"></Step>
+                  <Step title="第二步" content="上传报表"></Step>
+                  <Step title="第三部" content="系统自动导入"></Step>
+                </Steps>
+                <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
+                  <Button type="dashed" icon="android-download"
+                          style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载
+                  </Button>
+                  <Upload action="//jsonplaceholder.typicode.com/posts/">
+                    <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传
+                    </Button>
+                  </Upload>
+                </div>
+              </Modal>
+            </div>
+          </div>
+        </Card>
         <Table style="margin-top: 10px;" size="small" :data="tableData2" :columns="tableColumns2" border></Table>
-        <Page :total="100" show-total style="margin-top: 10px;" :on-change="setPage"></Page>
+        <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
       <TabPane label="人员岗位统计" name="name2">
         <UserStatistics/>
@@ -80,18 +202,33 @@
   </div>
 </template>
 <script>
-  import sxcxArea from './sxcxArea.vue';
   import UserStatistics from './UserStatistics.vue'
   export default {
     components: {
-      sxcxArea,
       UserStatistics
     },
     data () {
       return {
+//          查询区域
+        exports: false,
+        modal1: false,
+        postList: ['全部', '公司领导', '二级', '三级', '主任科员', '一般管理', '辅助', '司机', '修理', '其他在岗', '内退', '病假', '产假', '女工长假', '下岗', '工伤', '待岗', '停薪', '外借', '其他不在岗',],
+        getLetters: [],
+        letterArray: ['全部', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '清除'],
+        cxItem:{
+          xmszm:'',
+          zzqk: '',
+          htkssj: '',
+          htjssj: '',
+          gwzt: [],
+          dw: [],
+          current:1,
+          size: 10
+        },
+//        主内容
         tableData2: [],
+        totalPage:0,
         tableColumns2: [],
-//        tableColumnsChecked: ['曾用名', '性别', '民族', '出生年月', '工号', '统计', '身份证号', '保险档号', '公积金档号', '公积金状态', '服兵役', '工作时间', '退休时间', '单位', '部门', '学历', '毕业院校', '所学专业', '工种', '职务', '工作证号', '合同自起', '合同止','备注', '路队', '工作类型', '备用字段1', '备用字段2', '备用字段3','备用字段4','备用字段5'],
         tableColumnsChecked: ['cym', 'xb', 'mz', 'xmdx', 'csny', 'jg', 'zzmm', 'gh', 'rybh', 'sfzh', 'bxdh', 'gjjzh', 'gjjdh', 'bm', 'zyjszc',
           'qdsj',
           'xl',
@@ -143,7 +280,7 @@
           xm: {
             title: '姓名',
             key: 'xm',
-            width: 200,
+            width: 100,
           },
           cym: {
             title: '曾用名',
@@ -467,7 +604,8 @@
                   on: {
                     click: () => {
                       this.$router.push({
-                        path: '/ListInfo'
+                        path: '/ListInfo',
+                        query: {row: params.row}
                       })
                     }
                   }
@@ -502,18 +640,49 @@
           path: '/UserStatistics'
         })
       },
-      setPage:function (e) {
+      setPage:function (current) {
+        this.cxItem.current=current;
+        this.getList();
+      },
+//      获取列表
+      getList:function () {
+          console.log(this.cxItem);
+        this.$fetch(this.$url.userManager_userList, {current:this.cxItem.current, size: 10})
+          .then(res => {
+              console.log(res);
+            this.totalPage=res.data.total;
+            this.tableData2=res.data.records;
+            this.$Message.info('查询成功')
+          })
+      },
 
+
+
+//      查询区域
+      addPerson: function () {
+        this.$router.push({path: '/ListInfo', query: {tip: 'add'}});
+      },
+      getLetter: function (item) {
+        if (item === '清除') {
+          this.cxItem.xmszm = '';
+          this.getLetters = []
+        } else {
+          this.getLetters.push(item);
+          let letter = this.getLetters.toString().replace(/,/g, '');
+          this.cxItem.xmszm = letter;
+        }
+      },
+      ok() {
+
+      },
+      search() {
+        console.log(this.cxItem);
+        this.getList();
       }
     },
     mounted () {
       this.changeTableColumns();
-      this.$fetch(this.$url.userManager_userList, {curren: 1,size: 10})
-      .then(res => {
-          console.log(res.data.records);
-          this.tableData2=res.data.records;
-          this.$Message.info('查询成功')
-      })
+      this.getList();
     }
   }
 </script>

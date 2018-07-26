@@ -2,7 +2,8 @@ import axios from 'axios';
 import iView from 'iview';
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL ='http://10.50.0.144:8702';
+axios.defaults.baseURL ='http://10.50.0.144:8702';//服务器
+// axios.defaults.baseURL ='http://192.168.1.103:8089';//本地
 
 
 //http request 拦截器
@@ -13,7 +14,7 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type':'application/json'
-    }
+    };
     // if(token){
     //   config.params = {'token':token}
     // }

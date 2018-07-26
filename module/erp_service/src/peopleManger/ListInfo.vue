@@ -8,7 +8,7 @@
       <Card class="card_file">
         <p slot="title">人员基本信息</p>
         <div slot="extra">
-          <Button type="primary" size="small" :icon="this.isEdit_jbxx==false?'checkmark-circled':'edit'" @click="jbxx">
+          <Button type="primary" size="small" v-show="this.$route.query.tip!='add'"  :icon="this.isEdit_jbxx==false?'checkmark-circled':'edit'" @click="jbxx">
             {{this.isEdit_jbxx == false ? '保存' : '修改'}}
           </Button>
         </div>
@@ -116,25 +116,25 @@
       <Card class="card_file" style="margin-top: 10px">
         <p slot="title">公积金基本信息</p>
         <div slot="extra">
-          <Button type="primary" size="small" :icon="this.isEdit_gjj==false?'checkmark-circled':'edit'" @click="gjj">
+          <Button type="primary" size="small" v-show="this.$route.query.tip!='add'" :icon="this.isEdit_gjj==false?'checkmark-circled':'edit'" @click="gjj">
             {{this.isEdit_gjj == false ? '保存' : '修改'}}
           </Button>
         </div>
         <div style="display: flex;flex-wrap: wrap">
-          <FormItem :label-width="120" label="公积金账号">
+          <FormItem :label-width="160" label="公积金账号">
             <Input :disabled="isEdit_gjj" v-model="formItem.gjjzh" placeholder="公积金账号" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="公积金开户时间">
+          <FormItem :label-width="160" label="公积金开户时间">
             <DatePicker :disabled="isEdit_gjj" type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.gjjkhsj"></DatePicker>
           </FormItem>
           <FormItem :label-width="160" label="公积金缴存情况备注">
             <Input :disabled="isEdit_gjj" v-model="formItem.gjjjcbz" placeholder="公积金缴存情况备注" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="公积金档号">
+          <FormItem :label-width="160" label="公积金档号">
             <Input :disabled="isEdit_gjj" v-model="formItem.gjjdh" placeholder="公积金档号" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="公积金状态">
+          <FormItem :label-width="160" label="公积金状态">
             <RadioGroup :disabled="isEdit_gjj" v-model="formItem.gjjzt" style="width: 170px;">
               <Radio label="已交">已交</Radio>
               <Radio label="未交">未交</Radio>
@@ -146,7 +146,7 @@
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">单位基本信息</p>
         <div slot="extra">
-          <Button type="primary" size="small" :icon="this.isEdit_dwxx==false?'checkmark-circled':'edit'" @click="dwxx">
+          <Button type="primary" v-show="this.$route.query.tip!='add'" size="small" :icon="this.isEdit_dwxx==false?'checkmark-circled':'edit'" @click="dwxx">
             {{this.isEdit_dwxx == false ? '保存' : '修改'}}
           </Button>
         </div>
@@ -174,7 +174,7 @@
             <Input :disabled="isEdit_dwxx" v-model="formItem.txlb" placeholder="退离类别" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="工种职务">
-            <Input :disabled="isEdit_dwxx" v-model="formItem.gzzw" placeholder="工种" class="input_item"/>
+            <Input :disabled="isEdit_dwxx" v-model="formItem.gzzw" placeholder="工种职务" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="工作证号">
             <Input :disabled="isEdit_dwxx" v-model="formItem.gzzh" placeholder="工作证号" class="input_item"/>
@@ -289,10 +289,13 @@
       <!--填写变更原因-->
       <Modal
         v-model="bgyy"
-        title="填写变更原因">
+        title="填写变更原因"
+        @on-ok="ok"
+        @on-cancel="cancel"
+      >
         <Form :model="formItem" :label-width="80">
           <FormItem label="变更原因">
-            <Input v-model="formItem.rybgqk" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+            <Input v-model="formItem.bgyy" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                    placeholder="填写变更原因，70字以内"></Input>
           </FormItem>
         </Form>
@@ -328,7 +331,7 @@
         ],
         ruleValidate: {
           xm: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
           ],
         },
         formItem: {
@@ -425,13 +428,31 @@
         }
       },
       save: function () {
-          console.log('结果',this.formItem);
+        console.log('结果', this.formItem);
         this.$post(this.$url.userManager_saveUserInfo, this.formItem)
           .then(res => {
-            if(res.success===true){
+            if (res.success === true) {
               this.$Message.info('添加成功');
-            }else {
+            } else {
               this.$Message.error('添加失败')
+            }
+          })
+      },
+      cancel: function () {
+        this.$Message.error('修改失败')
+      },
+      ok:function () {
+          console.log(this.formItem)
+//          this.update();
+      },
+      update: function () {
+        this.$post(this.$url.userManager_updateUserInfo, this.formItem)
+          .then(res => {
+              console.log(res);
+            if (res.success === true) {
+              this.$Message.info('修改成功');
+            } else {
+              this.$Message.error('修改失败')
             }
           })
       }
@@ -441,10 +462,12 @@
     },
     mounted () {
       let tip = this.$route.query.tip;
-      if(tip==='add'){
-        this.isEdit_jbxx=false,
-          this.isEdit_dwxx=false,
-          this.isEdit_gjj=false
+      this.formItem = this.$route.query.row||{};
+      console.log(this.$route.query.row);
+      if (tip === 'add') {
+          this.isEdit_jbxx = false,
+          this.isEdit_dwxx = false,
+          this.isEdit_gjj = false
       }
     }
   }

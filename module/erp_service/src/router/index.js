@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // 人力资源管理
 import List from '../peopleManger/List.vue'
-import SxcxArea from '../peopleManger/sxcxArea.vue'
 import ListInfo from '../peopleManger/ListInfo.vue'
 import UserStatistics from '../peopleManger/UserStatistics.vue'
 // 计划管理
@@ -55,10 +54,6 @@ export default[
   {
     path: '/',
     component: List
-  },
-  {
-    path: '/SxcxArea',
-    component: SxcxArea
   },
   {
     path: '/ListInfo',

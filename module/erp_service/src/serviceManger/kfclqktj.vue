@@ -37,7 +37,7 @@
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                             class="text_width"></DatePicker>
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
@@ -55,9 +55,12 @@
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
-              <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
-                            class="text_width"></DatePicker>
+              <FormItem label="选择公司" style="margin: 0">
+                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+                  <Option value="beijing">一公司</Option>
+                  <Option value="shanghai">二公司</Option>
+                  <Option value="shenzhen">三公司</Option>
+                </Select>
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
               <div class="btn">
@@ -75,7 +78,7 @@
           <Form :model="formItem" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="date" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                             class="text_width"></DatePicker>
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
@@ -103,115 +106,49 @@
         },
         columns11: [
           {
-            title: '时间',
+            title: '单位/项目',
             key: 'sj',
-            width:140,
             align: 'center',
 
           },
           {
-            title: '项目',
-            key: 'sj',
-            width:140,
+            title: '到站不停车',
+            key: 'dzbtc',
             align: 'center',
-            children:[
-              {
-                title: '到站不停车',
-                key: 'dzbtc',
-                width:140,
-                align: 'center',
-              },  {
-                title: '拒载',
-                key: 'jz',
-                width:140,
-                align: 'center',
-              },  {
-                title: '服务态度差',
-                key: 'fwtdc',
-                width:140,
-                align: 'center',
-              }, {
-                title: '脱线运营',
-                key: 'txyy',
-                width:140,
-                align: 'center',
-              }, {
-                title: '摔夹事故',
-                key: 'sjsg',
-                width:140,
-                align: 'center',
-              }, {
-                title: '刷IC卡方面',
-                key: 'ic',
-                width:140,
-                align: 'center',
-              }, {
-                title: '其它',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },
-            ]
           },  {
-            title: '单位',
-            key: 'ry',
-            width:140,
+            title: '拒载',
+            key: 'jz',
             align: 'center',
-            children:[
-              {
-                title: '一公司',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },  {
-                title: '二公司',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },  {
-                title: '三公司',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },  {
-                title: '四公司',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },  {
-                title: '五公司',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },  {
-                title: '六公司',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },
-            ]
-
           },  {
-            title: '项目合计',
-            key: 'hj',
-            width:140,
+            title: '服务态度差',
+            key: 'fwtdc',
             align: 'center',
-
-          },  {
-            title: '分公司投诉问题合计',
-            key: 'tshj',
-            width:140,
+          }, {
+            title: '脱线运营',
+            key: 'txyy',
             align: 'center',
-
-          },{
-            title: '备注',
-            key: 'yy',
-            width:140,
+          }, {
+            title: '摔夹事故',
+            key: 'sjsg',
             align: 'center',
-
-          }
+          }, {
+            title: '刷IC卡方面',
+            key: 'ic',
+            align: 'center',
+          }, {
+            title: '其它',
+            key: 'qt',
+            align: 'center',
+          },
         ],
-        data10: [],
+        data13: [],
+
+
+
+
+
+
+
 
 
 
@@ -220,135 +157,130 @@
 
         columns12: [
           {
-            title: '时间',
-            key: 'sj',
-            width:140,
+            title: '路别/项目',
+            key: 'xl',
             align: 'center',
 
           },
           {
-            title: '项目',
-            key: 'sj',
-            width:140,
+            title: '到站不停车',
+            key: 'dzbtc',
             align: 'center',
-            children:[
-              {
-                title: '到站不停车',
-                key: 'dzbtc',
-                width:140,
-                align: 'center',
-              },  {
-                title: '拒载',
-                key: 'jz',
-                width:140,
-                align: 'center',
-              },  {
-                title: '服务态度差',
-                key: 'fwtdc',
-                width:140,
-                align: 'center',
-              }, {
-                title: '脱线运营',
-                key: 'txyy',
-                width:140,
-                align: 'center',
-              }, {
-                title: '摔夹事故',
-                key: 'sjsg',
-                width:140,
-                align: 'center',
-              }, {
-                title: '刷IC卡方面',
-                key: 'ic',
-                width:140,
-                align: 'center',
-              }, {
-                title: '其它',
-                key: 'qt',
-                width:140,
-                align: 'center',
-              },
-            ]
+          },  {
+            title: '拒载',
+            key: 'jz',
+            align: 'center',
+          },  {
+            title: '服务态度差',
+            key: 'fwtdc',
+            align: 'center',
+          }, {
+            title: '脱线运营',
+            key: 'txyy',
+            align: 'center',
+          }, {
+            title: '摔夹事故',
+            key: 'sjsg',
+            align: 'center',
+          }, {
+            title: '刷IC卡方面',
+            key: 'ic',
+            align: 'center',
+          }, {
+            title: '其它',
+            key: 'qt',
+            align: 'center',
           },
-          {
-            title: '项目合计',
-            key: 'hj',
-            width:140,
-            align: 'center',
-
-          },  {
-            title: '路别',
-            key: 'lb',
-            width:140,
-            align: 'center',
-
-          },  {
-            title: '分公司投诉问题合计',
-            key: 'tshj',
-            width:140,
-            align: 'center',
-
-          },{
-            title: '备注',
-            key: 'yy',
-            width:140,
-            align: 'center',
-
-          }
         ],
         data12: [],
 
 
 
 
-
         columns13: [
           {
-            title: '时间',
-            key: 'sj',
-            align: 'center',
-
-          },
-          {
-            title: '单位',
+            title: '单位/项目',
             key: 'dw',
             align: 'center',
 
           },
           {
-            title: '分类及所占的比例',
-            key: 'sj',
+            title: '转办件数',
+            key: 'dzbtc',
+            align: 'center',
+          },  {
+            title: '分类及所占比例',
+            key: 'jz',
             align: 'center',
             children:[
               {
                 title: '到站不停车',
-                key: 'dzbtc',
-                align: 'center',
-              },  {
-                title: '拒载',
-                key: 'jz',
-                align: 'center',
-              },  {
-                title: '服务态度差',
                 key: 'fwtdc',
                 align: 'center',
               }, {
-                title: '其它',
+                title: '%',
                 key: 'txyy',
                 align: 'center',
               }, {
-                title: '安全方面数量',
+                title: '大间隔',
                 key: 'sjsg',
+                align: 'center',
+              }, {
+                title: '%',
+                key: 'ic',
+                align: 'center',
+              }, {
+                title: '拒载',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '%',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '服务态度差',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '%',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '其他',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '%',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '安全方面',
+                key: 'qt',
+                align: 'center',
+              }, {
+                title: '%',
+                key: 'qt',
+                align: 'center',
+              },
+            ],
+          },
+          {
+            title: '承办情况',
+            key: 'qt',
+            align: 'center',
+            children:[
+              {
+                title: '已办结',
+                key: 'qt',
+                align: 'center',
+              },
+              {
+                title: '未办结',
+                key: 'qt',
                 align: 'center',
               },
             ]
           },
-          {
-            title: '承办情况',
-            key: 'cbqk',
-            align: 'center',
-
-          }
         ],
         data13: [],
       }
@@ -356,11 +288,11 @@
     methods: {},
     mounted () {
       const data = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 1; i < 10; i++) {
         data.push({
           xh:i,
-          gsmc:i+'公司',
-          sj:'2018-10-1'+i,
+          sj:i+'公司',
+//          sj:'2018-10-1'+i,
           xl:'1'+i+'路',
           phone:'17868804701',
           type:'投诉',
@@ -405,7 +337,7 @@
           xh:i,
           gsmc:i+'公司',
           sj:'2018-10-1'+i,
-          xl:'1'+i+'路',
+          xl:'11'+i+'路',
           phone:'17868804701',
           type:'投诉',
           ry:'谢中华',

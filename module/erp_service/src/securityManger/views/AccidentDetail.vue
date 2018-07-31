@@ -14,20 +14,160 @@
       <p slot="title" >
         车辆事故基本信息
       </p>
-      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" @click="changeTextType">{{actionText}}</Button>
-      <Form v-model="formDetail" :label-width="80">
-        <Row align="middle" style="flex-wrap: wrap">
-          <Col span="6" v-for="(item, index) in columns" :key="item+index" style="height: 40px;">
-            <FormItem :label="columns[index].nameText" style="margin-top: 0px;">
-              <Input v-if="isEdit" v-model="columns[index].value" style="width: 150px;"></Input>
-              <div v-else>{{columns[index].value}}</div>
-            </FormItem>
-          </Col>
-        </Row>
+      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" @click="changeType">{{editText}}</Button>
+      <Button v-if="isEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="updateData">保存</Button>
+
+      <Form ref="updateDiv" :model="formValidate" :rules="ruleValidate" :label-width="150">
+        <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+
+          <FormItem prop="larq" label="立案日期:">
+            <div style="width: 120px">{{formValidate.larq}}</div>
+          </FormItem>
+
+          <FormItem prop="lasj" label="立案时间:">
+            <div style="width: 120px">{{formValidate.lasj}}</div>
+          </FormItem>
+
+          <FormItem label="事故性质:">
+            <div style="width: 120px">{{formValidate.sgxz}}</div>
+          </FormItem>
+
+          <FormItem label="事故总损失(元):">
+            <div style="width: 120px">{{formValidate.sgzss}}</div>
+          </FormItem>
+
+          <FormItem label="公积金定损金额合计(元):">
+            <div style="width: 120px">{{formValidate.gjjhj}}</div>
+          </FormItem>
+
+          <FormItem prop="sgsx" label="事故属性:">
+            <CheckboxGroup v-if="isEdit" v-model="formValidate.sgsx">
+              <Checkbox label="交强"></Checkbox>
+              <Checkbox label="车损"></Checkbox>
+              <Checkbox label="车内"></Checkbox>
+              <Checkbox label="三者"></Checkbox>
+            </CheckboxGroup>
+            <div style="width: 120px;" v-else>{{sgsxString}}</div>
+          </FormItem>
+
+          <FormItem prop="xczrsgfl" label="行车责任:">
+            <Select v-if="isEdit" v-model="formValidate.xczrsgfl" style="width: 120px;">
+              <Option value="QBZR">全部责任</Option>
+              <Option value="ZYZR">主要责任</Option>
+              <Option value="TDZR">同等责任</Option>
+              <Option value="SJQW">次要责任</Option>
+            </Select>
+            <div style="width: 120px;" v-else>{{formValidate.xczrsgfl}}</div>
+          </FormItem>
+
+          <FormItem prop="jafy" label="结案费用:">
+            <Input v-if="isEdit" v-model="formValidate.jafy" placeholder="结案费用..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.jafy}}</div>
+          </FormItem>
+
+        </div>
+
+        <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+
+          <FormItem prop="dw" label="登记单位:">
+            <Select v-if="isEdit" v-model="formValidate.dw" style="width: 120px;">
+              <Option value="公交一公司">公交一公司</Option>
+              <Option value="公交二公司">公交二公司</Option>
+              <Option value="公交三公司">公交三公司</Option>
+              <Option value="公交四公司">公交四公司</Option>
+            </Select>
+            <div style="width: 120px;" v-else>{{formValidate.dw}}</div>
+          </FormItem>
+
+          <FormItem prop="pz" label="牌照:">
+            <Input v-if="isEdit" v-model="formValidate.pz" placeholder="请输入牌照..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.pz}}</div>
+          </FormItem>
+
+          <FormItem prop="zbh" label="自编号:">
+            <Input v-if="isEdit" v-model="formValidate.zbh" placeholder="请输入车辆自编号..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.zbh}}</div>
+          </FormItem>
+
+          <FormItem prop="lb" label="路别:">
+            <Input v-if="isEdit" v-model="formValidate.lb" placeholder="请输入路别..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.lb}}</div>
+          </FormItem>
+
+          <FormItem prop="jsyxm" label="驾驶员姓名:">
+            <Input v-if="isEdit" v-model="formValidate.jsyxm" placeholder="驾驶员姓名..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.jsyxm}}</div>
+          </FormItem>
+
+          <FormItem prop="dd" label="地点:">
+            <Input v-if="isEdit" v-model="formValidate.dd" placeholder="地点..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.dd}}</div>
+          </FormItem>
+
+          <FormItem prop="lalx" label="立案状态:">
+            <Input v-if="isEdit" v-model="formValidate.lalx" placeholder="立案状态..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.lalx}}</div>
+          </FormItem>
+
+          <FormItem prop="bar" label="报案人:">
+            <Input v-if="isEdit" v-model="formValidate.bar" placeholder="报案人..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.bar}}</div>
+          </FormItem>
+
+          <FormItem prop="kcr" label="勘察人:">
+            <Input v-if="isEdit" v-model="formValidate.kcr" placeholder="勘察人..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.kcr}}</div>
+          </FormItem>
+
+          <FormItem prop="ssrs" label="受伤人数:">
+            <Input v-if="isEdit" v-model="formValidate.ssrs" placeholder="受伤人数..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.ssrs}}</div>
+          </FormItem>
+
+          <FormItem prop="swrs" label="死亡人数:">
+            <Input v-if="isEdit" v-model="formValidate.swrs" placeholder="死亡人数..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.swrs}}</div>
+          </FormItem>
+
+          <FormItem prop="kf" label="追加扣分:">
+            <Input v-if="isEdit" v-model="formValidate.kf" placeholder="追加扣分..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.kf}}</div>
+          </FormItem>
+
+        </div>
+
+        <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+
+          <FormItem prop="gjjcs" label="公积金车损:">
+            <Input v-if="isEdit" v-model="formValidate.gjjcs" placeholder="公积金车损..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.gjjcs}}</div>
+          </FormItem>
+
+          <FormItem prop="gjjcn" label="公积金车内:">
+            <Input v-if="isEdit" v-model="formValidate.gjjcn" placeholder="公积金车内..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.gjjcn}}</div>
+          </FormItem>
+
+          <FormItem prop="gjjsz" label="公积金三者:">
+            <Input v-if="isEdit" v-model="formValidate.gjjsz" placeholder="公积金三者..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.gjjsz}}</div>
+          </FormItem>
+
+          <FormItem prop="jqxss" label="交强险损失:">
+            <Input v-if="isEdit" v-model="formValidate.jqxss" placeholder="交强险损失..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.jqxss}}</div>
+          </FormItem>
+
+        </div>
+
+        <FormItem prop="bz" label="备注:">
+          <Input v-if="isEdit" style="width: 50%" v-model="formValidate.bz" type="textarea" :autosize="{minRows: 2,maxRows: 4}" placeholder="请输入说明备注..."></Input>
+          <div style="width: 120px;" v-else>{{formValidate.bz}}</div>
+        </FormItem>
 
       </Form>
     </Card>
-    <ARAddLossList/>
+    <ARAddLossList :tableData="lossListData" @update="updateLASGZJSHGList"/>
   </div>
 </template>
 
@@ -41,112 +181,146 @@
     data () {
       return {
         isEdit: false,
-        actionText: '编辑',
-        columns: [
-          {
-            nameCode: 'dw',
-            nameText: '登记单位:',
-            value: '公交一公司'
-          },
-          {
-            nameCode: 'pz',
-            nameText: '车牌号码:',
-            value: '蒙A123456'
-          },
-          {
-            nameCode: 'zbh',
-            nameText: '自编号:',
-            value: 'C3921'
-          },
-          {
-            nameCode: 'lb',
-            nameText: '路别:',
-            value: '706路'
-          },
-          {
-            nameCode: 'lasj',
-            nameText: '立案时间:',
-            value: '2018-09-10'
-          },
-          {
-            nameCode: 'dd',
-            nameText: '地点:',
-            value: '南门公交站拐弯处'
-          },
-          {
-            nameCode: 'jsyxm',
-            nameText: '驾驶员姓名:',
-            value: '小黄'
-          },
-          {
-            nameCode: 'bar',
-            nameText: '报案人:',
-            value: '小黄'
-          },
-          {
-            nameCode: 'sgsx',
-            nameText: '事故属性:',
-            value: '三者'
-          },
-          {
-            nameCode: 'sgxz',
-            nameText: '事故性质:',
-            value: '重大事故'
-          },
-          {
-            nameCode: 'kcr',
-            nameText: '勘查人:',
-            value: '阿俊'
-          },
-          {
-            nameCode: 'la',
-            nameText: '立案:',
-            value: '立案'
-          },
-          {
-            nameCode: 'gs',
-            nameText: '估损:',
-            value: '20万元'
-          },
-          {
-            nameCode: 'zr',
-            nameText: '责任:',
-            value: '我司司机负全责'
-          },
-          {
-            nameCode: 'bz',
-            nameText: '备注:',
-            value: '没办法, 被讹了'
-          },
-        ],
-        formDetail: {
-          dw: '公交一公司',
-          pz: '蒙A123456',
-          zbh: 'C3921',
-          lb: '706路',
-          lasj: '2018-09-10',
-          dd: '南门公交站拐弯处',
-          jsyxm: '小黄',
-          bar: '小黄',
-          sgsx: '三者',
-          sgxz: '重大事故',
-          kcr: '阿俊',
-          la: '立案',
-          gs: '20万元',
-          zr: '我司司机负全责',
-          bz: '没办法, 被讹了',
-        }
+        formValidate: {
+          dw: '',
+          dd: '',
+          pz: '',
+          zbh: '',
+          jsyxm: '',
+          lb: '',
+          lalx: '',
+          bar: '',
+          kcr: '',
+          sgsx: [],
+          sgxz: '',
+          kf: '',
+          bz: '',
+          swrs: 0,
+          ssrs: 0,
+          gjjcs: 0,
+          gjjcn: 0,
+          gjjsz: 0,
+          gjjhj: 0,
+          jqxss: 0,
+          sgzss: 0,
+          zr: '责任',
+          jafy: 0,
+          xczrsgfl: '',
+        },
+        ruleValidate: {
+          dw: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ],
+          xczrsgfl: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ],
+          pz: [
+            {required: true, message: '此项不能为空', trigger: 'blur'},
+          ],
+          dd: [
+            {required: true, message: '此项不能为空', trigger: 'blur'},
+          ],
+          lalx: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ],
+          lb: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ],
+          zbh: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ],
+          jsyxm: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ],
+          sgsx: [
+            {required: true, type: 'array', min: 1, message: '请至少选择一个', trigger: 'change'},
+          ],
+          zr: [
+            {required: true, message: '此项不能为空', trigger: 'blur'}
+          ]
+        },
+        lossListData: [],
       }
     },
     methods: {
-      changeTextType() {
-        this.isEdit = (this.isEdit === true) ? false : true;
-        console.log(this.isEdit);
-        this.actionText = (this.isEdit === true) ? '取消' : '编辑';
+      initialData() {
+        var params = {};
+        for (let attr in this.$route.query.rowData) {
+          params[attr] = this.$route.query.rowData[attr];
+        }
+        this.formValidate = params;
+//        console.log(params);
+        this.formValidate.sgsx = this.formValidate.sgsx.split("、");
+      },
+      changeType() {
+        if (this.isEdit) {
+          console.log('编辑状态下,点击了取消,还原原始数据');
+          this.initialData();
+        }else{
+          console.log('点击了编辑');
+        }
+        this.isEdit = !this.isEdit;
+      },
+      // ********** network ********** //
+      requestLASGZJSGListData() { // 立案事故追加信息列表
+        this.$fetch(this.$url.security_LASG_lossList, {ajid: this.$route.query.rowData.id})
+        .then(res=>{
+          this.lossListData = res.data.records;
+        })
+      },
+      updateLASGZJSHGList() {
+        this.requestLASGZJSGListData();
+      },
+      updateData() {
+        // 更新立案事故信息
+        let params = {};
+        for (let attr in this.formValidate) {
+          params[attr] = this.formValidate[attr];
+        }
+        delete params._index;
+        delete params._rowKey;
+        delete params.lasj;
+        delete params.larq;
+        params.sgsx = params.sgsx.join('、');
+        console.log(params);
+
+        this.$refs['updateDiv'].validate(valid=>{
+          if (valid) {
+            this.$post(this.$url.security_LASG_update, params)
+            .then(res=>{
+              this.$Message.success('修改成功!');
+              this.isEdit = false;
+            })
+          }else{
+            this.$Message.error('请按照规则来修改更新信息!');
+          }
+        })
+
+
       }
     },
+    computed: {
+      sgsxString() {
+        return this.formValidate.sgsx.join('、');l
+      },
+      editText() {
+        if (!this.isEdit) {
+          return '编辑';
+        }else{
+          return '取消';
+        }
+      },
+      editIcon() {
+        if (!this.isEdit) {
+          return 'edit';
+        }else{
+          return 'close';
+        }
+      },
+    },
     mounted () {
-
+      this.initialData();
+      this.requestLASGZJSGListData();
     }
   }
 </script>

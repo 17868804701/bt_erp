@@ -3,8 +3,8 @@ import iView from 'iview';
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL ='http://10.50.0.144:8702';//服务器
-// axios.defaults.baseURL ='http://192.168.1.103:8089';//本地
-
+// 192.168.1.110:8089
+// http://10.50.0.144:8702'
 
 //http request 拦截器
 axios.interceptors.request.use(

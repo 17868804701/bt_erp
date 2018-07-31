@@ -5,15 +5,12 @@
     <p slot="title" >
       追加经损记录
     </p>
-    <Button slot="extra" type="primary" size="small" style="margin-right: 10px;">导出Excel</Button>
-
-    <!--<Table style="margin-top: 20px;" height="535px" :data="tableData" border :columns="initTableColumns" border></Table>-->
     <can-edit-table
-      refs="table4"
+      ref="table"
       v-model="tableData"
       :hover-show="true"
-      @on-cell-change="handleCellChange"
       @on-change="handleChange"
+      @on-delete="handleDel"
       :editIncell="true"
       :columns-list="initTableColumns"
     ></can-edit-table>
@@ -23,16 +20,16 @@
 <script>
   import canEditTable from '../../components/common/canEditTable.vue';
   export default {
+    props: {
+      tableData: Array,
+    },
     components: {
       canEditTable,
     },
     data () {
       return {
         columnsTitle: ['追加公司', '路别', '牌照', '驾驶员姓名', '立案时间', '预估经损', '结案经损', '追加车内', '追加车损', '三者', '合计追加', '追加扣分', '备注'],
-        columnsCode: ['zjgs','lb','pz','jsyxm','lasj','ygjs','jajs','zjcn','zjcs','sz','hjzj','zjkf','bz'],
-        tableData:this.mockTableData(),
-        addLossStatus: false,
-
+        columnsCode: ['zjgs','lb','pz','jsyxm','lasj','ygjs','jajs','zjcn','zjcs','zjsz','hjzj','zjkf','bz'],
       }
     },
     computed: {
@@ -68,32 +65,6 @@
       },
     },
     methods: {
-      mockTableData () {
-        let data = [];
-        function getNum() {
-          return Math.floor(Math.random () * 100 + 1);
-        }
-        for (let i = 0; i < 1; i++) {
-          data.push({
-            zjgs: '单位'+ i,
-            pz: '蒙A123456',
-            lb: '706路',
-            lasj: '2018-09-10',
-            jsyxm: '大黄',
-            sgsx: '交强、车损、车内',
-            sgxz: '重大事故',
-            ygjs: '100万元',
-            jajs: '80万元',
-            zjcn: '20万元',
-            zjcs: '40万元',
-            sz: '20万元',
-            hjzj: '100万元',
-            zjkf: '10分',
-            bz: getNum(),
-          })
-        }
-        return data;
-      },
       search() {
         console.log('搜索查询');
       },
@@ -101,13 +72,36 @@
         console.log('查看详情');
       },
       handleDel (val, index) {
-        this.$Message.success('删除了第' + (index + 1) + '行数据');
-      },
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
+        let row = val[index];
+        this.deleteLASGZJSGData(row);
       },
       handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
+        let row = val[index];
+        this.updateLASGZJSGData(row);
+      },
+      updateLASGZJSGData(row) { // 修改立案事故追加信息
+        var that = this;
+        this.$post(this.$url.security_LASG_updateLoss, row)
+        .then(res=>{
+          console.log(res);
+          if (res.success === true) {
+            this.$Message.success('修改成功!');
+            that.$emit('update');
+          }else{
+            this.$Message.error('修改失败!');
+          }
+        })
+      },
+      deleteLASGZJSGData(row) { // 删除立案事故追加信息
+        this.$fetch(this.$url.security_LASG_deleteLoss, {id: row.id})
+        .then(res=>{
+          if (res.success === true) {
+            this.$Message.success('删除成功!');
+            this.$emit('update');
+          }else{
+            this.$Message.error('删除失败!');
+          }
+        })
       },
     },
     mounted () {
@@ -115,3 +109,24 @@
     }
   }
 </script>
+
+<!--
+{
+  "bz": "string",
+  "hjzj": 0,
+  "id": "string",
+  "jajs": 0,
+  "jsyxm": "string",
+  "laid": "string",
+  "lasj": "2018-07-30T05:47:10.816Z",
+  "lb": "string",
+  "pz": "string",
+  "ygjs": 0,
+  "zjcn": 0,
+  "zjcs": 0,
+  "zjgs": "string",
+  "zjkf": 0,
+  "zjsz": 0
+}
+-->
+

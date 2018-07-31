@@ -32,8 +32,8 @@ const editButton = (vm, h, currentRow, index) => {
                     edittingRow.editting = false;
                     edittingRow.saving = false;
                     vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
-                    vm.$emit('input', vm.handleBackdata(vm.thisTableData));
-                    vm.$emit('on-change', vm.handleBackdata(vm.thisTableData), index);
+//                    vm.$emit('input', vm.handleBackdata(vm.thisTableData));
+                    vm.$emit('on-change', vm.handleBackdata(vm.edittingStore), index);
                 }
             }
         }
@@ -48,8 +48,8 @@ const deleteButton = (vm, h, currentRow, index) => {
         },
         on: {
             'on-ok': () => {
-                vm.thisTableData.splice(index, 1);
-                vm.$emit('input', vm.handleBackdata(vm.thisTableData));
+//                vm.thisTableData.splice(index, 1);
+//                vm.$emit('input', vm.handleBackdata(vm.thisTableData));
                 vm.$emit('on-delete', vm.handleBackdata(vm.thisTableData), index);
             }
         }

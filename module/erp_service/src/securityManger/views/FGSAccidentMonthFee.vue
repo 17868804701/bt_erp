@@ -8,8 +8,8 @@
           <Col span="24">
           <FormItem label="按月查询" style="margin: 0;">
             <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-            <Button type="primary" icon="ios-search">搜索</Button>
-            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+            <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
+            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
           </FormItem>
           </Col>
         </Row>
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-  import canEditTable from '../../components/common/canEditTable.vue'
+  import canEditTable from '../../components/common/canEditTable.vue';
+  import * as DateTool from '../../../utils/DateTool';
   export default {
     components:{
       canEditTable
@@ -29,7 +30,6 @@
     data () {
       return {
         formItem: {
-          select: '',
           date: ''
         },
         columns11: [
@@ -167,8 +167,33 @@
       },
       handleChange (val, index) {
         this.$Message.success('修改了第' + (index + 1) + '行数据');
-      }
+      },
+      searchData() {
+        if (isNaN(this.formItem.date)&&!isNaN(Date.parse(this.formItem.date))) {
+          console.log('_______++++++____');
 
+          console.log(this.formItem);
+        }
+
+        let date = this.formatDate(this.formItem.date);
+        console.log(date);
+        // 请求数据
+        console.log('_____________________');
+        let firstDay = DateTool.getFirstDay(this.formItem.date);
+        let lastDay = DateTool.getLastDay(this.formItem.date);
+      },
+      exportExcel() {
+        // 按当前月份查询下载
+        let url = this.$url.security_GFGSJTSG_exportExcel;
+        window.open(url);
+      },
+      formatDate(time) {
+        let date =  new Date(time);
+        let y = 1900+date.getYear();
+        let m = "0"+(date.getMonth()+1);
+        let d = "0"+date.getDate();
+        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+      },
     },
     mounted () {
       const data = [];

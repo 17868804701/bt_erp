@@ -8,11 +8,9 @@
 
 <template>
   <div>
-    <Table height="600" :data="tableData" border :columns="initTableColumns" border></Table>
-    <Page :total="100" show-total style="margin-top: 10px;"></Page>
+    <Table :data="tableData" border :columns="initTableColumns" border></Table>
     <Row type="flex" justify="center" align="middle" style="margin-top: 0px;margin-bottom: 40px;margin-top: 20px;">
       <Col span="23">
-        <!--饼状图-->
         <Card style="height: 800px;">
           <p slot="title" class="card-title">
             <Icon type="ios-pulse-strong"></Icon>
@@ -32,10 +30,10 @@
   export default {
     data () {
       return {
-        columnsTitle: ['总计','不含退离','在岗职工小计','在岗女工','公司领导','二级','三级(主任科员)','一般管理','辅助','司机','修理','其他在岗','其他不在岗','内退',
-        '病假','产假','女工长假','下岗','工伤','待岗','停薪','外借','退离','说明'],
-        columnsCode: ['zj','bhtli','zgzgxj','zgng','gsld','ej','sj','ybgl','fz','siji','xl','qtzg','qtbzg','nt','cj','bj','ngcj','xg','gs','dg','tx','wj','tl','sm'],
-        tableData:this.mockTableData(),
+        columnsTitle: ['总计','不含退离','在岗女工','公司领导','二级','三级(主任科员)','一般管理','辅助','司机','修理','其他在岗','其他不在岗','内退',
+        '病假','产假','女工长假','下岗','工伤','待岗','停薪','外借','退离'],
+        columnsCode: ['zj','bhtl','zgng','gsld','ej','sj','ybgl','fz','siji','xl','qtzg','qtbzg','nt','cj','bj','ngcj','xg','gs','dg','tx','wj','tl'],
+        tableData:[],
       }
     },
     computed: {
@@ -68,11 +66,9 @@
         }
         for (let i = 0; i < 17; i++) {
           data.push({
-            dwh: getNum(),
             dw: '单位'+ i,
             zj: getNum(),
-            bhtli: getNum(),
-            zgzgxj: getNum(),
+            bhtl: getNum(),
             zgng: getNum(),
             gsld: getNum(),
             ej: getNum(),
@@ -93,22 +89,26 @@
             tx: getNum(),
             wj: getNum(),
             tl: getNum(),
-            sm: getNum(),
           })
         }
         return data;
       },
+      requestData() {
+        this.$fetch(this.$url.userManager_counts)
+        .then(res => {
+          this.tableData = res.data;
+          // 构建图表数据
+          this.pieData();
+        })
+      },
       pieData() {
         var dataSourcePie = echarts.init(document.getElementById('data_source_con'));
-
         let dwData = [];
         let series = [];
-        for (let i = 0; i < 17; i++) {
-
+        for (let i = 0; i < this.tableData.length; i++) {
           let countData = [];
           countData.push(this.tableData[i].zj);
-          countData.push(this.tableData[i].bhtli);
-          countData.push(this.tableData[i].zgzgxj);
+          countData.push(this.tableData[i].bhtl);
           countData.push(this.tableData[i].zgng);
           countData.push(this.tableData[i].gsld);
           countData.push(this.tableData[i].ej);
@@ -194,12 +194,82 @@
           dataSourcePie.resize();
         });
       },
-
     },
     mounted () {
       this.$nextTick(() => {
-        this.pieData();
+        this.requestData();
       });
     }
   }
 </script>
+<!--
+bhtl
+:
+1
+bj
+:
+0
+cj
+:
+0
+dg
+:
+0
+dw
+:
+"
+ej
+:
+0
+fz
+:
+0
+gs
+:
+0
+gsld
+:
+0
+ngcj
+:
+0
+nt
+:
+0
+qtbzg
+:
+0
+qtzg
+:
+0
+siji
+:
+0
+sj
+:
+0
+tl
+:
+0
+tx
+:
+0
+wj
+:
+0
+xg
+:
+0
+xl
+:
+0
+ybgl
+:
+0
+zgng
+:
+0
+zj
+:
+1
+-->

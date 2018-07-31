@@ -201,8 +201,8 @@
       </TabPane>
       <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
 
-      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true">列表字段扩展</Button>
-      <!--<Button type="primary" size="default" slot="extra">临时退出</Button>-->
+      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true" style="margin-right: 10px;">列表字段扩展</Button>
+      <Button type="primary" size="default" slot="extra"  @click="exit" >临时退出</Button>
     </Tabs>
   </div>
 </template>
@@ -683,8 +683,17 @@
       },
 //      导出报表
       daochu: function () {
-//          console.log(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj)
-          window.open(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj)
+          this.$getExcel(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj);
+      },
+      exit:function () {
+        this.$fetch('http://10.50.0.144:8702/login/logout?access_token='+this.$VueCookie.get('access_token'))
+          .then(res => {
+           console.log(res);
+            if(res.success===true){
+              this.$VueCookie.set('access_token','',-1);
+              window.top.location.href = process.env.BASE_URL+"/login";
+            }
+          })
       }
     },
     mounted () {

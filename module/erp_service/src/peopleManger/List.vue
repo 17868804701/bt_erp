@@ -6,9 +6,11 @@
     height: 32px;
     padding-left: 7px;
   }
+
   .select_name::-webkit-input-placeholder {
     color: #bbbec4;
   }
+
   #letter {
     margin-right: 10px;
     width: 50px;
@@ -26,7 +28,7 @@
         width="550"
         style="height: auto"
         :mask-closable="false"
-        title="选择要显示的列字段" >
+        title="选择要显示的列字段">
         <Checkbox-group v-model="tableColumnsChecked" @on-change="changeTableColumns">
           <Checkbox label="cym">曾用名</Checkbox>
           <Checkbox label="xb">性别</Checkbox>
@@ -99,12 +101,14 @@
                     @on-ok="ok"
                     :mask-closable="false"
                     title="选择姓名首字母" style="text-align: center">
-                    <Button type="primary" size="small" v-for="(item,index) in letterArray" :key="item+index" id="letter"
+                    <Button type="primary" size="small" v-for="(item,index) in letterArray" :key="item+index"
+                            id="letter"
                             @click="getLetter(item)">{{item}}
                     </Button>
                   </Modal>
                   <FormItem label="在职情况" style="margin-left: 10px;">
                     <Select v-model="cxItem.zzqk" style="width:180px">
+                      <Option value="">全部</Option>
                       <Option value="在职">在职</Option>
                       <Option value="离职">离职</Option>
                     </Select>
@@ -150,7 +154,7 @@
                 <Icon type="search"></Icon>
                 搜索
               </Button>
-              <Button type="primary" size="default" slot="extra" style="float: right;">
+              <Button type="primary" size="default" @click="daochu" slot="extra" style="float: right;">
                 <Icon type="android-download"></Icon>
                 导出Excel
               </Button>
@@ -197,7 +201,8 @@
       </TabPane>
       <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
 
-      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true" >列表字段扩展</Button>
+      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true">列表字段扩展
+      </Button>
     </Tabs>
   </div>
 </template>
@@ -215,19 +220,19 @@
         postList: ['全部', '公司领导', '二级', '三级', '主任科员', '一般管理', '辅助', '司机', '修理', '其他在岗', '内退', '病假', '产假', '女工长假', '下岗', '工伤', '待岗', '停薪', '外借', '其他不在岗',],
         getLetters: [],
         letterArray: ['全部', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '清除'],
-        cxItem:{
-          xmszm:'',
+        cxItem: {
+          xmszm: '',
           zzqk: '',
           htkssj: '',
           htjssj: '',
           gwzt: [],
           dw: [],
-          current:1,
+          current: 1,
           size: 10
         },
 //        主内容
         tableData2: [],
-        totalPage:0,
+        totalPage: 0,
         tableColumns2: [],
         tableColumnsChecked: ['cym', 'xb', 'mz', 'xmdx', 'csny', 'jg', 'zzmm', 'gh', 'rybh', 'sfzh', 'bxdh', 'gjjzh', 'gjjdh', 'bm', 'zyjszc',
           'qdsj',
@@ -593,7 +598,7 @@
             key: 'month20',
             align: 'center',
             fixed: 'right',
-            width: 200,
+            width: 150,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -610,20 +615,20 @@
                     }
                   }
                 }, '详情'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginLeft: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      alert("删除成功")
-                    }
-                  }
-                }, '删除')
+//                h('Button', {
+//                  props: {
+//                    type: 'error',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginLeft: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      alert("删除成功")
+//                    }
+//                  }
+//                }, '删除')
               ]);
             }
           }
@@ -640,22 +645,19 @@
           path: '/UserStatistics'
         })
       },
-      setPage:function (current) {
-        this.cxItem.current=current;
+      setPage: function (current) {
+        this.cxItem.current = current;
         this.getList();
       },
 //      获取列表
-      getList:function () {
-          console.log(this.cxItem);
-        this.$fetch(this.$url.userManager_userList, {current:this.cxItem.current, size: 10})
+      getList: function () {
+        this.$fetch(this.$url.userManager_userList, this.cxItem)
           .then(res => {
-              console.log(res);
-            this.totalPage=res.data.total;
-            this.tableData2=res.data.records;
+            this.totalPage = res.data.total;
+            this.tableData2 = res.data.records;
             this.$Message.info('查询成功')
           })
       },
-
 
 
 //      查询区域
@@ -678,9 +680,20 @@
       search() {
         console.log(this.cxItem);
         this.getList();
+      },
+//      导出报表
+      daochu: function () {
+//          console.log(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj)
+          window.open(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj)
+//        this.$fetch(this.$url.userManager_exportExcel, this.cxItem)
+//          .then(res => {
+//            console.log(res);
+//            this.$Message.info('导出成功')
+//          })
       }
     },
     mounted () {
+//        window.top.location.href='http://10.50.0.144:8702/login';
       this.changeTableColumns();
       this.getList();
     }

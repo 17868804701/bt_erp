@@ -8,7 +8,8 @@
       <Card class="card_file">
         <p slot="title">人员基本信息</p>
         <div slot="extra">
-          <Button type="primary" size="small" v-show="this.$route.query.tip!='add'"  :icon="this.isEdit_jbxx==false?'checkmark-circled':'edit'" @click="jbxx">
+          <Button type="primary" size="small" v-show="this.$route.query.tip!='add'"
+                  :icon="this.isEdit_jbxx==false?'checkmark-circled':'edit'" @click="jbxx">
             {{this.isEdit_jbxx == false ? '保存' : '修改'}}
           </Button>
         </div>
@@ -29,8 +30,7 @@
               </FormItem>
               <FormItem :label-width="120" label="民族">
                 <Select v-model="formItem.mz" :disabled="isEdit_jbxx" style="width: 170px;">
-                  <Option value="汉族">汉族</Option>
-                  <Option value="满族">满族</Option>
+                  <Option v-for="(item,index) in nations" :value="item">{{item}}</Option>
                 </Select>
               </FormItem>
               <FormItem :label-width="120" label="出生年月">
@@ -41,7 +41,7 @@
                 <Input :disabled="isEdit_jbxx" v-model="formItem.jg" placeholder="陕西汉中" class="input_item"/>
               </FormItem>
               <FormItem :label-width="120" label="姓名首字母">
-                <Input :disabled="isEdit_jbxx" v-model="formItem.xmdx" placeholder="姓名首字母" class="input_item"/>
+                <Input :disabled="isEdit_jbxx" v-model="formItem.xmszm" placeholder="姓名首字母" class="input_item"/>
               </FormItem>
               <FormItem :label-width="120" label="联系电话">
                 <Input :disabled="isEdit_jbxx" v-model="formItem.lxdh" placeholder="联系电话" class="input_item"/>
@@ -96,7 +96,7 @@
             </div>
             <div class="head jbxx_right">
               <img class="head_img"
-                   src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530166672360&di=0d3b017d5285bae86c811371eca9cd11&imgtype=0&src=http%3A%2F%2Fpic14.photophoto.cn%2F20100127%2F0036036848818577_b.jpg"
+                   :src="formItem.zpdz"
                    alt="">
               <Upload action="//jsonplaceholder.typicode.com/posts/">
                 <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
@@ -116,7 +116,8 @@
       <Card class="card_file" style="margin-top: 10px">
         <p slot="title">公积金基本信息</p>
         <div slot="extra">
-          <Button type="primary" size="small" v-show="this.$route.query.tip!='add'" :icon="this.isEdit_gjj==false?'checkmark-circled':'edit'" @click="gjj">
+          <Button type="primary" size="small" v-show="this.$route.query.tip!='add'"
+                  :icon="this.isEdit_gjj==false?'checkmark-circled':'edit'" @click="gjj">
             {{this.isEdit_gjj == false ? '保存' : '修改'}}
           </Button>
         </div>
@@ -135,10 +136,7 @@
             <Input :disabled="isEdit_gjj" v-model="formItem.gjjdh" placeholder="公积金档号" class="input_item"/>
           </FormItem>
           <FormItem :label-width="160" label="公积金状态">
-            <RadioGroup :disabled="isEdit_gjj" v-model="formItem.gjjzt" style="width: 170px;">
-              <Radio label="已交">已交</Radio>
-              <Radio label="未交">未交</Radio>
-            </RadioGroup>
+            <Input :disabled="isEdit_gjj" v-model="formItem.gjjzt" placeholder="公积金状态" class="input_item"/>
           </FormItem>
         </div>
       </Card>
@@ -146,7 +144,8 @@
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">单位基本信息</p>
         <div slot="extra">
-          <Button type="primary" v-show="this.$route.query.tip!='add'" size="small" :icon="this.isEdit_dwxx==false?'checkmark-circled':'edit'" @click="dwxx">
+          <Button type="primary" v-show="this.$route.query.tip!='add'" size="small"
+                  :icon="this.isEdit_dwxx==false?'checkmark-circled':'edit'" @click="dwxx">
             {{this.isEdit_dwxx == false ? '保存' : '修改'}}
           </Button>
         </div>
@@ -155,7 +154,22 @@
             <Input :disabled="isEdit_dwxx" v-model="formItem.rybh" placeholder="人员编号" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="单位">
-            <Input :disabled="isEdit_dwxx" v-model="formItem.dw" placeholder="单位" class="input_item"/>
+            <Select :disabled="isEdit_dwxx" v-model="formItem.dw" style="width: 170px;">
+              <Option value="集团公司">集团公司</Option>
+              <Option value="公交一公司">公交一公司</Option>
+              <Option value="公交二公司">公交二公司</Option>
+              <Option value="公交三公司">公交三公司</Option>
+              <Option value="公交四公司">公交四公司</Option>
+              <Option value="公交五公司">公交五公司</Option>
+              <Option value="公交六公司">公交六公司</Option>
+              <Option value="长客公司">长客公司</Option>
+              <Option value="点钞中心">点钞中心</Option>
+              <Option value="培训中心">培训中心</Option>
+              <Option value="稽查大队">稽查大队</Option>
+              <Option value="站管中心">站管中心</Option>
+              <Option value="维修公司">维修公司</Option>
+            </Select>
+            <!--<Input :disabled="isEdit_dwxx" v-model="formItem.dw" placeholder="单位" class="input_item"/>-->
           </FormItem>
           <FormItem :label-width="120" label="部门">
             <Input :disabled="isEdit_dwxx" v-model="formItem.bm" placeholder="部门" class="input_item"/>
@@ -241,10 +255,10 @@
             <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.txsj"></DatePicker>
           </FormItem>
-          <FormItem :label-width="120" label="公积金开户时间">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
-                        v-model="formItem.date"></DatePicker>
-          </FormItem>
+          <!--<FormItem :label-width="120" label="公积金开户时间">-->
+            <!--<DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"-->
+                        <!--v-model="formItem.gjjkhsj"></DatePicker>-->
+          <!--</FormItem>-->
           <FormItem :label-width="120" label="合同自起">
             <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.htkssj"></DatePicker>
@@ -259,24 +273,15 @@
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">人员变更记录</p>
         <div>
-          <Table stripe :columns="columns1" :data="data1" border></Table>
-          <!--<FormItem :label-width="120" label="人员变更情况">-->
-          <!--<Input v-model="formItem.input" placeholder="人员变更情况" class="input_item"/>-->
-          <!--</FormItem>-->
-          <!--<FormItem :label-width="120" label="变更原因">-->
-          <!--<Input v-model="formItem.input" placeholder="变更原因" class="input_item"/>-->
-          <!--</FormItem>-->
-          <!--<FormItem :label-width="120" label="变更时间">-->
-          <!--<DatePicker type="date" style="width: 170px;" placeholder="Select date"-->
-          <!--v-model="formItem.date"></DatePicker>-->
-          <!--</FormItem>-->
-          <!--<FormItem :label-width="120" label="变更内容">-->
-          <!--<Input v-model="formItem.input" placeholder="变更内容" class="input_item"/>-->
-          <!--</FormItem>-->
+          <FormItem :label-width="120" label="变更原因">
+            <Input v-model="formItem.bgyy" :disabled="true" placeholder="变更原因" class="input_item"/>
+          </FormItem>
         </div>
       </Card>
       <div style="width: 100%;text-align: center;padding: 20px;">
-        <Button type="primary" icon="checkmark-circled" @click="save">提交保存</Button>
+        <Button type="primary" icon="checkmark-circled" @click="save('formItem')" v-show="this.$route.query.tip=='add'">
+          提交保存
+        </Button>
       </div>
       <Modal
         v-model="modalPdf"
@@ -284,8 +289,6 @@
         title="查看pdf">
         <vuePdfjs url="http://cdn.mozilla.net/pdfjs/tracemonkey.pdf" :type="0">111111111111111111111</vuePdfjs>
       </Modal>
-
-
       <!--填写变更原因-->
       <Modal
         v-model="bgyy"
@@ -305,37 +308,23 @@
 </template>
 <script>
   import vuePdfjs from 'vue-pdfjs'
-  import vueshowpdf from 'vueshowpdf'
   export default {
     data () {
       return {
+        nations: ["汉族", "蒙古族", "回族", "藏族", "维吾尔族", "苗族", "彝族", "壮族", "布依族", "朝鲜族", "满族", "侗族", "瑶族", "白族", "土家族",
+          "哈尼族", "哈萨克族", "傣族", "黎族", "傈僳族", "佤族", "畲族", "高山族", "拉祜族", "水族", "东乡族", "纳西族", "景颇族", "柯尔克孜族",
+          "土族", "达斡尔族", "仫佬族", "羌族", "布朗族", "撒拉族", "毛南族", "仡佬族", "锡伯族", "阿昌族", "普米族", "塔吉克族", "怒族", "乌孜别克族",
+          "俄罗斯族", "鄂温克族", "德昂族", "保安族", "裕固族", "京族", "塔塔尔族", "独龙族", "鄂伦春族", "赫哲族", "门巴族", "珞巴族", "基诺族"],
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
         bgyy: false,
-        columns1: [
-          {
-            title: '人员变更原因',
-            key: 'bgyy'
-          },
-          {
-            title: '变更时间',
-            key: 'bgsj'
-          }
-        ],
-        data1: [
-          {
-            bgyy: '把职位换成主任',
-            bgsj: '2018-10-10',
-          },
-        ],
         ruleValidate: {
           xm: [
             {required: true, message: '必填项不能为空', trigger: 'blur'}
           ],
         },
         formItem: {
-          // 基本信息
           xm: "",
           cym: "",
           xb: "",
@@ -357,13 +346,11 @@
           fby: "",
           txdz: "",
           rdsj: "",
-          // 公积金信息
           gjjzh: "",
           gjjkhsj: "",
           gjjjcbz: "",
           gjjdh: "",
           gjjzt: "",
-          // 单位信息
           rybh: "",
           gh: "", //
           sscj: "", //
@@ -375,7 +362,6 @@
           txlb: "",
           gzzw: "",
           gzzh: "",
-          //证件情况
           ld: "",
           gsbx: "",
           zzqk: "",
@@ -389,10 +375,10 @@
           txsj: "",
           htkssj: "",
           htjssj: "",
-          bz: "", // 备注
+          bz: "",
           xmszm: "",
-          ygfz: "", // 员工附件
-          zpdz: "", // 照片地址
+          ygfz: "",
+          zpdz: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530166672360&di=0d3b017d5285bae86c811371eca9cd11&imgtype=0&src=http%3A%2F%2Fpic14.photophoto.cn%2F20100127%2F0036036848818577_b.jpg", // 照片地址
           bgyy: ''
         },
         modalPdf: false,
@@ -402,8 +388,14 @@
       }
     },
     methods: {
-      showPdf: function () {
-        this.isshowpdf = true;
+      formatDate: function (now) {
+        let year = now.getFullYear();
+        let month = now.getMonth() + 1;
+        let date = now.getDate();
+        let hour = now.getHours();
+        let minute = now.getMinutes();
+        let second = now.getSeconds();
+        return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
       },
       closepdf(){
         this.isshowpdf = false;
@@ -427,30 +419,38 @@
           this.bgyy = true
         }
       },
-      save: function () {
-        console.log('结果', this.formItem);
-        this.$post(this.$url.userManager_saveUserInfo, this.formItem)
-          .then(res => {
-            if (res.success === true) {
-              this.$Message.info('添加成功');
-            } else {
-              this.$Message.error('添加失败')
-            }
-          })
+      save: function (name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            console.log('结果', this.formItem);
+            this.$post(this.$url.userManager_saveUserInfo, this.formItem)
+              .then(res => {
+                if (res.success === true) {
+                  this.$Message.info('添加成功');
+                  this.$router.push({path: '/'});
+                } else {
+                  this.$Message.error('添加失败')
+                }
+              });
+            this.$Message.success('Success!');
+          } else {
+            this.$Message.error('必要字段必须填写');
+          }
+        })
       },
       cancel: function () {
         this.$Message.error('修改失败')
       },
-      ok:function () {
-          console.log(this.formItem)
-//          this.update();
+      ok: function () {
+        this.update();
       },
       update: function () {
         this.$post(this.$url.userManager_updateUserInfo, this.formItem)
           .then(res => {
-              console.log(res);
+            console.log(res);
             if (res.success === true) {
               this.$Message.info('修改成功');
+//              this.$router.push({path: '/'});
             } else {
               this.$Message.error('修改失败')
             }
@@ -462,12 +462,22 @@
     },
     mounted () {
       let tip = this.$route.query.tip;
-      this.formItem = this.$route.query.row||{};
-      console.log(this.$route.query.row);
+      this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
-          this.isEdit_jbxx = false,
+        this.isEdit_jbxx = false,
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
+      }else {
+        this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
+        this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
+        this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));
+        this.formItem.gjjkhsj = this.formatDate(new Date(new Date(this.$route.query.row.gjjkhsj).getTime()));
+        this.formItem.qdsj = this.formatDate(new Date(new Date(this.$route.query.row.qdsj).getTime()));
+        this.formItem.bdwgzsj = this.formatDate(new Date(new Date(this.$route.query.row.bdwgzsj).getTime()));
+        this.formItem.txsj = this.formatDate(new Date(new Date(this.$route.query.row.txsj).getTime()));
+        this.formItem.htkssj = this.formatDate(new Date(new Date(this.$route.query.row.htkssj).getTime()));
+        this.formItem.htjssj = this.formatDate(new Date(new Date(this.$route.query.row.htjssj).getTime()));
+        this.formItem.csny = this.formatDate(new Date(new Date(this.$route.query.row.csny).getTime()));
       }
     }
   }

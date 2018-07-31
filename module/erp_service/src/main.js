@@ -1,7 +1,6 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
 import App from './App.vue';
-import Routers from './router/index';
+import router from './router';
 import iView from 'iview';
 import vueshowpdf from 'vueshowpdf'
 import vuePdfjs from 'vue-pdfjs'
@@ -18,20 +17,12 @@ Vue.prototype.$fetch=fetch;
 Vue.prototype.$patch=patch;
 Vue.prototype.$put=put;
 
-Vue.use(VueCookie)
 
 //定义全局变量
 
-Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(vueshowpdf);
 Vue.use(vuePdfjs);
-
-// The routing configuration
-const RouterConfig = {
-  routes: Routers
-};
-const router = new VueRouter(RouterConfig);
 
 new Vue({
   el: '#app',

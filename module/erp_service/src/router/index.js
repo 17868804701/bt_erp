@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+import VueCookie from 'vue-cookie'
+import {proxylogin} from '../../static/sso-vue'
 // 人力资源管理
 import List from '../peopleManger/List.vue'
 import ListInfo from '../peopleManger/ListInfo.vue'
@@ -48,9 +50,8 @@ import kfclqktj from '../serviceManger/kfclqktj.vue'
 import xjpj from '../serviceManger/xjpj.vue'
 import tableTemp from '../serviceManger/tableTemp.vue'
 
-Vue.use(Router);
-
-export default[
+Vue.use(VueRouter);
+const route = [
   {
     path: '/',
     component: List
@@ -119,7 +120,7 @@ export default[
   {
     path: '/gasManger',
     component: gasManger
-  } ,
+  },
   {
     path: '/lhlctz',
     component: lhlctz
@@ -147,39 +148,71 @@ export default[
   {
     path: '/yyscyl',
     component: yyscyl
-  },{
+  }, {
     path: '/xlxyhjjhdfx',
     component: xlxyhjjhdfx
-  },{
+  }, {
     path: '/jjzbwcqk',
     component: jjzbwcqk
   },
   {
     path: '/MMDetail',
     component: MMDetail
-  },{
+  }, {
     path: '/kfxxList',
     component: kfxxList
-  },{
+  }, {
     path: '/addKfxx',
     component: addKfxx
-  },{
+  }, {
     path: '/zrxts',
     component: zrxts
-  },{
+  }, {
     path: '/kfclqktj',
     component: kfclqktj
-  },{
+  }, {
     path: '/xjpj',
     component: xjpj
-  },{
+  }, {
     path: '/JCfyjs',
     component: JCfyjs
-  },{
+  }, {
     path: '/gpjcInfo',
     component: gpjcInfo
-  },{
+  }, {
     path: '/tableTemp',
     component: tableTemp
   }
-]
+];
+const router = new VueRouter({routes: route});
+let api = process.env.BASE_URL;
+let url = api+'/login/replylogin';
+router.beforeEach((to, from, next) => {
+  let acessToken =VueCookie.get('access_token');
+  console.log(acessToken)
+
+  if(acessToken===null){
+    proxylogin(url,{
+      callback:function(data){
+        if(data.state === 400){
+          window.top.location.href = api+"/login";
+        }else if(data.state === 200){
+          VueCookie.set('access_token', data.access_token);
+          next();
+        }else{
+          window.top.location.href = api+"/login";
+        }
+      },
+      error:function () {
+        alert('服务器错误');
+        window.top.location.href = api+"/login";
+      },
+      timeout:10000
+    })
+
+  }else {
+      next()
+  }
+});
+
+export default router;

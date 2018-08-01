@@ -6,12 +6,12 @@
       <h2 style="margin-left: 15px;">
         事故情况报表管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;">
+      <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
         <TabPane label="集团公司事故情况月汇总表" name="name1">
-          <JTAccidentMonthFee/>
+          <JTAccidentMonthFee ref="JTAccidentMonthFee"/>
         </TabPane>
         <TabPane label="各分公司交通事故月报表" name="name2">
-          <FGSAccidentMonthFee/>
+          <FGSAccidentMonthFee ref="FGSAccidentMonthFee"/>
         </TabPane>
       </Tabs>
     </div>
@@ -33,10 +33,16 @@
       }
     },
     methods: {
-
+      clickTab(name) {
+        if (name === 'name1') {
+          this.$refs['JTAccidentMonthFee'].requestListData();
+        } else {
+          this.$refs['FGSAccidentMonthFee'].requestListData();
+        }
+      }
     },
     mounted () {
-
+      this.$refs['JTAccidentMonthFee'].requestListData();
     }
   }
 </script>

@@ -1,8 +1,6 @@
 <!--安全管理事故考核表-->
 <!-- 包含子页面
-
     安全管理月考核表管理、追加事故经损说明管理、分公司限速运营月统计结果
-
 -->
 <template>
   <div >
@@ -10,16 +8,16 @@
       <h2 style="margin-left: 15px;">
         安全管理月考核表管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;">
+      <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
         <TabPane label="安全管理月考核表" name="name1">
-          <ExamineManager/>
+          <ExamineManager ref="ExamineManager"/>
         </TabPane>
         <TabPane label="追加事故经损说明管理" name="name2">
-          <AddLossList/>
+          <AddLossList ref="AddLossList"/>
         </TabPane>
-        <TabPane label="分公司限速运营月统计结果" name="name3">
-          <RateLimitReport/>
-        </TabPane>
+        <!--<TabPane label="分公司限速运营月统计结果" name="name3">-->
+          <!--<RateLimitReport ref="RateLimitReport"/>-->
+        <!--</TabPane>-->
       </Tabs>
     </div>
   </div>
@@ -41,10 +39,17 @@
       }
     },
     methods: {
-
+      clickTab(name) {
+        console.log(name);
+        if (name === 'name1') {
+          this.$refs['ExamineManager'].requestListData();
+        } else {
+          this.$refs['AddLossList'].requestListData();
+        }
+      }
     },
     mounted () {
-
+      this.$refs['ExamineManager'].requestListData();
     }
   }
 </script>

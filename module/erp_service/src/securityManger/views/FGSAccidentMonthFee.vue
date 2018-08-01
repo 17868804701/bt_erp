@@ -15,7 +15,7 @@
         </Row>
       </Form>
     </Card>
-    <can-edit-table style="margin-top: 10px;" v-model="data10" :columnsList="columns11" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
+    <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="columns11" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
     </can-edit-table>
   </div>
 </template>
@@ -30,7 +30,9 @@
     data () {
       return {
         formItem: {
-          date: ''
+          date: '',
+          lasjStart: '',
+          lasjEnd: '',
         },
         columns11: [
           {
@@ -157,8 +159,7 @@
             ]
           },
         ],
-        data10: [],
-        dwList: ['集团公司', '一公司', '二公司', '三公司', '四公司', '五公司', '六公司', '长客公司', '吉运公司', '修理公司', '票款中心', '稽查大队', '大自然', '站管', '培训中心'],
+        tableData: [],
       }
     },
     methods:{
@@ -168,57 +169,50 @@
       handleChange (val, index) {
         this.$Message.success('修改了第' + (index + 1) + '行数据');
       },
-      searchData() {
-        if (isNaN(this.formItem.date)&&!isNaN(Date.parse(this.formItem.date))) {
-          console.log('_______++++++____');
-
-          console.log(this.formItem);
+      requestListData() {
+        console.log('请求分公司数据');
+        let params = {
+          lasjStart: this.formItem.lasjStart,
+          lasjEnd: this.formItem.lasjEnd
         }
-
-        let date = this.formatDate(this.formItem.date);
-        console.log(date);
-        // 请求数据
-        console.log('_____________________');
-        let firstDay = DateTool.getFirstDay(this.formItem.date);
-        let lastDay = DateTool.getLastDay(this.formItem.date);
+        console.log(params);
+        this.$fetch(this.$url.security_GFGSJTSG_list, params)
+        .then(res => {
+          console.log('----------');
+          console.log(res);
+          if (res.success === true) {
+            if (res.data.length > 0) {
+              this.tableData = res.data.records;
+            }
+          }else{
+            this.$Message.error('数据获取失败, 请重试!');
+          }
+        })
+      },
+      searchData() {
+        if (this.formItem.date instanceof Date) {
+          let firstDay = DateTool.getFirstDay(this.formItem.date);
+          let lastDay = DateTool.getLastDay(this.formItem.date);
+          this.formItem.lasjStart = firstDay;
+          this.formItem.lasjEnd = lastDay;
+          this.requestListData();
+        }else{
+          this.$Message.error('请选择月份后搜索!');
+        }
       },
       exportExcel() {
         // 按当前月份查询下载
         let url = this.$url.security_GFGSJTSG_exportExcel;
+        if (this.formItem.date instanceof Date) {
+          let date = this.formatDate(this.formItem.date);
+          let firstDay = DateTool.getFirstDay(this.formItem.date);
+          let lastDay = DateTool.getLastDay(this.formItem.date);
+          url = url + '?startTime=' + firstDay + '&&endTime=' + lastDay;
+        }
         window.open(url);
-      },
-      formatDate(time) {
-        let date =  new Date(time);
-        let y = 1900+date.getYear();
-        let m = "0"+(date.getMonth()+1);
-        let d = "0"+date.getDate();
-        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
       },
     },
     mounted () {
-      const data = [];
-      for (let i = 0; i < 14; i++) {
-        data.push({
-          key: i,
-          dwxm: this.dwList[i],
-          yylc: '9727839',
-          xczrsgcs: '6',
-          sg_td: '0',
-          sg_zd: '0',
-          sg_jd: '0',
-          sg_yb: '0',
-          sg_yjqw: '0',
-          sg_ejqw: '3',
-          sg_sjqw: '3',
-          sgswrs: '0',
-          sgssrs: '11',
-          sgpl: '0.62',
-          js_hzj: '718184',
-          jsl: '738.28',
-          bnljkhsg: '24',
-        });
-        this.data10 = data;
-      }
     }
   }
 </script>

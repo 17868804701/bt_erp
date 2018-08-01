@@ -292,6 +292,9 @@
       },
       editDone() {
 
+      },
+      requestListData() {
+        console.log('安全管理月考核表请求数据');
       }
     },
     mounted () {

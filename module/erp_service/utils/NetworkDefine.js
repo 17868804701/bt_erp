@@ -2,6 +2,8 @@
  * Created by qismsom on 2018/7/24.
  */
 
+const baseURL = 'http://10.50.0.144:8702';
+
 const NetworkInterface = {
   userManager_userList: '/person/userInfo/list', // 人力资源管理列表
   userManager_saveUserInfo: '/person/userInfo/save', // 保存人员信息
@@ -29,17 +31,28 @@ const NetworkInterface = {
   security_JTGSSGHZ_list: '/anq/lasg/lasgList',
 
   security_GFGSJTSG_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportJtsgbbExcel',  // 各分公司交通事故月报表
-  security_GFGSJTSG_list: '', // 各分公司交通事故月报表列表数据
+  security_GFGSJTSG_list: '/anq/lasg/jtsgbbList', // 各分公司交通事故月报表列表数据
 
   // 安全管理月考核表
   security_AQGLYKH_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportAqglkhbExcel', // 安全管理月考核表
-  security_AQGLYKH_list: '', // 安全管理月考核表列表数据
-  security_ZJSGJSSM_exportExcel: 'http://10.50.0.144:8702/lasg/exportZjsgjsExcel', // 追加事故经损说明管理
-  security_ZJSGJSSM_list: '', // 追加事故经损说明管理列表数据
-  // 分公司限速运营月统计结果  --- gps 有，不做
-
-  // 安全生产情况分析
+  security_AQGLYKH_list: '/anq/lasg/aqglkhbList', // 安全管理月考核表列表数据
+  security_ZJSGJSSM_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportZjsgjsExcel', // 追加事故经损说明管理
+  security_ZJSGJSSM_list: '/anq//lasg/zjsgjsList', // 追加事故经损说明管理列表数据
+  
+  // 安全生产情况分析列表数据
+  security_AQSCFGS_list: '/anq/lasg/fgsAqsczbList',
+  security_AQSCJTGS_list: '/anq/lasg/hzAqsczbList',
+  
+  // 安全生产情况分析 报表导出
   //   /lasg/exportAqsczbExcel   整个的导出
+  security_AQQKFX_exportExcel: baseURL+'/lasg/exportAqsczbQkfxExcel', // 安全情况分析 --- 报表导出
+  security_LASGFB_exportExcel: baseURL+'/lasg/exportAqsczbLasgfbExcel', // 立案事故分布 --- 报表导出
+  security_KHSGFB_exportExcel: baseURL+'/lasg/exportAqsczbKhsgfbExcel', // 考核事故分布 --- 报表导出
+  security_JJSS_exportExcel: baseURL+'/lasg/exportAqsczbJjssExcel', // 经济损失 --- 报表导出
+  security_SCZRSGPL_exportExcel: baseURL+'/lasg/exportAqsczbXczrsgplExcel', // 行车责任事故频率 --- 报表导出
+  security_LASGJSLZB_exportExcel: baseURL+'/lasg/exportAqsczbLasgjslExcel', // 立案事故经损率指标 --- 报表导出
+  security_CLAJ_exportExcel: baseURL+'/lasg/exportAqsczbAjtcExcel', // 车辆安检 --- 报表导出
+  security_DWTBJQXJPF_exportExcel: baseURL+'/lasg/exportAqsczbDwtbExcel', // 对外投保交强险及赔付情况 --- 报表导出
   // 安全情况分析
   // 立案事故分布
   // 考核事故分布

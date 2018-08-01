@@ -21,7 +21,8 @@
 </template>
 
 <script>
-  import canEditTable from '../../components/common/canEditTable.vue'
+  import canEditTable from '../../components/common/canEditTable.vue';
+  import * as DateTool from '../../../utils/DateTool';
   export default {
     components:{
       canEditTable
@@ -29,7 +30,9 @@
     data () {
       return {
         formItem: {
-          date: ''
+          date: '',
+          lasjStart: '',
+          lasjEnd: '',
         },
         columnsTitle: ['牌照','单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案类型', '责任','备注'],
         columnsCode: ['pz','dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','zr','bz'],
@@ -86,10 +89,14 @@
         this.$Message.success('修改了第' + (index + 1) + '行数据');
       },
       requestListData() {
+        console.log('请求集团公司数据');
         let params = {
           current: this.current,
-          size: this.size
+          size: this.size,
+          lasjStart: this.formItem.lasjStart,
+          lasjEnd: this.formItem.lasjEnd
         }
+        console.log(params);
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
           console.log(res);
@@ -103,27 +110,30 @@
         this.requestListData();
       },
       searchData() {
-        console.log(this.formItem);
-        let date = this.formatDate(this.formItem.date);
-        console.log(date);
-        // 请求数据  需要添加  按月份查询
-        this.requestListData();
+        if (this.formItem.date instanceof Date) {
+          console.log(this.formItem);
+          let firstDay = DateTool.getFirstDay(this.formItem.date);
+          let lastDay = DateTool.getLastDay(this.formItem.date);
+          this.formItem.lasjStart = firstDay;
+          this.formItem.lasjEnd = lastDay;
+          this.current = 1;
+          this.requestListData();
+
+        }else{
+          this.$Message.error('请选择月份后搜索!');
+        }
       },
       exportExcel() {
-        let url = this.$url.security_GFGSJTSG_exportExcel;
-        url = url + '?current='+this.current+'&&size='+this.size;
-        window.open(url);
-      },
-      formatDate(time) {
-        let date =  new Date(time);
-        let y = 1900+date.getYear();
-        let m = "0"+(date.getMonth()+1);
-        let d = "0"+date.getDate();
-        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+        let url = this.$url.security_JTGSSGHZ_exportExcel;
+        if (this.formItem.date instanceof Date) {
+          let firstDay = DateTool.getFirstDay(this.formItem.date);
+          let lastDay = DateTool.getLastDay(this.formItem.date);
+          url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
+        }
+        this.$getExcel(url);
       },
     },
     mounted () {
-      this.requestListData();
     }
   }
 </script>

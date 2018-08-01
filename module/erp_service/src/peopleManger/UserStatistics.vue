@@ -197,7 +197,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-        this.requestData();
+//        this.requestData();
       });
     }
   }

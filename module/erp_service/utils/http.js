@@ -3,8 +3,9 @@ import iView from 'iview';
 import VueCookie from 'vue-cookie'
 
 axios.defaults.timeout = 5000;
-// axios.defaults.baseURL ='http://192.168.1.102:8702';//服务器
-axios.defaults.baseURL ='http://10.50.0.144:8702';//本地
+axios.defaults.baseURL ='http://10.50.0.144:8702';//服务器
+// axios.defaults.baseURL ='http://192.168.1.103:8089';//本地
+
 
 //http request 拦截器
 axios.interceptors.request.use(
@@ -13,8 +14,10 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + VueCookie.get('access_token'),
+      'Authorization': 'bearer ' + VueCookie.get('access_token')
     };
+    let acessToken = VueCookie.get('access_token');
+    // console.log(config);
     return config;
   },
   error => {
@@ -141,4 +144,14 @@ export function put(url,data = {}){
       reject(err)
     })
   })
+}
+
+export function getExcel(url){
+  let access_token = VueCookie.get('access_token');
+  if (url.indexOf('?')>0) {
+    url = url + '&access_token=' + access_token;
+  }else{
+    url = url + '?access_token=' + access_token;
+  }
+  window.open(url);
 }

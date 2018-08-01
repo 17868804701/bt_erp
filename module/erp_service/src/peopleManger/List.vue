@@ -688,6 +688,7 @@
       }
     },
     mounted () {
+//        window.top.location.href='http://10.50.0.144:8702/login';
       this.changeTableColumns();
       this.getList();
     }

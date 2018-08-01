@@ -201,8 +201,8 @@
       </TabPane>
       <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
 
-      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true">列表字段扩展
-      </Button>
+      <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true">列表字段扩展</Button>
+      <!--<Button type="primary" size="default" slot="extra">临时退出</Button>-->
     </Tabs>
   </div>
 </template>
@@ -655,7 +655,7 @@
           .then(res => {
             this.totalPage = res.data.total;
             this.tableData2 = res.data.records;
-            this.$Message.info('查询成功')
+//            this.$Message.info('查询成功')
           })
       },
 

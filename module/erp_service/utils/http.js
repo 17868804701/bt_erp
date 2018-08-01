@@ -13,10 +13,8 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type': 'application/json',
-      // 'Authorization': 'bearer ' + VueCookie.get('access_token'),
+      'Authorization': 'bearer ' + VueCookie.get('access_token'),
     };
-    let acessToken = VueCookie.get('access_token');
-    // console.log(config);
     return config;
   },
   error => {
@@ -29,7 +27,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     iView.LoadingBar.finish();
-    if(response.data.errCode ==2){
+    if(response.data.errCode === 2){
     }
     return response;
   },
@@ -38,20 +36,27 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 400:
-          console.log('参数不合法');
+          iView.Message.error('参数不合法');
           break;
         case 401:
-          window.top.location.href = "http://10.50.0.144:8702/login";
-        console.log('401错误');
+            window.top.location.href = process.env.BASE_URL+"/login";
+           console.log('401错误');
           break;
         case 404:
+          iView.Message.error('未找到该路径');
           console.log('404错误');
           break;
         case 2001:
-          console.log("2001错误");
-          window.top.location.href = "https://www.baidu.com";
+          iView.Message.error('Token失效');
+          VueCookie.set('access_token','',-1);
+          window.top.location.href = process.env.BASE_URL+"/login";
+          break;
+        case 2002:
+          iView.Message.error('你当前的操作没有权限');
+          alert('你当前的操作没有权限');
           break;
         case 500:
+          iView.Message.error('服务器错误');
           console.log('服务器错误');
           break;
       }

@@ -191,7 +191,7 @@ router.beforeEach((to, from, next) => {
   let acessToken =VueCookie.get('access_token');
   console.log(acessToken);
 
-  if(acessToken===null){
+  if(acessToken===null||acessToken===''){
     proxylogin(url,{
       callback:function(data){
         if(data.state === 400){

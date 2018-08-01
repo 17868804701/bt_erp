@@ -30,7 +30,7 @@
               </FormItem>
               <FormItem :label-width="120" label="民族">
                 <Select v-model="formItem.mz" :disabled="isEdit_jbxx" style="width: 170px;">
-                  <Option v-for="(item,index) in nations" :value="item">{{item}}</Option>
+                  <Option v-for="(item,index) in nations" :key="item+index" :value="item">{{item}}</Option>
                 </Select>
               </FormItem>
               <FormItem :label-width="120" label="出生年月">

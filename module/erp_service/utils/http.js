@@ -3,9 +3,8 @@ import iView from 'iview';
 import VueCookie from 'vue-cookie'
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL ='http://10.50.0.144:8702';//服务器
-// axios.defaults.baseURL ='http://192.168.1.103:8089';//本地
-
+// axios.defaults.baseURL ='http://192.168.1.102:8702';//服务器
+axios.defaults.baseURL ='http://10.50.0.144:8702';//本地
 
 //http request 拦截器
 axios.interceptors.request.use(
@@ -14,7 +13,7 @@ axios.interceptors.request.use(
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'bearer ' + VueCookie.get('access_token')
+      // 'Authorization': 'bearer ' + VueCookie.get('access_token'),
     };
     let acessToken = VueCookie.get('access_token');
     // console.log(config);
@@ -41,15 +40,14 @@ axios.interceptors.response.use(
         case 400:
           console.log('参数不合法');
           break;
-        case 401:            /**token未授权或token授权失败，过期等等**/
-        // 401 清除token信息并跳转到登录页面
+        case 401:
+          window.top.location.href = "http://10.50.0.144:8702/login";
+        console.log('401错误');
           break;
-        case 404:            /**未找到页面**/
-          // 404 跳转到404页面
-          console.log('404错误')
+        case 404:
+          console.log('404错误');
           break;
         case 2001:
-          /**未找到页面**/
           console.log("2001错误");
           window.top.location.href = "https://www.baidu.com";
           break;

@@ -40,11 +40,11 @@
         <Form :model="formItem" :label-width="80">
           <div class="search">
             <FormItem label="选择年份" style="margin: 0">
-              <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+              <DatePicker type="year" placeholder="选择时间" :transfer="true"
                           class="text_width"></DatePicker>
             </FormItem>
             <FormItem label="选择公司" style="margin: 0">
-              <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+              <Select :transfer="true" style="width: 195px;">
                 <Option value="beijing">公交一公司</Option>
                 <Option value="shanghai">公交二公司</Option>
                 <Option value="shenzhen">公交三公司</Option>
@@ -59,7 +59,7 @@
                 >
                 <Form :model="formItem" :label-width="80">
                   <FormItem label="导出说明">
-                    <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入导出说明"></Input>
+                    <Input  type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入导出说明"></Input>
                   </FormItem>
                 </Form>
               </Modal>
@@ -68,7 +68,7 @@
         </Form>
       </Card>
       <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
-      <Page :total="100" show-total style="margin-top: 10px;"></Page>
+      <Page :total="totalPage" show-total style="margin-top: 10px;"  @on-change="setPage"></Page>
     </div>
   </div>
 </template>
@@ -77,20 +77,36 @@
     data () {
       return {
         modal1:false,
+        totalPage:0,
         formItem: {
-          date: '',
-          textarea:''
+          current:1,
+          size:'10',
+          nd:'',
+          yf:'',
+          dw:'  '
         },
         columns11: [
           {
             title: '路别',
-            key: 'lubie',
+            key: 'lb',
             align: 'center',
             width: 100,
           },
           {
             title: '单位',
-            key: 'danwei',
+            key: 'dw',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '年度',
+            key: 'nd',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '月份',
+            key: 'yf',
             align: 'center',
             width: 100,
           },
@@ -114,14 +130,14 @@
             children: [
               {
                 title: '合计',
-                key: 'age',
+                key: 'xslc_hj',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：非营业',
-                key: 'age',
+                key: 'xslc_fyy',
                 align: 'center',
                 width: 120,
                 sortable: false
@@ -136,21 +152,21 @@
             children: [
               {
                 title: '实耗',
-                key: 'age',
+                key: 'rlxh_sh',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '定额',
-                key: 'age',
+                key: 'rlxh_de',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '节超（+）',
-                key: 'jiechao',
+                key: 'rlxh_jc',
                 align: 'center',
                 width: 120,
                 sortable: false
@@ -165,35 +181,35 @@
             children: [
               {
                 title: '合计',
-                key: 'age',
+                key: 'kyl_hj',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：投币人次',
-                key: 'age',
+                key: 'kyl_tbrc',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：普通IC卡人',
-                key: 'age',
+                key: 'kyl_icrc',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：月票卡人',
-                key: 'age',
+                key: 'kyl_yprc',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：月票卡老年卡人次',
-                key: 'age',
+                key: 'kyl_jlkrc',
                 align: 'center',
                 width: 120,
                 sortable: false
@@ -208,28 +224,28 @@
             children: [
               {
                 title: '合计',
-                key: 'age',
+                key: 'sr_hj',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：投币收入',
-                key: 'age',
+                key: 'sr_tbsr',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：IC卡优惠后收入',
-                key: 'age',
+                key: 'sr_ickyhsr',
                 align: 'center',
                 width: 120,
                 sortable: false
               },
               {
                 title: '其中：IC卡补贴收入',
-                key: 'age',
+                key: 'sr_ickbtsr',
                 align: 'center',
                 width: 120,
                 sortable: false
@@ -240,27 +256,24 @@
         data10: []
       }
     },
+
+    methods:{
+      List:function () {
+        this.$fetch(this.$url.fgsxcyb,this.formItem)
+          .then(res => {
+            console.log(res);
+            this.totalPage = res.data.total;
+            this.data10 = res.data.records;
+            this.$Message.info('查询成功')
+          })
+      },
+      setPage: function (current) {
+        this.cxItem.current = current;
+        this.getList();
+      },
+    },
     mounted () {
-      const data = [];
-      for (let i = 0; i < 10; i++) {
-        data.push({
-          jiechao: i * 12564 - 11252,
-          lubie: i + 200 + '路',
-          gzcr: i * 10521 + 156144,
-          xccs: i * 4521 + 156144,
-          key: i,
-          danwei:'公交'+i+'公司',
-          name: 'John Brown',
-          age: i + 1,
-          street: 'Lake Park',
-          building: 'C',
-          door: 2035,
-          caddress: 'Lake Street 42',
-          cname: 'SoftLake Co',
-          gender: 'M',
-        });
-      }
-      this.data10 = data;
+      this.List()
     }
   }
 </script>

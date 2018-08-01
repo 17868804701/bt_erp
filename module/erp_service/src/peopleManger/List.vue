@@ -685,15 +685,9 @@
       daochu: function () {
 //          console.log(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj)
           window.open(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj)
-//        this.$fetch(this.$url.userManager_exportExcel, this.cxItem)
-//          .then(res => {
-//            console.log(res);
-//            this.$Message.info('导出成功')
-//          })
       }
     },
     mounted () {
-//        window.top.location.href='http://10.50.0.144:8702/login';
       this.changeTableColumns();
       this.getList();
     }

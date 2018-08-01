@@ -48,6 +48,11 @@ const NetworkInterface = {
   // 立案事故经损率指标
   // 车辆安检
   // 对外投保交强险及赔付情况
+
+
+  // 运营管理
+  fgsxcyb:'/yuny/fgsXcyb/getXcybList',   //分公司行车月报表列表
+  exportFgsxcyb:'/yuny/fgsXcyb/exportXcybExcel'   //分公司行车月报表列表
 };
 
 export default NetworkInterface;

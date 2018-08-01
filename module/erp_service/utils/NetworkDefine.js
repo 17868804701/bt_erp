@@ -38,11 +38,11 @@ const NetworkInterface = {
   security_AQGLYKH_list: '/anq/lasg/aqglkhbList', // 安全管理月考核表列表数据
   security_ZJSGJSSM_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportZjsgjsExcel', // 追加事故经损说明管理
   security_ZJSGJSSM_list: '/anq//lasg/zjsgjsList', // 追加事故经损说明管理列表数据
-  
+
   // 安全生产情况分析列表数据
   security_AQSCFGS_list: '/anq/lasg/fgsAqsczbList',
   security_AQSCJTGS_list: '/anq/lasg/hzAqsczbList',
-  
+
   // 安全生产情况分析 报表导出
   //   /lasg/exportAqsczbExcel   整个的导出
   security_AQQKFX_exportExcel: baseURL+'/lasg/exportAqsczbQkfxExcel', // 安全情况分析 --- 报表导出
@@ -65,7 +65,11 @@ const NetworkInterface = {
 
   // 运营管理
   fgsxcyb:'/yuny/fgsXcyb/getXcybList',   //分公司行车月报表列表
-  exportFgsxcyb:'/yuny/fgsXcyb/exportXcybExcel'   //分公司行车月报表列表
+  exportFgsxcyb:'/yuny/fgsXcyb/exportXcybExcel',   //分公司行车月报表导出
+  yyexportFgsxcyb:'/yuny/yybbtj/exportLineExcel',   //导出线路车次正点统计表
+  getLineList:'/yuny/yybbtj/getLineList',   //导出线路车次正点统计表
+  yyJtexportFgsxcyb:'/yuny/yybbtj/exportJthzExcel',   //导出各公司与集团汇总表
+  getjthzList:'/yuny//yybbtj/getjthzList'   //导出各公司与集团汇总表
 };
 
 export default NetworkInterface;

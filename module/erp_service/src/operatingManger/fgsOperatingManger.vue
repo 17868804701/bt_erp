@@ -39,27 +39,30 @@
       <Card style="padding-left: 15px;">
         <Form :model="formItem" :label-width="80">
           <div class="search">
-            <FormItem label="选择年份" style="margin: 0">
-              <DatePicker type="year" placeholder="选择时间" :transfer="true"
-                          class="text_width"></DatePicker>
+            <FormItem label="选择年月" style="margin: 0">
+              <DatePicker type="month" placeholder="选择时间" :transfer="true"
+                          class="text_width" v-model="formItem.sj"></DatePicker>
             </FormItem>
             <FormItem label="选择公司" style="margin: 0">
-              <Select :transfer="true" style="width: 195px;">
-                <Option value="beijing">公交一公司</Option>
-                <Option value="shanghai">公交二公司</Option>
-                <Option value="shenzhen">公交三公司</Option>
+              <Select :transfer="true" v-model="formItem.dw" style="width: 195px;">
+                <Option value="公交一公司">公交一公司</Option>
+                <Option value="公交二公司">公交二公司</Option>
+                <Option value="公交三公司">公交三公司</Option>
               </Select>
             </FormItem>
-            <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+            <Button type="primary" icon="ios-search" @click="search" class="search_btn">查询</Button>
             <div class="btn">
               <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
               <Modal
                 v-model="modal1"
+                @on-ok="ok"
+                @on-cancel="cancel"
                 title="填写导出说明"
-                >
+              >
                 <Form :model="formItem" :label-width="80">
                   <FormItem label="导出说明">
-                    <Input  type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入导出说明"></Input>
+                    <Input type="textarea" v-model="formItem.dcsm" :autosize="{minRows: 2,maxRows: 5}"
+                           placeholder="请输入导出说明"></Input>
                   </FormItem>
                 </Form>
               </Modal>
@@ -68,7 +71,7 @@
         </Form>
       </Card>
       <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
-      <Page :total="totalPage" show-total style="margin-top: 10px;"  @on-change="setPage"></Page>
+      <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
     </div>
   </div>
 </template>
@@ -76,14 +79,14 @@
   export default {
     data () {
       return {
-        modal1:false,
-        totalPage:0,
+        modal1: false,
+        totalPage: 0,
         formItem: {
-          current:1,
-          size:'10',
-          nd:'',
-          yf:'',
-          dw:'  '
+          current: 1,
+          size: '10',
+          dw: '',
+          sj: '',
+          dcsm: ''
         },
         columns11: [
           {
@@ -99,18 +102,6 @@
             width: 100,
           },
           {
-            title: '年度',
-            key: 'nd',
-            align: 'center',
-            width: 100,
-          },
-          {
-            title: '月份',
-            key: 'yf',
-            align: 'center',
-            width: 100,
-          },
-          {
             title: '工作车日',
             key: 'gzcr',
             align: 'center',
@@ -118,7 +109,7 @@
           },
           {
             title: '行车次数（车次）',
-            key: 'xccs',
+            key: 'xccx',
             align: 'center',
             width: 100,
           },
@@ -256,21 +247,45 @@
         data10: []
       }
     },
-
-    methods:{
-      List:function () {
-        this.$fetch(this.$url.fgsxcyb,this.formItem)
+    methods: {
+      List: function () {
+        this.$fetch(this.$url.fgsxcyb, this.formItem)
           .then(res => {
-            console.log(res);
-            this.totalPage = res.data.total;
-            this.data10 = res.data.records;
-            this.$Message.info('查询成功')
+            console.log(res)
+            if (res.data.total === 0) {
+              this.$Message.info('暂无数据')
+              this.totalPage = res.data.total;
+              this.data10 = res.data.records;
+            } else {
+              this.totalPage = res.data.total;
+              this.data10 = res.data.records;
+            }
           })
       },
       setPage: function (current) {
-        this.cxItem.current = current;
-        this.getList();
+        this.formItem.current = current;
+        this.List();
       },
+      ok: function () {
+        let time = '';
+        if (this.formItem.sj === '') {
+          time = ''
+        } else {
+          time = this.$formatDate(this.formItem.sj).substring(0, 7);
+        }
+        this.$getExcel(process.env.BASE_URL + this.$url.exportFgsxcyb + '?sj=' + time + '&dw=' + this.formItem.dw + '&dcsm=' + this.formItem.dcsm)
+      },
+      cancel: function () {
+        this.$Message.error('导出失败')
+      },
+      search: function () {
+        if (this.formItem.sj === '') {
+          this.formItem.sj = ''
+        } else {
+          this.formItem.sj = this.$formatDate(this.formItem.sj).substring(0, 7);
+        }
+        this.List()
+      }
     },
     mounted () {
       this.List()

@@ -36,3 +36,21 @@ export function getLastDay(date) {
   console.log(lastDay);
   return lastDay;
 }
+
+
+
+export function formatDate_hs (now) {
+  now = new Date(new Date(now).getTime());
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let date = now.getDate();
+  let hour = now.getHours();
+  let minute = now.getMinutes();
+  let second = now.getSeconds();
+  if(month<10){
+    month = '0'+month
+  }else {
+
+  }
+  return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+}

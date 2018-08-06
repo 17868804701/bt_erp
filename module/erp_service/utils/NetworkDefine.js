@@ -69,7 +69,13 @@ const NetworkInterface = {
   yyexportFgsxcyb:'/yuny/yybbtj/exportLineExcel',   //导出线路车次正点统计表
   getLineList:'/yuny/yybbtj/getLineList',   //导出线路车次正点统计表
   yyJtexportFgsxcyb:'/yuny/yybbtj/exportJthzExcel',   //导出各公司与集团汇总表
-  getjthzList:'/yuny//yybbtj/getjthzList'   //导出各公司与集团汇总表
+  getjthzList:'/yuny//yybbtj/getjthzList',   //导出各公司与集团汇总表
+
+
+
+  // 计划管理
+  jtgsList:'/erp-modules-jih/jtyyjh/getJtyyjhList',  ///集团公司运营计划管理
+  yyjhtzList:'/erp-modules-jih/yyjhtz/getYyjhtzList',//运营计划调整列表
 };
 
 export default NetworkInterface;

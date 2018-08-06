@@ -38,7 +38,7 @@
                             v-model="formItem.csny"></DatePicker>
               </FormItem>
               <FormItem :label-width="120" label="籍贯">
-                <Input :disabled="isEdit_jbxx" v-model="formItem.jg" placeholder="陕西汉中" class="input_item"/>
+                <Input :disabled="isEdit_jbxx" v-model="formItem.jg" placeholder="籍贯" class="input_item"/>
               </FormItem>
               <FormItem :label-width="120" label="姓名首字母">
                 <Input :disabled="isEdit_jbxx" v-model="formItem.xmszm" placeholder="姓名首字母" class="input_item"/>
@@ -98,7 +98,7 @@
               <img class="head_img"
                    :src="formItem.zpdz"
                    alt="">
-              <Upload action="//jsonplaceholder.typicode.com/posts/">
+              <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess">
                 <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
               </Upload>
             </div>
@@ -109,8 +109,10 @@
         <p slot="title">附件查看</p>
         <Icon type="document-text" class="file"></Icon>
         <span class="a_pdf"
-              @click="modalPdf=true">附件：员工资料.pdf</span><br>
-        <Button type="primary" icon="ios-cloud-upload-outline" style="margin-top: 10px;">上传员工资料PDF</Button>
+              @click="modalPdf=true">附件：点击查看个人资料.pdf</span><br>
+        <Upload :headers="header" :action='uploadFile' :on-success="handleSuccessPdf">
+          <Button type="primary" icon="ios-cloud-upload-outline" style="margin-top: 10px;">上传资料PDF</Button>
+        </Upload>
       </Card>
       <!--<Button type="primary" icon="paper-airplane" size="small" style="margin-top:10px;">公积金基本信息</Button>-->
       <Card class="card_file" style="margin-top: 10px">
@@ -256,8 +258,8 @@
                         v-model="formItem.txsj"></DatePicker>
           </FormItem>
           <!--<FormItem :label-width="120" label="公积金开户时间">-->
-            <!--<DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"-->
-                        <!--v-model="formItem.gjjkhsj"></DatePicker>-->
+          <!--<DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"-->
+          <!--v-model="formItem.gjjkhsj"></DatePicker>-->
           <!--</FormItem>-->
           <FormItem :label-width="120" label="合同自起">
             <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
@@ -287,7 +289,7 @@
         v-model="modalPdf"
         width="70%"
         title="查看pdf">
-        <vuePdfjs url="http://cdn.mozilla.net/pdfjs/tracemonkey.pdf" :type="0">111111111111111111111</vuePdfjs>
+        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':this.$route.query.row.ygfz" :type="0"></vuePdfjs>
       </Modal>
       <!--填写变更原因-->
       <Modal
@@ -308,6 +310,7 @@
 </template>
 <script>
   import vuePdfjs from 'vue-pdfjs'
+  import VueCookie from 'vue-cookie'
   export default {
     data () {
       return {
@@ -318,6 +321,7 @@
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
+        uploadFile: process.env.upload_BASE_URL + "/file/upload",
         bgyy: false,
         ruleValidate: {
           xm: [
@@ -382,12 +386,34 @@
           bgyy: ''
         },
         modalPdf: false,
-        pdfurls: '',
         isshowpdf: false,
         value: '1',
+        header: {
+          'Authorization': 'bearer ' + VueCookie.get('access_token')
+        }
       }
     },
     methods: {
+      handleSuccess: function (res, file) {
+        console.log(res.path);
+        if (res.success === true) {
+          console.log(process.env.upload_BASE_URL + '/' + res.path);
+          this.formItem.zpdz = process.env.upload_BASE_URL + '/' + res.path;
+          this.update();
+        } else {
+          this.$Message.error('修改失败');
+        }
+      },
+      handleSuccessPdf: function (res, file) {
+        console.log(res.path);
+        if (res.success === true) {
+          console.log(process.env.upload_BASE_URL + '/' + res.path);
+          this.formItem.ygfz = process.env.upload_BASE_URL + '/' + res.path;
+          this.update();
+        } else {
+          this.$Message.error('修改失败');
+        }
+      },
       formatDate: function (now) {
         let year = now.getFullYear();
         let month = now.getMonth() + 1;
@@ -447,7 +473,6 @@
       update: function () {
         this.$post(this.$url.userManager_updateUserInfo, this.formItem)
           .then(res => {
-            console.log(res);
             if (res.success === true) {
               this.$Message.info('修改成功');
 //              this.$router.push({path: '/'});
@@ -461,13 +486,14 @@
       vuePdfjs
     },
     mounted () {
+      console.log(this.$route.query.row,'穿的值');
       let tip = this.$route.query.tip;
       this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
         this.isEdit_jbxx = false,
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
-      }else {
+      } else {
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));

@@ -97,12 +97,7 @@
             align: 'center',
             width: 130,
           },
-          {
-            title: '领料规格',
-            key: 'llgg',
-            align: 'center',
-            width: 120,
-          },{
+        {
             title: '物品编号',
             key: 'wpbh',
             align: 'center',

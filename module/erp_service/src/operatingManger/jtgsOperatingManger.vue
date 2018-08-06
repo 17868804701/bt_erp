@@ -13,7 +13,7 @@
           集团公司运营部统计
         </h2>
       </div>
-      <Tabs value="name1" style="margin-top: 5px;">
+      <Tabs value="name1" style="margin-top: 5px;" @on-click="changes">
         <TabPane label="线路车次正点统计表" name="name1">
           <Card>
             <Form :model="formItem1" :label-width="80">
@@ -583,7 +583,7 @@
           .then(res => {
             console.log(res);
             if (res.data.total === 0) {
-              this.$Message.info('暂无数据')
+              this.$Message.info('暂无数据');
               this.totalPage1 = res.data.total;
               this.data10 = res.data.records;
             } else {
@@ -631,11 +631,17 @@
           this.formItem2.sj = this.$formatDate(this.formItem2.sj).substring(0, 7);
         }
         this.getList2();
+      },
+      changes:function (name) {
+        if(name==='name1'){
+            this.getList1()
+        }else{
+            this.getList2()
+        }
       }
     },
     mounted () {
       this.getList1();
-      this.getList2()
     }
   }
 </script>

@@ -282,31 +282,31 @@
               }
             ]
           },
-          {
-            title: '操作',
-            key: 'zt',
-            align: 'center',
-            fixed: 'right',
-            width: 180,
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.modal1 = true
-                    }
-                  }
-                }, '查看详情  /  修改'),
-              ]);
-            }
-          }
+//          {
+//            title: '操作',
+//            key: 'zt',
+//            align: 'center',
+//            fixed: 'right',
+//            width: 180,
+//            render: (h, params) => {
+//              return h('div', [
+//                h('Button', {
+//                  props: {
+//                    type: 'primary',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginRight: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      this.modal1 = true
+//                    }
+//                  }
+//                }, '查看详情  /  修改'),
+//              ]);
+//            }
+//          }
         ],
         data10: [],
 
@@ -399,30 +399,30 @@
               }
             ]
           },
-          {
-            title: '操作',
-            align: 'center',
-            fixed: 'right',
-            width: 220,
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.modal2 = true
-                    }
-                  }
-                }, '查看详情  /  修改'),
-              ]);
-            }
-          }
+//          {
+//            title: '操作',
+//            align: 'center',
+//            fixed: 'right',
+//            width: 220,
+//            render: (h, params) => {
+//              return h('div', [
+//                h('Button', {
+//                  props: {
+//                    type: 'primary',
+//                    size: 'small'
+//                  },
+//                  style: {
+//                    marginRight: '5px'
+//                  },
+//                  on: {
+//                    click: () => {
+//                      this.modal2 = true
+//                    }
+//                  }
+//                }, '查看详情  /  修改'),
+//              ]);
+//            }
+//          }
         ],
         data12: []
       }

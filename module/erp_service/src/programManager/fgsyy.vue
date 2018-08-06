@@ -1,52 +1,150 @@
 <template>
-<div>
-  <!--<router-link to="/addProgram">-->
-
-  <!--</router-link>-->
-  <Modal
-    v-model="addProgram"
-    title="新增计划"
-    @on-ok="ok"
-    width="80%"
-    :mask-closable="false"
-    style="height: auto"
-    :scrollable="true"
-    @on-cancel="cancel">
-  <addProgram></addProgram>
-  </Modal>
-  <Card>
-    <Form :model="formItem" :label-width="80">
-      <Row>
-        <Col span="24">
-        <FormItem label="按年份查询" style="margin: 0;">
-          <DatePicker type="year" placeholder="Select date" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-          <Button type="primary" icon="ios-search">搜索</Button>
-          <Button type="primary" icon="android-download" @click="addProgram=true" style="position: absolute;right: 110px;">新增计划</Button>
-          <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
-        </FormItem>
-        </Col>
-      </Row>
-    </Form>
-  </Card>
-  <can-edit-table style="margin-top: 10px;" v-model="data10" :columnsList="columns11" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
-  </can-edit-table>
-  <!--<Table :columns="columns11" :data="data10" border height="515" size="small" style="margin-top: 20px;"></Table>-->
-</div>
+  <div>
+    <!--新增-->
+    <Modal
+      v-model="addProgram"
+      title="新增计划"
+      @on-ok="ok"
+      width="80%"
+      :mask-closable="false"
+      style="height: auto"
+      :scrollable="true"
+      @on-cancel="cancel">
+      <Form :model="formItem" :label-width="90">
+        <div style="display: flex;flex-wrap: wrap">
+          <FormItem label="年份">
+            <DatePicker type="year" placeholder="选择年份" v-model="formItem.date" style="width: 195px;"></DatePicker>
+          </FormItem>
+          <FormItem label="路别">
+            <Select v-model="formItem.select" style="width: 195px;">
+              <Option value="beijing">1路</Option>
+              <Option value="shanghai">2路</Option>
+              <Option value="shenzhen">3路</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="班车数量">
+            <Input v-model="formItem.input" placeholder="班车数量" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="备用">
+            <Input v-model="formItem.input" placeholder="备用" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="合计">
+            <Input v-model="formItem.input" placeholder="合计" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="日车次">
+            <Input v-model="formItem.input" placeholder="日车次" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="年度车次">
+            <Input v-model="formItem.input" placeholder="年度车次" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="路线长度">
+            <Input v-model="formItem.input" placeholder="路线长度" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="运营日里程">
+            <Input v-model="formItem.input" placeholder="运营日里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="运营年度里程">
+            <Input v-model="formItem.input" placeholder="运营年度里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="日出入库里程">
+            <Input v-model="formItem.input" placeholder="日出入库里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="年度里程">
+            <Input v-model="formItem.input" placeholder="年度里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="日加气里程">
+            <Input v-model="formItem.input" placeholder="日加气里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="年度里程">
+            <Input v-model="formItem.input" placeholder="年度里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="小计">
+            <Input v-model="formItem.input" placeholder="小计" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="备用年度里程">
+            <Input v-model="formItem.input" placeholder="备用车年度里程" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="合计">
+            <Input v-model="formItem.input" placeholder="合计" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="说明">
+            <Input v-model="formItem.input" placeholder="说明" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="出入库台数">
+            <Input v-model="formItem.input" placeholder="出入库台数" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="加气台数">
+            <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="出入库说明">
+            <Input v-model="formItem.textarea" style="width: 480px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+                   placeholder="出入库说明"></Input>
+          </FormItem>
+        </div>
+      </Form>
+    </Modal>
+    <!--修改-->
+    <Modal
+      v-model="editProgram"
+      title="修改"
+      @on-ok="ok"
+      width="40%"
+      :mask-closable="false"
+      style="height: auto"
+      :scrollable="true"
+      @on-cancel="cancel">
+      <Form :model="formItem" :label-width="90">
+        <div style="display: flex;flex-wrap: wrap">
+          <FormItem label="出入库台数">
+            <Input v-model="formItem.input" placeholder="出入库台数" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="加气台数">
+            <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
+          </FormItem>
+          <FormItem label="出入库说明">
+            <Input v-model="formItem.textarea" style="width: 480px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+                   placeholder="出入库说明"></Input>
+          </FormItem>
+        </div>
+      </Form>
+    </Modal>
+    <Card>
+      <Form :model="formItem" :label-width="80">
+        <Row>
+          <Col span="24">
+          <FormItem label="按年份查询" style="margin: 0;">
+            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
+                        v-model="formItem.year"></DatePicker>
+            <Button type="primary" icon="ios-search">搜索</Button>
+            <Button type="primary" icon="android-download" @click="addProgram=true"
+                    style="position: absolute;right: 110px;">新增计划
+            </Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
+          </FormItem>
+          </Col>
+        </Row>
+      </Form>
+    </Card>
+    <Table :columns="columns11" :data="data10" border height="515" size="small" style="margin-top: 20px;"></Table>
+  </div>
 </template>
 <script>
   import canEditTable from './canEditTable.vue';
   import addProgram from './addProgram.vue';
   export default {
-      components:{
-        canEditTable,
-        addProgram
-      },
+    components: {
+      canEditTable,
+      addProgram
+    },
     data () {
       return {
-        addProgram:false,
+        addProgram: false,
+        editProgram:false,
         formItem: {
-          select: '',
-          date: ''
+          input: '',
+          textarea: '',
+          date: '',
+          select: ''
         },
         columns11: [
           {
@@ -54,7 +152,6 @@
             key: 'name',
             align: 'center',
             width: 100,
-            fixed: 'left',
           },
           {
             title: '路别',
@@ -67,7 +164,6 @@
             key: 'age',
             align: 'center',
             width: 100,
-            sortable: true
           },
           {
             title: '配车数',
@@ -78,21 +174,18 @@
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
               {
                 title: '备用',
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
               {
                 title: '合计',
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
             ]
           },
@@ -105,14 +198,12 @@
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
               {
                 title: '年度车次',
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
             ]
           },
@@ -126,14 +217,12 @@
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
               {
                 title: '年度里程',
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
             ]
           },
@@ -146,42 +235,37 @@
                 key: 'age',
                 align: 'center',
                 width: 100,
-//                sortable: true,
-                children:[
+//               ,
+                children: [
                   {
                     title: '日出入库里程',
                     key: 'age',
                     align: 'center',
                     width: 100,
-                    sortable: true
                   },
                   {
                     title: '年度里程',
                     key: 'age',
                     align: 'center',
                     width: 100,
-                    sortable: true
                   },
                   {
                     title: '日加气里程',
                     key: 'age',
                     align: 'center',
                     width: 100,
-                    sortable: true
                   },
                   {
                     title: '年度里程',
                     key: 'age',
                     align: 'center',
                     width: 100,
-                    sortable: true
                   },
                   {
                     title: '小计',
                     key: 'age',
                     align: 'center',
                     width: 100,
-                    sortable: true
                   }
                 ]
               },
@@ -190,14 +274,12 @@
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
               {
                 title: '合计',
                 key: 'age',
                 align: 'center',
                 width: 100,
-                sortable: true
               },
             ]
           },
@@ -206,7 +288,7 @@
             align: 'center',
           },
           {
-            title: '出入库',
+            title: '出入库台数',
             key: 'gender1',
             align: 'center',
             width: 120,
@@ -232,7 +314,7 @@
           {
             title: '操作',
             align: 'center',
-            width: 100,
+            width: 170,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -249,7 +331,21 @@
                       this.show(params.index)
                     }
                   }
-                }, '删除')
+                }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.editProgram = true
+                    }
+                  }
+                }, '修改')
               ]);
             }
           }
@@ -257,26 +353,19 @@
         data10: []
       }
     },
-    methods:{
+    methods: {
       ok () {
         this.$Message.info('Clicked ok');
       },
       cancel () {
         this.$Message.info('Clicked cancel');
       },
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-      },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
-      }
-
     },
     mounted () {
       const data = [];
       for (let i = 0; i < 10; i++) {
         data.push({
-          lb:'1'+i+'2',
+          lb: '1' + i + '2',
           key: i,
           name: '2018年',
           age: i + 1,
@@ -286,8 +375,8 @@
           caddress: 'Lake Street 42',
           cname: 'SoftLake Co',
           gender3: '这里是说明，可以修改的哦',
-          gender2: i+25,
-          gender1: '出入库',
+          gender2: i + 25,
+          gender1: '21',
         });
         this.data10 = data;
       }

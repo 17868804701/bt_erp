@@ -307,7 +307,7 @@
           },
           xmdx: {
             title: '姓名首字母',
-            key: 'xmdx',
+            key: 'xmszm',
             width: 150,
             sortable: true
           },
@@ -615,20 +615,6 @@
                     }
                   }
                 }, '详情'),
-//                h('Button', {
-//                  props: {
-//                    type: 'error',
-//                    size: 'small'
-//                  },
-//                  style: {
-//                    marginLeft: '5px'
-//                  },
-//                  on: {
-//                    click: () => {
-//                      alert("删除成功")
-//                    }
-//                  }
-//                }, '删除')
               ]);
             }
           }
@@ -655,11 +641,8 @@
           .then(res => {
             this.totalPage = res.data.total;
             this.tableData2 = res.data.records;
-//            this.$Message.info('查询成功')
           })
       },
-
-
 //      查询区域
       addPerson: function () {
         this.$router.push({path: '/ListInfo', query: {tip: 'add'}});
@@ -697,7 +680,6 @@
       }
     },
     mounted () {
-//        window.top.location.href='http://10.50.0.144:8702/login';
       this.changeTableColumns();
       this.getList();
     }

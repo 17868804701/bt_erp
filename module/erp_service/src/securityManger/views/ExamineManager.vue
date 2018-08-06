@@ -4,10 +4,12 @@
     <Modal
       v-model="editModal"
       title="编辑运营安全体系执行规范"
-      width="50%"
-      @on-ok="editDone"
-      @on-cancel="editCancle">
-      <EditSafeExamineArea/>
+      width="50%">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="saveAQData">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancle">取消</Button>
+      </div>
+      <EditSafeExamineArea :formItem="editRow"/>
     </Modal>
     <Card>
       <Form :model="formItem" :label-width="80">
@@ -15,23 +17,30 @@
           <Col span="24">
           <FormItem label="按月查询" style="margin: 0;">
             <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-            <Button type="primary" icon="ios-search">搜索</Button>
+            <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
             <Button type="primary" icon="android-download"
-                    style="float: right;margin-right: 10px">导出Excel
+                    style="float: right;margin-right: 10px" @click="exportExcel">导出Excel
             </Button>
           </FormItem>
           </Col>
         </Row>
       </Form>
     </Card>
-    <can-edit-table style="margin-top: 10px;" v-model="data10" :columnsList="columns11" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
-    </can-edit-table>
+    <can-edit-table
+      ref="table"
+      v-model="tableData"
+      :hover-show="true"
+      @on-change="handleChange"
+      :editIncell="true"
+      :columns-list="columns11"
+    ></can-edit-table>
   </div>
 </template>
 
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
   import EditSafeExamineArea from '../components/EditSafeExamineArea.vue'
+  import * as DateTool from '../../../utils/DateTool'
   export default {
     components:{
       canEditTable,
@@ -41,8 +50,9 @@
       return {
         editModal: false,
         formItem: {
-          select: '',
-          date: ''
+          date: this.initDate(),
+          lasjStart: '',
+          lasjEnd: ''
         },
         columns11: [
           {
@@ -73,31 +83,31 @@
                     children: [
                       {
                         title: '一般',
-                        key: 'sgjb_yb',
+                        key: 'ybsg',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '一级轻微',
-                        key: 'sgjb_yj',
+                        key: 'yjqw',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '二级轻微',
-                        key: 'sgjb_ej',
+                        key: 'ejqw',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '三级轻微',
-                        key: 'sgjb_sj',
+                        key: 'sjqw',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '扣分',
-                        key: 'sgjb_kf',
+                        key: 'xczrsgKf',
                         align: 'center',
                         width: 90,
                       },
@@ -109,19 +119,19 @@
                     children: [
                       {
                         title: '经损含追加(元)',
-                        key: 'sgss_jshzj',
+                        key: 'js',
                         align: 'center',
                         width: 120,
                       },
                       {
                         title: '经损率(元/万公里)',
-                        key: 'sgss_jsl',
+                        key: 'jsl',
                         align: 'center',
                         width: 120,
                       },
                       {
                         title: '扣分',
-                        key: 'sgss_kf',
+                        key: 'sgssKf',
                         align: 'center',
                         width: 90,
                       },
@@ -139,43 +149,43 @@
                     children: [
                       {
                         title: '职工安全教育',
-                        key: 'aqjy_zgaqjy',
+                        key: 'zgaqjy',
                         align: 'center',
                         width: 80,
                       },
                       {
                         title: '安全宣传',
-                        key: 'aqjy_aqxc',
+                        key: 'aqxc',
                         align: 'center',
                         width: 80,
                       },
                       {
                         title: '安全例会',
-                        key: 'aqjy_aqlh',
+                        key: 'aqlh',
                         align: 'center',
                         width: 80,
                       },
                       {
                         title: '线路安全稽查',
-                        key: 'aqjy_xlaqjc',
+                        key: 'xlanqjc',
                         align: 'center',
                         width: 80,
                       },
                       {
                         title: '酒精检测',
-                        key: 'aqjy_jjjc',
+                        key: 'jjjc',
                         align: 'center',
                         width: 80,
                       },
                       {
                         title: '四不放过',
-                        key: 'aqjy_sbfg',
+                        key: 'sbfg',
                         align: 'center',
                         width: 80,
                       },
                       {
                         title: '安全标准化',
-                        key: 'aqjy_aqbzh',
+                        key: 'aqbzh',
                         align: 'center',
                         width: 80,
                       },
@@ -187,37 +197,37 @@
                     children: [
                       {
                         title: '吸烟',
-                        key: 'jsyaq_xy',
+                        key: 'xy',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '接打手机',
-                        key: 'jsyaq_jdsj',
+                        key: 'jdsj',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '闯信号',
-                        key: 'jsyaq_cxh',
+                        key: 'cxh',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '未礼让斑马线',
-                        key: 'jsyaq_wlrbmx',
+                        key: 'wlrbmx',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '超速行驶',
-                        key: 'jsyaq_csxs',
+                        key: 'csxs',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '驾驶中闲谈',
-                        key: 'jsyaq_jszxt',
+                        key: 'jszxt',
                         align: 'center',
                         width: 90,
                       },
@@ -229,13 +239,13 @@
                     children: [
                       {
                         title: '行车十检',
-                        key: 'claqgl_xcsj',
+                        key: 'xcsj',
                         align: 'center',
                         width: 90,
                       },
                       {
                         title: '车辆安全设施抽检',
-                        key: 'claqgl_sscj',
+                        key: 'claqsscj',
                         align: 'center',
                         width: 90,
                       },
@@ -269,6 +279,8 @@
                   on: {
                     click: () => {
                       console.log('编辑运营安全体系执行规范');
+                      console.log(params.row);
+                      this.editRow = params.row;
                       this.editModal = true;
                     }
                   }
@@ -277,66 +289,129 @@
             }
           }
         ],
-        data10: [],
+        tableData: [],
+        editRow: {},
       }
     },
     methods:{
+      initDate() {
+        let now = new Date();
+        return now;
+      },
       handleCellChange (val, index, key) {
         this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
       },
       handleChange (val, index) {
         this.$Message.success('修改了第' + (index + 1) + '行数据');
       },
-      editCancle() {
+      cancle() {
+        this.editModal = false;
+      },
+      saveAQData() {
+        let params = {
+          aqbzh: 0,
+          aqlh: 0,
+          aqxc: 0,
+          claqsscj: 0,
+          csxs: 0,
+          cxh: 0,
+          dw: "",
+          jdsj: 0,
+          jjjc: 0,
+          jszxt: 0,
+          khsj: "",
+          sbfg: 0,
+          wlrbmx: 0,
+          xcsj: 0,
+          xlanqjc: 0,
+          xy: 0,
+          zgaqjy: 0
+        }
+
+        for (let attr in params) {
+          if (typeof this.editRow[attr] == 'undefined' || this.editRow[attr] == null || this.editRow[attr] == "") {
+            params[attr] = 0;
+          }else{
+            params[attr] = this.editRow[attr];
+          }
+        }
+
+        var that = this;
+        if (typeof this.editRow['id'] === 'undefined' || this.editRow['id'] === null || this.editRow['id']=="") {
+          console.log('没有id, 新增保存');
+          params.khsj = DateTool.yyyymm01FormatDate(this.formItem.date);
+          console.log(params);
+          this.$post(this.$url.security_AQGLYKH_save, params)
+          .then(res => {
+            if (res.success === true) {
+              this.$Message.success('保存成功!');
+              that.editModal = false;
+              that.requestListData();
+            }else{
+              this.$Message.error('保存失败!');
+            }
+          })
+        }else{
+          params.khsj = DateTool.yyyymm01FormatDate(this.formItem.date);
+          params.gxsj = DateTool.yyyymm01FormatDate(this.formItem.date);
+          console.log('有id, 更新');
+          console.log(params);
+          params.id = this.editRow.id;
+          this.$post(this.$url.security_AQGLYKH_update, params)
+          .then(res => {
+            if (res.success === true) {
+              this.$Message.success('更新成功!');
+              that.editModal = false;
+              that.requestListData();
+            }else{
+              this.$Message.error('更新失败!');
+            }
+          })
+        }
+
 
       },
-      editDone() {
-
+      searchData() {
+        this.requestListData();
       },
       requestListData() {
+        let params = {
+          time: DateTool.yyyyddFormatDate(this.formItem.date),
+        }
         console.log('安全管理月考核表请求数据');
+        console.log(params);
+        this.$fetch(this.$url.security_AQGLYKH_list, params)
+        .then(res => {
+          console.log(res);
+          if (res.success === true) {
+            if (res.data.length > 0) {
+
+              res.data.forEach(item => {
+                item.gxsj = DateTool.timesToDate(item.gxsj);
+                item.khsj = DateTool.timesToDate(item.khsj);
+              })
+              this.tableData = res.data;
+            }
+          }else{
+            this.$Message.error('数据获取失败, 请重试!');
+          }
+        })
+      },
+      exportExcel() {
+        let url = this.$url.security_AQGLYKH_exportExcel;
+        if (this.formItem.date instanceof Date) {
+          let firstDay = DateTool.getFirstDay(this.formItem.date);
+          let lastDay = DateTool.getLastDay(this.formItem.date);
+          url = url + '?startTime=' + firstDay + '&&endTime=' + lastDay;
+        }
+        this.$getExcel(url);
       }
     },
     mounted () {
-      const data = [];
-      for (let i = 0; i < 14; i++) {
-        data.push({
-          key: i,
-          dw: '一公司',
-          yylc: '1622141.4',
-          sgjb_yb: '',
-          sgjb_yj: '',
-          sgjb_ej: '',
-          sgjb_sj: '1',
-          sgjb_kf: '0.1',
-          sgss_jshzj: '72910',
-          sgss_jsl: '449',
-          sgss_kf: '0.0',
 
-          aqjy_zgaqjy: '',
-          aqjy_aqxc: '',
-          aqjy_aqlh: '',
-          aqjy_xlaqjc: '',
-          aqjy_jjjc: '',
-          aqjy_sbfg: '',
-          aqjy_aqbzh: '',
 
-          jsyaq_xy: '',
-          jsyaq_jdsj: '',
-          jsyaq_cxh: "",
-          jsyaq_wlrbmx: '',
-          jsyaq_csxs: '',
-          jsyaq_jszxt: '',
-
-          claqgl_xcsj: '',
-          claqgl_sscj: '',
-
-          zjkf: '0.1',
-
-        });
-        this.data10 = data;
-      }
     }
   }
 </script>
+
 

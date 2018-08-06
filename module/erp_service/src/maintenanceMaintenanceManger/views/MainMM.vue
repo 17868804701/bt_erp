@@ -6,21 +6,21 @@
       <h2 style="margin-left: 15px;">
         保养管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;">
+      <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
         <TabPane label="车辆保养" name="name1">
-          <MMList></MMList>
+          <MMList ref="MMList"></MMList>
         </TabPane>
         <TabPane label="检验单管理" name="name2">
-          <MMJYDList></MMJYDList>
+          <MMJYDList ref="MMJYDList"></MMJYDList>
         </TabPane>
         <TabPane label="验收单管理" name="name3">
-          <MMYSDList></MMYSDList>
+          <MMYSDList ref="MMYSDList"></MMYSDList>
         </TabPane>
         <TabPane label="维修领料管理" name="name4">
-          <MMCLList></MMCLList>
+          <MMCLList ref="MMCLList"></MMCLList>
         </TabPane>
         <TabPane label="返修管理" name="name5">
-          <MMBackList></MMBackList>
+          <MMBackList ref="MMBackList"></MMBackList>
         </TabPane>
       </Tabs>
     </div>
@@ -47,10 +47,23 @@
       }
     },
     methods: {
-
+      clickTab(name) {
+        if (name === 'name1') {
+          this.$refs['MMList'].requestListData();
+        } else if (name === 'name2') {
+          this.$refs['MMJYDList'].requestListData();
+        } else if (name === 'name3') {
+          this.$refs['MMYSDList'].requestListData();
+        } else if (name === 'name4') {
+          this.$refs['MMCLList'].requestListData();
+        } else {
+          this.$refs['MMBackList'].requestListData();
+        }
+      }
     },
     mounted () {
 
     }
   }
 </script>
+

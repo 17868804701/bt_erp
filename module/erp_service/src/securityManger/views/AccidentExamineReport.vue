@@ -15,9 +15,6 @@
         <TabPane label="追加事故经损说明管理" name="name2">
           <AddLossList ref="AddLossList"/>
         </TabPane>
-        <!--<TabPane label="分公司限速运营月统计结果" name="name3">-->
-          <!--<RateLimitReport ref="RateLimitReport"/>-->
-        <!--</TabPane>-->
       </Tabs>
     </div>
   </div>
@@ -40,7 +37,6 @@
     },
     methods: {
       clickTab(name) {
-        console.log(name);
         if (name === 'name1') {
           this.$refs['ExamineManager'].requestListData();
         } else {

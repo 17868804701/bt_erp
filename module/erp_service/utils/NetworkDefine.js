@@ -5,6 +5,12 @@
 const baseURL = 'http://10.50.0.144:8702';
 
 const NetworkInterface = {
+  
+  // **********        数据字典            *********** //
+  common_getDictListDataWithCode: 'auth/dic/getByCode',  // 根据code字典数据
+  
+  
+  // **********        人力资源            *********** //
   userManager_userList: '/person/userInfo/list', // 人力资源管理列表
   userManager_saveUserInfo: '/person/userInfo/save', // 保存人员信息
   userManager_updateUserInfo: '/person/userInfo/update', // 更新人员信息
@@ -13,7 +19,8 @@ const NetworkInterface = {
   userManager_userChangeList: '/person/userInfo/getHis', // 员工变更记录
   userManager_counts: '/person/userInfo/getCount', // 员工数据统计
 
-  // 安全事故管理
+  
+  // **********        安全事故管理            *********** //
   security_LASG_list: '/anq/lasg/lasgList', // 立案事故信息列表
   security_LASG_add: '/anq/lasg/saveLasg', // 添加立案事故信息
   security_LASG_update: '/anq/lasg/updateLasg', //更新立案事故信息
@@ -22,27 +29,23 @@ const NetworkInterface = {
   security_LASG_deleteLoss: '/anq/lasg/deleteZjsg', // 删除立案事故追加经损信息
   security_LASG_updateLoss: '/anq/lasg/updateZjsg', // 更新立案事故追加经损信息
   security_LASG_lossList: '/anq/lasg/zjsgList', // 追加事故信息列表
-
   //报表
   security_LASG_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportLasgExcel', // 导出立案事故信息列表
-
   // 事故情况汇总
   security_JTGSSGHZ_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportLasgExcel',// 集团公司事故情况月汇总表 ---- 和立案事故管理页面一样的接口 --- 需要添加 按月份查询
   security_JTGSSGHZ_list: '/anq/lasg/lasgList',
-
   security_GFGSJTSG_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportJtsgbbExcel',  // 各分公司交通事故月报表
   security_GFGSJTSG_list: '/anq/lasg/jtsgbbList', // 各分公司交通事故月报表列表数据
-
   // 安全管理月考核表
   security_AQGLYKH_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportAqglkhbExcel', // 安全管理月考核表
   security_AQGLYKH_list: '/anq/lasg/aqglkhbList', // 安全管理月考核表列表数据
+  security_AQGLYKH_save: '/anq/lasg/saveAqkh', // 安全管理月考核表， 添加安全相关分数
+  security_AQGLYKH_update: '/anq/lasg/updateAqkh', // 安全管理月考核表， 更新安全相关分数
   security_ZJSGJSSM_exportExcel: 'http://10.50.0.144:8702/anq/lasg/exportZjsgjsExcel', // 追加事故经损说明管理
   security_ZJSGJSSM_list: '/anq//lasg/zjsgjsList', // 追加事故经损说明管理列表数据
-
   // 安全生产情况分析列表数据
-  security_AQSCFGS_list: '/anq/lasg/fgsAqsczbList',
-  security_AQSCJTGS_list: '/anq/lasg/hzAqsczbList',
-
+  security_AQSCFGS_list: '/anq/lasg/fgsAqsczbList', // 分公司数据
+  security_AQSCJTGS_list: '/anq/lasg/hzAqsczbList', // 集团公司数据
   // 安全生产情况分析 报表导出
   //   /lasg/exportAqsczbExcel   整个的导出
   security_AQQKFX_exportExcel: baseURL+'/lasg/exportAqsczbQkfxExcel', // 安全情况分析 --- 报表导出
@@ -61,8 +64,47 @@ const NetworkInterface = {
   // 立案事故经损率指标
   // 车辆安检
   // 对外投保交强险及赔付情况
-
-
+  
+  // **********        维修养护            *********** //
+  maintain_BYGL_CLBY_recordList: '/weix/maintenanceManagement/clby/list',        // 保养管理 - 车辆保养 - 列表数据
+  maintain_BYGL_CLBY_saveRecord: '/weix/maintenanceManagement/clby/save',        // 保养管理 - 车辆保养 - 新增保养进场登记
+  maintain_BYGL_CLBY_updateRecord: '/weix/maintenanceManagement/clby/update',    // 保养管理 - 车辆保养 - 更新保养进场登记
+  maintain_BYGL_CLBY_deleteRecord: '/weix/maintenanceManagement/clby/delete',    // 保养管理 - 车辆保养 - 删除保养进场登记
+  maintain_BYGL_CLBY_recordDetail: '/weix/maintenanceManagement/clby/info',      // 保养管理 - 车辆保养 - 详情
+  // 导出
+  
+  maintain_BYGL_JYDGL_recordList: '/weix/maintenanceManagement/jyd/list',             // 检验单管理 - 列表
+  maintain_BYGL_JYDGL_listDetail: '/weix/maintenanceManagement/jydMx/info',           // 检验单管理 - 列表查看详情
+  maintain_BYGL_JYDGL_exportExcel: '/weix/maintenanceManagement/jyd/listExport',      // 检验单管理 - 列表导出excel
+  
+  maintain_BYGL_YSDGL_recordList: '/weix/maintenanceManagement/ysd/list',             // 验收单管理 - 列表
+  maintain_BYGL_YSDGL_listDetail: '/weix/maintenanceManagement/ysdMx/info',           // 验收单管理 - 列表查看详情
+  maintain_BYGL_YSDGL_exportExcel: '/weix/maintenanceManagement/ysd/listExport',      // 验收单管理 - 列表导出excel
+  
+  maintain_BYGL_WXLLGL_recordList: '/weix/maintenanceManagement/llmx/list',           // 维修理领料管理 - 列表
+  maintain_BYGL_WXLLGL_listDetail: '/weix/maintenanceManagement/llmx/info',           // 维修理领料管理 - 列表查看详情?????
+  maintain_BYGL_WXLLGL_exportExcel: '',// 维修理领料管理 - 列表导出excel
+  
+  maintain_BYGL_FXGL_recordList: '/weix/maintenanceManagement/fxgl/list',             // 返修管理 - 列表
+  maintain_BYGL_FXGL_save: '/weix//maintenanceManagement/fxgl/save',                  // 返修管理 - 新增
+  maintain_BYGL_FXGL_update: '/weix//maintenanceManagement/fxgl/update',              // 返修管理 - 更新
+  maintain_BYGL_FXGL_delete: '/weix//maintenanceManagement/fxgl/delete',              // 返修管理 - 删除
+  maintain_BYGL_FXGL_listDetail: '/weix//maintenanceManagement/fxgl/info',            // 返修管理 - 列表查看详情
+  maintain_BYGL_FXGL_exportExcel: '', // 返修管理 - 列表导出excel
+  
+  
+  
+  
+  
+  
+  maintain_BBGL_SJBYTZ_list: '/weix/reportManagement/tertiaryMaintenanceAccount',                       // 报表管理 - 三级保养台账列表
+  maintain_BBGL_SJBYTZ_exportExcel: '/weix/reportManagement/tertiaryMaintenanceAccountExport',          // 报表管理 - 三级保养台账 导出excel
+  maintain_BBGL_SJWHCL_list: '/weix/reportManagement/tertiaryMaintenanceMaterialUsage',                 // 报表管理 - 三级维护材料使用情况列表
+  maintain_BBGL_SJWHCL_exportExcel: '/weix/reportManagement/tertiaryMaintenanceMaterialUsageExport',    // 报表管理 - 三级维护材料使用情况 导出excel
+  // **********        维修养护            *********** //
+  
+  
+  
   // 运营管理
   fgsxcyb:'/yuny/fgsXcyb/getXcybList',   //分公司行车月报表列表
   exportFgsxcyb:'/yuny/fgsXcyb/exportXcybExcel',   //分公司行车月报表导出

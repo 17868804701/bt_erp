@@ -1,4 +1,4 @@
-// 2018 年第一季度安全生产情况分析
+// 2018 年第一季度安全生产情况分析   少车内事故所有内容
 export const PA_Quarter_Columns = [
   {
     title: '2018年第一季度安全生产情况分析',
@@ -6,20 +6,14 @@ export const PA_Quarter_Columns = [
     children: [
       {
         title: '立案事故',
-        key: 'lasg',
+        key: 'xczrsgcsSum',
         align: 'center',
         width: 90,
       },
       {
         title: '考核事故',
-        key: 'khsg',
+        key: 'khsgSum',
         align: 'center',
-        width: 90,
-      },
-      {
-        title: '车内事故',
-        key: 'lasg',
-        align: 'cnsg',
         width: 90,
       },
       {
@@ -28,55 +22,25 @@ export const PA_Quarter_Columns = [
         children: [
           {
             title: '去年同期（起）',
-            key: 'lasgbj_qntq',
+            key: 'oldxczrsgcsSum',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势',
-            key: 'lasgbj_qs',
+            key: 'xczrsgcsqs',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势值',
-            key: 'lasgbj_qsz',
+            key: 'xczrsgcsqsVal',
             align: 'center',
             width: 90,
           },
           {
             title: '幅度',
-            key: 'lasgbj_fd',
-            align: 'center',
-            width: 90,
-          },
-        ],
-      },
-      {
-        title: '车内事故比较去年同期比较',
-        align: 'center',
-        children: [
-          {
-            title: '去年同期（起）',
-            key: 'cnsgbj_qntq',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势',
-            key: 'cnsgbj_qs',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势值',
-            key: 'cnsgbj_qsz',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '幅度',
-            key: 'cnsgbj_fd',
+            key: 'xczrsgcsqsFd',
             align: 'center',
             width: 90,
           },
@@ -88,31 +52,31 @@ export const PA_Quarter_Columns = [
         children: [
           {
             title: '本期',
-            key: 'khybsgbj_bq',
+            key: 'ybsgSum',
             align: 'center',
             width: 90,
           },
           {
             title: '去年同期（起）',
-            key: 'khybsgbj_qntq',
+            key: 'ybsgSum',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势',
-            key: 'khybsgbj_qs',
+            key: 'ybsgqs',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势值',
-            key: 'khybsgbj_qsz',
+            key: 'ybsgqsVal',
             align: 'center',
             width: 90,
           },
           {
             title: '幅度',
-            key: 'khybsgbj_fd',
+            key: 'ybsgqsFd',
             align: 'center',
             width: 90,
           },
@@ -124,31 +88,31 @@ export const PA_Quarter_Columns = [
         children: [
           {
             title: '本期',
-            key: 'khejsgbj_bq',
+            key: 'ejqwSum',
             align: 'center',
             width: 90,
           },
           {
             title: '去年同期（起）',
-            key: 'khejsgbj_qntq',
+            key: 'oldejqwSum',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势',
-            key: 'khejsgbj_qs',
+            key: 'ejqwqs',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势值',
-            key: 'khejsgbj_qsz',
+            key: 'ejqwqsVal',
             align: 'center',
             width: 90,
           },
           {
             title: '幅度',
-            key: 'khejsgbj_fd',
+            key: 'ejqwqsFd',
             align: 'center',
             width: 90,
           },
@@ -160,31 +124,31 @@ export const PA_Quarter_Columns = [
         children: [
           {
             title: '本期',
-            key: 'khsjsgbj_bq',
+            key: 'sjqwSum',
             align: 'center',
             width: 90,
           },
           {
             title: '去年同期（起）',
-            key: 'khsjsgbj_qntq',
+            key: 'oldsjqwSum',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势',
-            key: 'khsjsgbj_qs',
+            key: 'sjqwqs',
             align: 'center',
             width: 90,
           },
           {
             title: '趋势值',
-            key: 'khsjsgbj_qsz',
+            key: 'sjqwqsVal',
             align: 'center',
             width: 90,
           },
           {
             title: '幅度',
-            key: 'khsjsgbj_fd',
+            key: 'sjqwqsFd',
             align: 'center',
             width: 90,
           },
@@ -242,27 +206,27 @@ export const PA_LASG_Columns = [
       },
       {
         title: '本期',
-        key: 'bq',
+        key: 'xczrsgcsSum',
         align: 'center',
       },
       {
         title: '去年同期',
-        key: 'qntq',
+        key: 'oldxczrsgcsSum',
         align: 'center',
       },
       {
         title: '趋势',
-        key: 'qs',
+        key: 'xczrsgcsqs',
         align: 'center',
       },
       {
         title: '趋势值',
-        key: 'qsz',
+        key: 'xczrsgcsqsVal',
         align: 'center',
       },
       {
         title: '幅度',
-        key: 'fd',
+        key: 'xczrsgcsqsFd',
         align: 'center',
       },
     ],
@@ -285,33 +249,28 @@ export const PA_Economic_Losses = [
     align: 'center',
     children: [
       {
-        title: '单位',
-        key: 'dw',
-        align: 'center'
-      },
-      {
         title: '本期',
-        key: 'bq',
+        key: 'jsSum',
         align: 'center',
       },
       {
         title: '去年同期',
-        key: 'qntq',
+        key: 'oldjsSum',
         align: 'center',
       },
       {
         title: '趋势',
-        key: 'qs',
+        key: 'jsqs',
         align: 'center',
       },
       {
         title: '趋势值',
-        key: 'qsz',
+        key: 'jsqsVal',
         align: 'center',
       },
       {
         title: '幅度',
-        key: 'fd',
+        key: 'jsqsFd',
         align: 'center',
       },
     ],
@@ -340,22 +299,22 @@ export const PA_Examine = [
       },
       {
         title: '考核事故',
-        key: 'khsg',
+        key: 'khsgSum',
         align: 'center',
       },
       {
         title: '一般事故',
-        key: 'ybsg',
+        key: 'ybsgSum',
         align: 'center',
       },
       {
         title: '二级轻微事故',
-        key: 'ejsg',
+        key: 'ejqwSum',
         align: 'center',
       },
       {
         title: '三级轻微事故',
-        key: 'sjsg',
+        key: 'sjqwSum',
         align: 'center',
       },
     ],
@@ -383,7 +342,7 @@ export const PA_XCZR_Rate = [
       },
       {
         title: '行车责任事故频率',
-        key: 'xczr_rate',
+        key: 'sgplSum',
         align: 'center',
       },
       {
@@ -392,17 +351,17 @@ export const PA_XCZR_Rate = [
         children: [
           {
             title: '计划',
-            key: 'jhbj_jh',
+            key: 'sgpljhSum',
             align: 'center',
           },
           {
             title: '趋势',
-            key: 'jhbj_qs',
+            key: 'sgpljhqs',
             align: 'center',
           },
           {
             title: '趋势值',
-            key: 'jhbj_qsz',
+            key: 'sgpljhVal',
             align: 'center',
           },
         ],
@@ -413,22 +372,22 @@ export const PA_XCZR_Rate = [
         children: [
           {
             title: '去年同期',
-            key: 'qntqbj_qntq',
+            key: 'oldsgplSum',
             align: 'center',
           },
           {
             title: '趋势',
-            key: 'qntqbj_qs',
+            key: 'sgplqs',
             align: 'center',
           },
           {
             title: '趋势值',
-            key: 'qntqbj_qsz',
+            key: 'sgplqsVal',
             align: 'center',
           },
           {
             title: '幅度',
-            key: 'qntqbj_fd',
+            key: 'sgplqsFd',
             align: 'center',
           },
         ],
@@ -464,17 +423,17 @@ export const PA_LASG_LossRateTarget = [
       },
       {
         title: '事故（起）',
-        key: 'sg',
+        key: 'xczrsgcsSum',
         align: 'center',
       },
       {
         title: '经损（万元）',
-        key: 'js',
+        key: 'jsSum',
         align: 'center',
       },
       {
         title: '经损率（元/万公里）',
-        key: 'jsl',
+        key: 'jslSum',
         align: 'center',
       },
       {
@@ -483,17 +442,17 @@ export const PA_LASG_LossRateTarget = [
         children: [
           {
             title: '计划（元/万公里）',
-            key: 'jhbj_jh',
+            key: 'jsljhSum',
             align: 'center',
           },
           {
             title: '趋势',
-            key: 'jhbj_qs',
+            key: 'jsljhqs',
             align: 'center',
           },
           {
             title: '趋势值',
-            key: 'jhbj_qsz',
+            key: 'jsljhqsVal',
             align: 'center',
           },
         ],
@@ -504,22 +463,22 @@ export const PA_LASG_LossRateTarget = [
         children: [
           {
             title: '去年同期（元/万公里）',
-            key: 'qntqbj_qntq',
+            key: 'oldjslSum',
             align: 'center',
           },
           {
             title: '趋势',
-            key: 'qntqbj_qs',
+            key: 'oldjslSum',
             align: 'center',
           },
           {
             title: '趋势值',
-            key: 'qntqbj_qsz',
+            key: 'jslqsVal',
             align: 'center',
           },
           {
             title: '幅度',
-            key: 'qntqbj_fd',
+            key: 'jslqsVal',
             align: 'center',
           },
         ],
@@ -557,17 +516,17 @@ export const PA_CLAJ_Yield = [
       },
       {
         title: '检车台次',
-        key: 'jctc',
+        key: 'jctcSum',
         align: 'center',
       },
       {
         title: '不合格',
-        key: 'bhg',
+        key: 'bhgSum',
         align: 'center',
       },
       {
         title: '合格率',
-        key: 'hgl',
+        key: 'jctcHgl',
         align: 'center',
       },
     ],
@@ -595,12 +554,12 @@ export const PA_Insure_Paid = [
       },
       {
         title: '回赔额',
-        key: 'hpe1',
+        key: 'dwtbHpeSum',
         align: 'center',
       },
       {
         title: '事件（起）',
-        key: 'sj',
+        key: 'dwtbSjSum',
         align: 'center',
       }
     ],
@@ -611,7 +570,7 @@ export const PA_Insure_Paid = [
     children: [
       {
         title: '回赔额',
-        key: 'hpe2',
+        key: 'clbxHpeSum',
         align: 'center',
       }
     ],

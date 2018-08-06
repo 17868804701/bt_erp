@@ -30,9 +30,7 @@
     data () {
       return {
         formItem: {
-          date: '',
-          lasjStart: '',
-          lasjEnd: '',
+          date: this.initDate(),
         },
         columns11: [
           {
@@ -41,7 +39,7 @@
             children: [
               {
                 title: '单位/项目',
-                key: 'dwxm',
+                key: 'dw',
                 align: 'center',
                 width: 120,
               },
@@ -65,49 +63,49 @@
                 children: [
                   {
                     title: '特大事故',
-                    key: 'sg_td',
+                    key: 'tdsg',
                     align: 'center',
                     width: 120,
                     sortable: true
                   },
                   {
                     title: '重大事故',
-                    key: 'sg_zd',
+                    key: 'zdsg',
                     align: 'center',
                     width: 120,
                     sortable: true
                   },
                   {
                     title: '较大事故',
-                    key: 'sg_jd',
+                    key: 'jdsg',
                     align: 'center',
                     width: 120,
                     sortable: true
                   },
                   {
                     title: '一般事故',
-                    key: 'sg_yb',
+                    key: 'ybsg',
                     align: 'center',
                     width: 120,
                     sortable: true
                   },
                   {
                     title: '一级轻微',
-                    key: 'sg_yjqw',
+                    key: 'yjqw',
                     align: 'center',
                     width: 120,
                     sortable: true
                   },
                   {
                     title: '二级轻微',
-                    key: 'sg_ejqw',
+                    key: 'ejqw',
                     align: 'center',
                     width: 120,
                     sortable: true
                   },
                   {
                     title: '三级轻微',
-                    key: 'sg_sjqw',
+                    key: 'sjqw',
                     align: 'center',
                     width: 120,
                     sortable: true
@@ -137,7 +135,7 @@
               },
               {
                 title: '经损(含追加)(元)',
-                key: 'js_hzj',
+                key: 'js',
                 align: 'center',
                 width: 120,
                 sortable: true
@@ -150,8 +148,8 @@
                 sortable: true
               },
               {
-                title: '本年累计考核事故',
-                key: 'bnljkhsg',
+                title: '本月累计考核事故',
+                key: 'bykhsgSum',
                 align: 'center',
                 width: 120,
                 sortable: true,
@@ -163,6 +161,10 @@
       }
     },
     methods:{
+      initDate() {
+        let now = new Date();
+        return now;
+      },
       handleCellChange (val, index, key) {
         this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
       },
@@ -172,8 +174,7 @@
       requestListData() {
         console.log('请求分公司数据');
         let params = {
-          lasjStart: this.formItem.lasjStart,
-          lasjEnd: this.formItem.lasjEnd
+          time: DateTool.yyyyddFormatDate(this.formItem.date)
         }
         console.log(params);
         this.$fetch(this.$url.security_GFGSJTSG_list, params)
@@ -182,7 +183,7 @@
           console.log(res);
           if (res.success === true) {
             if (res.data.length > 0) {
-              this.tableData = res.data.records;
+              this.tableData = res.data;
             }
           }else{
             this.$Message.error('数据获取失败, 请重试!');
@@ -209,7 +210,7 @@
           let lastDay = DateTool.getLastDay(this.formItem.date);
           url = url + '?startTime=' + firstDay + '&&endTime=' + lastDay;
         }
-        window.open(url);
+        this.$getExcel(url);
       },
     },
     mounted () {

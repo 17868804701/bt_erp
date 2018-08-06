@@ -30,9 +30,7 @@
     data () {
       return {
         formItem: {
-          date: '',
-          lasjStart: '',
-          lasjEnd: '',
+          date: this.initDate(),
         },
         columnsTitle: ['牌照','单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案类型', '责任','备注'],
         columnsCode: ['pz','dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','zr','bz'],
@@ -47,7 +45,14 @@
     },
     computed: {
       initTableColumns() {
-        let coulumns = [];
+        let coulumns = [
+          {
+            type: 'index',
+            align: 'center',
+            title: '序号',
+             width: 90,
+          }
+        ];
         for (let i = 0; i < this.columnsTitle.length; i++) {
           coulumns.push({
             title: this.columnsTitle[i],
@@ -82,31 +87,38 @@
       },
     },
     methods:{
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-      },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
+      initDate() {
+        let now = new Date();
+        return now;
       },
       requestListData() {
         console.log('请求集团公司数据');
+        let firstDay = DateTool.getFirstDay(this.formItem.date);
+        let lastDay = DateTool.getLastDay(this.formItem.date);
         let params = {
           current: this.current,
           size: this.size,
-          lasjStart: this.formItem.lasjStart,
-          lasjEnd: this.formItem.lasjEnd
+          lasjStart: firstDay,
+          lasjEnd: lastDay
         }
         console.log(params);
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
           console.log(res);
-          this.tableData = res.data.records;
-          this.totalSize = res.data.total;
-          this.current = res.data.current;
+          if (res.data.records.length > 0 && res.data.records != null) {
+
+            res.data.records.forEach(item => {
+              item.lasj = DateTool.timesToDate(item.lasj);
+              item.larq = DateTool.timesToDate(item.larq);
+            })
+
+            this.tableData = res.data.records;
+            this.totalSize = res.data.total;
+          }
         })
       },
       setPage(page) {
-        this.searchOptions.current = page;
+        this.current = page;
         this.requestListData();
       },
       searchData() {
@@ -128,7 +140,7 @@
         if (this.formItem.date instanceof Date) {
           let firstDay = DateTool.getFirstDay(this.formItem.date);
           let lastDay = DateTool.getLastDay(this.formItem.date);
-          url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
+          url = url + '?lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
         }
         this.$getExcel(url);
       },

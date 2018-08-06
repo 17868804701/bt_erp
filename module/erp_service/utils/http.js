@@ -153,6 +153,7 @@ export function getExcel(url){
   }else{
     url = url + '?access_token=' + access_token;
   }
+  console.log(url);
   window.open(url);
 }
 

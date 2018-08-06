@@ -177,7 +177,7 @@
             { required: true, type: 'array', min: 1, message: '请至少选择一个', trigger: 'change' },
           ],
           zr: [
-            { required: true, message: '此项不能为空', trigger: 'blur' }
+            { required: true, message: '此项不能为空', trigger: 'blur', }
           ]
         }
       }

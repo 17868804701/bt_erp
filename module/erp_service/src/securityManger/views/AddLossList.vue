@@ -33,6 +33,7 @@
           date: '',
           current: 1,
           size: 10,
+          time: '',
         },
         totalSize: 0,
         columns11: [
@@ -44,99 +45,76 @@
                 title: '序号',
                 align: 'center',
                 type: 'index',
-                width: 100,
               },
               {
                 title: '追加公司',
                 key: 'zjgs',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
                 title: '路别',
                 key: 'lb',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
-                title: '车牌号',
-                key: 'cph',
+                title: '牌照',
+                key: 'pz',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
                 title: '驾驶员',
-                key: 'jsy',
+                key: 'jsyxm',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
-                title: '事故日期',
-                key: 'sgrq',
+                title: '立案时间',
+                key: 'lasj',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
                 title: '预估经损',
                 key: 'ygjs',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
                 title: '结案经损',
                 key: 'jajs',
                 align: 'center',
-                width: 120,
-                sortable: true
               },
               {
                 title: '追加车内',
                 key: 'zjcn',
                 align: 'center',
-                width: 120,
-                sortable: true,
               },
               {
-                title: '追加车损、三者',
-                key: 'zjcssz',
+                title: '追加车损',
+                key: 'zjcs',
                 align: 'center',
-                width: 120,
-                sortable: true,
+              },
+              {
+                title: '追加三者',
+                key: 'zjsz',
+                align: 'center',
               },
               {
                 title: '合计追加',
                 key: 'hjzj',
                 align: 'center',
-                width: 120,
-                sortable: true,
               },
               {
                 title: '追加扣分',
                 key: 'zjkf',
                 align: 'center',
-                width: 120,
-                sortable: true,
               },
+              {
+                title: '备注',
+                key: 'bz',
+                align: 'center',
+              }
             ]
-          },
-          {
-            title: '备注',
-            key: 'bz',
-            align: 'center',
-            width: 220,
-            sortable: true,
-            fixed: 'right',
-            editable: true
           },
         ],
         tableData: [],
-        dwList: ['集团公司', '一公司', '二公司', '三公司', '四公司', '五公司', '六公司', '长客公司', '吉运公司', '修理公司', '票款中心', '稽查大队', '大自然', '站管', '培训中心'],
       }
     },
     methods:{
@@ -147,22 +125,32 @@
         this.$Message.success('修改了第' + (index + 1) + '行数据');
       },
       searchData() {
-        console.log(this.formItem.date);
+        this.requestListData();
       },
       setPage(page) {
         this.formItem.current = page;
         this.requestListData();
       },
       requestListData() {
+        let params = {
+          time: this.formItem.date.getFullYear(),
+          current: this.formItem.current,
+          size: this.formItem.size,
+        };
         console.log('追加事故经损说明管理请求数据');
-        console.log(this.formItem);
-        this.$fetch(this.$url.security_ZJSGJSSM_list, this.formItem)
+        console.log(params);
+        this.$fetch(this.$url.security_ZJSGJSSM_list, params)
         .then(res => {
           console.log(res);
           if (res.success === true) {
-            if (res.data.length > 0) {
+            if (res.data.records.length > 0) {
+
+              res.data.records.forEach(item => {
+                item.lasj = DateTool.timesToDate(item.lasj);
+              })
+
               this.tableData = res.data.records;
-              this.totalSize = res.data.totalSize;
+              this.totalSize = res.data.total;
             }
           }else{
             this.$Message.error('数据获取失败, 请重试!');
@@ -177,10 +165,12 @@
           let lastDay = DateTool.getLastDay(this.formItem.date);
           url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
         }
-        window.open(url);
+        this.$getExcel(url);
       }
     },
     mounted () {
+      let now = new Date();
+      this.formItem.date = now;
     }
   }
 </script>

@@ -56,6 +56,9 @@
           </Row>
         </Form>
       </Card>
+      <Card>
+        <CommonSelect type="XCSGZRFL" :selectValue="companyValue"/>
+      </Card>
       <can-edit-table style="margin-top: 10px;" v-model="data1" :columnsList="columns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
       </can-edit-table>
       <Page :total="100" show-total style="margin-top: 10px;"></Page>
@@ -64,15 +67,18 @@
 </template>
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
     components: {
-      canEditTable
+      canEditTable,
+      CommonSelect,
     },
     data () {
       return {
         formItem: {
           date: '',
         },
+        companyValue: 'ZYZR',
         deviceItem: {
           device_time: '叉车',
           sbxh: '3T',

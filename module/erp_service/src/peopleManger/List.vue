@@ -639,8 +639,15 @@
       getList: function () {
         this.$fetch(this.$url.userManager_userList, this.cxItem)
           .then(res => {
-            this.totalPage = res.data.total;
-            this.tableData2 = res.data.records;
+              console.log(res)
+            if(res.data.total===0){
+              this.$Message.info('暂无数据');
+              this.totalPage = res.data.total;
+              this.tableData2 = res.data.records;
+            }else {
+              this.totalPage = res.data.total;
+              this.tableData2 = res.data.records;
+            }
           })
       },
 //      查询区域

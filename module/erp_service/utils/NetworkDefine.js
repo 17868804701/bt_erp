@@ -5,11 +5,11 @@
 const baseURL = 'http://10.50.0.144:8702';
 
 const NetworkInterface = {
-  
+
   // **********        数据字典            *********** //
   common_getDictListDataWithCode: 'auth/dic/getByCode',  // 根据code字典数据
-  
-  
+
+
   // **********        人力资源            *********** //
   userManager_userList: '/person/userInfo/list', // 人力资源管理列表
   userManager_saveUserInfo: '/person/userInfo/save', // 保存人员信息
@@ -19,7 +19,7 @@ const NetworkInterface = {
   userManager_userChangeList: '/person/userInfo/getHis', // 员工变更记录
   userManager_counts: '/person/userInfo/getCount', // 员工数据统计
 
-  
+
   // **********        安全事故管理            *********** //
   security_LASG_list: '/anq/lasg/lasgList', // 立案事故信息列表
   security_LASG_add: '/anq/lasg/saveLasg', // 添加立案事故信息
@@ -56,8 +56,8 @@ const NetworkInterface = {
   security_LASGJSLZB_exportExcel: baseURL+'/anq/lasg/exportAqsczbLasgjslExcel', // 立案事故经损率指标 --- 报表导出
   security_CLAJ_exportExcel: baseURL+'/anq/lasg/exportAqsczbAjtcExcel', // 车辆安检 --- 报表导出
   security_DWTBJQXJPF_exportExcel: baseURL+'/anq/lasg/exportAqsczbDwtbExcel', // 对外投保交强险及赔付情况 --- 报表导出
-  
-  
+
+
   // **********        维修养护            *********** //
   maintain_BYGL_CLBY_recordList: '/weix/maintenanceManagement/clby/list',        // 保养管理 - 车辆保养 - 列表数据
   maintain_BYGL_CLBY_saveRecord: '/weix/maintenanceManagement/clby/save',        // 保养管理 - 车辆保养 - 新增保养进场登记
@@ -81,29 +81,29 @@ const NetworkInterface = {
   maintain_BYGL_FXGL_delete: '/weix/maintenanceManagement/fxgl/delete',              // 返修管理 - 删除
   maintain_BYGL_FXGL_listDetail: '/weix/maintenanceManagement/fxgl/info',            // 返修管理 - 列表查看详情
   maintain_BYGL_FXGL_exportExcel: baseURL+'/weix/maintenanceManagement/fxgl/listExport', // 返修管理 - 列表导出excel
-  
-  
-  
-  
+
+
+
+
   maintain_DEVICE_list: '/weix/equipmentMaintenanceRecord/list',                                       // 保养管理 - 设备保养记录 - 设备管理列表
   maintain_DEVICE_save: '/weix/equipmentMaintenanceRecord/save',                                       // 保养管理 - 设备保养记录 - 新增设备信息
   maintain_DEVICE_update: '/weix/equipmentMaintenanceRecord/update',                                   // 保养管理 - 设备保养记录 - 更新设备信息
   maintain_DEVICE_delete: '/weix/equipmentMaintenanceRecord/delete',                                   // 保养管理 - 设备保养记录 - 删除设备信息
-  
+
   maintain_DEVICEBY_list: '/weix/equipmentMaintenanceRecord/wxby/list',                                // 保养管理 - 设备保养记录 - 设备保养管理列表
   maintain_DEVICEBY_save: '/weix/equipmentMaintenanceRecord/wxby/save',                                // 保养管理 - 设备保养记录 - 新增设备保养信息
   maintain_DEVICEBY_update: '/weix/equipmentMaintenanceRecord/wxby/update',                            // 保养管理 - 设备保养记录 - 更新设备保养信息
   maintain_DEVICEBY_delete: '/weix/equipmentMaintenanceRecord/wxby/delete',                            // 保养管理 - 设备保养记录 - 删除设备保养信息
-  
-  
+
+
   maintain_BBGL_SJBYTZ_list: '/weix/reportManagement/tertiaryMaintenanceAccount',                       // 报表管理 - 三级保养台账列表
   maintain_BBGL_SJBYTZ_exportExcel: baseURL+'/weix/reportManagement/tertiaryMaintenanceAccountExport',          // 报表管理 - 三级保养台账 导出excel
   maintain_BBGL_SJWHCL_list: '/weix/reportManagement/tertiaryMaintenanceMaterialUsage',                 // 报表管理 - 三级维护材料使用情况列表
   maintain_BBGL_SJWHCL_exportExcel: baseURL+'/weix/reportManagement/tertiaryMaintenanceMaterialUsageExport',    // 报表管理 - 三级维护材料使用情况 导出excel
   // **********        维修养护            *********** //
-  
-  
-  
+
+
+
   // 运营管理
   fgsxcyb:'/yuny/fgsXcyb/getXcybList',   //分公司行车月报表列表
   exportFgsxcyb:'/yuny/fgsXcyb/exportXcybExcel',   //分公司行车月报表导出
@@ -117,6 +117,20 @@ const NetworkInterface = {
   // 计划管理
   jtgsList:'/erp-modules-jih/jtyyjh/getJtyyjhList',  ///集团公司运营计划管理
   yyjhtzList:'/erp-modules-jih/yyjhtz/getYyjhtzList',//运营计划调整列表
+
+  // 钢瓶检测
+  gpjcList:'/weix/cylinderInspection/fysz/list',   //检测费用设定列表
+  addFysd:'/weix/cylinderInspection/fysz/save',   //添加费用设定
+  delFysd:'/weix/cylinderInspection/fysz/delete',   //删除费用设定
+  updateFysd:'/weix/cylinderInspection/fysz/update',   //删除费用设定
+  gpjcdj:'/weix/cylinderInspection/save',   //钢瓶检测登记 -----添加
+  gpjcdjDel:'/weix/cylinderInspection/delete',   //钢瓶检测登记 -----删除
+  gpjcdjList:'/weix/cylinderInspection/list',   //钢瓶检测登记 -----列表
+  updateGpjcdj:'/weix/cylinderInspection/update',   //钢瓶检测登记 -----修改
+  yfjcfyjs:'/weix/inspectionFeeSettlement/getMonthlyInspectionFee',   //月份检测费用结算
+  jdjcfyjs:'/weix/inspectionFeeSettlement/getQuarterInspectionFee',   //季度检测费用结算列表
+  yjcfydc:'/weix/inspectionFeeSettlement/getMonthlyInspectionFeeExport',   //月检测费用导出
+  jdjcfydc:'/weix/inspectionFeeSettlement/getQuarterInspectionFeeExport'   //季度测费用导出
 };
 
 export default NetworkInterface;

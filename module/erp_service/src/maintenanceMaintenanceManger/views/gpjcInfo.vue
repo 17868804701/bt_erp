@@ -1,11 +1,12 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .container {
-    padding:15px 10px 10px 0px;
+    padding: 15px 10px 10px 0px;
     width: 98%;
     margin-left: 1%;
     border-bottom: 1px solid #eae9ec;
   }
+
   .container h2 {
     margin-left: 15px;
   }
@@ -13,38 +14,53 @@
 <template>
   <div>
     <div class="container">
-      <h2>钢瓶检测详情 <router-link to="/GPCheckList"><Button type="primary" size="small"><<返回列表</Button></router-link></h2>
+      <h2>钢瓶检测详情
+        <router-link to="/GPCheckList">
+          <Button type="primary" size="small"><
+            <返回列表
+          </Button>
+        </router-link>
+      </h2>
     </div>
     <Card style="width:98%;margin: 10px 1%">
       <p slot="title">登记详情</p>
       <div slot="extra">
-        <Button type="primary" icon="edit"  size="small">修改</Button>
+        <Button type="primary" size="small" v-show="this.isDisable==false"
+                :icon="this.isDisable==false?'checkmark-circled':'edit'" @click="update">
+          保存
+        </Button>
+        <Button type="primary" size="small" v-show="this.isDisable==true"
+                :icon="this.isDisable==false?'checkmark-circled':'edit'" @click="edit">
+          修改
+        </Button>
       </div>
       <div>
         <Form :model="formItem" :label-width="80">
           <div style="padding-left: 20px;display: flex;flex-wrap: wrap">
             <FormItem label="单位名称" style="margin: 0 0 10px 0">
-              <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                <Option value="beijing">一公司</Option>
-                <Option value="shanghai">二公司</Option>
-                <Option value="shenzhen">三公司</Option>
+              <Select v-model="formItem.dwmc" :disabled="isDisable" :transfer="true" style="width: 195px;">
+                <Option value="公交一公司">公交一公司</Option>
+                <Option value="公交二公司">公交二公司</Option>
+                <Option value="公交三公司">公交三公司</Option>
               </Select>
             </FormItem>
             <FormItem label="车牌号" style="margin: 0 0 10px 0">
-              <Input v-model="formItem.input" placeholder="车牌号" style="width: 195px;"/>
+              <Input v-model="formItem.cph" :disabled="isDisable" placeholder="车牌号" style="width: 195px;"/>
             </FormItem>
             <FormItem label="自编号" style="margin: 0 0 10px 0">
-              <Input v-model="formItem.input" placeholder="自编号" style="width: 195px;"/>
+              <Input v-model="formItem.zbh" :disabled="isDisable" placeholder="自编号" style="width: 195px;"/>
             </FormItem>
             <FormItem label="车型" style="margin: 0 0 10px 0">
-              <Input v-model="formItem.input" placeholder="车型" style="width: 195px;"/>
+              <Input v-model="formItem.cx" :disabled="isDisable" placeholder="车型" style="width: 195px;"/>
             </FormItem>
             <FormItem label="检测日期" style="margin: 0 0 10px 0">
-              <DatePicker type="date" placeholder="本次检测日期" :transfer="true" v-model="formItem.date"
+              <DatePicker type="date" :disabled="isDisable" placeholder="本次检测日期" :transfer="true"
+                          v-model="formItem.jcrq"
                           style="width: 195px;"></DatePicker>
             </FormItem>
             <FormItem label="接车日期" style="margin: 0 0 10px 0">
-              <DatePicker type="date" placeholder="接车日期" :transfer="true" v-model="formItem.date"
+              <DatePicker type="date" :disabled="isDisable" placeholder="接车日期" :transfer="true"
+                          v-model="formItem.bcjcrq"
                           style="width: 195px;"></DatePicker>
             </FormItem>
           </div>
@@ -77,7 +93,7 @@
     <Card style="width:98%;margin: 10px 1%">
       <p slot="title">再装钢瓶详情</p>
       <div slot="extra">
-        <Button type="primary" icon="plus" @click="modal1=true"  size="small">增加</Button>
+        <Button type="primary" icon="plus" @click="modal1=true" size="small">增加</Button>
       </div>
       <Table :columns="columns2" :data="data2" size="small" border style="margin-top: 10px;"></Table>
     </Card>
@@ -99,11 +115,15 @@
   export default {
     data () {
       return {
-        modal1:false,
+        modal1: false,
+        isDisable: true,
         formItem: {
-          input: '',
-          select: '',
-          date:''
+          dwmc: '',
+          cph: '',
+          zbh: '',
+          jcrq: '',
+          bcjcrq: '',
+          cx: ''
         },
 //        钢瓶重量、体积、瓶号、生产日期
         columns2: [
@@ -139,7 +159,7 @@
                   },
                   on: {
                     click: () => {
-                    this.modal1=true
+                      this.modal1 = true
                     }
                   }
                 }, '加气'),
@@ -153,7 +173,7 @@
                   },
                   on: {
                     click: () => {
-                      this.modal1=true
+                      this.modal1 = true
                     }
                   }
                 }, '换瓶'),
@@ -162,9 +182,6 @@
           }
         ],
         data2: [],
-
-
-
 
 
         columns3: [
@@ -188,48 +205,8 @@
             title: '总价',
             key: 'zj'
           },
-//          {
-//            title: '操作',
-//            align: 'center',
-//            key: 'time',
-//            render: (h, params) => {
-//              return h('div', [
-//                h('Button', {
-//                  props: {
-//                    type: 'primary',
-//                    size: 'small'
-//                  },
-//                  style: {
-//                    marginRight: '5px'
-//                  },
-//                  on: {
-//                    click: () => {
-//                      this.modal1=true
-//                    }
-//                  }
-//                }, '加气'),
-//                h('Button', {
-//                  props: {
-//                    type: 'primary',
-//                    size: 'small'
-//                  },
-//                  style: {
-//                    marginRight: '5px'
-//                  },
-//                  on: {
-//                    click: () => {
-//                      this.modal1=true
-//                    }
-//                  }
-//                }, '换瓶'),
-//              ]);
-//            }
-//          }
         ],
         data3: [],
-
-
-
 
 
         columns4: [
@@ -257,67 +234,43 @@
             title: '总价',
             key: 'zj'
           },
-//          {
-//            title: '操作',
-//            align: 'center',
-//            key: 'time',
-//            render: (h, params) => {
-//              return h('div', [
-//                h('Button', {
-//                  props: {
-//                    type: 'primary',
-//                    size: 'small'
-//                  },
-//                  style: {
-//                    marginRight: '5px'
-//                  },
-//                  on: {
-//                    click: () => {
-//                      this.modal1=true
-//                    }
-//                  }
-//                }, '加气'),
-//                h('Button', {
-//                  props: {
-//                    type: 'primary',
-//                    size: 'small'
-//                  },
-//                  style: {
-//                    marginRight: '5px'
-//                  },
-//                  on: {
-//                    click: () => {
-//                      this.modal1=true
-//                    }
-//                  }
-//                }, '换瓶'),
-//              ]);
-//            }
-//          }
         ],
         data4: []
       }
     },
     methods: {
+      edit: function () {
+        this.isDisable = false;
+      },
+      update: function () {
+        this.isDisable = true;
+        this.$post(this.$url.updateGpjcdj, this.formItem)
+          .then(res => {
+            if (res.msg === 'success') {
+              this.$Message.info('修改成功');
+            } else {
+              this.$Message.error('修改失败');
+            }
+          })
+      }
     },
     mounted () {
+      this.formItem = this.$route.query.djInfo
+
       const data1 = [];
       for (let i = 0; i < 8; i++) {
         data1.push({
           gpzl: '40kg',
           tj: '12L',
-          ph: '1510'+i,
+          ph: '1510' + i,
           bz: '大客车用',
-          scrq:'2018-02-05',
-          jcrq:'2018-02-04',
-          zbh:'16468165',
+          scrq: '2018-02-05',
+          jcrq: '2018-02-04',
+          zbh: '16468165',
           time: '2016-10-03'
         });
       }
       this.data2 = data1;
-
-
-
 
 
       const data2 = [];
@@ -325,17 +278,16 @@
         data2.push({
           gpzl: '40kg',
           tj: '12L',
-          ph: '1510'+i,
+          ph: '1510' + i,
           bz: '大客车用',
-          scrq:'2018-02-05',
-          jcrq:'2018-02-04',
-          zbh:'16468165',
+          scrq: '2018-02-05',
+          jcrq: '2018-02-04',
+          zbh: '16468165',
           time: '2016-10-03',
-          zj:'4651元'
+          zj: '4651元'
         });
       }
       this.data3 = data2;
-
 
 
       const data3 = [];
@@ -343,14 +295,14 @@
         data3.push({
           gpzl: '40kg',
           tj: '12L',
-          ph: '1510'+i,
+          ph: '1510' + i,
           bz: '大客车用',
-          scrq:'2018-02-05',
-          jcrq:'2018-02-04',
-          zbh:'16468165',
+          scrq: '2018-02-05',
+          jcrq: '2018-02-04',
+          zbh: '16468165',
           time: '2016-10-03',
-          zj:'4651元',
-          ghgptj:'130L'
+          zj: '4651元',
+          ghgptj: '130L'
         });
       }
       this.data4 = data3;

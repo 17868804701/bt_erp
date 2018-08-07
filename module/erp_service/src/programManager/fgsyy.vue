@@ -88,7 +88,7 @@
       v-model="editProgram"
       title="修改"
       @on-ok="ok"
-      width="40%"
+      width="500"
       :mask-closable="false"
       style="height: auto"
       :scrollable="true"
@@ -102,7 +102,7 @@
             <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
           </FormItem>
           <FormItem label="出入库说明">
-            <Input v-model="formItem.textarea" style="width: 480px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+            <Input v-model="formItem.textarea" style="width: 200%;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                    placeholder="出入库说明"></Input>
           </FormItem>
         </div>

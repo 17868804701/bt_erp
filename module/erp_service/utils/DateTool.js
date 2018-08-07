@@ -93,8 +93,9 @@ export function formatDate_hs (now) {
   let second = now.getSeconds();
   if(month<10){
     month = '0'+month
-  }else {
-
+  }
+  if(date<10) {
+    date = '0'+date
   }
   return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
 }

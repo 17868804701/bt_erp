@@ -36,7 +36,7 @@ import jjzbwcqk from '../enterpriseManger/jjzbwcqk.vue'
 // 维修养护管理
 import MainMM from '../maintenanceMaintenanceManger/views/MainMM.vue'
 import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
-import DeviceList from '../maintenanceMaintenanceManger/views/DeviceList.vue'
+import DeviceManager from '../maintenanceMaintenanceManger/views/DeviceManager.vue'
 import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
 import MMDetail from '../maintenanceMaintenanceManger/views/MMDetail.vue'
 import JCfyjs from '../maintenanceMaintenanceManger/views/JCfyjs.vue'
@@ -134,8 +134,8 @@ const route = [
     component: GPCheckList
   },
   {
-    path: '/DeviceList',
-    component: DeviceList
+    path: '/DeviceManager',
+    component: DeviceManager
   },
   {
     path: '/ReportList',

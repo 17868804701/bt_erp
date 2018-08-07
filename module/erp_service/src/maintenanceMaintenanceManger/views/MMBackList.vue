@@ -45,15 +45,15 @@
             <Col span="24">
             <FormItem label="按返修进场时间查询" style="margin: 0;">
               <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search">搜索</Button>
-              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+              <Button type="primary" icon="ios-search" @click="this.requestListData">搜索</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
               <Button type="primary" icon="plus" style="float: right;margin-right: 10px" @click="backModal=true">新增</Button>
             </FormItem>
             </Col>
           </Row>
         </Form>
       </Card>
-      <can-edit-table style="margin-top: 10px;" v-model="data1" :columnsList="columns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
+      <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="columns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange">
       </can-edit-table>
       <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
     </div>
@@ -163,7 +163,7 @@
                   },
                   on: {
                     click: () => {
-                      this.clickAction(params, 'delete')
+                      this.deleteRow(params);
                     }
                   }
                 }, '删除')
@@ -171,56 +171,6 @@
             }
           },
         ],
-        data1: [
-          {
-            ch: '蒙A123456',
-            cx: '中型客车',
-            jcsj: '2018-07-07',
-            ccsj: '2018-07-08',
-            fxyy: '就是跑着不得劲',
-            bz: '没啥毛病',
-          },
-          {
-            ch: '蒙A123456',
-            cx: '中型客车',
-            jcsj: '2018-07-07',
-            ccsj: '2018-07-08',
-            fxyy: '就是跑着不得劲',
-            bz: '没啥毛病',
-          },
-          {
-            ch: '蒙A123456',
-            cx: '中型客车',
-            jcsj: '2018-07-07',
-            ccsj: '2018-07-08',
-            fxyy: '就是跑着不得劲',
-            bz: '没啥毛病',
-          },
-          {
-            ch: '蒙A123456',
-            cx: '中型客车',
-            jcsj: '2018-07-07',
-            ccsj: '2018-07-08',
-            fxyy: '就是跑着不得劲',
-            bz: '没啥毛病',
-          },
-          {
-            ch: '蒙A123456',
-            cx: '中型客车',
-            jcsj: '2018-07-07',
-            ccsj: '2018-07-08',
-            fxyy: '就是跑着不得劲',
-            bz: '没啥毛病',
-          },
-          {
-            ch: '蒙A123456',
-            cx: '中型客车',
-            jcsj: '2018-07-07',
-            ccsj: '2018-07-08',
-            fxyy: '就是跑着不得劲',
-            bz: '没啥毛病',
-          },
-        ]
       }
     },
     computed: {
@@ -236,6 +186,10 @@
         .then(res=>{
           console.log(res);
           if (res.code === 0) {
+            res.page.list.forEach(item => {
+              item.fxccsj = DateTool.timesToDate(item.fxccsj);
+              item.fxjcsj = DateTool.timesToDate(item.fxjcsj);
+            })
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
             this.$Message.success('获取数据成功!');
@@ -286,33 +240,53 @@
       cancle() {
         this.backModal = false;
       },
-      clickAction(params, type) {
-        console.log('操作返修记录');
-        console.log(params + type);
+      deleteRow(params) {
+        var that = this;
+        let p = {id : params.row.id};
+        let url = this.$url.maintain_BYGL_FXGL_delete + '?id=' +params.row.id ;
+        this.$post(url)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('删除成功!');
+            that.requestListData();
+          }else{
+            this.$Message.error('删除失败!');
+          }
+        })
+      },
+      inputCallBack(data) {
+        console.log(data);
       },
       handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
+        let row = val[index];
+        this.updateRow(row);
       },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
-      }
+      updateRow(row) {
+        console.log(row);
+        var that = this;
+        this.$post(this.$url.maintain_BYGL_FXGL_update, row)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('修改成功!');
+          } else{
+            this.$Message.error('修改失败!');
+          }
+          this.requestListData();
+        })
+      },
+      exportExcel() {
+        let url = this.$url.maintain_BYGL_FXGL_exportExcel;
+        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
+        if (this.formItem.date instanceof Date) {
+          url = url + '&date=' + this.formItem.date;
+        }
+        this.$getExcel(url);
+      },
     },
     mounted () {
 
     }
   }
 </script>
-
-<!--
-{
-  "byid": "string",
-  "bz": "string",
-  "ch": "string",
-  "cx": "string",
-  "fxccsj": "2018-08-03T07:54:28.494Z",
-  "fxjcsj": "2018-08-03T07:54:28.494Z",
-  "fxxm": "string",
-  "fxyy": "string",
-  "id": "string"
-}
--->

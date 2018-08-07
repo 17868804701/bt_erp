@@ -113,7 +113,7 @@ const saveIncellEditBtn = (vm, h, param) => {
             click: (event) => {
                 vm.edittingStore[param.index].edittingCell[param.column.key] = false;
                 vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
-                vm.$emit('input', vm.handleBackdata(vm.thisTableData));
+//                vm.$emit('input', vm.handleBackdata(vm.thisTableData));
                 vm.$emit('on-cell-change', vm.handleBackdata(vm.thisTableData), param.index, param.column.key);
             }
         }

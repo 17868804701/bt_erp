@@ -156,8 +156,8 @@
                 <a :href="url+'JCfyjs'" target="erp_main">
                   <MenuItem name="6-5">检测费用结算</MenuItem>
                 </a>
-                <a :href="url+'DeviceList'" target="erp_main">
-                  <MenuItem name="6-3">设备保养记录</MenuItem>
+                <a :href="url+'DeviceManager'" target="erp_main">
+                  <MenuItem name="6-3">设备保养管理</MenuItem>
                 </a>
                 <a :href="url+'ReportList'" target="erp_main">
                   <MenuItem name="6-4">报表管理</MenuItem>

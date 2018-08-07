@@ -70,13 +70,7 @@
 <script>
   import AddAccidentDiv from '../components/AddAccidentDiv.vue'
   import AddLossDiv from '../components/AddLossDiv.vue';
-
-  import ARList from './ARList.vue';
-  import ARAddLossList from '../components/ARAddLossList.vue';
-  import JTAccidentMonthFee from './JTAccidentMonthFee.vue';
-  import FGSAccidentMonthFee from './FGSAccidentMonthFee.vue';
-  import AccidentExamineReport from './AccidentExamineReport.vue';
-  import ProductAnalyse from './ProductAnalyse.vue';
+  import * as DateTool from '../../../utils/DateTool'
   export default {
     components: {
       AddLossDiv,
@@ -371,7 +365,14 @@
 
       },
       exportExcel() {
-        window.open(this.$url.security_LASG_exportExcel);
+        let url = this.$url.security_LASG_exportExcel;
+        url = url + '?current='+this.formItem.current+'&&size='+this.formItem.size;
+        if (this.formItem.date instanceof Date) {
+          let firstDay = DateTool.getFirstDay(this.formItem.date);
+          let lastDay = DateTool.getLastDay(this.formItem.date);
+          url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
+        }
+        this.$getExcel(url);
       },
       // action
       SGXZ() {

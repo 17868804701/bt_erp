@@ -1,9 +1,12 @@
 <!--公用组件 下拉框-->
 <template>
   <div >
-    <Select v-model="selectValue" style="width: 110px;" @on-change="selectOption">
+    <Select v-if="isSelect" v-model="selectValue" style="width: 110px;" @on-change="selectOption">
       <Option v-for="(item, index) in sourceData" :key="item+index" :value="item.code">{{item.title}}</Option>
     </Select>
+    <CheckboxGroup v-else v-model="selectValue">
+      <Checkbox v-for="(item, index) in sourceData" :key="item+index" :value="item.code" :label="item.title"></Checkbox>
+    </CheckboxGroup>
   </div>
 </template>
 
@@ -13,11 +16,23 @@
     name: 'CommonSelect',
     props: {
       type: String,
-      selectValue: String,
+      selectValue: [String, Array],
+      iviewType: String,
     },
     components: {
     },
     computed: {
+      isSelect() {
+        if (this.iviewType === '' || typeof this.iviewType == 'undefined') {
+          return true;
+        }
+
+        if (this.iviewType === 'checkbox') {
+          return false;
+        }else{
+          return true;
+        }
+      }
     },
     data () {
       return {
@@ -42,6 +57,7 @@
       }
     },
     mounted () {
+      console.log(this.iviewType);
       this.requestDictData();
     },
     created() {

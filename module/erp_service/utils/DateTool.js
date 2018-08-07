@@ -26,6 +26,9 @@ export function timesToDate(time) {
 }
 
 export function yyyyddFormatDate(date) {
+  if (date === null || date === '') {
+    return '';
+  }
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
   if(month<10){

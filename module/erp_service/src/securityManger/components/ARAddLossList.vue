@@ -86,10 +86,10 @@
           console.log(res);
           if (res.success === true) {
             this.$Message.success('修改成功!');
-            that.$emit('update');
           }else{
             this.$Message.error('修改失败!');
           }
+          that.$emit('update');
         })
       },
       deleteLASGZJSGData(row) { // 删除立案事故追加信息

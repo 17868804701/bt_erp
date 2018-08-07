@@ -7,10 +7,10 @@
         <Form :model="formItem">
           <Row>
             <Col span="24">
-            <FormItem label="按关键字查询" style="margin: 0;">
-              <Input style="width: 150px;" placeholder="请输入关键字" v-model="formItem.option"></Input>
-              <Button type="primary" icon="ios-search">搜索</Button>
-              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+            <FormItem label="按领料日期查询" style="margin: 0;">
+              <DatePicker type="month" placeholder="选择月份"  :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+              <Button type="primary" icon="ios-search" @click="this.requestListData">搜索</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
             </FormItem>
             </Col>
           </Row>
@@ -29,7 +29,7 @@
     data () {
       return {
         formItem: {
-          option: '',
+          date: '',
           currPage: 1,
           pageSize: 10,
         },
@@ -43,7 +43,7 @@
           },
           {
             title: '车号',
-            key: 'ch',
+            key: 'cph',
             align: 'center',
           },
           {
@@ -117,17 +117,25 @@
         .then(res=>{
           console.log(res);
           if (res.code === 0) {
-            res.page.records.forEach(item => {
+            res.page.list.forEach(item => {
               item.rq = DateTool.timesToDate(item.rq);
             })
-            this.tableData = res.page.records;
-            this.totalSize = res.page.total;
+            this.tableData = res.page.list;
+            this.totalSize = res.page.totalCount;
             this.$Message.success('获取数据成功!');
           }else{
             this.$Message.error('请求失败!');
           }
         })
-      }
+      },
+      exportExcel() {
+        let url = this.$url.maintain_BYGL_WXLLGL_exportExcel;
+        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
+        if (this.formItem.date instanceof Date) {
+          url = url + '&date=' + this.formItem.date;
+        }
+        this.$getExcel(url);
+      },
     },
     mounted () {
 

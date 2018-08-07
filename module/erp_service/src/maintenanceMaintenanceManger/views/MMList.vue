@@ -66,7 +66,7 @@
           <Row>
             <Col span="24">
             <FormItem label="按进厂时间查询" style="margin: 0;">
-              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
+              <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end"
                           v-model="formItem.date"></DatePicker>
               <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
               <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
@@ -264,9 +264,7 @@
         }
         params.jcsj = DateTool.yyyymmddFormatDate(this.basicData.jcsj);
         console.log(params);
-
         var that = this;
-
         this.$post(this.$url.maintain_BYGL_CLBY_saveRecord, params)
         .then(res => {
           console.log(res);
@@ -314,9 +312,9 @@
       },
       requestListData() {
         let params = {};
+        params.date = DateTool.yyyyddFormatDate(this.formItem.date);
         params.currPage = this.formItem.currPage;
         params.pageSize = this.formItem.pageSize;
-        params.date = DateTool.yyyymmddFormatDate(this.formItem.date);
         console.log(params);
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordList, params)
         .then(res => {
@@ -334,8 +332,13 @@
         })
       },
       exportExcel() {
-        console.log('导出报表');
-      }
+        let url = this.$url.maintain_BYGL_CLBY_exportExcel;
+        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
+        if (this.formItem.date instanceof Date) {
+          url = url + '&date=' + this.formItem.date;
+        }
+        this.$getExcel(url);
+      },
     },
     mounted () {
       this.requestListData();

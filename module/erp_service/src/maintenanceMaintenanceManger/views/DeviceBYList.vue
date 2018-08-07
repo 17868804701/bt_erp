@@ -1,3 +1,4 @@
+<!--设备保养记录-->
 <!--设备信息管理-->
 
 <template>
@@ -6,58 +7,73 @@
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
       <Modal
         v-model="addModal"
-        title="新增设备信息"
+        title="新增设备保养记录"
         width="50%">
         <div slot="footer" style="height: 30px;">
-          <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddDevice('deviceItem')">保存</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddDeviceBY('deviceItem')">保存</Button>
           <Button type="primary" style="float: right;margin-right: 10px" @click="addModal=false">取消</Button>
         </div>
         <div>
+          <Form ref="deviceItem" :model="deviceItem" :rules="ruleValidate" :label-width="180">
+            <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+              <FormItem prop="sbid" label="请根据设备编号选择设备:" style="margin-top: 0px;">
+                <Select v-model="deviceItem.sbid" placeholder="请选择设备" style="width: 120px;" filterable>
+                  <Option v-for="(item, index) in this.deviceData" :key="item+index" :value="item.id">{{item.sbbh}}</Option>
+                </Select>
+              </FormItem>
+            </div>
+          </Form>
           <Form ref="deviceItem" :model="deviceItem" :rules="ruleValidate" :label-width="100">
             <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-              <FormItem prop="sbbh" label="设备编号:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.sbbh" style="width:120px;"></Input>
-              </FormItem>
-              <FormItem prop="sbmc" label="设备名称:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.sbmc" style="width:120px;"></Input>
-              </FormItem>
-              <FormItem prop="ggxh" label="规格型号:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.ggxh" style="width:120px;"></Input>
-              </FormItem>
-              <FormItem prop="fzxs" label="复杂系数:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.fzxs" style="width:120px;"></Input>
-              </FormItem>
-              <FormItem prop="zzcm" label="制造厂名:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.zzcm" style="width:120px;"></Input>
-              </FormItem>
-              <FormItem prop="ccbh" label="出厂编号:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.ccbh" style="width:120px;"></Input>
-              </FormItem>
-              <FormItem prop="ccrq" label="出厂日期:" style="margin-top: 0px;">
+              <FormItem prop="wxrq" label="养护日期:" style="margin-top: 0px;">
                 <DatePicker
                   style="width: 120px;"
                   type="date"
                   placeholder="选择时间"
                   :transfer="true"
                   placement="bottom-end"
-                  v-model="deviceItem.ccrq">
+                  v-model="deviceItem.wxrq">
                 </DatePicker>
               </FormItem>
-              <FormItem prop="kssyrq" label="开始使用日期:" style="margin-top: 0px;">
+              <FormItem prop="wxry" label="养护人员:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.wxry" style="width:120px;"></Input>
+              </FormItem>
+              <FormItem prop="wxnr" label="养护内容:" style="margin-top: 0px;">
+                <Input v-model="deviceItem.wxnr" style="width:120px;"></Input>
+              </FormItem>
+            </div>
+          </Form>
+        </div>
+      </Modal>
+      <Modal
+        v-model="updateModal"
+        title="更新设备保养记录"
+        width="50%">
+        <div slot="footer" style="height: 30px;">
+          <Button type="primary" style="float: right;margin-right: 10px" @click="confirmUpdateDeviceBY('updateDeviceItem')">更新</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="updateModal=false">取消</Button>
+        </div>
+        <div>
+          <Form ref="updateDeviceItem" :model="updateDeviceItem" :rules="ruleValidate" :label-width="100">
+            <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+              <FormItem label="设备编号:" style="margin-top: 0px;">
+                <div>{{updateDeviceItem.sbbh}}</div>
+              </FormItem>
+              <FormItem prop="wxrq" label="养护日期:" style="margin-top: 0px;">
                 <DatePicker
                   style="width: 120px;"
                   type="date"
                   placeholder="选择时间"
                   :transfer="true"
                   placement="bottom-end"
-                  v-model="deviceItem.kssyrq">
+                  v-model="updateDeviceItem.wxrq">
                 </DatePicker>
               </FormItem>
-              <FormItem prop="azdd" label="安装地点:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.azdd" style="width:120px;"></Input>
+              <FormItem prop="wxry" label="养护人员:" style="margin-top: 0px;">
+                <Input v-model="updateDeviceItem.wxry" style="width:120px;"></Input>
               </FormItem>
-              <FormItem prop="zrr" label="责任人:" style="margin-top: 0px;">
-                <Input v-model="deviceItem.zrr" style="width:120px;"></Input>
+              <FormItem prop="wxnr" label="养护内容:" style="margin-top: 0px;">
+                <Input v-model="updateDeviceItem.wxnr" style="width:120px;"></Input>
               </FormItem>
             </div>
           </Form>
@@ -98,6 +114,7 @@
     },
     data () {
       return {
+        deviceData: [],
         formItem: {
           date: '',
           currPage: 1,
@@ -105,51 +122,35 @@
         },
         totalSize: 0,
         deviceItem: {
+          wxnr: '',
+          wxrq: '',
+          wxry: '',
+          sbid: '',
+        },
+        updateDeviceItem: {
           id : '',
-          sbbh: "A004",
-          sbmc: "设备名称4",
-          ggxh: "规格型号4",
-          fzxs: "复杂系数4",
-          zzcm: "制造厂名4",
-          ccbh: "出厂编号4",
-          ccrq: '',
-          kssyrq: '',
-          azdd: "安装地点4",
-          zrr: "责任人4"
+          wxnr: '',
+          wxrq: '',
+          wxry: '',
+          sbid: '',
+          sbbh: '',
         },
         ruleValidate: {
-          sbbh: [
+          sbid: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
           ],
-          sbmc: [
+          wxnr: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
           ],
-          ggxh: [
-            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          wxrq: [
+            { required: true, type: 'date', message: '请选择日期', trigger: 'change' },
           ],
-          fzxs: [
-            { required: true, message: '此项为必填字段', trigger: 'blur' },
-          ],
-          zzcm: [
-            { required: true, message: '此项为必填字段', trigger: 'blur' },
-          ],
-          ccbh: [
-            { required: true, message: '此项为必填字段', trigger: 'blur' },
-          ],
-          ccrq: [
-            { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
-          ],
-          kssyrq: [
-            { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
-          ],
-          azdd: [
-            { required: true, message: '此项为必填字段', trigger: 'blur' },
-          ],
-          zrr: [
+          wxry: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
           ],
         },
         addModal: false,
+        updateModal: false,
         columns: [
           {
             type: 'index',
@@ -160,56 +161,85 @@
             title: '设备编号',
             key: 'sbbh',
             align: 'center',
+            width: 150,
+          },
+          {
+            title: '养护内容',
+            key: 'wxnr',
+            align: 'center',
+            width: 150,
+          },
+          {
+            title: '养护日期',
+            key: 'wxrq',
+            align: 'center',
+            width: 150,
+          },
+          {
+            title: '养护人员',
+            key: 'wxry',
+            align: 'center',
+            width: 150,
           },
           {
             title: '设备名称',
             key: 'sbmc',
             align: 'center',
+            width: 150,
           },
           {
             title: '规格型号',
             key: 'ggxh',
             align: 'center',
+            width: 150,
           },
           {
             title: '复杂系数',
             key: 'fzxs',
             align: 'center',
+            width: 150,
           },
           {
             title: '制造厂名',
             key: 'zzcm',
             align: 'center',
+            width: 150,
           },
           {
             title: '出厂编号',
             key: 'ccbh',
             align: 'center',
+            width: 150,
           },
           {
             title: '出厂日期',
             key: 'ccrq',
             align: 'center',
+            width: 150,
           },
           {
             title: '开始使用日期',
             key: 'kssyrq',
             align: 'center',
+            width: 150,
           },
           {
             title: '安装地点',
             key: 'azdd',
             align: 'center',
+            width: 150,
           },
           {
             title: '责任人',
             key: 'zrr',
             align: 'center',
+            width: 150,
           },
           {
             title: '操作',
             key: 'action',
             width: 150,
+            fixed: 'right',
             align: 'center',
             render: (h, params) => {
               return h('div', [
@@ -234,7 +264,7 @@
                   },
                   on: {
                     click: () => {
-                      this.updateRow(params);
+                      this.clickUpdateBtn(params);
                     }
                   }
                 }, '修改')
@@ -249,13 +279,13 @@
 
     },
     methods: {
-      setPage(page) {
-        this.formItem.currPage = page;
-        this.requestListData();
-      },
-      requestListData() {
+      requestDeviceData() {
         console.log('请求设备列表');
-        this.$fetch(this.$url.maintain_DEVICE_list, this.formItem)
+        let params = {
+          currPage: 1,
+          pageSize: 10,
+        };
+        this.$fetch(this.$url.maintain_DEVICE_list, params)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
@@ -263,8 +293,28 @@
               item.ccrq = DateTool.timesToDate(item.ccrq);
               item.kssyrq = DateTool.timesToDate(item.kssyrq);
             })
-            this.tableData = res.page.records;
-            this.totalSize = res.page.total;
+            this.deviceData = res.page.records;
+            console.log(this.deviceData);
+          }
+        })
+      },
+      setPage(page) {
+        this.formItem.currPage = page;
+        this.requestListData();
+      },
+      requestListData() {
+        console.log('请求设备列表');
+        this.$fetch(this.$url.maintain_DEVICEBY_list, this.formItem)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            res.page.list.forEach(item => {
+              item.ccrq = DateTool.timesToDate(item.ccrq);
+              item.kssyrq = DateTool.timesToDate(item.kssyrq);
+              item.wxrq = DateTool.timesToDate(item.wxrq);
+            })
+            this.tableData = res.page.list;
+            this.totalSize = res.page.totalCount;
             this.$Message.success('获取数据成功!');
           }else{
             this.$Message.error('请求失败!');
@@ -273,60 +323,79 @@
       },
       deleteRow(params) {
         let p = {id : params.row.id};
-        this.$fetch(this.$url.maintain_DEVICE_delete, p)
+        this.$fetch(this.$url.maintain_DEVICEBY_delete, p)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
-            this.$Messgae.success('删除成功!');
+            this.$Message.success('删除成功!');
             this.requestListData();
-          } else {
+          }else {
             this.$Message.error('删除失败, 请重试!');
           }
         })
       },
-      saveRow() {
+      saveRow() { // 新增
         console.log(this.deviceItem);
-        let url = '';
-        if (this.deviceItem.id.length > 0) {
-          console.log('更新接口');
-          url = this.$url.maintain_DEVICE_update;
-        } else {
-          console.log('新增接口');
-          url = this.$url.maintain_DEVICE_save;
-        }
-        this.$post(url, this.deviceItem)
+        console.log('新增设备保养记录');
+        this.$post(this.$url.maintain_DEVICEBY_save, this.deviceItem)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
             this.addModal = false;
-            this.$Message.success('操作成功, 请在列表查看!');
+            this.$Message.success('操作成功!');
             this.deviceItem = {
               id : '',
-              sbbh: "",
-              sbmc: "",
-              ggxh: "",
-              fzxs: "",
-              zzcm: "",
-              ccbh: "",
-              ccrq: '',
-              kssyrq: '',
-              azdd: "",
-              zrr: ""
-            };
+              wxnr: '',
+              wxrq: '',
+              wxry: '',
+              sbid: '',
+            }
             this.requestListData();
-          } else {
+          }else{
             this.$Message.error('操作失败, 请重试!');
           }
         })
       },
-      updateRow(params) {
+      clickUpdateBtn(params) {
         console.log(params.row);
-        for (let attr in params.row) {
-          this.deviceItem[attr] = params.row[attr];
+        for (let attr in this.updateDeviceItem) {
+          this.updateDeviceItem[attr] = params.row[attr];
         }
-        this.addModal = true;
+        this.updateModal = true;
       },
-      confirmAddDevice(name) {
+      updateRow() {
+        console.log(this.updateDeviceItem);
+        console.log('更新设备保养记录');
+        this.$post(this.$url.maintain_DEVICEBY_update, this.updateDeviceItem)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.updateModal = false;
+            this.$Message.success('操作成功!');
+            this.updateDeviceItem = {
+              id : '',
+              wxnr: '',
+              wxrq: '',
+              wxry: '',
+              sbid: '',
+              sbbh: '',
+            }
+            this.requestListData();
+          }else{
+            this.$Message.error('操作失败, 请重试!');
+          }
+        })
+      },
+      confirmUpdateDeviceBY(name) { // 更新保养记录
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.updateRow();
+          } else {
+            this.$Message.error('请按照规则来填写内容!');
+          }
+        })
+      },
+      confirmAddDeviceBY(name) { // 添加保养记录
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.saveRow();
@@ -337,8 +406,9 @@
       },
     },
     mounted () {
-
+      this.requestDeviceData();
     }
   }
 </script>
+
 

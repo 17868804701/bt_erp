@@ -23,9 +23,9 @@
           <Row>
             <Col span="24">
             <FormItem label="按验收时间进行查询" style="margin: 0;">
-              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search">搜索</Button>
-              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px">导出Excel</Button>
+              <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+              <Button type="primary" icon="ios-search" @click="this.requestListData">搜索</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
             </FormItem>
             </Col>
           </Row>
@@ -37,6 +37,7 @@
   </div>
 </template>
 <script>
+  import * as DateTool from '../../../utils/DateTool'
   export default {
     components: {
     },
@@ -59,7 +60,7 @@
           },
           {
             title: '车号',
-            key: 'ch',
+            key: 'cph',
             align: 'center',
           },
           {
@@ -79,7 +80,7 @@
           },
           {
             title: '验收时间',
-            key: 'yssj',
+            key: 'scsj',
             align: 'center',
           },
           {
@@ -115,8 +116,8 @@
       showDetail(row) {
         // 需要修改接口
         console.log(row);
-        let url = this.$url.maintain_BYGL_YSDGL_listDetail + '/' + row.id;
-        this.$fetch(url)
+        let params = {id : row.id};
+        this.$fetch(this.$url.maintain_BYGL_YSDGL_listDetail, params)
         .then(res => {
           console.log(res);
         })
@@ -130,6 +131,10 @@
         .then(res=>{
           console.log(res);
           if (res.code === 0) {
+            res.page.list.forEach(item => {
+              item.scsj = DateTool.timesToDate(item.scsj);
+              console.log(item.scsj);
+            })
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
             this.$Message.success('获取数据成功!');
@@ -137,7 +142,15 @@
             this.$Message.error('请求失败!');
           }
         })
-      }
+      },
+      exportExcel() {
+        let url = this.$url.maintain_BYGL_YSDGL_exportExcel;
+        url = url + '?currPage='+this.formItem.current+'&&pageSize='+this.formItem.size;
+        if (this.formItem.date instanceof Date) {
+          url = url + '&date=' + this.formItem.date;
+        }
+        this.$getExcel(url);
+      },
     },
     mounted () {
 
@@ -157,3 +170,4 @@ ysxm: [
               }
             ],
 -->
+

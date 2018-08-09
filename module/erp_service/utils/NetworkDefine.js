@@ -130,7 +130,24 @@ const NetworkInterface = {
   yfjcfyjs:'/weix/inspectionFeeSettlement/getMonthlyInspectionFee',   //月份检测费用结算
   jdjcfyjs:'/weix/inspectionFeeSettlement/getQuarterInspectionFee',   //季度检测费用结算列表
   yjcfydc:'/weix/inspectionFeeSettlement/getMonthlyInspectionFeeExport',   //月检测费用导出
-  jdjcfydc:'/weix/inspectionFeeSettlement/getQuarterInspectionFeeExport'   //季度测费用导出
+  jdjcfydc:'/weix/inspectionFeeSettlement/getQuarterInspectionFeeExport',   //季度测费用导出
+  gpjcxqList:'/weix/cylinderInspection/gpxq/list',   //钢瓶检测详情list
+  gpjcxqDel:'/weix/cylinderInspection/gpxq/delete',   //钢瓶检测详情list删除
+  gpjcxqSave:'/weix/cylinderInspection/gpxq/save',   //钢瓶检测详情list增加
+  gpjcxqJQ:'/weix/cylinderInspection/gpxq/cz',   //加气换瓶
+  gpjcxqJL:'/weix/cylinderInspection/gpxq/jl',   //操作记录
+
+
+  // 服务管理
+  tsqkfl:'/fuw/kfxx/tsqkflHzList',    //投诉情况分类表
+  tsqkflExport:'/fuw/kfxx/exportTsqkflHzExcel',    //投诉情况分类表导出
+  fgstsqkfl:'/fuw/kfxx/fgsTsqkflHzList',    //分公司投诉情况分类表
+  fgstsqkflExport:'/fuw/kfxx/exportFgsTsqkflHzExcel',    //分公司投诉情况分类表导出
+  kfxxtj:'/fuw/kfxx/tsxzbTjList',    //客服信息列表
+  kfxxtjExport:'/fuw/kfxx/exportTsxzbTjExcel',    //客服信息列表
+
+  kfxxList:'/fuw/kfxx/kfxxList',//客服信息列表
+  savekfxx:'/fuw/kfxx/saveKfxx',//客服信息--新增
 };
 
 export default NetworkInterface;

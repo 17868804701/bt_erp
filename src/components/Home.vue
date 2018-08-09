@@ -34,7 +34,8 @@
           <span>&nbsp;包头公交ERP</span>
         </div>
         <div class="demo-avatar" style="position: absolute;right: 150px;">
-          <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
+          <!--<img src="../assets/icon.png" alt="">-->
+          <Avatar :src="require('../assets/icon.png')"/>
           <Dropdown style="margin-left: 10px;">
             <span style="color: white">欢迎管理员</span>
             <Icon type="arrow-down-b" style="color: white"></Icon>
@@ -173,9 +174,9 @@
               <a :href="url+'kfxxList'" target="erp_main">
                 <MenuItem name="7-1">客服信息列表页面</MenuItem>
               </a>
-              <a :href="url+'zrxts'" target="erp_main">
-                <MenuItem name="7-2">责任性投诉反馈</MenuItem>
-              </a>
+              <!--<a :href="url+'zrxts'" target="erp_main">-->
+                <!--<MenuItem name="7-2">责任性投诉反馈</MenuItem>-->
+              <!--</a>-->
               <a :href="url+'kfclqktj'" target="erp_main">
                 <MenuItem name="7-3">客服处理情况统计</MenuItem>
               </a>

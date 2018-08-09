@@ -32,78 +32,95 @@
         </router-link>
       </h2>
     </div>
-    <!--<Steps :current="0" style="margin-top: 10px;">-->
-      <!--<Step title="第一步" content="添加客服信息"></Step>-->
-      <!--<Step title="第二步" content="处理中"></Step>-->
-      <!--<Step title="第三步" content="填写反馈信息"></Step>-->
-    <!--</Steps>-->
 
     <Card style="padding-left: 15px;margin-top: 20px;">
-      <Form :model="formItem" :label-width="80">
+      <Form :model="formItem" ref="formItem" :rules="ruleValidate" :label-width="100">
         <div class="search">
-          <FormItem label="投诉时间" style="margin-bottom: 15px">
-            <DatePicker type="daterange" placeholder="投诉时间" :transfer="true" v-model="formItem.date"
+          <FormItem label="投诉时间" style="margin-bottom: 25px" prop="tssj">
+            <DatePicker type="date" placeholder="投诉时间" :transfer="true" v-model="formItem.tssj"
                         class="text_width"></DatePicker>
           </FormItem>
-          <FormItem label="线路" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="线路" class="text_width"/>
-          </FormItem>
-          <FormItem label="车号" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="车号" class="text_width"/>
-          </FormItem>
-          <FormItem label="投诉人姓名" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="投诉人姓名" class="text_width"/>
-          </FormItem>
-          <FormItem label="联系电话" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="联系电话" class="text_width"/>
-          </FormItem>
-          <!--<FormItem label="类别" style="margin-bottom: 15px">-->
-            <!--<Input v-model="formItem.input" placeholder="类别" class="text_width"/>-->
-          <!--</FormItem>-->
-          <FormItem label="记录人" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="记录人" class="text_width"/>
-          </FormItem>
-          <FormItem label="备注" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="备注" class="text_width"/>
-          </FormItem>
-          <FormItem label="来电/来访" style="margin-bottom: 15px">
-            <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-              <Option value="来电">来电</Option>
-              <Option value="来访">来访</Option>
+          <FormItem label="线路" style="margin-bottom: 25px" prop="xl">
+            <Select v-model="formItem.xl" :transfer="true" style="width: 195px;">
+              <Option value="1路">1路</Option>
+              <Option value="2路">2路</Option>
+              <Option value="3路">3路</Option>
             </Select>
           </FormItem>
-          <FormItem label="事件类别" style="margin-bottom: 15px">
-            <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-              <Option value="责任性投诉">责任性投诉</Option>
-              <Option value="普通事件">普通事件</Option>
-              <Option value="疑难性问题">疑难性问题</Option>
+          <FormItem label="记录部门" style="margin-bottom: 25px" prop="jlbm">
+            <Select v-model="formItem.jlbm" :transfer="true" style="width: 195px;">
+              <Option value="运营部">运营部</Option>
+              <Option value="责任公司">责任公司</Option>
             </Select>
           </FormItem>
-          <FormItem label="状态" style="margin-bottom: 15px">
-            <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-              <Option value="处理中">处理中</Option>
-              <Option value="处理完成">处理完成</Option>
+          <FormItem label="记录人" style="margin-bottom: 25px" prop="jlr">
+            <Input v-model="formItem.jlr" placeholder="记录人" class="text_width"/>
+          </FormItem>
+          <FormItem label="车号" style="margin-bottom: 25px" prop="ch">
+            <Input v-model="formItem.ch" placeholder="车号" class="text_width"/>
+          </FormItem>
+          <FormItem label="投诉人姓名" style="margin-bottom: 25px" prop="tsr">
+            <Input v-model="formItem.tsr" placeholder="投诉人姓名" class="text_width"/>
+          </FormItem>
+          <FormItem label="联系电话" style="margin-bottom: 25px" prop="lxdh">
+            <Input v-model="formItem.lxdh" placeholder="联系电话" class="text_width"/>
+          </FormItem>
+
+          <FormItem label="投诉类别" style="margin-bottom: 25px" prop="tslb">
+            <Select v-model="formItem.tslb" :transfer="true" style="width: 195px;" @on-change="changesLf">
+              <Option value="DZBTC">到站不停车</Option>
+              <Option value="JZ">拒载</Option>
+              <Option value="DJG">大间隔</Option>
+              <Option value="FWTDC">服务态度差 </Option>
+              <Option value="TXYY">脱线运营</Option>
+              <Option value="SJSG">摔夹事故</Option>
+              <Option value="ICKFM">刷IC卡方面</Option>
+              <Option value="QT">其他</Option>
             </Select>
           </FormItem>
-          <FormItem label="选择部门" style="margin-bottom: 15px">
-            <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-              <Option value="beijing">公交一公司</Option>
-              <Option value="shanghai">公交二公司</Option>
-              <Option value="shenzhen">公交三公司</Option>
-              <Option value="shenzhen">运营部</Option>
+          <FormItem label="来电/来访" style="margin-bottom: 25px" prop="lfxs">
+            <Select v-model="formItem.lfxs" :transfer="true" style="width: 195px;" @on-change="changesLf">
+              <Option value="0">来电</Option>
+              <Option value="1">来访</Option>
             </Select>
           </FormItem>
-          <FormItem label="事由" style="margin-bottom: 15px">
-            <Input v-model="formItem.input" placeholder="事由" style="width: 470px;"/>
+          <FormItem label="事件类别" style="margin-bottom: 25px" v-show="this.formItem.lfxs!=1">
+            <Select v-model="formItem.sjlb" :transfer="true" style="width: 195px;" @on-change="changes">
+              <Option value="2">普通事件</Option>
+              <Option value="0">责任性事件</Option>
+              <Option value="1">疑难性事件</Option>
+            </Select>
           </FormItem>
-          <FormItem label="反馈信息">
-            <Input v-model="formItem.textarea" style="width: 470px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="填写反馈信息"></Input>
+          <FormItem label="状态" style="margin-bottom: 25px" v-show="this.formItem.sjlb!=2&&this.formItem.lfxs!=1">
+            <Select v-model="formItem.zt" :transfer="true" style="width: 195px;">
+              <Option value="1">处理中</Option>
+              <Option value="2">处理完成</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="提交部门" style="margin-bottom: 25px" v-show="this.formItem.sjlb!=2&&this.formItem.lfxs!=1">
+            <Select v-model="formItem.bm" :transfer="true" style="width: 195px;">
+              <Option value="运营部">运营部</Option>
+              <Option value="责任公司">责任公司</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="备注" style="margin-bottom: 25px">
+            <Input v-model="formItem.bz" placeholder="备注" class="text_width"/>
+          </FormItem>
+          <FormItem label="事由" style="margin-bottom: 25px">
+            <Input v-model="formItem.sy" placeholder="事由" style="width: 470px;"/>
+          </FormItem>
+          <FormItem label="反馈时间" style="margin-bottom: 25px" v-show="this.formItem.sjlb==2">
+            <DatePicker type="date" placeholder="投诉时间" :transfer="true" v-model="formItem.fksj"
+                        class="text_width"></DatePicker>
+          </FormItem>
+          <FormItem label="反馈信息" v-show="this.formItem.sjlb==2">
+            <Input style="width: 470px;" v-model="formItem.cljg"  type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="填写反馈信息"></Input>
           </FormItem>
         </div>
       </Form>
     </Card>
     <div style="margin: 20px;">
-      <Button type="primary">下一步</Button>
+      <Button type="primary" @click="save('formItem')">下一步</Button>
       <router-link to="/kfxxList">
         <Button type="ghost" style="margin-left: 8px">返回</Button>
       </router-link>
@@ -115,14 +132,97 @@
     data () {
       return {
 //          注意：这块要根据选择的事件类型不同去判断所填的项目
-        formItem: {
-          input: '',
-          select: '',
-          date: '',
-          textarea:''
+        formItem:{
+          bm: "",
+          bz: "",
+          ch: "",
+          cljg: "",
+          fksj: "",
+          id: "",
+          jlbm: "",
+          jlr: "",
+          lfxs: "",
+          lxdh: "",
+          sjlb: "",
+          sy: "",
+          tslb: "",
+          tsr: "",
+          tssj: "",
+          xl: "",
+          zt: 0
+        },
+        ruleValidate: {
+          tssj: [
+            { required: true, message: '必填项不能为空', trigger: 'blur',type:'date' }
+          ],
+          jlr: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  xl: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  jlbm: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  ch: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  tsr: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  lxdh: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  tslb: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],  lfxs: [
+            { required: true, message: '必填项不能为空', trigger: 'blur' }
+          ],
         }
       }
     },
-    methods: {}
+    methods: {
+      changes:function (value) {
+        console.log(value)
+        if(value==2){
+          this.formItem.zt = ''
+          this.formItem.bm = ''
+        }else {
+          this.formItem.fksj = ''
+          this.formItem.cljg = ''
+        }
+      },
+      changesLf:function (value) {
+        console.log(value);
+        if(value==1){
+          this.formItem.sjlb = '';
+          this.formItem.zt = '';
+          this.formItem.bm = ''
+        }
+      },
+      save:function (name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.formItem.tssj = this.$formatDate(this.formItem.tssj).substring(0,10);
+            console.log(this.formItem.tssj);
+            if(this.formItem.fksj===''){
+              this.formItem.fksj = ''
+            }else {
+              this.formItem.fksj = this.$formatDate(this.formItem.fksj).substring(0,7);
+            }
+            console.log(this.formItem);
+            this.$post(this.$url.savekfxx,this.formItem)
+              .then(res => {
+                console.log(res);
+                if(res.success==true){
+                    this.$Message.info("添加成功")
+                }else {
+                  this.$Message.error("添加失败")
+                }
+              })
+          } else {
+            this.$Message.error('请填写完整信息');
+          }
+        });
+
+      }
+    },
+    mounted:function () {
+
+    }
   }
 </script>

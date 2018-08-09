@@ -67,24 +67,61 @@
         </Form>
       </div>
     </Card>
+
+
     <!--更换钢瓶-->
     <Modal
       v-model="modal1"
       width="320"
-      title="更换钢瓶/加气登记">
-      <Form :model="formItem" :label-width="80">
-        <FormItem label="钢瓶重量" style="margin: 0 0 10px 0">
-          <Input v-model="formItem.input" placeholder="钢瓶重量" style="width: 195px;"/>
-        </FormItem>
+      title="添加钢瓶">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="addGp">确定
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
+      </div>
+      <Form :model="addGps" :label-width="80">
         <FormItem label="钢瓶体积" style="margin: 0 0 10px 0">
-          <Input v-model="formItem.input" placeholder="钢瓶体积" style="width: 195px;"/>
+          <Select v-model="addGps.fyszid" :transfer="true" style="width: 195px;">
+            <Option :value="item.id" v-for="item in this.tjList" :key="item.id">{{item.tj}}</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="钢瓶重量" style="margin: 0 0 10px 0">
+          <Input v-model="addGps.gpzl" placeholder="钢瓶重量" style="width: 195px;"/>
         </FormItem>
         <FormItem label="瓶号" style="margin: 0 0 10px 0">
-          <Input v-model="formItem.input" placeholder="瓶号" style="width: 195px;"/>
+          <Input v-model="addGps.gpph" placeholder="瓶号" style="width: 195px;"/>
         </FormItem>
-        <FormItem label="生产日期" style="margin: 0 0 10px 0">
-          <DatePicker type="date" placeholder="生产日期" :transfer="true" v-model="formItem.date"
+      </Form>
+    </Modal>
+
+
+    <!--更换钢瓶-->
+    <Modal
+      v-model="modal2"
+      width="320"
+      title="更换钢瓶/加气登记">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="changeGPJQ">确定
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
+      </div>
+      <Form :model="changeGp" :label-width="80">
+        <FormItem label="操作类型" style="margin: 0 0 10px 0">
+          <Select v-model="changeGp.type" :transfer="true" style="width: 195px;">
+            <Option value="0">换瓶</Option>
+            <Option value="1">加气</Option>
+          </Select>
+        </FormItem>
+        <FormItem label="操作时间" style="margin: 0 0 10px 0">
+          <DatePicker type="date" placeholder="操作时间" :transfer="true"
+                      v-model="changeGp.czsj"
                       style="width: 195px;"></DatePicker>
+        </FormItem>
+        <FormItem label="操作内容" style="margin: 0 0 10px 0">
+          <Input v-model="changeGp.cznr" placeholder="瓶号" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="总价" style="margin: 0 0 10px 0">
+          <Input v-model="changeGp.zj" placeholder="瓶号" style="width: 195px;"/>
         </FormItem>
       </Form>
     </Modal>
@@ -99,7 +136,7 @@
     </Card>
     <Card style="width:98%;margin: 10px 1%">
       <p slot="title">钢瓶更换记录</p>
-      <Tabs value="name1" style="margin-top: -15px;">
+      <Tabs value="name1" style="margin-top: -15px;" @on-click="changesTabs">
         <TabPane label="加气记录" name="name1">
           <Table :columns="columns3" :data="data3" size="small" border style="margin-top: 10px;"></Table>
         </TabPane>
@@ -107,7 +144,6 @@
           <Table :columns="columns4" :data="data4" size="small" border style="margin-top: 10px;"></Table>
         </TabPane>
       </Tabs>
-
     </Card>
   </div>
 </template>
@@ -116,7 +152,11 @@
     data () {
       return {
         modal1: false,
+        modal2: false,
         isDisable: true,
+        gpId: '',
+        gpxqId: '',
+        tjList: [],
         formItem: {
           dwmc: '',
           cph: '',
@@ -125,26 +165,61 @@
           bcjcrq: '',
           cx: ''
         },
+        addGps: {
+          fyszid: '',
+          gpph: '',
+          gpid: '',
+          gpzl: '',
+          scrq: ''
+        },
+        changeGp: {
+          cznr: "",
+          czsj: "",
+          gpxqId: "",
+          id: "",
+          type: "",
+          zj: ""
+        },
+        cz: {
+            currPage:1,
+            pageSize:10,
+            type:'1'
+        },
+        cz1: {
+          currPage:1,
+          pageSize:10,
+          type:'0'
+        },
 //        钢瓶重量、体积、瓶号、生产日期
         columns2: [
           {
             title: '钢瓶重量',
+            width: 130,
             key: 'gpzl'
           },
           {
             title: '体积',
+            width: 140,
             key: 'tj'
           },
           {
+            title: '单价',
+            width: 140,
+            key: 'dj'
+          },
+          {
             title: '瓶号',
-            key: 'ph'
+            width: 140,
+            key: 'gpph'
           },
           {
             title: '生产日期',
-            key: 'scrq'
+            key: 'scrq',
+            width: 170
           },
           {
             title: '操作',
+            width: 240,
             align: 'center',
             key: 'time',
             render: (h, params) => {
@@ -159,13 +234,14 @@
                   },
                   on: {
                     click: () => {
-                      this.modal1 = true
+                      this.modal2 = true;
+                      this.gpxqId = params.row.id
                     }
                   }
-                }, '加气'),
+                }, '操作'),
                 h('Button', {
                   props: {
-                    type: 'primary',
+                    type: 'error',
                     size: 'small'
                   },
                   style: {
@@ -173,10 +249,19 @@
                   },
                   on: {
                     click: () => {
-                      this.modal1 = true
+                      this.$fetch(this.$url.gpjcxqDel + '?id=' + params.row.id)
+                        .then(res => {
+                          console.log(res);
+                          if (res.msg === 'success') {
+                            this.$Message.info('删除成功');
+                            this.list1();
+                          } else {
+                            this.$Message.error('删除失败')
+                          }
+                        })
                     }
                   }
-                }, '换瓶'),
+                }, '删除'),
               ]);
             }
           }
@@ -186,20 +271,16 @@
 
         columns3: [
           {
-            title: '钢瓶重量',
-            key: 'gpzl'
+            title: '钢瓶id',
+            key: 'gpxqId'
           },
           {
-            title: '体积',
-            key: 'tj'
+            title: '操作时间',
+            key: 'czsj'
           },
           {
-            title: '瓶号',
-            key: 'ph'
-          },
-          {
-            title: '加气日期',
-            key: 'scrq'
+            title: '操作内容',
+            key: 'cznr'
           },
           {
             title: '总价',
@@ -211,24 +292,16 @@
 
         columns4: [
           {
-            title: '钢瓶重量',
-            key: 'gpzl'
+            title: '钢瓶id',
+            key: 'gpxqId'
           },
           {
-            title: '体积',
-            key: 'tj'
+            title: '操作时间',
+            key: 'czsj'
           },
           {
-            title: '瓶号',
-            key: 'ph'
-          },
-          {
-            title: '更换钢瓶体积',
-            key: 'ghgptj'
-          },
-          {
-            title: '更换日期',
-            key: 'scrq'
+            title: '操作内容',
+            key: 'cznr'
           },
           {
             title: '总价',
@@ -252,25 +325,129 @@
               this.$Message.error('修改失败');
             }
           })
+      },
+      list1: function () {
+        this.$fetch(this.$url.gpjcxqList, {currPage: 1, pageSize: 10})
+          .then(res => {
+            console.log(res);
+            if (res.msg === 'success') {
+              res.page.forEach(item => {
+                item.scrq = this.$formatDate(item.scrq).substring(0, 10)
+              });
+              this.data2 = res.page
+            }
+          })
+      },
+//      获取钢瓶体积单价
+      getTj: function () {
+        this.$fetch(this.$url.gpjcList, {currPage: 1, pageSize: 10})
+          .then(res => {
+            console.log(res);
+            if (res.page.total === 0) {
+              this.$Message.info('暂无数据');
+              this.totalPage = res.page.total;
+              this.data1 = res.page.records;
+            } else {
+              res.page.records.forEach(item => {
+                item.xzsj = this.$formatDate(item.xzsj).substring(0, 10)
+              });
+              this.tjList = res.page.records
+              console.log(res.page.records, '体积')
+            }
+          })
+      },
+      addGp: function () {
+        this.addGps.gpid = this.gpid;
+        console.log(this.addGps);
+        if (this.addGps.gpid === '' || this.addGps.gpzl === '' || this.addGps.gpph === '') {
+          this.$Message.error('填写完整参数');
+        } else {
+          this.$post(this.$url.gpjcxqSave, this.addGps)
+            .then(res => {
+              if (res.msg === 'success') {
+                this.$Message.info('添加成功');
+                this.modal1 = false;
+                this.list1();
+              } else {
+                this.$Message.error('添加失败');
+              }
+            })
+        }
+      },
+      quxiao: function () {
+        this.$Message.error('操作失败');
+        this.modal1 = false;
+        this.modal2 = false;
+      },
+      changeGPJQ: function () {
+        console.log(this.gpxqId);
+        this.changeGp.gpxqId = this.gpxqId;
+        if (this.changeGp.czsj == '') {
+          this.changeGp.czsj = ''
+        } else {
+          this.changeGp.czsj = this.$formatDate(this.changeGp.czsj).substring(0,10)
+        };
+        this.$post(this.$url.gpjcxqJQ, this.changeGp)
+          .then(res => {
+            if (res.msg === 'success') {
+              this.$Message.info('添加成功');
+              this.modal2 = false;
+              this.changeGp = {}
+            } else {
+              this.$Message.error('添加失败');
+            }
+          });
+          console.log(this.changeGp)
+      },
+      changesTabs:function (name) {
+        console.log(name);
+        if(name==='name1'){
+            this.czlist1()
+        }else {
+            this.czlist2()
+        }
+      },
+      czlist1:function () {
+        this.$post(this.$url.gpjcxqJL+'?currPage='+this.cz.currPage+'&pageSize='+this.cz.pageSize+'&type='+this.cz.type)
+          .then(res => {
+
+            res.page.records.forEach(item=>{
+              item.czsj = this.$formatDate(item.czsj).substring(0,10)
+            });
+            console.log(res.page.records,'操作记录');
+            if (res.msg === 'success') {
+                this.data3 = res.page.records
+            } else {
+
+            }
+          });
+      },
+      czlist2:function () {
+        this.$post(this.$url.gpjcxqJL+'?currPage='+this.cz1.currPage+'&pageSize='+this.cz1.pageSize+'&type='+this.cz1.type)
+          .then(res => {
+
+            res.page.records.forEach(item=>{
+              item.czsj = this.$formatDate(item.czsj).substring(0,10)
+            });
+            console.log(res.page.records,'操作记录');
+            if (res.msg === 'success') {
+              this.data4 = res.page.records
+            } else {
+
+            }
+          });
       }
     },
     mounted () {
-      this.formItem = this.$route.query.djInfo
+      this.gpid = this.$route.query.djInfo.id;
+      this.formItem = this.$route.query.djInfo;
 
-      const data1 = [];
-      for (let i = 0; i < 8; i++) {
-        data1.push({
-          gpzl: '40kg',
-          tj: '12L',
-          ph: '1510' + i,
-          bz: '大客车用',
-          scrq: '2018-02-05',
-          jcrq: '2018-02-04',
-          zbh: '16468165',
-          time: '2016-10-03'
-        });
-      }
-      this.data2 = data1;
+      this.list1();
+      this.getTj();
+
+
+      this.czlist1();
+//      this.czlist2();
 
 
       const data2 = [];

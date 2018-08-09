@@ -30,7 +30,7 @@
 </style>
 <template>
   <div class="container">
-    <h2>检测登记</h2> <span style="color: red;font-size: 12px;font-weight: b">钢瓶检测等级详情有问题 未完成</span>
+    <h2>检测登记</h2>
     <Tabs value="name1" @on-click="changesTabs">
       <TabPane label="检测费用设定" name="name1">
         <Card style="padding-left: 15px;">
@@ -251,7 +251,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$post(this.$url.delFysd + '?id=' + params.row.id)
+                      this.$fetch(this.$url.delFysd + '?id=' + params.row.id)
                         .then(res => {
                           console.log(res)
                           if (res.msg === 'success') {

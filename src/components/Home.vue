@@ -35,7 +35,7 @@
         </div>
         <div class="demo-avatar" style="position: absolute;right: 150px;">
           <!--<img src="../assets/icon.png" alt="">-->
-          <Avatar :src="require('../assets/icon.png')"/>
+          <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
           <Dropdown style="margin-left: 10px;">
             <span style="color: white">欢迎管理员</span>
             <Icon type="arrow-down-b" style="color: white"></Icon>
@@ -207,7 +207,7 @@
       return {
         theme2:'dark',
 //        url:'http://106.12.19.134:8080/bterp/#/',
-//        url:'http://106.12.19.134:8080/bterp/l/#/',
+//        url:'http://106.12.19.134:8080/erp_bt/#/',
         url:'http://localhost:8081/#/',
         fullHeight: document.documentElement.clientHeight
       }

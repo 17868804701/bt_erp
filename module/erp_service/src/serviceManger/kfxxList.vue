@@ -71,16 +71,33 @@
                             class="text_width"></DatePicker>
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn" @click="search2">查询</Button>
-              <Button type="primary" icon="android-download" class="search_btn">批量处理</Button>
+              <Button type="primary" icon="android-download" class="search_btn" @click="plcl">批量处理</Button>
             </div>
           </Form>
         </Card>
-        <Table :columns="columns12" :data="data12" border height="470" style="margin-top: 10px;" size="small"></Table>
+        <Table :columns="columns12" :data="data12" border height="470" style="margin-top: 10px;" size="small"
+               @on-selection-change="selectAll"></Table>
         <Page :total="totalPage1" show-total style="margin-top: 10px;" @on-change="setp1"></Page>
-
-
       </TabPane>
     </Tabs>
+
+    <!--批量处理-->
+    <Modal
+      v-model="modal1"
+      width="500"
+      @on-cancel="cancel"
+      title="填写反馈信息">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="plclOk">确定</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
+      </div>
+      <Form :model="formItem2" :label-width="100">
+        <FormItem label="反馈信息">
+          <Input style="width: 350px;" v-model="formItem2.cljg" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+                 placeholder="填写反馈信息"></Input>
+        </FormItem>
+      </Form>
+    </Modal>
   </div>
 </template>
 <script>
@@ -101,8 +118,14 @@
           startTime: '',
           endTime: ''
         },
+        formItem2: {
+          cljg: '',
+          ids: []
+        },
+        modal1: false,
         totalPage: 0,
-        totalPage1:0,
+        totalPage1: 0,
+        selection: [],
         columns11: [
           {
             title: '投诉时间',
@@ -244,7 +267,10 @@
                   },
                   on: {
                     click: () => {
-                      this.show(params.index)
+                      this.$router.push({
+                        path: '/addkfxx',
+                        query: {row: params.row,tip:'edit'}
+                      })
                     }
                   }
                 }, '修改'),
@@ -259,7 +285,8 @@
           {
             type: 'selection',
             width: 60,
-            align: 'center'
+            align: 'center',
+
           },
           {
             title: '投诉时间',
@@ -401,10 +428,12 @@
                   },
                   on: {
                     click: () => {
-                      this.show(params.index)
+                      console.log(params.row.id);
+                      this.formItem2.ids.push(params.row.id)
+                      this.modal1 = true;
                     }
                   }
-                }, '修改'),
+                }, '处理'),
               ]);
             }
           },
@@ -462,7 +491,7 @@
           this.$getExcel(process.env.BASE_URL + this.$url.daochukfxx + '?sjlb=' + this.formItem.sjlb + '&startTime = ' + this.formItem.startTime + '&endTime = ' + this.formItem.endTime)
         }
       },
-      search2:function () {
+      search2: function () {
         if (this.formItem1.startTime[0] == '') {
           this.formItem1.startTime = '',
             this.formItem1.endTime = '',
@@ -492,16 +521,50 @@
         this.totalPage = current;
         this.list();
       },
-      setp1:function () {
+      setp1: function () {
         this.totalPage1 = current;
         this.list2();
       },
-      tabs:function (name) {
-        if(name==='name1'){
-            this.list()
-        }else {
-            this.list2()
+      tabs: function (name) {
+        if (name === 'name1') {
+          this.list()
+        } else {
+          this.list2()
         }
+      },
+      selectAll: function (selection) {
+        this.selection = selection;
+        console.log(this.selection)
+      },
+      plclSubmit: function () {
+          console.log(this.formItem2);
+        this.$post(this.$url.plclkfxx, this.formItem2)
+          .then(res => {
+            console.log(res)
+          })
+      },
+      plcl: function () {
+        if (this.selection.length === 0) {
+          this.$Message.error('请选择数据')
+        } else {
+          this.selection.forEach(item => {
+            this.formItem2.ids.push(item.id)
+          });
+          this.modal1 = true;
+        }
+      },
+      plclOk: function () {
+        if (this.formItem2.cljg === '') {
+          this.$Message.error('请填写反馈信息')
+        } else {
+          this.plclSubmit()
+        }
+      },
+      cancel: function () {
+        this.$Message.error('操作失败');
+        this.modal1 = false;
+        this.formItem2.cljg = ''
+        this.formItem2.ids = []
       }
     },
     mounted () {

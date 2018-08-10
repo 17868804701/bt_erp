@@ -23,7 +23,7 @@
 <template>
   <div class="container">
     <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;">
-      <h2>添加客服信息
+      <h2> <span v-if="this.tip=='edit'">修改客服信息</span> <span v-else>添加客服信息</span>
         <router-link to="/kfxxList">
           <!--icon="chevron-left" -->
           <Button type="primary" size="small"><
@@ -99,8 +99,8 @@
           </FormItem>
           <FormItem label="提交部门" style="margin-bottom: 25px" v-show="this.formItem.sjlb!=2&&this.formItem.lfxs!=1">
             <Select v-model="formItem.bm" :transfer="true" style="width: 195px;">
-              <Option value="运营部">运营部</Option>
-              <Option value="责任公司">责任公司</Option>
+              <Option value="公交一公司">公交一公司</Option>
+              <Option value="公交二公司">公交二公司</Option>
             </Select>
           </FormItem>
           <FormItem label="备注" style="margin-bottom: 25px">
@@ -120,7 +120,8 @@
       </Form>
     </Card>
     <div style="margin: 20px;">
-      <Button type="primary" @click="save('formItem')">下一步</Button>
+      <Button type="primary" @click="update" v-if="this.tip=='edit'">修改</Button>
+      <Button type="primary" @click="save('formItem')" v-else="">下一步</Button>
       <router-link to="/kfxxList">
         <Button type="ghost" style="margin-left: 8px">返回</Button>
       </router-link>
@@ -151,6 +152,7 @@
           xl: "",
           zt: 0
         },
+        tip:'',
         ruleValidate: {
           tssj: [
             { required: true, message: '必填项不能为空', trigger: 'blur',type:'date' }
@@ -219,10 +221,30 @@
           }
         });
 
+      },
+      update:function () {
+        this.$post(this.$url.updatekfxx,this.formItem)
+          .then(res => {
+            console.log(res);
+            if(res.success==true){
+              this.$Message.info("修改成功");
+              this.$router.push({path: '/kfxxList',})
+            }else {
+              this.$Message.error("修改失败")
+            }
+          })
       }
     },
     mounted:function () {
+      let tip = this.$route.query.tip;
+      let row = this.$route.query.row;
+      this.tip = tip;
+      if(tip==='edit'){
+        this.formItem = row
+      }else {
 
+      }
+      console.log(tip)
     }
   }
 </script>

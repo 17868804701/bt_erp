@@ -19,7 +19,7 @@ const NetworkInterface = {
   userManager_userChangeList: '/person/userInfo/getHis', // 员工变更记录
   userManager_counts: '/person/userInfo/getCount', // 员工数据统计
 
-
+  
   // **********        安全事故管理            *********** //
   security_LASG_list: '/anq/lasg/lasgList', // 立案事故信息列表
   security_LASG_add: '/anq/lasg/saveLasg', // 添加立案事故信息
@@ -56,50 +56,63 @@ const NetworkInterface = {
   security_LASGJSLZB_exportExcel: baseURL+'/anq/lasg/exportAqsczbLasgjslExcel', // 立案事故经损率指标 --- 报表导出
   security_CLAJ_exportExcel: baseURL+'/anq/lasg/exportAqsczbAjtcExcel', // 车辆安检 --- 报表导出
   security_DWTBJQXJPF_exportExcel: baseURL+'/anq/lasg/exportAqsczbDwtbExcel', // 对外投保交强险及赔付情况 --- 报表导出
-
-
+  
+  
   // **********        维修养护            *********** //
-  maintain_BYGL_CLBY_recordList: '/weix/maintenanceManagement/clby/list',        // 保养管理 - 车辆保养 - 列表数据
-  maintain_BYGL_CLBY_saveRecord: '/weix/maintenanceManagement/clby/save',        // 保养管理 - 车辆保养 - 新增保养进场登记
-  maintain_BYGL_CLBY_updateRecord: '/weix/maintenanceManagement/clby/update',    // 保养管理 - 车辆保养 - 更新保养进场登记
-  maintain_BYGL_CLBY_deleteRecord: '/weix/maintenanceManagement/clby/delete',    // 保养管理 - 车辆保养 - 删除保养进场登记
-  maintain_BYGL_CLBY_recordDetail: '/weix/maintenanceManagement/clby/info',      // 保养管理 - 车辆保养 - 详情
-  maintain_BYGL_CLBY_exportExcel: baseURL+'/weix/maintenanceManagement/clby/listExport',      // 保养管理 - 车辆保养 - 列表导出excel
-
-  maintain_BYGL_JYDGL_recordList: '/weix/maintenanceManagement/jyd/list',             // 检验单管理 - 列表
-  // maintain_BYGL_JYDGL_listDetail: '/weix/maintenanceManagement/jyd/info',          // 检验单管理 - 列表查看详情
-  maintain_BYGL_JYDGL_exportExcel: baseURL+'/weix/maintenanceManagement/jyd/listExport',      // 检验单管理 - 列表导出excel
-  maintain_BYGL_YSDGL_recordList: '/weix/maintenanceManagement/ysd/list',             // 验收单管理 - 列表
-  // maintain_BYGL_YSDGL_listDetail: '/weix/maintenanceManagement/ysdMx/info',           // 验收单管理 - 列表查看详情
-  maintain_BYGL_YSDGL_exportExcel: baseURL+'/weix/maintenanceManagement/ysd/listExport',      // 验收单管理 - 列表导出excel
-  maintain_BYGL_WXLLGL_recordList: '/weix/maintenanceManagement/llmx/list',           // 维修理领料管理 - 列表
-  // maintain_BYGL_WXLLGL_listDetail: '/weix/maintenanceManagement/llmx/info',           // 维修理领料管理 - 列表查看详情?????
-  maintain_BYGL_WXLLGL_exportExcel: baseURL+'/weix/maintenanceManagement/llmx/listExport',// 维修理领料管理 - 列表导出excel
-  maintain_BYGL_FXGL_recordList: '/weix/maintenanceManagement/fxgl/list',             // 返修管理 - 列表
-  maintain_BYGL_FXGL_save: '/weix/maintenanceManagement/fxgl/save',                  // 返修管理 - 新增
-  maintain_BYGL_FXGL_update: '/weix/maintenanceManagement/fxgl/update',              // 返修管理 - 更新
-  maintain_BYGL_FXGL_delete: '/weix/maintenanceManagement/fxgl/delete',              // 返修管理 - 删除
-  maintain_BYGL_FXGL_listDetail: '/weix/maintenanceManagement/fxgl/info',            // 返修管理 - 列表查看详情
-  maintain_BYGL_FXGL_exportExcel: baseURL+'/weix/maintenanceManagement/fxgl/listExport', // 返修管理 - 列表导出excel
-
-
-
-
-  maintain_DEVICE_list: '/weix/equipmentMaintenanceRecord/list',                                       // 保养管理 - 设备保养记录 - 设备管理列表
-  maintain_DEVICE_save: '/weix/equipmentMaintenanceRecord/save',                                       // 保养管理 - 设备保养记录 - 新增设备信息
-  maintain_DEVICE_update: '/weix/equipmentMaintenanceRecord/update',                                   // 保养管理 - 设备保养记录 - 更新设备信息
-  maintain_DEVICE_delete: '/weix/equipmentMaintenanceRecord/delete',                                   // 保养管理 - 设备保养记录 - 删除设备信息
-
-  maintain_DEVICEBY_list: '/weix/equipmentMaintenanceRecord/wxby/list',                                // 保养管理 - 设备保养记录 - 设备保养管理列表
-  maintain_DEVICEBY_save: '/weix/equipmentMaintenanceRecord/wxby/save',                                // 保养管理 - 设备保养记录 - 新增设备保养信息
-  maintain_DEVICEBY_update: '/weix/equipmentMaintenanceRecord/wxby/update',                            // 保养管理 - 设备保养记录 - 更新设备保养信息
-  maintain_DEVICEBY_delete: '/weix/equipmentMaintenanceRecord/wxby/delete',                            // 保养管理 - 设备保养记录 - 删除设备保养信息
-
-
-  maintain_BBGL_SJBYTZ_list: '/weix/reportManagement/tertiaryMaintenanceAccount',                       // 报表管理 - 三级保养台账列表
-  maintain_BBGL_SJBYTZ_exportExcel: baseURL+'/weix/reportManagement/tertiaryMaintenanceAccountExport',          // 报表管理 - 三级保养台账 导出excel
-  maintain_BBGL_SJWHCL_list: '/weix/reportManagement/tertiaryMaintenanceMaterialUsage',                 // 报表管理 - 三级维护材料使用情况列表
-  maintain_BBGL_SJWHCL_exportExcel: baseURL+'/weix/reportManagement/tertiaryMaintenanceMaterialUsageExport',    // 报表管理 - 三级维护材料使用情况 导出excel
+  maintain_BYGL_DATA_WXGXX_list: '/weix/dataDictionary/listWXGXX',                              // 基础数据 - 维修工信息管理列表
+  maintain_BYGL_DATA_WXGXX_saveOrUpdate: '/weix/dataDictionary/saveWXGXX',                      // 基础数据 - 维修工信息新增或更新
+  maintain_BYGL_DATA_WXGXX_delete: '/weix/dataDictionary/deleteWXGXX',                          // 基础数据 - 维修工信息删除
+  
+  maintain_BYGL_DATA_PGXX_list: '/weix/dataDictionary/listPJXX',                                // 基础数据 - 配件信息列表
+  maintain_BYGL_DATA_PGXX_saveOrUpdate: '/weix/dataDictionary/savePJXX',                        // 基础数据 - 配件信息新增或更新
+  maintain_BYGL_DATA_PGXX_delete: '/weix/dataDictionary/deletePJXX',                            // 基础数据 - 配件信息删除
+  
+  maintain_BYGL_CLBY_recordList: '/weix/maintenanceManagement/clby/list',                       // 车辆保养 - 列表数据
+  maintain_BYGL_CLBY_saveRecord: '/weix/maintenanceManagement/clby/save',                       // 车辆保养 - 新增保养进场登记
+  maintain_BYGL_CLBY_updateRecord: '/weix/maintenanceManagement/clby/update',                   // 车辆保养 - 更新保养进场登记
+  maintain_BYGL_CLBY_deleteRecord: '/weix/maintenanceManagement/clby/delete',                   // 车辆保养 - 删除保养进场登记
+  maintain_BYGL_CLBY_recordDetail: '/weix/maintenanceManagement/clby/info',                     // 车辆保养 - 详情
+  maintain_BYGL_CLBY_exportExcel: baseURL+'/weix/maintenanceManagement/clby/listExport',        // 车辆保养 - 列表导出excel
+  
+  maintain_BYGL_CLBY_FDJ_saveOrUpdate: '/weix/maintenanceManagement/clbyFdjjc/update',          // 车辆保养详情 - 发动机进场记录更新
+  
+  maintain_BYGL_CLBY_DSJ_saveUpdate: '/weix/maintenanceManagement/clbyMx/saveDspj',             // 车辆保养详情 - 添加或者保存丢失件修配记录
+  maintain_BYGL_CLBY_CY_saveUpdate: '/weix/maintenanceManagement/clbyMx/saveCy',                // 车辆保养详情 - 添加或者保存超养作业记录
+  maintain_BYGL_CLBY_DJSORCY_delete: '/weix/maintenanceManagement/clbyMx/delete',               // 车辆保养详情 - 删除超养作业记录或丢失件
+  
+  maintain_BYGL_CLBY_CL_save: '/weix/maintenanceManagement/llmx/save',                          // 车辆保养详情 - 添加一条领料记录
+  maintain_BYGL_CLBY_CL_update: '/weix/maintenanceManagement/llmx/update',                      // 车辆保养详情 - 更新修改一条领料记录
+  maintain_BYGL_CLBY_CL_delete: '/weix/maintenanceManagement/llmx/delete',                      // 车辆保养详情 - 删除一条领料记录
+  
+  maintain_BYGL_JYDGL_recordList: '/weix/maintenanceManagement/jyd/list',                            // 检验单管理 - 列表
+  maintain_BYGL_JYDGL_exportExcel: baseURL+'/weix/maintenanceManagement/jyd/listExport',             // 检验单管理 - 列表导出excel
+  maintain_BYGL_YSDGL_recordList: '/weix/maintenanceManagement/ysd/list',                            // 验收单管理 - 列表
+  maintain_BYGL_YSDGL_exportExcel: baseURL+'/weix/maintenanceManagement/ysd/listExport',             // 验收单管理 - 列表导出excel
+  maintain_BYGL_WXLLGL_recordList: '/weix/maintenanceManagement/llmx/list',                          // 维修理领料管理 - 列表
+  maintain_BYGL_WXLLGL_exportExcel: baseURL+'/weix/maintenanceManagement/llmx/listExport',           // 维修理领料管理 - 列表导出excel
+  maintain_BYGL_FXGL_recordList: '/weix/maintenanceManagement/fxgl/list',                            // 返修管理 - 列表
+  maintain_BYGL_FXGL_save: '/weix/maintenanceManagement/fxgl/save',                                  // 返修管理 - 新增
+  maintain_BYGL_FXGL_update: '/weix/maintenanceManagement/fxgl/update',                              // 返修管理 - 更新
+  maintain_BYGL_FXGL_delete: '/weix/maintenanceManagement/fxgl/delete',                              // 返修管理 - 删除
+  maintain_BYGL_FXGL_listDetail: '/weix/maintenanceManagement/fxgl/info',                            // 返修管理 - 列表查看详情
+  maintain_BYGL_FXGL_exportExcel: baseURL+'/weix/maintenanceManagement/fxgl/listExport',             // 返修管理 - 列表导出excel
+  
+  maintain_DEVICE_list: '/weix/equipmentMaintenanceRecord/list',                                       // 设备保养记录 - 设备管理列表
+  maintain_DEVICE_save: '/weix/equipmentMaintenanceRecord/save',                                       // 设备保养记录 - 新增设备信息
+  maintain_DEVICE_update: '/weix/equipmentMaintenanceRecord/update',                                   // 设备保养记录 - 更新设备信息
+  maintain_DEVICE_delete: '/weix/equipmentMaintenanceRecord/delete',                                   // 设备保养记录 - 删除设备信息
+  maintain_DEVICE_exportExcel: baseURL+'/weix/equipmentMaintenanceRecord/listExport',
+  
+  maintain_DEVICEBY_list: '/weix/equipmentMaintenanceRecord/wxby/list',                                // 设备保养记录 - 设备保养管理列表
+  maintain_DEVICEBY_save: '/weix/equipmentMaintenanceRecord/wxby/save',                                // 设备保养记录 - 新增设备保养信息
+  maintain_DEVICEBY_update: '/weix/equipmentMaintenanceRecord/wxby/update',                            // 设备保养记录 - 更新设备保养信息
+  maintain_DEVICEBY_delete: '/weix/equipmentMaintenanceRecord/wxby/delete',                            // 设备保养记录 - 删除设备保养信息
+  maintain_DEVICEBY_exportExcel: baseURL+'/weix/equipmentMaintenanceRecord/wxby/listExport',
+  
+  maintain_BBGL_SJBYTZ_list: '/weix/reportManagement/tertiaryMaintenanceAccount',                                // 报表管理 - 三级保养台账列表
+  maintain_BBGL_SJBYTZ_exportExcel: baseURL+'/weix/reportManagement/tertiaryMaintenanceAccountExport',           // 报表管理 - 三级保养台账 导出excel
+  maintain_BBGL_SJWHCL_list: '/weix/reportManagement/tertiaryMaintenanceMaterialUsage',                          // 报表管理 - 三级维护材料使用情况列表
+  maintain_BBGL_SJWHCL_exportExcel: baseURL+'/weix/reportManagement/tertiaryMaintenanceMaterialUsageExport',     // 报表管理 - 三级维护材料使用情况 导出excel
   // **********        维修养护            *********** //
 
 

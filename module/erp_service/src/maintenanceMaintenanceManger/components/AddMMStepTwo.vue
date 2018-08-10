@@ -51,6 +51,8 @@
       </div>
     </Modal>
 
+
+    <!--项目检验记录-->
     <Card style="margin-top: 20px;">
       <p slot="title" >
         车辆三级维护过程检验记录
@@ -68,7 +70,6 @@
       </div>
 
     </Card>
-    <!--新增维护过程检验记录-->
     <Modal
       v-model="jysmModal"
       title="新增维护过程检验记录"
@@ -88,7 +89,7 @@
       </div>
     </Modal>
 
-
+    <!--项目验收记录-->
     <Card style="margin-top: 20px;">
       <p slot="title" >
         车辆三级维护项目验收
@@ -111,23 +112,40 @@
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
   import StepTwoTableData from './StepTwoTableData'
+  import * as DateTool from '../../../utils/DateTool'
   export default {
     name: 'AddMMStepTwo',
     components: {
       canEditTable,
     },
+    props: {
+      sourceData: Object,
+    },
     data () {
       return {
         clModal: false,
         clList: [],
+
         clItem: {
-          lych: '',
-          clmc: '',
+          gg: "",
+          ghdw: "",
+          ppxh: "",
+          jldw: "",
+          fj: "",
+          dj: '',
+          clmc: "",
+          jyyxm: "",
+          cx: "",
+          wpmc: "",
+          bz: "",
           sl: '',
-          rq: '',
-          bz: '',
-          sm: '',
-          jyy: '',
+          sm: "",
+          cph: "",
+          id: "",
+          je: '',
+          yt: "",
+          byid: "",
+          rq: ''
         },
         clColumns: [
           {
@@ -136,54 +154,99 @@
             align: 'center',
           },
           {
-            title: '领料车号',
-            key: 'lych',
+            title: '领料车牌号',
+            key: 'cph',
             align: 'center',
-            editable: true
           },
           {
-            title: '材料名称',
-            key: 'clmc',
+            title: '车型',
+            key: 'cx',
             align: 'center',
-            editable: true
+          },
+          {
+            title: '商品编码',
+            key: 'spbm',
+            align: 'center',
+          },
+          {
+            title: '物品名称',
+            key: 'wpmc',
+            align: 'center',
+          },{
+            title: '物品分类名称',
+            key: 'wpflmc',
+            align: 'center',
+          },
+          {
+            title: '供货单位',
+            key: 'gys',
+            align: 'center',
+          },
+          {
+            title: '计量单位',
+            key: 'dw',
+            align: 'center',
+          },
+          {
+            title: '规格',
+            key: 'gg',
+            align: 'center',
           },
           {
             title: '数量',
             key: 'sl',
             align: 'center',
-            editable: true
+          },
+          {
+            title: '单价',
+            key: 'dj',
+            align: 'center',
+          },
+          {
+            title: '金额',
+            key: 'je',
+            align: 'center',
           },
           {
             title: '日期',
             key: 'rq',
             align: 'center',
-            editable: true
           },
           {
             title: '备注',
             key: 'bz',
             align: 'center',
-            editable: true
-          },
-          {
-            title: '说明',
-            key: 'sm',
-            align: 'center',
-            editable: true
           },
           {
             title: '检验员',
-            key: 'jyy',
+            key: 'jyyxm',
             align: 'center',
-            editable: true
           },
           {
             title: '操作',
             key: 'action',
             align: 'center',
             fixed: 'right',
+            width: 150,
             render: (h, params, index) => {
               return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      for(let attr in this.clItem) {
+                        this.clItem[attr] = params.row[attr];
+                      }
+                      this.clModal = true;
+                    }
+                  }
+                }, '修改'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -191,8 +254,7 @@
                   },
                   on: {
                     click: () => {
-                      console.log('删除领料备料记录');
-                      this.clList.splice(index, 1);
+                      this.deleteCLRow(params.row);
                     }
                   }
                 }, '删除')
@@ -203,8 +265,10 @@
         // 材料名称、数量、备注、说明、日期、检验员姓名
 
         jysmModal: false,
-        jysmData: [],
-
+        ysdData: '',
+        ysdList: '',
+        jydData: '',
+        jydList: '',
         // 验收项目数据
         ysxmData: [],
       }
@@ -240,6 +304,20 @@
       cancleAddLLBL() {
         console.log('取消添加领料备料记录')
       },
+      deleteCLRow(row) {
+        let params = {id: row.id};
+        this.$fetch(this.$url.maintain_BYGL_CLBY_CL_delete, params)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('删除成功!');
+            this.$emit('updateInfo');
+          }else{
+            this.$Message.error('删除失败, 请重试!');
+          }
+        })
+      },
+
       checkJYXMChange(e) {
         console.log(e);
       },
@@ -268,6 +346,15 @@
       checkYSXM() {
         console.log('选择了验收项目');
         console.log(this.ysxmData);
+      },
+      configureData() {
+        let ysdData = this.sourceData.pageYsd; // 验收单数据
+        let jydData = this.sourceData.pageJyd; // 检验单数据
+        let llmxListData = this.sourceData.pageLlmx; // 领料明细数据
+        this.clList = llmxListData;
+        this.clList.forEach(item=>{
+          item.rq = DateTool.timesToDate(item.rq);
+        })
       }
     },
     mounted () {
@@ -277,5 +364,18 @@
       this.jysmData = this.getJYSMData();
       this.ysxmData = this.getYSXMData();
     },
+    watch: {
+      sourceData(newData) {
+        if (typeof newData.code !== undefined) {
+          console.log('监听到数据发生改变并且有值, 处理数据!');
+          this.configureData();
+        }
+      }
+    }
   }
 </script>
+
+<!--商品编码、物品名称、物品分类名称、单位、计划价、供应商-->
+<!--spbm、wpmc、wpflmc、dw、jhj、gys-->
+
+<!---->

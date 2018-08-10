@@ -65,21 +65,10 @@
       </Modal>
       <Card>
         <Form :model="formItem">
-          <Row>
-            <Col span="24">
-            <FormItem label="按养护日期查询" style="margin: 0;">
-              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
-                          v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-              <Button type="primary" icon="android-download"
-                      style="float: right;margin-right: 10px">导出Excel
-              </Button>
-              <Button type="primary" icon="plus"
-                      style="float: right;margin-right: 10px" @click="addModal=true">新增
-              </Button>
-            </FormItem>
-            </Col>
-          </Row>
+          <div>
+            <Button type="primary" icon="plus" style="margin-right: 10px" @click="addModal=true">新增</Button>
+            <Button type="primary" icon="android-download" @click="exportExcel">导出Excel</Button>
+          </div>
         </Form>
       </Card>
       <Table style="margin-top: 10px;" :data="tableData" :columns="columns" border></Table>
@@ -335,6 +324,12 @@
           }
         })
       },
+      exportExcel() {
+        console.log(this.formItem);
+        console.log('导出');
+        let url = this.$url.maintain_DEVICE_exportExcel;
+        this.$getExcel(url);
+      }
     },
     mounted () {
 

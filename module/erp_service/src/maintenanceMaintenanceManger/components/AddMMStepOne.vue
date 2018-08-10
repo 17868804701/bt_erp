@@ -2,38 +2,84 @@
 <template>
   <div>
 
+    <!--发动机基本信息-->
     <Card style="margin-top: 20px;">
       <p slot="title" >
         车辆保养基本信息
       </p>
-      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="editIcon" @click="basicDataIsEdit = !basicDataIsEdit">{{editText}}</Button>
+      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="editIcon" @click="clickEditBasicData">{{editText}}</Button>
       <Button v-if="basicDataIsEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="saveBasicData">保存</Button>
       <Form v-model="basicData" :label-width="100">
         <div style="display: flex;flex-wrap: wrap;">
-          <FormItem v-for="(item, index) in basicDatacolumns" :key="item+index" :label="basicDatacolumns[index].nameText" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicDatacolumns[index].value" style="width:120px;"></Input>
-            <div style="width: 120px;" v-else>{{basicDatacolumns[index].value}}</div>
+          <FormItem label="登记编号:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.djbh" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.djbh}}</div>
+          </FormItem>
+          <FormItem label="车辆自编号:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.clzbh" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.clzbh}}</div>
+          </FormItem>
+          <FormItem label="车牌号:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.cph" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.cph}}</div>
+          </FormItem>
+          <FormItem label="车型:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.cx" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.cx}}</div>
+          </FormItem>
+          <FormItem label="线路:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.xl" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.xl}}</div>
+          </FormItem>
+          <FormItem label="分公司:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.fgs" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.fgs}}</div>
+          </FormItem>
+          <FormItem label="进厂时间:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.jcsj" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.jcsj}}</div>
+          </FormItem>
+          <FormItem label="送修人:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.sxr" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.sxr}}</div>
+          </FormItem>
+          <FormItem label="检验员:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.jyy" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.jyy}}</div>
+          </FormItem>
+          <FormItem label="保养类别:" style="margin-top: 0px;">
+            <Input v-if="basicDataIsEdit" v-model="basicData.bylb" style="width:120px;"></Input>
+            <div style="width: 120px;" v-else>{{basicData.bylb}}</div>
           </FormItem>
         </div>
 
         <div style="display: flex;flex-wrap: wrap;">
           <FormItem label="是否有丢失件:" style="margin-top: 0px;" >
-            <i-switch v-model="basicData.dsjSwitchValue">
+            <i-switch v-if="basicDataIsEdit" v-model="basicData.dsjSwitchValue">
               <span slot="open">是</span>
               <span slot="close">否</span>
             </i-switch>
+            <div v-else>
+              {{this.isHaveDSJ}}
+            </div>
           </FormItem>
           <FormItem label="是否维修发动机:" style="margin-top: 0px;margin-left: 75px;" >
-            <i-switch v-model="basicData.switchValue">
+            <i-switch v-if="basicDataIsEdit" v-model="basicData.fdjSwitchValue">
               <span slot="open">是</span>
               <span slot="close">否</span>
             </i-switch>
+            <div v-else>
+              {{this.isHaveFDJ}}
+            </div>
           </FormItem>
           <FormItem label="是否超养:" style="margin-top: 0px;margin-left: 75px;" >
-            <i-switch v-model="basicData.cySwitchValue">
+            <i-switch v-if="basicDataIsEdit" v-model="basicData.cySwitchValue">
               <span slot="open">是</span>
               <span slot="close">否</span>
             </i-switch>
+            <div v-else>
+              {{this.isHaveCY}}
+            </div>
           </FormItem>
         </div>
       </Form>
@@ -46,80 +92,35 @@
       </p>
       <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" icon="plus" @click="dsjModal = true;">添加</Button>
       <Row align="middle" style="flex-wrap: wrap">
-        <can-edit-table style="margin-top: 10px;" v-model="dsjList" :columnsList="dsjColumns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
+        <can-edit-table style="margin-top: 10px;" v-model="dsjList" :columnsList="dsjColumns">
         </can-edit-table>
       </Row>
     </Card>
-
     <Modal
       v-model="dsjModal"
       title="新增丢失件修配记录"
       width="50%"
-      @on-ok="addDSJ"
-      @on-cancel="cancleAddDSJ">
-      <div>
-        <Form v-model="dsj" :label-width="60">
-          <Row>
-            <Col span="8">
-              <FormItem label="名称">
-                <Input v-model="dsj.mc" placeholder="名称..." style="width: 100px"></Input>
-              </FormItem>
-            </Col>
-            <Col span="8">
-              <FormItem label="数量">
-                <Input v-model="dsj.sl" placeholder="数量..." style="width: 100px"></Input>
-              </FormItem>
-            </Col>
-            <Col span="8">
-              <FormItem label="修配结果">
-                <Input v-model="dsj.xpjg" placeholder="修配结果..." style="width: 100px"></Input>
-              </FormItem>
-            </Col>
-          </Row>
-        </Form>
+      :mask-closable="false"
+      :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="addDSJ">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddDSJ">取消</Button>
       </div>
-    </Modal>
-
-    <!--发动机进厂技术记录-->
-    <Card v-if="basicData.switchValue" style="margin-top: 20px;">
-      <p slot="title" >
-        发动机进厂技术记录
-      </p>
-      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="fdjEditIcon" @click="fdjDataIsEdit = !fdjDataIsEdit">{{fdjEditText}}</Button>
-      <Button v-if="fdjDataIsEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="saveFDJData">保存</Button>
-        <Form v-model="fdjData" :label-width="70">
-          <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
-            <FormItem v-for="(item, index) in fdjDataColumns" :key="item+index" :label="fdjDataColumns[index].nameText" style="margin-top: 0px;">
-              <Input v-if="fdjDataIsEdit" v-model="fdjDataColumns[index].value" style="width:120px;"></Input>
-              <div style="width: 120px;" v-else>{{fdjDataColumns[index].value}}</div>
+      <div style="padding: 0px; height: 100%;">
+        <Form v-model="dsj" :label-width="80">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+            <FormItem label="名称:">
+              <Input v-model="dsj.name" placeholder="名称..." style="width: 100px"></Input>
+            </FormItem>
+            <FormItem label="数量:">
+              <Input v-model="dsj.sl" placeholder="数量..." style="width: 100px"></Input>
+            </FormItem>
+            <FormItem label="修配结果:">
+              <Input v-model="dsj.content" placeholder="修配结果..." style="width: 100px"></Input>
             </FormItem>
           </div>
         </Form>
-      <Input v-model="fdjData.bz" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入说明备注..."></Input>
-
-      <Button type="primary" size="small" style="margin-top: 10px;position: absolute;right: 20px;" icon="plus" @click="fdjQGModal=true">添加</Button>
-      <Table border style="margin-top: 50px;" :data="FDJ_QG_DATA" :columns="FDJ_QG_COLUMNS"></Table>
-
-      <Button type="primary" size="small" style="margin-top: 10px;position: absolute;right: 20px;" icon="plus" @click="fdjQZModal=true">添加</Button>
-      <Table border style="margin-top: 50px;" :data="FDJ_QZ_DATA" :columns="FDJ_QZ_COLUMNS"></Table>
-    </Card>
-    <!--新增气缸凸轮轴-->
-    <Modal
-      v-model="fdjQGModal"
-      title="新增气缸凸轮轴检测数据"
-      width="50%"
-      @on-ok="addFDJQGData"
-      @on-cancel="cancleAddFDJQGData">
-      <AddFDJQGView :qgData="fdjQGData"/>
-    </Modal>
-    <!--新增曲轴-->
-    <Modal
-      v-model="fdjQZModal"
-      title="新增曲轴检测数据"
-      width="50%"
-      @on-ok="addFDJQZData"
-      @on-cancel="cancleAddFDJQZData">
-      <AddFDJQZView :qzData="fdjQZData"/>
+      </div>
     </Modal>
 
     <!--超养作业记录-->
@@ -132,27 +133,26 @@
         <can-edit-table
           style="margin-top: 10px;"
           v-model="cyList"
-          :columnsList="cyColumns"
-          :editIncell="true"
-          :hoverShow="true"
-          @on-cell-change="handleCellChange"
-          @on-change="handleChange">
+          :columnsList="cyColumns">
         </can-edit-table>
       </Row>
     </Card>
-
     <Modal
       v-model="cyModal"
       title="新增超养作业记录"
       width="50%"
-      @on-ok="addCYZY"
-      @on-cancel="cancleAddCYZY">
+      :mask-closable="false"
+      :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="addCYZY">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddCYZY">取消</Button>
+      </div>
       <div>
         <Form v-model="cyItem" :label-width="60">
           <Row>
             <Col span="8">
             <FormItem label="项目">
-              <Input v-model="cyItem.xm" placeholder="项目..." style="width: 100px"></Input>
+              <Input v-model="cyItem.name" placeholder="项目..." style="width: 100px"></Input>
             </FormItem>
             </Col>
             <Col span="8">
@@ -162,12 +162,83 @@
             </Col>
             <Col span="8">
             <FormItem label="修复方法">
-              <Input v-model="cyItem.xfff" placeholder="修复方法..." style="width: 100px"></Input>
+              <Input v-model="cyItem.content" placeholder="修复方法..." style="width: 100px"></Input>
             </FormItem>
             </Col>
           </Row>
         </Form>
       </div>
+    </Modal>
+
+    <!--发动机进厂技术记录-->
+    <Card v-if="basicData.fdjSwitchValue" style="margin-top: 20px;">
+      <p slot="title" >
+        发动机进厂技术记录
+      </p>
+      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="fdjEditIcon" @click="editBtnClick">{{fdjEditText}}</Button>
+      <Button v-if="fdjDataIsEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="saveFDJData">保存</Button>
+        <Form v-model="fdjData" :label-width="70">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+            <FormItem label="发动机号:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjData.fdjh" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjData.fdjh}}</div>
+            </FormItem>
+            <FormItem label="进场时间:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjData.jcsj" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjData.jcsj}}</div>
+            </FormItem>
+            <FormItem label="是否镶接:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjData.sfqj" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjData.sfqj}}</div>
+            </FormItem>
+            <FormItem label="承修人:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjData.cxr" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjData.cxr}}</div>
+            </FormItem>
+            <FormItem label="修理记录:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjData.xljl" placeholder="请输入说明备注..."></Input>
+              <div v-else>{{fdjData.xljl}}</div>
+            </FormItem>
+          </div>
+        </Form>
+
+      <hr style="height:1px;border:none;border-top:1px solid lightgrey;margin-bottom: 5px; margin-top: 10px"/>
+      <div style="margin-bottom: 50px;">
+        <Button type="primary" size="small" icon="plus" @click="fdjQGModal=true">添加气缸凸轮轴活塞检验数据</Button>
+        <Table border style="margin-top: 10px;" :data="FDJ_QG_DATA" :columns="FDJ_QG_COLUMNS"></Table>
+      </div>
+
+      <hr style="height:1px;border:none;border-top:1px solid lightgrey;margin-bottom: 5px; margin-top: 10px"/>
+      <div>
+        <Button type="primary" size="small" icon="plus" @click="fdjQZModal=true">添加曲轴检验数据</Button>
+        <Table border style="margin-top: 10px;" :data="FDJ_QZ_DATA" :columns="FDJ_QZ_COLUMNS"></Table>
+      </div>
+    </Card>
+    <!--新增气缸凸轮轴-->
+    <Modal
+      v-model="fdjQGModal"
+      title="新增气缸凸轮轴检测数据"
+      width="50%"
+      :mask-closable="false"
+      :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="addFDJ_QG_NewData">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddFDJQGData">取消</Button>
+      </div>
+      <AddFDJQGView :qgData="fdjQGData"/>
+    </Modal>
+    <!--新增曲轴-->
+    <Modal
+      v-model="fdjQZModal"
+      title="新增曲轴检测数据"
+      width="50%"
+      :mask-closable="false"
+      :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="addFDJ_QZ_NewData">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddFDJQZData">取消</Button>
+      </div>
+      <AddFDJQZView :qzData="fdjQZData"/>
     </Modal>
 
   </div>
@@ -184,89 +255,225 @@
       AddFDJQZView,
       AddFDJQGView
     },
+    props: {
+      sourceData: Object,
+    },
     data () {
       return {
-
         // **************** 车辆基本数据 ************** //
         basicData: {
-          djbh: '20170909-011',
-          clzbh: '3-231',
-          cph: '蒙B12311',
-          xl: '706路',
-          fgs: '分公司',
-          jcsj: '2017-09-09',
-          sxr: '小黄',
-          jyy: '小黄',
-          bylb: '三养',
-          switchValue: false,
+          id: '',
+          djbh: '',
+          clzbh: '',
+          cph: '',
+          cx: '',
+          xl: '',
+          fgs: '',
+          jcsj: '',
+          sxr: '',
+          jyy: '',
+          bylb: '',
+          fdjSwitchValue: true,
           dsjSwitchValue: false,
           cySwitchValue: false,
         },
         dsjModal: false,
         cyModal: false,
         basicDataIsEdit: false,
-        basicDatacolumns: [
-          {
-            nameCode: 'djbh',
-            nameText: '登记编号:',
-            value: '公交一公司'
-          },
-          {
-            nameCode: 'clzbh',
-            nameText: '车辆自编号:',
-            value: '3-231'
-          },
-          {
-            nameCode: 'cph',
-            nameText: '车牌号:',
-            value: '蒙B12311'
-          },
-          {
-            nameCode: 'xl',
-            nameText: '线路:',
-            value: '706路'
-          },
-          {
-            nameCode: 'fgs',
-            nameText: '分公司:',
-            value: '2018-09-10'
-          },
-          {
-            nameCode: 'jcsj',
-            nameText: '进厂时间:',
-            value: '2017-09-09'
-          },
-          {
-            nameCode: 'sxr',
-            nameText: '送修人:',
-            value: '小黄'
-          },
-          {
-            nameCode: 'jyy',
-            nameText: '检验员:',
-            value: '小黄'
-          },
-          {
-            nameCode: 'bylb',
-            nameText: '保养类别:',
-            value: '三养'
-          },
-        ],
 
         // **************** 发动机数据 ************** //
-        FDJ_QG_COLUMNS: [],
+        FDJ_QG_COLUMNS: [
+          {
+            title: '部位',
+            align: 'center',
+            type: 'index'
+          },
+          {
+            title: '气缸',
+            align: 'center',
+            children: [
+              {
+                title: '上部',
+                align: 'center',
+                children: [
+                  {
+                    title: '前后',
+                    key: 'qg_sb_qh',
+                    align: 'center',
+                  },
+                  {
+                    title: '左右',
+                    key: 'qg_sb_zy',
+                    align: 'center',
+                  },
+                ]
+              },
+              {
+                title: '中部',
+                align: 'center',
+                children: [
+                  {
+                    title: '前后',
+                    key: 'qg_zb_qh',
+                    align: 'center',
+                  },
+                  {
+                    title: '左右',
+                    key: 'qg_zb_zy',
+                    align: 'center',
+                  },
+                ]
+              },
+              {
+                title: '下部',
+                align: 'center',
+                children: [
+                  {
+                    title: '前后',
+                    key: 'qg_xb_qh',
+                    align: 'center',
+                  },
+                  {
+                    title: '左右',
+                    key: 'qg_xb_zy',
+                    align: 'center',
+                  },
+                ]
+              },
+            ],
+          },
+          {
+            title: '活塞尺寸',
+            align: 'center',
+            key: 'hscc',
+          },
+          {
+            title: '凸轮轴',
+            align: 'center',
+            children: [
+              {
+                title: '升程',
+                align: 'center',
+                children: [
+                  {
+                    title: '进气',
+                    key: 'tlz_jq',
+                    align: 'center'
+                  },
+                  {
+                    title: '排气',
+                    key: 'tlz_pq',
+                    align: 'center'
+                  },
+                ]
+              }
+            ]
+          },
+          {
+            title: '操作',
+            align: 'center',
+            render: (h, params, index) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteFDJ_QG_Data(params.index);
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
+          }
+        ],
         FDJ_QG_DATA: [],
-        FDJ_QZ_COLUMNS: [],
+        FDJ_QZ_COLUMNS: [
+          {
+            title: '曲轴',
+            align:'center',
+            children: [
+              {
+                title: '曲轴径',
+                align: 'center',
+                children: [
+                  {
+                    title: '直径',
+                    key: 'qz_qzj_zj',
+                    align: 'center'
+                  },
+                  {
+                    title: '圆度',
+                    key: 'qz_qzj_yd',
+                    align: 'center'
+                  },
+                  {
+                    title: '圆柱度',
+                    key: 'qz_qzj_yzd',
+                    align: 'center'
+                  }
+                ]
+              },
+              {
+                title: '连杆颈',
+                align: 'center',
+                children: [
+                  {
+                    title: '直径',
+                    key: 'qz_lgj_zj',
+                    align: 'center'
+                  },
+                  {
+                    title: '圆度',
+                    key: 'qz_lgj_yd',
+                    align: 'center'
+                  },
+                  {
+                    title: '圆柱度',
+                    key: 'qz_lgj_yzd',
+                    align: 'center'
+                  }
+                ]
+              },
+            ],
+          },
+          {
+            title: '操作',
+            align: 'center',
+            render: (h, params, index) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteFDJ_QZ_Data(params.index);
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
+          }
+        ],
         FDJ_QZ_DATA: [],
+
         fdjData: {
-          jcch: '1-2188',
+          byid: '',
+          id: '',
           fdjh: '559',
-          cx: '141',
           jcsj: '2017-04-17',
-          sfxj: '下套+0.00',
+          sfqj: "下套+0.00",
           cxr: '李光',
-          bz: '',
-          jyy: '小黄'
+          xljl: "修理记录4",
+          fy: '',
+          tlz: '',
+          qg: '',
+          qz: '',
+          hs: '',
         },
         fdjQGData: {
           qg_sb_qh: '101.67',
@@ -291,55 +498,20 @@
         fdjDataIsEdit: false,
         fdjQZModal: false,
         fdjQGModal: false,
-        fdjDataColumns: [
-          {
-            nameCode: 'jcch',
-            nameText: '机厂车号:',
-            value: '1-2188'
-          },
-          {
-            nameCode: 'fdjh',
-            nameText: '发动机号:',
-            value: '559'
-          },
-          {
-            nameCode: 'cx',
-            nameText: '车型:',
-            value: '141'
-          },
-          {
-            nameCode: 'sfxj',
-            nameText: '是否镶嵌:',
-            value: '下套+0.00'
-          },
-          {
-            nameCode: 'cxr',
-            nameText: '承修人:',
-            value: '李光'
-          },
-          {
-            nameCode: 'jyy',
-            nameText: '检验员:',
-            value: '小黄'
-          },
-        ],
 
         // **************** 丢失件修配数据 ************** //
         dsjColumns: [
           {
-            key: 'mc',
+            key: 'name',
             title: '名称',
-            editable: true
           },
           {
             key: 'sl',
             title: '数量',
-            editable: true
           },
           {
-            key: 'xpjg',
+            key: 'content',
             title: '修配结果',
-            editable: true
           },
           {
             title: '操作',
@@ -350,13 +522,29 @@
               return h('div', [
                 h('Button', {
                   props: {
+                    type: 'primary',
+                    size: 'small',
+                  },
+                  style: {
+                    marginRight: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      for (let attr in this.dsj) {
+                        this.dsj[attr] = params.row[attr];
+                      }
+                      this.dsjModal = true;
+                    }
+                  }
+                }, '修改'),
+                h('Button', {
+                  props: {
                     type: 'error',
                     size: 'small'
                   },
                   on: {
                     click: () => {
-                      console.log('删除');
-                      this.dsjList.splice(index, 1);
+                      this.deleteDSJOrCY(params.row);
                     }
                   }
                 }, '删除')
@@ -366,27 +554,26 @@
         ],
         dsjList: [],
         dsj: {
-          mc: '',
+          name: '',
           sl: '',
-          xpjg: '',
+          content: '',
+          id: '',
+          byid: '',
         },
 
         // **************** 超养作业记录数据 ************** //
         cyColumns: [
           {
-            key: 'xm',
+            key: 'name',
             title: '项目',
-            editable: true
           },
           {
             key: 'sl',
             title: '数量',
-            editable: true
           },
           {
-            key: 'xfff',
+            key: 'content',
             title: '修复方法',
-            editable: true
           },
           {
             title: '操作',
@@ -397,12 +584,29 @@
               return h('div', [
                 h('Button', {
                   props: {
+                    type: 'primary',
+                    size: 'small',
+                  },
+                  style: {
+                    marginRight: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      for (let attr in this.cyItem) {
+                        this.cyItem[attr] = params.row[attr];
+                      }
+                      this.cyModal = true;
+                    }
+                  }
+                }, '修改'),
+                h('Button', {
+                  props: {
                     type: 'error',
                     size: 'small'
                   },
                   on: {
                     click: () => {
-                      this.cyList.splice(index, 1);
+                      this.deleteDSJOrCY(params.row);
                     }
                   }
                 }, '删除')
@@ -412,9 +616,11 @@
         ],
         cyList: [],
         cyItem: {
-          xm: '',
+          name: '',
           sl: '',
-          xfff: '',
+          content: '',
+          id: '',
+          byid: '',
         },
       }
     },
@@ -446,71 +652,273 @@
         }else{
           return 'close';
         }
+      },
+      isHaveDSJ() {
+        return this.basicData.dsjSwitchValue ? '是' : '否';
+      },
+      isHaveFDJ() {
+        return this.basicData.fdjSwitchValue ? '是' : '否';
+      },
+      isHaveCY() {
+        return this.basicData.cySwitchValue ? '是' : '否';
       }
     },
     methods: {
       clickEditBasicData() { // 编辑车辆基本信息
+        // 点击取消后还原数据
+        if (this.basicDataIsEdit === true) {
+          this.configureData();
+        }
         this.basicDataIsEdit = !this.basicDataIsEdit;
+
       },
       saveBasicData() { // 保存修改车辆基本信息
-        console.log('保存信息');
-        this.basicDataIsEdit = false;
+        this.$post(this.$url.maintain_BYGL_CLBY_updateRecord, this.basicData)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.basicDataIsEdit = false;
+            this.$Message.success('更新成功!');
+            this.$emit('updateInfo');
+          }else{
+            this.$Message.error('更新失败, 请重试!');
+          }
+        })
       },
-      clickAddDSJAction() {
 
+      addDSJ() { // 添加或更新丢失件修配记录
+        console.log('添加丢失件修配记录');
+        this.dsj.byid = this.sourceData.clby.id;
+        console.log(this.dsj);
+        this.$post(this.$url.maintain_BYGL_CLBY_DSJ_saveUpdate, this.dsj)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('添加丢失件修配记录成功!');
+            this.dsjModal = false;
+            this.$emit('updateInfo');
+            this.dsj = {
+              name: '',
+              sl: '',
+              content: '',
+              id: '',
+              byid: '',
+            };
+          }else{
+            this.$Message.error('添加失败, 请重试!');
+          }
+        })
       },
-      addDSJ() { // 确认添加丢失件
-        this.dsjList.push(this.dsj);
+      deleteDSJOrCY(DSJData) { // 删除丢失件修配记录或者超养作业记录
+        let params = {id: DSJData.id};
+        this.$fetch(this.$url.maintain_BYGL_CLBY_DJSORCY_delete, params)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('删除成功!');
+            this.$emit('updateInfo');
+          }else{
+            this.$Message.error('删除失败, 请重试!');
+          }
+        })
+      },
+      cancleAddDSJ() { // 取消添加丢失件修配记录
+        this.dsjModal = false;
         this.dsj = {
-          mc: '',
+          name: '',
           sl: '',
-          xpjg: '',
+          content: '',
+          id: '',
+          byid: '',
         };
-        console.log('确认添加');
       },
-      cancleAddDSJ() { // 取消添加丢失件
-        console.log('取消添加');
-      },
+
       addCYZY() { // 添加超养记录
-        this.cyList.push(this.cyItem);
-        this.cyItem = {
-          xm: '',
-          sl: '',
-          xfff: '',
-        };
-        console.log('确认添加');
+        console.log('添加超养作业记录');
+        this.cyItem.byid = this.sourceData.clby.id;
+        console.log(this.cyItem);
+        this.$post(this.$url.maintain_BYGL_CLBY_CY_saveUpdate, this.cyItem)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('添加超养作业记录成功!');
+            this.cyModal = false;
+            this.$emit('updateInfo');
+            this.cyItem = {
+              name: '',
+              sl: '',
+              content: '',
+              id: '',
+              byid: '',
+            }
+          }else{
+            this.$Message.error('添加失败, 请重试!');
+          }
+        })
       },
       cancleAddCYZY() {
-        console.log('取消添加超养作业记录');
+        this.cyModal = false;
+        this.cyItem = {
+          name: '',
+          sl: '',
+          content: '',
+          id: '',
+          byid: '',
+        }
       },
 
-      saveFDJData() { // 修改保存 发动机基本信息
-        this.fdjDataIsEdit = false;
+      editBtnClick() {
+        if (!this.fdjDataIsEdit) {
+          console.log('点击了编辑按钮');
+        }else{
+          console.log('点击了取消按钮');
+          // 点击了取消, 即使修改了, 也需要把 双向绑定的数据 为初始的数据.
+          for (let attr in this.sourceData.clbyFdjjc) {
+            this.fdjData[attr] = this.sourceData.clbyFdjjc[attr];
+          }
+        }
+        this.fdjDataIsEdit = !this.fdjDataIsEdit;
       },
-      addFDJQGData() {
-        //FDJ_QZ_DATA
-        //fdjQZData
-        this.FDJ_QG_DATA.push(this.fdjQGData);
-        this.fdjQGData = {
-          qg_sb_qh: '101.67',
-          qg_sb_zy: '101.68',
-          qg_zb_qh: '101.68',
-          qg_zb_zy: '101.67',
-          qg_xb_qh: '101.68',
-          qg_xb_zy: '101.68',
-          hscc: '101.59',
-          tlz_jq: '7.24',
-          tlz_pq: '7.23',
-        };
-        console.log('添加气缸凸轮轴检测数据');
+      saveFDJData() { // 修改保存 发动机基本信息
+        let params = {};
+        // 拷贝所有发动机所有的原始数据
+        // 更新所有的基本信息
+        for (let attr in this.fdjData) {
+          params[attr] = this.fdjData[attr];
+        }
+        this.updateFDJ(params);
+      },
+      updateFDJ(params) { // 更新发动机   字段为json字符串, 不论是添加还是修改, 都调用更新对应字段的接口
+        this.$post(this.$url.maintain_BYGL_CLBY_FDJ_saveOrUpdate, params)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.$Message.success('保存成功!');
+            this.fdjQGModal = false;
+            this.fdjQZModal = false;
+            this.fdjDataIsEdit = false;
+            this.$emit('updateInfo');
+            this.fdjQGData = {
+              qg_sb_qh: '',
+              qg_sb_zy: '',
+              qg_zb_qh: '',
+              qg_zb_zy: '',
+              qg_xb_qh: '',
+              qg_xb_zy: '',
+              hscc: '',
+              tlz_jq: '',
+              tlz_pq: '',
+            };
+            this.fdjQZData = {
+              qz_qzj_zj: '',
+              qz_qzj_yd: '',
+              qz_qzj_yzd: '',
+
+              qz_lgj_zj: '',
+              qz_lgj_yd: '',
+              qz_lgj_yzd: '',
+            };
+          }else{
+            this.$Message.error('保存失败, 请重试!');
+          }
+        })
+      },
+
+      // *************** 发动机中list数据配置方法 ***************** //
+      configureFDJQG_QZ_NetworkData(deepCopyArray) { // 把气缸-活塞-凸轮轴 或 曲轴的list数据转成json字符串数组
+        let stringArray = '';
+        deepCopyArray.forEach(item => {
+          let stringObj = JSON.stringify(item);
+          stringObj += '&';
+          stringArray = stringArray + stringObj;
+        })
+        stringArray = stringArray.substring(0, stringArray.length-1);
+        console.log(stringArray);
+        return stringArray;
+      },
+      // *************** 发动机中list数据配置方法 ***************** //
+      
+      // *************** 气缸 - 活塞 - 凸轮轴 ***************** //
+      addFDJ_QG_NewData() {
+        // 深拷贝数组
+        let deepCopyArray = JSON.parse(JSON.stringify(this.FDJ_QG_DATA));
+        deepCopyArray.push(this.fdjQGData);
+        let qgString = this.configureFDJQG_QZ_NetworkData(deepCopyArray);
+        // 深拷贝发动机对象
+        let params = {};
+        for (let attr in this.sourceData.clbyFdjjc) {
+          params[attr] = this.sourceData.clbyFdjjc[attr];
+        }
+        // 修改气缸json数据
+        params.qg = qgString;
+        this.updateFDJ(params);
+      },
+      deleteFDJ_QG_Data(index) {
+        console.log(index);
+        debugger;
+        // 深拷贝数组
+        let deepCopyArray = JSON.parse(JSON.stringify(this.FDJ_QG_DATA));
+        deepCopyArray.splice(index, 1);
+        let qgString = this.configureFDJQG_QZ_NetworkData(deepCopyArray);
+        // 深拷贝发动机对象
+        let params = {};
+        for (let attr in this.sourceData.clbyFdjjc) {
+          params[attr] = this.sourceData.clbyFdjjc[attr];
+        }
+        // 修改气缸json数据
+        params.qg = qgString;
+        this.updateFDJ(params);
       },
       cancleAddFDJQGData() {
-        console.log('取消添加气缸凸轮轴检测数据');
+        this.fdjQGModal = false;
+        this.fdjQGData = {
+          qg_sb_qh: '',
+          qg_sb_zy: '',
+          qg_zb_qh: '',
+          qg_zb_zy: '',
+          qg_xb_qh: '',
+          qg_xb_zy: '',
+          hscc: '',
+          tlz_jq: '',
+          tlz_pq: '',
+        };
       },
-      addFDJQZData() {
-        //FDJ_QZ_DATA
-        //fdjQZData
-        this.FDJ_QZ_DATA.push(this.fdjQZData);
+      // *************** 气缸 - 活塞 - 凸轮轴 ***************** //
+
+
+      // *************** 曲轴 ***************** //
+      addFDJ_QZ_NewData() {
+        // 深拷贝数组
+        let deepCopyArray = JSON.parse(JSON.stringify(this.FDJ_QZ_DATA));
+        deepCopyArray.push(this.fdjQZData);
+        let qzString = this.configureFDJQG_QZ_NetworkData(deepCopyArray);
+        // 深拷贝发动机对象
+        let params = {};
+        for (let attr in this.sourceData.clbyFdjjc) {
+          params[attr] = this.sourceData.clbyFdjjc[attr];
+        }
+        // 修改曲轴json数据
+        params.qz = qzString;
+        this.updateFDJ(params);
+      },
+      deleteFDJ_QZ_Data(index) {
+        console.log(index);
+        debugger;
+        // 深拷贝数组
+        let deepCopyArray = JSON.parse(JSON.stringify(this.FDJ_QZ_DATA));
+        deepCopyArray.splice(index, 1);
+        let qzString = this.configureFDJQG_QZ_NetworkData(deepCopyArray);
+        // 深拷贝发动机对象
+        let params = {};
+        for (let attr in this.sourceData.clbyFdjjc) {
+          params[attr] = this.sourceData.clbyFdjjc[attr];
+        }
+        // 修改曲轴json数据
+        params.qz = qzString;
+        this.updateFDJ(params);
+      },
+      cancleAddFDJQZData() {
+        this.fdjQZModal = false;
         this.fdjQZData = {
           qz_qzj_zj: '',
           qz_qzj_yd: '',
@@ -520,20 +928,9 @@
           qz_lgj_yd: '',
           qz_lgj_yzd: '',
         };
-        console.log('添加曲轴检测数据');
       },
-      cancleAddFDJQZData() {
-        console.log('取消添加曲轴检测数据');
-      },
-
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-      },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
-      },
-      clickAddFDJAction() {
-      },
+      // *************** 曲轴 ***************** //
+      
 
       getListData(item) {
         let dataArray = [];
@@ -542,23 +939,133 @@
         }
         return dataArray;
       },
-      getData () {
-        // 气缸
-        this.FDJ_QG_COLUMNS = FDJData.FDJ_QG_COLUMNS;
-        this.FDJ_QZ_COLUMNS = FDJData.FDJ_QZ_COLUMNS;
-      },
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-      },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
+//      getData () {
+//      },
+      configureData() {
+        // step 1
+        let clbyBasicData = this.sourceData.clby;       // 车辆保养基本信息
+        let clbyFdjjcData = this.sourceData.clbyFdjjc;  // 发动机进场记录
+        let clbyDspjData = this.sourceData.clbyDspj;    // 丢失配件记录
+        let clbyCyData = this.sourceData.clbyCy;        // 超养作业记录
+
+        // 处理车辆保养基本信息
+        for (let attr in clbyBasicData) {
+          this.basicData[attr] = clbyBasicData[attr];
+        }
+        console.log(clbyBasicData);
+
+        // 处理发动机进场记录
+        let tmpfdjData = {}; // 用来判断是否有发动机进场记录的object
+        for (let attr in clbyFdjjcData) {
+          this.fdjData[attr] = clbyFdjjcData[attr];
+          tmpfdjData[attr] = clbyFdjjcData[attr];
+        }
+        let isHaveFDJData = false;
+        delete tmpfdjData['byid'];
+        delete tmpfdjData['id'];
+        delete tmpfdjData['jcsj'];
+        for (let attr in tmpfdjData) {
+          if(tmpfdjData[attr] !== null && tmpfdjData[attr] !== '') {
+            isHaveFDJData = true;
+          }
+        }
+        this.basicData.fdjSwitchValue = isHaveFDJData;
+        console.log(this.fdjData);
+        // 处理成json
+        console.log('======== 气缸数据 - 活塞数 - 凸轮轴数据 ==========');
+        if (this.fdjData.qg !== null && this.fdjData.qg.length > 0) { // 气缸数据 - 活塞数 - 凸轮轴数据   注意: 由于页面问题,为了方便解析,前面三个数据均在qg字段中存储,格式为json字符串, 用&分割
+          let qgStringArray = this.fdjData.qg.split('&');
+          let qgArray = [];
+          qgStringArray.forEach(item => {
+            let obj = JSON.parse(item);
+            qgArray.push(obj);
+          })
+          this.FDJ_QG_DATA = qgArray;
+          console.log('========= 气缸数据 - 活塞数 - 凸轮轴数据 =========');
+        }
+
+        if (this.fdjData.qz !== null && this.fdjData.qz.length > 0) { // 曲轴
+          console.log('========= 曲轴 =========');
+          let qzStringArray = this.fdjData.qz.split('&');
+          let qzArray = [];
+          qzStringArray.forEach(item => {
+            let obj = JSON.parse(item);
+            qzArray.push(obj);
+          })
+          this.FDJ_QZ_DATA = qzArray;
+          console.log('========= 曲轴 =========');
+        }
+
+        // 处理丢失件列表
+        if (clbyDspjData !== null) {
+          this.basicData.dsjSwitchValue = (clbyDspjData.length > 0) ? true : false;
+          this.dsjList = clbyDspjData;
+        }
+        // 处理超养记录
+        if (clbyCyData !== null) {
+          this.basicData.cySwitchValue = (clbyCyData.length > 0) ? true : false;
+          this.cyList = clbyCyData;
+        }
       }
     },
     mounted () {
-
     },
     created () {
-      this.getData();
+    },
+    watch: {
+      sourceData(newData) {
+        if (typeof newData.code !== undefined) {
+          console.log('监听到数据发生改变并且有值, 处理数据!');
+          this.configureData();
+        }
+      }
     }
   }
 </script>
+
+
+<!--
+
+bylb:"三养级别"
+bz:null
+clzbh:"A9999"
+cph:"蒙A888888"
+cx:"大车"
+djbh:"9999"
+fgs:"公交一公司"
+id:"b93062ad09c64d9c96b81906cd1f853b"
+jcsj:1533686400000
+jyy:"毛良伟"
+sxr:"谢忠华"
+sl: '706'
+-->
+
+<!-- 丢失件修配记录 -->
+<!--
+{
+      "id": "3e53df02a2a54d56bf378429599c8c40",
+      "byid": "75125377398f4fbd9ec1bd47cb4e7c35",
+      "name": "测试",
+      "sl": 100,
+      "content": "丢失件修配记录内容",
+      "lx": 1,
+      "type": "1"
+}
+-->
+
+
+<!--发动机进场记录-->
+<!--
+byid:"6a2819c555a443cb863237d4d4f4eb2f"
+cxr:"大黄3"
+fdjh:"0003"
+fy:1489.9
+hs:null
+id:"16fda8efccf54746b05df3840da0251f"
+jcsj:1533037603000
+qg:null
+qz:null
+sfqj:"是"
+tlz:null
+xljl:"修理记录4"
+-->

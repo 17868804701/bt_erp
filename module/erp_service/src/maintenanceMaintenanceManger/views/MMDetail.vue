@@ -8,20 +8,19 @@
     </h2>
     <div style="margin-top: 20px;">
       <Steps :current="currentStep">
-        <Step title="进厂检验接单">
-        </Step>
+        <Step title="进厂检验接单"></Step>
         <Step title="维修养护测试阶段"></Step>
         <Step title="出厂"></Step>
       </Steps>
     </div>
 
-    <AddMMStepOne v-if="this.currentStep === 0 || this.currentStep === 1 || this.currentStep === 2"></AddMMStepOne>
-    <AddMMStepTwo v-if="this.currentStep === 1 || this.currentStep === 2"></AddMMStepTwo>
-    <AddMMStepThree v-if="this.currentStep === 2"></AddMMStepThree>
+    <AddMMStepOne :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepOne>
+    <AddMMStepTwo :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepTwo>
+    <AddMMStepThree></AddMMStepThree>
 
-    <div style="margin-top: 20px;width: 100%;display: flex;justify-content: center">
-      <Button v-if="this.currentStep === 0 || this.currentStep === 1" type="primary" @click="nextStep">{{nextStepText}}</Button>
-    </div>
+    <!--<div style="margin-top: 20px;width: 100%;display: flex;justify-content: center">-->
+      <!--<Button v-if="this.currentStep === 0 || this.currentStep === 1" type="primary" @click="nextStep">{{nextStepText}}</Button>-->
+    <!--</div>-->
 
   </div>
 </template>
@@ -38,6 +37,7 @@
     data () {
       return {
         currentStep: 0,
+        networkData: {},
       }
     },
     computed: {
@@ -49,7 +49,16 @@
         } else {
           return '';
         }
-      }
+      },
+      isStepTwo() {
+//        if (typeof this.networkData.pageJyd.ysxmmc !== 'undefined' || typeof this.networkData.pageYsd.ysxmmc !== 'undefined' || this.networkData.pageLlmx.length > 0) {
+//          return true;
+//        }
+//        return false;
+      },
+      isStepThree() {
+
+      },
     },
     methods: {
       nextStep() {
@@ -60,10 +69,24 @@
         } else {
 
         }
-      }
+      },
+      requestDetailData() {
+        let params = {id: this.$route.query.row.id}
+        this.$fetch(this.$url.maintain_BYGL_CLBY_recordDetail, params)
+        .then(res => {
+          console.log(res);
+//          if (typeof res.pageJyd.ysxmmc !== 'undefined' || typeof res.pageYsd.ysxmmc !== 'undefined' || res.pageLlmx.length > 0) {
+//            this.currentStep = 1;
+//          }
+//          if (false){
+//            this.currentStep = 2;
+//          }
+          this.networkData = res;
+        })
+      },
     },
     mounted () {
-
+      this.requestDetailData();
     }
   }
 </script>

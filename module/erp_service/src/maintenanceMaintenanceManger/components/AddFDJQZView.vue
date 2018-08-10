@@ -8,10 +8,10 @@
             <FormItem label="直径" style="margin-top: 0px;">
               <Input v-model="qzData.qz_qzj_zj" style="width:120px;"></Input>
             </FormItem>
-            <FormItem label="直径" style="margin-top: 0px;">
+            <FormItem label="圆度" style="margin-top: 0px;">
               <Input v-model="qzData.qz_qzj_yd" style="width:120px;"></Input>
             </FormItem>
-            <FormItem label="直径" style="margin-top: 0px;">
+            <FormItem label="圆柱度" style="margin-top: 0px;">
               <Input v-model="qzData.qz_qzj_yzd" style="width:120px;"></Input>
             </FormItem>
           </div>
@@ -21,10 +21,10 @@
             <FormItem label="直径" style="margin-top: 0px;">
               <Input v-model="qzData.qz_lgj_zj" style="width:120px;"></Input>
             </FormItem>
-            <FormItem label="直径" style="margin-top: 0px;">
+            <FormItem label="圆度" style="margin-top: 0px;">
               <Input v-model="qzData.qz_lgj_yd" style="width:120px;"></Input>
             </FormItem>
-            <FormItem label="直径" style="margin-top: 0px;">
+            <FormItem label="圆柱度" style="margin-top: 0px;">
               <Input v-model="qzData.qz_lgj_yzd" style="width:120px;"></Input>
             </FormItem>
           </div>

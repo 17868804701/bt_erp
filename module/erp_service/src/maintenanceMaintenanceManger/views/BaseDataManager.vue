@@ -1,0 +1,48 @@
+<!--基础数据管理-->
+
+<template>
+  <div >
+    <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
+      <h2 style="margin-left: 15px;">
+        基础数据管理
+      </h2>
+      <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
+        <TabPane label="维修工信息管理" name="name1">
+          <WorkerManager ref="WorkerManager"></WorkerManager>
+        </TabPane>
+        <TabPane label="配件信息管理" name="name2">
+          <PJXXManager ref="PJXXManager"></PJXXManager>
+        </TabPane>
+      </Tabs>
+    </div>
+  </div>
+</template>
+
+<script>
+  import WorkerManager from './WorkerManager.vue';
+  import PJXXManager from './PJXXManager.vue';
+  export default {
+    components: {
+      WorkerManager,
+      PJXXManager,
+    },
+    data () {
+      return {
+
+      }
+    },
+    methods: {
+      clickTab(name) {
+        if (name === 'name1') {
+          this.$refs['WorkerManager'].requestListData();
+        } else {
+          this.$refs['PJXXManager'].requestListData();
+        }
+      }
+    },
+    mounted () {
+      this.$refs['WorkerManager'].requestListData();
+    }
+  }
+</script>
+

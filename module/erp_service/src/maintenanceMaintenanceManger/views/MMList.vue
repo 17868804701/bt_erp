@@ -209,7 +209,8 @@
                     click: () => {
                       console.log('查看详情');
                       this.$router.push({
-                        path: '/MMDetail'
+                        path: '/MMDetail',
+                        query: {row: params.row}
                       })
                     }
                   }

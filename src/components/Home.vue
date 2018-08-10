@@ -148,6 +148,9 @@
                   <Icon type="ios-analytics"></Icon>
                   维修养护
                 </template>
+                <a :href="url+'BaseDataManager'" target="erp_main">
+                  <MenuItem name="6-0">基础数据管理</MenuItem>
+                </a>
                 <a :href="url+'MainMM'" target="erp_main">
                   <MenuItem name="6-1">保养管理</MenuItem>
                 </a>

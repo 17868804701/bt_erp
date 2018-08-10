@@ -41,6 +41,7 @@ import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
 import MMDetail from '../maintenanceMaintenanceManger/views/MMDetail.vue'
 import JCfyjs from '../maintenanceMaintenanceManger/views/JCfyjs.vue'
 import gpjcInfo from '../maintenanceMaintenanceManger/views/gpjcInfo.vue'
+import BaseDataManager from '../maintenanceMaintenanceManger/views/BaseDataManager.vue'
 
 // 服务管理
 import kfxxList from '../serviceManger/kfxxList.vue'
@@ -124,6 +125,10 @@ const route = [
   {
     path: '/lhlctz',
     component: lhlctz
+  },
+  {
+    path: '/BaseDataManager',
+    component: BaseDataManager
   },
   {
     path: '/MainMM',

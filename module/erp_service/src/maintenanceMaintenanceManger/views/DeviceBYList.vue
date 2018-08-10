@@ -1,8 +1,6 @@
 <!--设备保养记录-->
-<!--设备信息管理-->
 
 <template>
-
   <div>
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
       <Modal
@@ -45,6 +43,7 @@
           </Form>
         </div>
       </Modal>
+
       <Modal
         v-model="updateModal"
         title="更新设备保养记录"
@@ -79,16 +78,38 @@
           </Form>
         </div>
       </Modal>
+
+      <Modal
+        v-model="chooseDeviceModal"
+        title="请选择设备"
+        width="50%">
+        <div slot="footer" style="height: 30px;">
+          <Button type="primary" style="float: right;margin-right: 10px" @click="exportExcel('chooseDeviceItem')">导出</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="chooseDeviceModal=false">取消</Button>
+        </div>
+        <div>
+          <Form ref="chooseDeviceItem" :model="chooseDeviceItem" :rules="ruleValidate" :label-width="180">
+            <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+              <FormItem prop="sbbh" label="请根据设备编号选择设备:" style="margin-top: 0px;">
+                <Select v-model="chooseDeviceItem.sbbh" placeholder="请选择设备" style="width: 120px;" filterable>
+                  <Option v-for="(item, index) in this.deviceData" :key="item+index" :value="item.sbbh">{{item.sbbh}}</Option>
+                </Select>
+              </FormItem>
+            </div>
+          </Form>
+        </div>
+      </Modal>
+
       <Card>
         <Form :model="formItem">
           <Row>
             <Col span="24">
             <FormItem label="按养护日期查询" style="margin: 0;">
               <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
-                          v-model="formItem.date"></DatePicker>
+                          v-model="formItem.wxrq"></DatePicker>
               <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
               <Button type="primary" icon="android-download"
-                      style="float: right;margin-right: 10px">导出Excel
+                      style="float: right;margin-right: 10px" @click="chooseDeviceModal=true">导出Excel
               </Button>
               <Button type="primary" icon="plus"
                       style="float: right;margin-right: 10px" @click="addModal=true">新增
@@ -116,7 +137,7 @@
       return {
         deviceData: [],
         formItem: {
-          date: '',
+          wxrq: '',
           currPage: 1,
           pageSize: 10,
         },
@@ -135,9 +156,15 @@
           sbid: '',
           sbbh: '',
         },
+        chooseDeviceItem: {
+          sbbh: '',
+        },
         ruleValidate: {
           sbid: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          sbbh: [
+            { required: true, message: '请选择设备', trigger: 'blur' },
           ],
           wxnr: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
@@ -151,6 +178,7 @@
         },
         addModal: false,
         updateModal: false,
+        chooseDeviceModal: false,
         columns: [
           {
             type: 'index',
@@ -303,8 +331,13 @@
         this.requestListData();
       },
       requestListData() {
-        console.log('请求设备列表');
-        this.$fetch(this.$url.maintain_DEVICEBY_list, this.formItem)
+        console.log(this.formItem);
+        let params = {};
+        for (let attr in this.formItem) {
+          params[attr] = this.formItem[attr];
+        }
+        params.wxrq = DateTool.yyyymmddFormatDate(params.wxrq);
+        this.$fetch(this.$url.maintain_DEVICEBY_list, params)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
@@ -404,6 +437,19 @@
           }
         })
       },
+      exportExcel(name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            console.log(this.chooseDeviceItem.sbbh);
+            console.log('导出');
+            let url = this.$url.maintain_DEVICEBY_exportExcel;
+            url = url + '?sbbh=' + this.chooseDeviceItem.sbbh;
+            this.$getExcel(url);
+          } else {
+            this.$Message.error('请按照规则来填写内容!');
+          }
+        })
+      }
     },
     mounted () {
       this.requestDeviceData();

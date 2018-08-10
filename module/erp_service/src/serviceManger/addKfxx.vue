@@ -86,9 +86,9 @@
           </FormItem>
           <FormItem label="事件类别" style="margin-bottom: 25px" v-show="this.formItem.lfxs!=1">
             <Select v-model="formItem.sjlb" :transfer="true" style="width: 195px;" @on-change="changes">
-              <Option value="2">普通事件</Option>
               <Option value="0">责任性事件</Option>
               <Option value="1">疑难性事件</Option>
+              <Option value="2">普通事件</Option>
             </Select>
           </FormItem>
           <FormItem label="状态" style="margin-bottom: 25px" v-show="this.formItem.sjlb!=2&&this.formItem.lfxs!=1">

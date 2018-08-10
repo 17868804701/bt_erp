@@ -194,32 +194,26 @@
         columns2: [
           {
             title: '钢瓶重量',
-            width: 130,
             key: 'gpzl'
           },
           {
             title: '体积',
-            width: 140,
             key: 'tj'
           },
           {
             title: '单价',
-            width: 140,
             key: 'dj'
           },
           {
             title: '瓶号',
-            width: 140,
             key: 'gpph'
           },
           {
             title: '生产日期',
             key: 'scrq',
-            width: 170
           },
           {
             title: '操作',
-            width: 240,
             align: 'center',
             key: 'time',
             render: (h, params) => {
@@ -391,6 +385,8 @@
           .then(res => {
             if (res.msg === 'success') {
               this.$Message.info('添加成功');
+              this.czlist1();
+              this.czlist2();
               this.modal2 = false;
               this.changeGp = {}
             } else {
@@ -448,43 +444,6 @@
 
       this.czlist1();
 //      this.czlist2();
-
-
-      const data2 = [];
-      for (let i = 0; i < 8; i++) {
-        data2.push({
-          gpzl: '40kg',
-          tj: '12L',
-          ph: '1510' + i,
-          bz: '大客车用',
-          scrq: '2018-02-05',
-          jcrq: '2018-02-04',
-          zbh: '16468165',
-          time: '2016-10-03',
-          zj: '4651元'
-        });
-      }
-      this.data3 = data2;
-
-
-      const data3 = [];
-      for (let i = 0; i < 8; i++) {
-        data3.push({
-          gpzl: '40kg',
-          tj: '12L',
-          ph: '1510' + i,
-          bz: '大客车用',
-          scrq: '2018-02-05',
-          jcrq: '2018-02-04',
-          zbh: '16468165',
-          time: '2016-10-03',
-          zj: '4651元',
-          ghgptj: '130L'
-        });
-      }
-      this.data4 = data3;
-
-
       console.log(this.$server);
     }
   }

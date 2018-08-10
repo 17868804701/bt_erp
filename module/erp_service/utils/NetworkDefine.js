@@ -148,6 +148,8 @@ const NetworkInterface = {
 
   kfxxList:'/fuw/kfxx/kfxxList',//客服信息列表
   savekfxx:'/fuw/kfxx/saveKfxx',//客服信息--新增
+  daochukfxx:'/fuw/kfxx/exportKfxxExcel',//客服信息-导出
+  dwclkfxx:'/fuw/kfxx/dwclkfxxList',//待我处理客服信息-导出
 };
 
 export default NetworkInterface;

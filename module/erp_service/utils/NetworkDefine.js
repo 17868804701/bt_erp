@@ -186,6 +186,11 @@ const NetworkInterface = {
   daochujttrq:'/nengy/Trqtj/exportJtrqtjExcel',  //天然气月汇总--导出
   lljl:'/nengy/Lljl/getLljlList',  //领料记录
   savell:'/nengy/Lljl/save',  //新增领料
+  updatell:'/nengy/Lljl/update',  //修改领料
+  delll:'/nengy/Lljl/delete',  //删除领料
+  daochull:'/nengy/Lljl/exportLljlExcel',  //领料导出
+  jtdnList:'/nengy/Dnxxtj/getJtdnxhList',  //集团电能列表
+  jtdnListdaochu:'/nengy/Dnxxtj/exportJtdnExcel',  //集团电能列表导出
 };
 
 export default NetworkInterface;

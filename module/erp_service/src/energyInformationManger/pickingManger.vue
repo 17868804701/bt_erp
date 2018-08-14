@@ -15,7 +15,7 @@
                               v-model="formItem.kssj"></DatePicker>
                   <Button type="primary" icon="ios-search" @click="search">搜索</Button>
                   <Button type="primary" icon="android-download"
-                          style="float: right;margin-right: 10px">导出Excel
+                          style="float: right;margin-right: 10px" @click="daochuExcel">导出Excel
                   </Button>
                   <!--<Button type="ghost" icon="android-download"  style="float: right;margin-right:10px">批量派发</Button>-->
                   <Button type="primary" icon="plus" style="float: right;margin-right:10px" @click="addPicking=true">
@@ -39,13 +39,14 @@
         v-model="addPicking"
         title="新增领料"
         width="60%"
+        @on-cancel="cancel"
       >
         <div slot="footer" style="height: 30px;">
-          <Button type="primary" style="float: right;margin-right: 10px" @click="save('add')">确定
+          <Button type="primary" style="float: right;margin-right: 10px" @click = 'update' v-if="this.type=='edit'">修改
           </Button>
-          <Button type="primary" style="float: right;margin-right: 10px">修改
+          <Button type="primary" style="float: right;margin-right: 10px" @click="save('add')" v-else>确定
           </Button>
-          <Button type="primary" style="float: right;margin-right: 10px">取消</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
         </div>
         <div>
           <Form :model="add" ref="add" :rules="ruleValidate" :label-width="80">
@@ -129,6 +130,7 @@
     data () {
       return {
         addPicking: false,
+        type:'',
         totalPage: 0,
         formItem: {
           kssj: '',
@@ -295,7 +297,9 @@
                   },
                   on: {
                     click: () => {
-                      this.addPicking = true
+                      this.addPicking = true;
+                      this.type = 'edit'
+                      this.add = params.row
                     }
                   }
                 }, '修改'),
@@ -306,7 +310,21 @@
                   },
                   on: {
                     click: () => {
+                      console.log(params.row.id);
+                      let arr = []
+                      arr.push(params.row.id)
+                      console.log(arr)
+                      this.$post(this.$url.delll+'?id='+arr.toString())
+                        .then(res => {
+                          console.log(res);
+                          if(res.success===true){
+                            this.$Message.info('删除成功')
+                            this.list();
+                          }else {
+                            this.$Message.error('删除失败')
+                          }
 
+                        })
                     }
                   }
                 }, '删除')
@@ -348,12 +366,19 @@
               res.data.records.forEach(item => {
                 item.llsj = this.$formatDate(item.llsj).substring(0, 10)
               })
-              this.data10 = res.data.records
+              this.data10 = res.data.records;
+              this.totalPage = res.data.total;
             }
           })
       },
       step: function (current) {
         this.formItem.current = current
+        this.list()
+      },
+      cancel:function () {
+        this.add = {};
+//        this.$Message.info('操作失败');
+        this.type = ''
         this.list()
       },
       save: function (name) {
@@ -363,12 +388,49 @@
             this.$post(this.$url.savell, this.add)
               .then(res => {
                 console.log(res);
+                if(res.success===true){
+                  this.addPicking = false;
+                  this.list();
+                  this.$Message.info('添加成功');
+                  this.add = {}
+                }
 
               })
           } else {
             this.$Message.error('请填写完整表单!');
           }
         })
+      },
+      update:function () {
+        this.add.llsj = this.$formatDate(this.add.llsj).substring(0,10)
+        this.$post(this.$url.updatell, this.add)
+          .then(res => {
+            console.log(res);
+            if(res.success===true){
+              this.addPicking = false
+              this.list();
+              this.$Message.info('修改成功');
+              this.add = {}
+            }
+          })
+      },
+      daochuExcel:function () {
+        if (this.formItem.kssj[0] == '') {
+          this.formItem.kssj = '',
+            this.formItem.jssj = ''
+          console.log(this.formItem.kssj)
+          console.log(this.formItem.jssj)
+          this.$getExcel(process.env.BASE_URL + this.$url.daochull + '?kssj=' + this.formItem.kssj+'&jssj='+this.formItem.jsdw )
+        } else {
+          let start1 = this.$formatDate(this.formItem.kssj[0]).substring(0, 10);
+          let end2 = this.$formatDate(this.formItem.kssj[1]).substring(0, 10);
+          this.formItem.kssj = start1;
+          this.formItem.jssj = end2;
+          console.log(this.formItem.kssj)
+          console.log(this.formItem.jssj)
+          this.$getExcel(process.env.BASE_URL + this.$url.daochull + '?kssj=' + this.formItem.kssj+'&jssj='+this.formItem.jsdw )
+        }
+
       }
     },
     mounted () {

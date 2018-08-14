@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
-      <h2 style="margin-left: 15px;">天然气汇总管理 <span style="color: red;font-size: 12px;margin-left: 10px;">天然气月汇总合计没有字段，接口有问题</span></h2>
+      <h2 style="margin-left: 15px;">天然气汇总管理</h2>
       <Tabs value="name1" @on-click="tabs">
         <TabPane label="分公司天然气汇总" name="name1">
           <Card>
@@ -389,18 +389,18 @@
                 children: [
                   {
                     title: '气量',
-                    key: 'dj',
+                    key: 'hjql',
                     align: 'center',
                     width: 150,
                   },
                   {
                     title: '实际价',
-                    key: 'je',
+                    key: 'hjsjj',
                     align: 'center',
                     width: 150,
                   }, {
                     title: '计划价',
-                    key: 'je',
+                    key: 'hjjhj',
                     align: 'center',
                     width: 150,
                   },
@@ -496,6 +496,11 @@
               this.data12 = res.data.records;
               this.totalPage1 = res.data.total;
             } else {
+              res.data.records.forEach(item=>{
+                 item.hjql = item.htql+item.zrql
+                 item.hjsjj = item.htsjj+item.zrsjj
+                 item.hjjhj = item.htjhj+item.zrjhj
+              });
               this.data12 = res.data.records;
               this.totalPage1 = res.data.total;
             }

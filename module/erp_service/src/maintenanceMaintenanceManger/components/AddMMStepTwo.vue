@@ -379,3 +379,27 @@
 <!--spbm、wpmc、wpflmc、dw、jhj、gys-->
 
 <!---->
+
+<!--
+车号、车型、物品名称、领料数量、领料规格、供货单位、品牌型号、规格、计量单位、单价、金额、附记
+-->
+
+<!--
+{
+  "bz": "string",
+  "clmc": "string",
+  "dj": 0,
+  "fj": "string",
+  "gg": "string",
+  "ghdw": "string",
+  "je": 0,
+  "jldw": "string",
+  "jyyxm": "string",
+  "ppxh": "string",
+  "rq": "2018-08-10T08:33:35.729Z",
+  "sl": 0,
+  "sm": "string",
+  "wpmc": "string",
+  "yt": "string"
+}
+-->

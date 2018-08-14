@@ -55,12 +55,6 @@
             width: 100,
           },
           {
-            title: '路别',
-            key: 'lb',
-            width: 100,
-            align: 'center',
-          },
-          {
             title: '路线长度',
             key: 'xlcd',
             align: 'center',
@@ -164,7 +158,7 @@
               },
               {
                 title: '合计',
-                key: 'age',
+                key: 'fyyxj',
                 align: 'center',
                 width: 100,
               },

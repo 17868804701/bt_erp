@@ -1,0 +1,8 @@
+部署说明：
+http.js
+NetworkDefine.js
+ListInfo.vue  修改查看pdf资源路径
+dev.env.js 和 prod.env.js   需要修改BASE_URL和upload_BASE_URL
+List.vue  临时退出按钮需要更service路径
+Home.vue   需要修改url路径
+这些文件需要修改  路径

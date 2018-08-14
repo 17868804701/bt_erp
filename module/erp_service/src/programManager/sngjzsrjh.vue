@@ -6,10 +6,8 @@
         <Row>
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="Select date" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-            <Button type="primary" icon="ios-search">搜索</Button>
-
-
+            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.year"></DatePicker>
+            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
             <Button type="primary" icon="android-download" @click="exports=true"
                     style="float: right">导入计划表
             </Button>
@@ -57,37 +55,37 @@
       style="height: 500px;"
       @on-cancel="cancel">
       <div style="height:auto">
-        <Form :model="formItem" :label-width="120">
+        <Form :model="formItem1" :label-width="120">
           <FormItem label="单位">
-            <Input v-model="formItem.input" placeholder="单位" style="width: 195px;"/>
+            <Input v-model="formItem1.input" placeholder="单位" style="width: 195px;"/>
           </FormItem>
           <FormItem label="时间">
-            <DatePicker type="date" placeholder="Select date" v-model="formItem.date"></DatePicker>
+            <DatePicker type="date" placeholder="Select date" v-model="formItem1.date"></DatePicker>
           </FormItem>
           <FormItem label="路别">
-            <Select v-model="formItem.select" style="width: 195px;">
+            <Select v-model="formItem1.select" style="width: 195px;">
               <Option value="beijing">102路</Option>
               <Option value="shanghai">103路</Option>
               <Option value="shenzhen">286路</Option>
             </Select>
           </FormItem>
           <FormItem label="各年计划收入">
-            <Input v-model="formItem.input" placeholder="各年计划收入" style="width: 195px;"/>
+            <Input v-model="formItem1.input" placeholder="各年计划收入" style="width: 195px;"/>
           </FormItem>
           <FormItem label="各年实际收入">
-            <Input v-model="formItem.input" placeholder="各年实际收入" style="width: 195px;"/>
+            <Input v-model="formItem1.input" placeholder="各年实际收入" style="width: 195px;"/>
           </FormItem>
           <FormItem label="各年客运量">
-            <Input v-model="formItem.input" placeholder="各年客运量" style="width: 195px;"/>
+            <Input v-model="formItem1.input" placeholder="各年客运量" style="width: 195px;"/>
           </FormItem>
           <FormItem label="每车次客运量">
-            <Input v-model="formItem.input" placeholder="每车次客运量" style="width: 195px;"/>
+            <Input v-model="formItem1.input" placeholder="每车次客运量" style="width: 195px;"/>
           </FormItem>
         </Form>
       </div>
     </Modal>
     <Table stripe :columns="columns1" :data="data1" size="small" style="margin-top: 10px;"></Table>
-    <Page :total="100" show-total style="margin-top: 10px;"></Page>
+    <!--<Page :total="100" show-total style="margin-top: 10px;"></Page>-->
   </div>
 </template>
 <script>
@@ -97,87 +95,83 @@
         addProgram: false,
         exports:false,
         formItem: {
-          input: '',
-          date:''
+          current: 1,
+          size:10,
+          year:''
+        },
+        formItem1:{
+
         },
         columns1: [
           {
             title: '单位',
-            key: 'danwei'
+            key: 'dw'
           },
           {
-            title:'时间',
-            key:'sj'
+            title: '年度',
+            key: 'nd'
           },
           {
             title: '路别',
-            key: 'lubie'
+            key: 'lb'
           },
           {
-            title: '各年计划收入（万元）',
-            key: 'gnjhsr'
+            title: '前年实际（万元）',
+            key: 'qnsj'
           },
           {
-            title: '各年实际收入（万元）',
-            key: 'gnsjsr'
+            title: '去年计划（万元）',
+            key: 'bnjh'
           },
 
           {
-            title: '各年客运量（万）',
-            key: 'gnkyl'
+            title: '1-10月本期',
+            key: 'bqsj'
           },
           {
-            title: '每车次客运量（万）',
-            key: 'mcckyl'
+            title: '去年预计1（万）',
+            key: 'bnyj'
+          },
+          {
+            title: '本年计划（万）',
+            key: 'mnyj'
+          },
+          {
+            title: '本年计划车次（万）',
+            key: 'mnjhcc'
+          },
+          {
+            title: '去年每车次客运量（万）',
+            key: 'bnkyl'
+          },
+          {
+            title: '前年每车次客运量（万）',
+            key: 'qnkyl'
+          },
+          {
+            title: '操作',
+            key: 'cz',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                  this.$Message.info('修改')
+                    }
+                  }
+                }, '修改'),
+              ]);
+            }
           }
         ],
-        data1: [
-          {
-            sj: '2016-10-03',
-            danwei: '公交一公司',
-            lubie: '102路',
-            gnjhsr: '200',
-            gnsjsr: '10',
-            gnkyl: '1.5',
-            mcckyl: '0.5',
-          },
-          {
-            sj: '2016-10-03',
-            danwei: '公交一公司',
-            lubie: '102路',
-            gnjhsr: '200',
-            gnsjsr: '10',
-            gnkyl: '1.5',
-            mcckyl: '0.5',
-          },
-          {
-            sj: '2016-10-03',
-            danwei: '公交一公司',
-            lubie: '102路',
-            gnjhsr: '200',
-            gnsjsr: '10',
-            gnkyl: '1.5',
-            mcckyl: '0.5',
-          },
-          {
-            sj: '2016-10-03',
-            danwei: '公交一公司',
-            lubie: '102路',
-            gnjhsr: '200',
-            gnsjsr: '10',
-            gnkyl: '1.5',
-            mcckyl: '0.5',
-          },
-          {
-            sj: '2016-10-03',
-            danwei: '公交一公司',
-            lubie: '102路',
-            gnjhsr: '200',
-            gnsjsr: '10',
-            gnkyl: '1.5',
-            mcckyl: '0.5',
-          }
-        ]
+        data1: []
       }
     },
     methods: {
@@ -187,6 +181,36 @@
       cancel () {
         this.$Message.info('Clicked cancel');
       },
+      list:function () {
+        this.$fetch(this.$url.snjhList, this.formItem)
+          .then(res => {
+            console.log(res)
+            if (res.success === true) {
+              if (res.data.total === 0) {
+                this.$Message.info('暂无信息');
+                this.data1 = res.data.records;
+                this.totalPage = res.data.total
+              } else {
+                res.data.records.forEach(item=>{
+                    item.nd = item.nd.toString()
+                })
+                this.data1 = res.data.records;
+                this.totalPage = res.data.total
+              }
+            }
+          })
+      },
+      search:function () {
+        if(this.formItem.year==''){
+            this.formItem.year = ''
+        }else {
+            this.formItem.year = this.$formatDate(this.formItem.year).substring(0,4)
+        }
+        this.list();
+      }
+    },
+    mounted(){
+     this.list()
     }
   }
 </script>

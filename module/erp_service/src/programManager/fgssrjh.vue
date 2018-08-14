@@ -1,14 +1,13 @@
 <template>
   <div>
-    <!--<router-link to="/addProgram">-->
-    <!--</router-link>-->
     <Card>
       <Form :model="formItem" :label-width="80">
         <Row>
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="Select date" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-            <Button type="primary" icon="ios-search">搜索</Button>
+            <DatePicker type="year" placeholder="请选择年份" :transfer="true" placement="bottom-end"
+                        v-model="formItem.year"></DatePicker>
+            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
 
 
             <Button type="primary" icon="android-download" @click="exports=true"
@@ -33,7 +32,7 @@
       width="400"
       :mask-closable="false"
       style="height: 500px;"
-      @on-cancel="cancel">
+      @on-cancel="quxiao">
       <Steps :current="0" direction="vertical">
         <Step title="第一步" content="下载收入计划报表模板"></Step>
         <Step title="第二步" content="上传报表"></Step>
@@ -56,25 +55,38 @@
       width="350"
       :mask-closable="false"
       style="height: 500px;"
-      @on-cancel="cancel">
+      @on-cancel="quxiao">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="xiugai" v-if="this.type=='edit'">修改</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="save('formItem1')" v-else>确定
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
+      </div>
       <div style="height:auto">
-        <Form :model="formItem" :label-width="100">
-          <FormItem  label="单位">
-            <Select v-model="formItem.select" style="width: 195px;">
-              <Option value="beijing">一公司</Option>
-              <Option value="shanghai">二公司</Option>
+        <Form :model="formItem1" ref="formItem1" :rules="ruleValidate" :label-width="100">
+          <FormItem label="单位" prop="dw">
+            <Select v-model="formItem1.dw" style="width: 195px;">
+              <Option value="公交一公司">公交一公司</Option>
+              <Option value="公交二公司">公交二公司</Option>
             </Select>
           </FormItem>
-          <FormItem  label="车辆类别">
-            <Select v-model="formItem.select" style="width: 195px;">
-              <Option value="beijing">中型</Option>
-              <Option value="shanghai">大型</Option>
+          <FormItem label="车辆类别" prop="lb">
+            <Select v-model="formItem1.lb" style="width: 195px;">
+              <Option value="中型">中型</Option>
+              <Option value="大型">大型</Option>
             </Select>
           </FormItem>
-          <FormItem  label="年度计划收入">
-            <Input v-model="formItem.input" placeholder="年度计划" style="width: 195px;"/>
+          <FormItem label="年份" prop="nf">
+            <DatePicker type="year" placeholder="请选择年份" :transfer="true" placement="bottom-end"
+                        v-model="formItem1.nf"></DatePicker>
           </FormItem>
-
+          <FormItem label="计划时间" prop="jhsj">
+            <DatePicker type="date" placeholder="计划时间" :transfer="true" placement="bottom-end"
+                        v-model="formItem1.jhsj"></DatePicker>
+          </FormItem>
+          <FormItem label="年度计划收入" prop="ndjh">
+            <Input v-model="formItem1.ndjh" placeholder="年度计划" style="width: 195px;"/>
+          </FormItem>
         </Form>
       </div>
     </Modal>
@@ -87,42 +99,58 @@
     data () {
       return {
         addProgram: false,
-        exports:false,
+        exports: false,
+        type:'',
         formItem: {
-          input: '',
-          date:''
+          nf: '',
+          current: 1,
+          size: 10
+        },
+        ruleValidate: {
+          dw: [
+            {required: true, message: '必填字段', trigger: 'change'}
+          ], lb: [
+            {required: true, message: '必填字段', trigger: 'change'}
+          ], jhsj: [
+            {required: true, message: '必填字段', trigger: 'blur',type:'date'}
+          ], ndjh: [
+            {required: true, message: '必填字段', trigger: 'blur'}
+          ], nf: [
+            {required: true, message: '必填字段', trigger: 'blur',type:'date'}
+          ],
+        },
+        formItem1: {
+          dw: '',
+          lb: '',
+          jhsj: '',
+          year: '',
+          ndjh: ''
         },
         columns1: [
           {
             title: '单位',
-            key: 'danwei'
+            key: 'dw'
           },
           {
             title: '年份',
-            key: 'year'
+            key: 'nf'
           },
           {
             title: '类别',
-            key: 'type'
+            key: 'lb'
           },
           {
             title: '年度计划（万元）',
             key: 'ndjh'
           },
-
           {
-            title: '编制单位',
-            key: 'bzdw'
-          },
-          {
-            title: '制定时间',
-            key: 'zdTime'
+            title: '编制时间',
+            key: 'bzsj'
           }
-
           ,
           {
             title: '计划时间',
-            key: 'jhTime'
+            key: 'jhsj'
           },
           {
             title: '操作',
@@ -137,31 +165,127 @@
                   style: {
                     marginRight: '5px'
                   },
+                  on: {
+                    click: () => {
+                      console.log(params.row.id)
+                      this.$fetch(this.$url.delFgssrjh, {id:params.row.id})
+                        .then(res => {
+                          console.log(res)
+                          if (res.success === true) {
+                              this.$Message.info('删除成功')
+                              this.list()
+                          }else {
+                            this.$Message.error('删除失败')
+                          }
+                        })
+                    }
+                  }
                 }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      console.log(params.row);
+                      this.type = 'edit';
+                      this.addProgram = true;
+                      this.formItem1 = params.row
+                    }
+                  }
+                }, '修改'),
               ]);
             }
           }
         ],
-        data1: [
-          {
-            danwei: '公交一公司',
-            year:'2018',
-            type: '--',
-            ndjh: '200',
-            zdTime: '2016-10-03',
-            bzdw: '公交总公司',
-            jhTime: '2017-10-03',
-          }
-        ]
+        data1: []
       }
     },
     methods: {
       ok () {
         this.$Message.info('Clicked ok');
       },
-      cancel () {
-        this.$Message.info('Clicked cancel');
+      quxiao () {
+        this.$Message.error('操作失败');
+        this.list();
+        this.type = '',
+        this.formItem1 = {}
+        this.addProgram = false
       },
+      list: function () {
+        this.$fetch(this.$url.fgssrjhList, this.formItem)
+          .then(res => {
+            console.log(res)
+            if (res.success === true) {
+              if (res.data.total === 0) {
+                this.$Message.info('暂无信息');
+                this.data1 = res.data.records;
+                this.totalPage = res.data.total
+              } else {
+                res.data.records.forEach(item => {
+                  item.bzsj = this.$formatDate(item.bzsj).substring(0, 10)
+                  item.jhsj = this.$formatDate(item.jhsj).substring(0, 10)
+                  item.nf = item.nf.toString()
+                });
+                this.data1 = res.data.records;
+                this.totalPage = res.data.total
+              }
+            }
+          })
+      },
+      save: function (name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.formItem1.nf = this.$formatDate(this.formItem1.nf).substring(0, 4)
+            this.formItem1.jhsj = this.$formatDate(this.formItem1.jhsj).substring(0, 10)
+            console.log(this.formItem1);
+            this.$post(this.$url.saveFgssrjh, this.formItem1)
+              .then(res => {
+                console.log(res)
+                if (res.success === true) {
+                    this.$Message.info('添加成功')
+                    this.list();
+                    this.formItem1 = {}
+                    this.addProgram = false
+                }
+              })
+          } else {
+            this.$Message.error('请填写完整字段!');
+          }
+        });
+      },
+      search: function () {
+        if (this.formItem.year == '') {
+          this.formItem.year = ''
+        } else {
+          this.formItem.year = this.$formatDate(this.formItem.year).substring(0, 4)
+        }
+        console.log(this.formItem)
+        this.list()
+      },
+      xiugai:function () {
+        console.log(this.formItem1)
+        this.formItem1.nf = this.$formatDate(this.formItem1.nf).substring(0, 4)
+        this.formItem1.jhsj = this.$formatDate(this.formItem1.jhsj).substring(0, 10)
+        this.$post(this.$url.updateFgssrjh,this.formItem1)
+          .then(res => {
+            console.log(res)
+            if (res.success === true) {
+              this.$Message.info('修改成功');
+              this.addProgram = false
+              this.list()
+            }else {
+              this.$Message.error('修改失败')
+            }
+          })
+      }
+    },
+    mounted () {
+      this.list()
     }
   }
 </script>

@@ -687,6 +687,7 @@
       daochu: function () {
           this.$getExcel(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj);
       },
+//      临时退出
       exit:function () {
         this.$fetch('http://10.50.0.144:8702/login/logout?access_token='+this.$VueCookie.get('access_token'))
           .then(res => {

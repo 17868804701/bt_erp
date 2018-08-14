@@ -289,7 +289,7 @@
         v-model="modalPdf"
         width="70%"
         title="查看pdf">
-        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':this.$route.query.row.ygfz" :type="0"></vuePdfjs>
+        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':'http://10.50.0.144:8088/'+this.$route.query.row.ygfz" :type="0"></vuePdfjs>
       </Modal>
       <!--填写变更原因-->
       <Modal
@@ -328,6 +328,7 @@
             {required: true, message: '必填项不能为空', trigger: 'blur'}
           ],
         },
+        url:'',
         formItem: {
           xm: "",
           cym: "",
@@ -382,7 +383,7 @@
           bz: "",
           xmszm: "",
           ygfz: "",
-          zpdz: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530166672360&di=0d3b017d5285bae86c811371eca9cd11&imgtype=0&src=http%3A%2F%2Fpic14.photophoto.cn%2F20100127%2F0036036848818577_b.jpg", // 照片地址
+          zpdz: "", // 照片地址
           bgyy: ''
         },
         modalPdf: false,
@@ -395,20 +396,16 @@
     },
     methods: {
       handleSuccess: function (res, file) {
-        console.log(res.path);
         if (res.success === true) {
-          console.log(process.env.upload_BASE_URL + '/' + res.path);
-          this.formItem.zpdz = process.env.upload_BASE_URL + '/' + res.path;
+          this.formItem.zpdz = res.path;
           this.update();
         } else {
           this.$Message.error('修改失败');
         }
       },
       handleSuccessPdf: function (res, file) {
-        console.log(res.path);
         if (res.success === true) {
-          console.log(process.env.upload_BASE_URL + '/' + res.path);
-          this.formItem.ygfz = process.env.upload_BASE_URL + '/' + res.path;
+          this.formItem.ygfz = res.path;
           this.update();
         } else {
           this.$Message.error('修改失败');
@@ -486,14 +483,14 @@
       vuePdfjs
     },
     mounted () {
-      console.log(this.$route.query.row,'穿的值');
       let tip = this.$route.query.tip;
       this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
-        this.isEdit_jbxx = false,
+          this.isEdit_jbxx = false,
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
+        this.formItem.zpdz = process.env.upload_BASE_URL+'/'+this.$route.query.row.zpdz
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));
@@ -504,6 +501,7 @@
         this.formItem.htkssj = this.formatDate(new Date(new Date(this.$route.query.row.htkssj).getTime()));
         this.formItem.htjssj = this.formatDate(new Date(new Date(this.$route.query.row.htjssj).getTime()));
         this.formItem.csny = this.formatDate(new Date(new Date(this.$route.query.row.csny).getTime()));
+        console.log(this.formItem,'修改后的')
       }
     }
   }

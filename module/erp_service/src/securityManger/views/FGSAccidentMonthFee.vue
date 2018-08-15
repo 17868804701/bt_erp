@@ -192,10 +192,6 @@
       },
       searchData() {
         if (this.formItem.date instanceof Date) {
-          let firstDay = DateTool.getFirstDay(this.formItem.date);
-          let lastDay = DateTool.getLastDay(this.formItem.date);
-          this.formItem.lasjStart = firstDay;
-          this.formItem.lasjEnd = lastDay;
           this.requestListData();
         }else{
           this.$Message.error('请选择月份后搜索!');
@@ -205,12 +201,12 @@
         // 按当前月份查询下载
         let url = this.$url.security_GFGSJTSG_exportExcel;
         if (this.formItem.date instanceof Date) {
-          let date = this.formatDate(this.formItem.date);
-          let firstDay = DateTool.getFirstDay(this.formItem.date);
-          let lastDay = DateTool.getLastDay(this.formItem.date);
-          url = url + '?startTime=' + firstDay + '&&endTime=' + lastDay;
+          let time = DateTool.yyyyddFormatDate(this.formItem.date);
+          url = url + '?time=' + time;
+          this.$getExcel(url);
+        }else{
+          this.$Message.error('请先选择月份!');
         }
-        this.$getExcel(url);
       },
     },
     mounted () {

@@ -28,38 +28,24 @@
       <AddLossDiv ref="AddLossDiv" :lossForm="lossForm"/>
     </Modal>
     <Card style="width:100%; margin-top: 20px;">
-      <Form v-model="searchOptions">
-        <Row type="flex" align="middle" >
-          <Col span="6">
-            <FormItem label="搜索查询" style="margin: 0px;" v-model="searchOptions.xmorcarNo">
-              <Input placeholder="请输入牌照或姓名查询..." clearable style="width: 180px"></Input>
-            </FormItem>
-          </Col>
-          <Col span="6">
-            <FormItem label="立案时间" style="margin: 0px;"  v-model="searchOptions.lasj">
-              <DatePicker style="width: 180px;" type="date"
-                          placeholder="请选择立案时间"></DatePicker>
-            </FormItem>
-          </Col>
-          <Col span="6">
-            <Button type="primary" @click="search">
-              <Icon type="search"></Icon>
-              搜索
-            </Button>
-          </Col>
-          <Col span="6">
-            <FormItem style="margin: 0px;display: flex;justify-content: flex-end">
-              <Button  type="primary" @click="accidentModal = true">
-                <Icon type="plus-round"></Icon>
-                新增
-              </Button>
-              <Button  type="primary" @click="this.exportExcel">
-                <Icon type="android-download"></Icon>
-                导出Excel
-              </Button>
-            </FormItem>
-          </Col>
-        </Row>
+      <Form :model="searchOptions" :label-width="80">
+        <div style="display: flex;flex-wrap: wrap; align-items: center">
+          <FormItem label="车牌号" style="margin: 0px;">
+            <Input v-model="searchOptions.pz" placeholder="请输入牌照查询..." clearable style="width: 180px"></Input>
+          </FormItem>
+          <FormItem label="驾驶员姓名" style="margin: 0px;">
+            <Input v-model="searchOptions.jsyxm" placeholder="请输入驾驶员姓名查询..." clearable style="width: 180px"></Input>
+          </FormItem>
+          <FormItem label="立案时间" style="margin: 0px;" >
+            <DatePicker v-model="searchOptions.date" style="width: 180px;" type="date"
+                        placeholder="请选择立案时间"></DatePicker>
+          </FormItem>
+          <Button style="margin-left: 20px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
+          <div style="position: absolute;right: 20px;">
+            <Button type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>
+            <Button type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
+          </div>
+        </div>
       </Form>
     </Card>
     <!--表格-->
@@ -89,6 +75,8 @@
           size: 10,
           pz: '',
           dw: '',
+          jsyxm: '',
+          date: '',
           lasjStart: '',
           lasjEnd: '',
         },
@@ -238,7 +226,7 @@
     methods: {
       search() {
         console.log('搜索查询');
-
+        this.requestListData();
       },
       confirmAddLoss() {
         let addLossDiv = this.$refs.AddLossDiv;
@@ -285,7 +273,15 @@
 
       // ***********  network ********** //
       requestListData() {
-        this.$fetch(this.$url.security_LASG_list, this.searchOptions)
+        let params = {};
+        console.log(this.searchOptions);
+        for (let attr in this.searchOptions) {
+          params[attr] = this.searchOptions[attr];
+        }
+        params.lasjStart = DateTool.yyyymmddFormatDate(this.searchOptions.date);
+        params.lasjEnd = params.lasjStart;
+        console.log(params);
+        this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
           console.log(res);
           res.data.records.forEach(item=>{
@@ -366,10 +362,10 @@
       },
       exportExcel() {
         let url = this.$url.security_LASG_exportExcel;
-        url = url + '?current='+this.formItem.current+'&&size='+this.formItem.size;
-        if (this.formItem.date instanceof Date) {
-          let firstDay = DateTool.getFirstDay(this.formItem.date);
-          let lastDay = DateTool.getLastDay(this.formItem.date);
+        url = url + '?current='+this.searchOptions.current+'&&size='+this.searchOptions.size;
+        if (this.searchOptions.date instanceof Date) {
+          let firstDay = DateTool.getFirstDay(this.searchOptions.date);
+          let lastDay = DateTool.getLastDay(this.searchOptions.date);
           url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
         }
         this.$getExcel(url);

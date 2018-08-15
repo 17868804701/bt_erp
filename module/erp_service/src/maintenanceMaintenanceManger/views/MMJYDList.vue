@@ -121,11 +121,11 @@
       showDetail(row) {
         // 需要修改接口
         console.log(row);
-        let params = {id : row.byid};
-        this.$fetch(this.$url.maintain_BYGL_JYDGL_listDetail, params)
-        .then(res => {
-          console.log(res);
-        })
+//        let params = {id : row.byid};
+//        this.$fetch(this.$url.maintain_BYGL_JYDGL_listDetail, params)
+//        .then(res => {
+//          console.log(res);
+//        })
       },
       setPage(page) {
         this.formItem.currPage = page;

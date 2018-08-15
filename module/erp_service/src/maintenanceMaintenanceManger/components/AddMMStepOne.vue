@@ -837,7 +837,7 @@
         return stringArray;
       },
       // *************** 发动机中list数据配置方法 ***************** //
-      
+
       // *************** 气缸 - 活塞 - 凸轮轴 ***************** //
       addFDJ_QG_NewData() {
         // 深拷贝数组
@@ -930,7 +930,7 @@
         };
       },
       // *************** 曲轴 ***************** //
-      
+
 
       getListData(item) {
         let dataArray = [];
@@ -972,7 +972,7 @@
         this.basicData.fdjSwitchValue = isHaveFDJData;
         console.log(this.fdjData);
         // 处理成json
-        console.log('======== 气缸数据 - 活塞数 - 凸轮轴数据 ==========');
+//        console.log('======== 气缸数据 - 活塞数 - 凸轮轴数据 ==========');
         if (this.fdjData.qg !== null && this.fdjData.qg.length > 0) { // 气缸数据 - 活塞数 - 凸轮轴数据   注意: 由于页面问题,为了方便解析,前面三个数据均在qg字段中存储,格式为json字符串, 用&分割
           let qgStringArray = this.fdjData.qg.split('&');
           let qgArray = [];
@@ -981,11 +981,11 @@
             qgArray.push(obj);
           })
           this.FDJ_QG_DATA = qgArray;
-          console.log('========= 气缸数据 - 活塞数 - 凸轮轴数据 =========');
+//          console.log('========= 气缸数据 - 活塞数 - 凸轮轴数据 =========');
         }
 
         if (this.fdjData.qz !== null && this.fdjData.qz.length > 0) { // 曲轴
-          console.log('========= 曲轴 =========');
+//          console.log('========= 曲轴 =========');
           let qzStringArray = this.fdjData.qz.split('&');
           let qzArray = [];
           qzStringArray.forEach(item => {
@@ -993,7 +993,7 @@
             qzArray.push(obj);
           })
           this.FDJ_QZ_DATA = qzArray;
-          console.log('========= 曲轴 =========');
+//          console.log('========= 曲轴 =========');
         }
 
         // 处理丢失件列表
@@ -1015,7 +1015,7 @@
     watch: {
       sourceData(newData) {
         if (typeof newData.code !== undefined) {
-          console.log('监听到数据发生改变并且有值, 处理数据!');
+//          console.log('监听到数据发生改变并且有值, 处理数据!');
           this.configureData();
         }
       }

@@ -14,7 +14,7 @@
         </Row>
       </Form>
     </Card>
-    <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="initTableColumns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
+    <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="initTableColumns" :editIncell="true" :hoverShow="true">
     </can-edit-table>
     <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
   </div>

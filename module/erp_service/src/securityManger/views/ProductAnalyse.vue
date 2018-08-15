@@ -261,12 +261,6 @@
           //对外投保交强险及赔付情况
           this.PA_Insure_Paid = PATableData.PA_Insure_Paid;
       },
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-      },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
-      },
       clickTab(name) {
         console.log(this.currentTab);
         this.requestListData();
@@ -289,6 +283,7 @@
           .then(res => {
             console.log(res);
             if (res.data != null && res.data.length > 0) {
+              // 这个页面里面的错误是因为解析出错, 后台返回了一个   第一个元素为null 的数组
               that.configureHZData(res);
             }
           });

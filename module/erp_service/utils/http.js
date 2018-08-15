@@ -11,6 +11,7 @@ axios.defaults.baseURL ='http://10.50.0.144:8702';//服务器
 axios.interceptors.request.use(
   config => {
     iView.LoadingBar.start();
+    iView.Spin.show();
     config.data = JSON.stringify(config.data);
     config.headers = {
       'Content-Type': 'application/json',
@@ -22,6 +23,7 @@ axios.interceptors.request.use(
   },
   error => {
     iView.LoadingBar.error();
+    iView.Spin.hide();
     return Promise.reject(err);
   }
 );
@@ -30,12 +32,14 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     iView.LoadingBar.finish();
+    iView.Spin.hide();
     if(response.data.errCode === 2){
     }
     return response;
   },
   error => {
     iView.LoadingBar.error();
+    iView.Spin.hide();
     if (error.response) {
       switch (error.response.status) {
         case 400:

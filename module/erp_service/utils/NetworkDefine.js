@@ -8,7 +8,7 @@ const NetworkInterface = {
 
   // **********        数据字典            *********** //
   common_getDictListDataWithCode: 'auth/dic/getByCode',  // 根据code字典数据
-
+  common_getAllDictListDataWithCode: 'auth/dic/getAllByCode', //  获取code节点下所有数据
 
   // **********        人力资源            *********** //
   userManager_userList: '/person/userInfo/list', // 人力资源管理列表
@@ -83,6 +83,8 @@ const NetworkInterface = {
   maintain_BYGL_CLBY_CL_save: '/weix/maintenanceManagement/llmx/save',                          // 车辆保养详情 - 添加一条领料记录
   maintain_BYGL_CLBY_CL_update: '/weix/maintenanceManagement/llmx/update',                      // 车辆保养详情 - 更新修改一条领料记录
   maintain_BYGL_CLBY_CL_delete: '/weix/maintenanceManagement/llmx/delete',                      // 车辆保养详情 - 删除一条领料记录
+  
+  maintain_BYGL_CLBY_JYD_saveOrUpdate: '/weix/maintenanceManagement/jyd/save',                  // 车辆保养详情 - 新增或更新 - 检验单明细
 
   maintain_BYGL_JYDGL_recordList: '/weix/maintenanceManagement/jyd/list',                            // 检验单管理 - 列表
   maintain_BYGL_JYDGL_exportExcel: baseURL+'/weix/maintenanceManagement/jyd/listExport',             // 检验单管理 - 列表导出excel

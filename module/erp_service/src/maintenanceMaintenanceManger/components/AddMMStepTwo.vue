@@ -105,7 +105,7 @@
         <Form :label-width="50">
           <Tabs style="margin-top: 5px;" type="card">
             <TabPane v-for="(item, index) in jydList" :label="item.title" :key="item.title+index">
-              <CheckboxGroup v-model="jydData[index]">
+              <CheckboxGroup v-model="jydBindData[index]">
                 <Checkbox v-for="(subItem, index) in item.children" :key="subItem.title+index" :label="subItem.code">{{subItem.title}}</Checkbox>
               </CheckboxGroup>
             </TabPane>
@@ -120,11 +120,11 @@
         车辆三级维护项目验收
       </p>
       <Collapse>
-        <Panel v-for="(item, index) in YSXMOptions" :name="item+index" :key="item+index">
+        <Panel v-for="(item, index) in ysdList" :name="item+index" :key="item+index">
           {{item.title}}
-          <Tag style="margin-left: 10px;" type="dot" color="green">已完成验收 ({{ysxmData[index].length}}/{{item.items.length}})</Tag>
-          <CheckboxGroup slot="content" v-model="ysxmData[index]" @on-change="checkYSXM">
-            <Checkbox v-for="(subItem, subIndex) in item.items" :key="subItem+subIndex" :label="subItem"></Checkbox>
+          <Tag style="margin-left: 10px;" type="dot" color="green">已完成验收 ({{ysdBindData[index].length}}/{{item.children.length}})</Tag>
+          <CheckboxGroup slot="content" v-model="ysdBindData[index]" @on-change="checkYSXM">
+            <Checkbox v-for="(subItem, subIndex) in item.children" :key="subItem+subIndex" :label="subItem.code">{{subItem.title}}</Checkbox>
           </CheckboxGroup>
         </Panel>
       </Collapse>
@@ -134,8 +134,8 @@
 </template>
 <script>
   import canEditTable from '../../components/common/canEditTable.vue'
-  import StepTwoTableData from './StepTwoTableData'
   import * as DateTool from '../../../utils/DateTool'
+  import axios from 'axios';
   export default {
     name: 'AddMMStepTwo',
     components: {
@@ -289,27 +289,25 @@
             }
           }
         ],
-
-
+        
         jysmModal: false,
-        jydData: [],  // 存放选中的数据
-        jydList: [],  // 存放检验单原始数据
-        jydTmpData: {},
+        jydBindData: [], // 检验单双向绑定的数据
+        jydData: [],     // 检验单用于显示已选中项的数据
+        jydList: [],     // 存放检验单所有项目的数据
+        jydTmpData: {},  // 用于匹配code与title的数据
 
         ysdData: '',
-        ysdList: '',
-        ysxmData: [],
+        
+        ysdBindData: [], // 验收单和checkBox绑定的data
+        ysdList: [],     // 存放验收单所有项目的数据
+        ysdTmpData: {},  // 用于匹配code与title的数据
       }
     },
     computed: {
-      JYSMOptions() {
-        return StepTwoTableData.WXYH_JYXM;
-      },
-      YSXMOptions() {
-        return StepTwoTableData.WXYH_YSD;
-      },
     },
     methods: {
+
+      
       // *********  领料备料   ********** //
       addLLBL(name) {
         this.$refs[name].validate((valid) => {
@@ -414,17 +412,13 @@
       },
       // *********  领料备料   ********** //
 
+
       // *********  检验单   ********** //
-      checkJYD(e) {
-        console.log(this.jyd);
-      },
-      addJYSM() {
-        console.log(this.jydData);
-        console.log(this.jydList);
+      addJYSM() {  // 当用户交互checkbox, 双向绑定的数据发生改变, 点击确定保存成功后, ui展示的数据this.jydData应该和绑定的数据相同
         console.log('确认添加维修养护过程检验项目记录');
         let itemStringArr = [];
         // 深拷贝数组
-        let deepCopyArray = JSON.parse(JSON.stringify(this.jydData));
+        let deepCopyArray = JSON.parse(JSON.stringify(this.jydBindData));
         // 根据页面匹配的源数据进行包装后台存储json字符串
         for (let i = 0; i < deepCopyArray.length; i++) {
           // 对应的源数据
@@ -441,80 +435,94 @@
 
         let result = JSON.stringify(itemStringArr);
         console.log(result);
-        
+
         let params = {
-          id: '',
           ysxmmc: result,
           byid: this.sourceData.clby.id,
         };
-        if (this.sourceData.pageJyd !== null && typeof this.sourceData.pageJyd.id !== undefined) {
-          params.id = this.sourceData.pageJyd.id;
-        }
-        
-        debugger;
         this.$post(this.$url.maintain_BYGL_CLBY_JYD_saveOrUpdate, params)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
             this.jysmModal = false;
+            this.jydData = JSON.parse(JSON.stringify(this.jydBindData));
           }else{
             this.$Message.error('保存失败!');
           }
         })
       },
-      cancleAddJYSM() {
+      cancleAddJYSM() { // 当用户交互checkbox, 双向绑定的数据发生改变, 点击确定后, ui展示的数据this.jydData应该保持不变, 并修改双向绑定的数据为原来的数据
+        this.jydBindData = JSON.parse(JSON.stringify(this.jydData));
         console.log('取消添加维修养护过程检验项目记录');
         this.jysmModal = false;
       },
       // *********  检验单   ********** //
 
+      
+      // *********  验收单   ********** //
+      checkYSXM() {
+//        console.log('选择了验收项目');
+//        console.log(this.ysdBindData);
+        let ysdSelectValues = JSON.stringify(this.ysdBindData);
+        let params = {
+          ysxmmc: ysdSelectValues,
+          byid: this.sourceData.clby.id,  
+        };
+        this.$post(this.$url.maintain_BYGL_CLBY_YSD_saveOrUpdate, params)
+        .then(res => {
+          if (res.code === 0) {
+            // 更新成功, 数据双向绑定, 已经是最新数据, 不用刷新
+          }else{
+            this.$Message.error('更新失败!');
+            this.$emit('updateInfo');
+          }
+        })
+      },
       // *********  验收单   ********** //
 
-      // *********  验收单   ********** //
-      checkJYXMChange(e) {
-        console.log(e);
-      },
-      getJYSMData() {
-        let itemResults = [];
-        for (let i = 0; i < StepTwoTableData.WXYH_JYXM.length; i++){
-          itemResults.push([]);
-        }
-        return itemResults;
-      },
-      getYSXMData() {
-        let itemResults = [];
-        for (let i = 0; i < StepTwoTableData.WXYH_YSD.length; i++){
-          let tmpArray = [];
-          itemResults.push([]);
-        }
-        return itemResults;
-      },
-      checkYSXM() {
-        console.log('选择了验收项目');
-        console.log(this.ysxmData);
-      },
+
+      // *********  初始化数据   ********** //
       configureData() {
+
+        // 检验单数据
+        let jydData = this.sourceData.pageJyd.ysxmmc;
+        let jydArray = JSON.parse(jydData);
+        let tmpBindData = [];
+        for (let i = 0; i < jydArray.length; i++) {
+          let selectValues = jydArray[i].selectValues;
+          tmpBindData.push(selectValues);
+        }
+        if (typeof tmpBindData === 'object' && tmpBindData !== null && tmpBindData.length > 0) {
+          this.jydBindData = JSON.parse(JSON.stringify(tmpBindData));
+          this.jydData = JSON.parse(JSON.stringify(tmpBindData));
+        }
+
+        // 验收单数据
+        let ysdData = this.sourceData.pageYsd.ysxmmc;
+        let ysdArray = JSON.parse(ysdData);
+        if (typeof ysdArray === 'object' && ysdArray != null && ysdArray.length > 0)  {
+          this.ysdBindData = JSON.parse(JSON.stringify(ysdArray));
+        }
+
+        // 领料明细数据
         this.clItem.cph = this.sourceData.clby.cph;
         this.clItem.rq = new Date();
-
-
-        let ysdData = this.sourceData.pageYsd; // 验收单数据
-        let jydData = this.sourceData.pageJyd; // 检验单数据
-
-        let llmxListData = this.sourceData.pageLlmx; // 领料明细数据
+        let llmxListData = this.sourceData.pageLlmx;
         this.clList = llmxListData;
         this.clList.forEach(item=>{
           item.rq = DateTool.timesToDate(item.rq);
         })
       },
       initData() { // 初始化验收单和检验单项目明细
-        let jydSourceData = [];
-        let params = {code : 'JYXM'};
         var that = this;
-        this.$fetch(this.$url.common_getAllDictListDataWithCode, params)
-        .then(res => {
-          if (res.success === true) {
-            let data = res.data[0].children;
+        let jydSourceData = [];
+        let ysdSourceData = [];
+        let request1 = this.$fetch(this.$url.common_getAllDictListDataWithCode, {code : 'JYXM'});
+        let request2 = this.$fetch(this.$url.common_getAllDictListDataWithCode, {code : 'YSXM'});
+        axios.all([request1, request2])
+        .then(axios.spread(function(res1, res2){
+          if (res1.success === true) {
+            let data = res1.data[0].children;
             console.log(data);
             // 简化数据
             data.forEach(item => {
@@ -533,24 +541,46 @@
               })
               jydSourceData.push(obj);
             })
-            
-            debugger;
-            
             // 初始化绑定的数据, 默认为空
             that.jydList = jydSourceData;
             for (let i = 0; i < that.jydList.length; i++){
-              that.jydData.push([]);
+              that.jydBindData.push([]);
             }
           }
-        })
-      }
+
+          if (res2.success === true) {
+            let data = res2.data[0].children;
+            console.log(data);
+            data.forEach(item => {
+              let obj = {
+                title: item.title,
+                code: item.code,
+                children: [],
+              }
+              item.children.forEach(subItem => {
+                that.ysdTmpData[subItem.code] = subItem.title;
+                let subObj = {
+                  title: subItem.title,
+                  code: subItem.code,
+                }
+                obj.children.push(subObj);
+              })
+              ysdSourceData.push(obj);
+            })
+            
+            that.ysdList = ysdSourceData;
+            for (let i = 0; i < that.ysdList.length; i++){
+              that.ysdBindData.push([]);
+            }
+          }
+        }))
+      },
+      // *********  初始化数据   ********** //
     },
     mounted () {
       this.initData();
     },
     created () {
-      this.jysmData = this.getJYSMData();
-      this.ysxmData = this.getYSXMData();
     },
     watch: {
       sourceData(newData) {
@@ -563,63 +593,3 @@
   }
 </script>
 
-<!--商品编码、物品名称、物品分类名称、单位、计划价、供应商-->
-<!--spbm、wpmc、wpflmc、dw、jhj、gys-->
-
-<!--
-{
-	"gg": "规格1",             规格，	  手动输入
-	"ghdw": "供货单位1",        供货单位， 默认是 掌握 公司；
-	"ppxh": "品牌型号1",        品牌型号， 手动输入
-	"jldw": "计量单位1",        计量单位， 手动输入
-	"fj": "附记1",              附记，	  手动输入，
-	"dj": 100.0,               单价，       手动输入
-	"wpmc": "物品名称",         物品名称,   从配件信息列表中选取;
-	"sl": 100,                 数量，	  手动输入
-	"cph": "陕A1111",          车号，
-	"id": "15dac5464f7e4c909d5baf7fbc6c6277",
-	"je": 500.0,              金额，        数量*单价
-	"yt": "用途1",             用途，        (发动机大修、底盘维修、其他）选择
-	"byid": "d0de126b196649bcbffc0f48828e7136",
-	"rq": 1533021291000       领料日期，
-}
--->
-
-<!--
-车号、车型、物品名称、领料数量、领料规格、供货单位、品牌型号、规格、计量单位、单价、金额、附记
--->
-
-<!--
-
-
-
-
-
-
-
-
-
-
-
-
--->
-
-<!--
-{
-  "bz": "string",
-  "clmc": "string",
-  "dj": 0,
-  "fj": "string",
-  "gg": "string",
-  "ghdw": "string",
-  "je": 0,
-  "jldw": "string",
-  "jyyxm": "string",
-  "ppxh": "string",
-  "rq": "2018-08-10T08:33:35.729Z",
-  "sl": 0,
-  "sm": "string",
-  "wpmc": "string",
-  "yt": "string"
-}
--->

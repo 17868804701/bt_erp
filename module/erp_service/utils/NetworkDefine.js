@@ -85,6 +85,7 @@ const NetworkInterface = {
   maintain_BYGL_CLBY_CL_delete: '/weix/maintenanceManagement/llmx/delete',                      // 车辆保养详情 - 删除一条领料记录
   
   maintain_BYGL_CLBY_JYD_saveOrUpdate: '/weix/maintenanceManagement/jyd/save',                  // 车辆保养详情 - 新增或更新 - 检验单明细
+  maintain_BYGL_CLBY_YSD_saveOrUpdate: '/weix/maintenanceManagement/ysd/save',                  // 车辆保养详情 - 新增或更新 - 检验单明细
 
   maintain_BYGL_JYDGL_recordList: '/weix/maintenanceManagement/jyd/list',                            // 检验单管理 - 列表
   maintain_BYGL_JYDGL_exportExcel: baseURL+'/weix/maintenanceManagement/jyd/listExport',             // 检验单管理 - 列表导出excel

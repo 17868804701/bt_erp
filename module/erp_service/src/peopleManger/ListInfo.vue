@@ -96,7 +96,7 @@
             </div>
             <div class="head jbxx_right">
               <img class="head_img"
-                   :src="formItem.zpdz"
+                   :src="zpdz"
                    alt="">
               <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess">
                 <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
@@ -289,7 +289,7 @@
         v-model="modalPdf"
         width="70%"
         title="查看pdf">
-        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':'http://10.50.0.144:8088/'+this.$route.query.row.ygfz" :type="0"></vuePdfjs>
+        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':'http://106.12.19.134:8080/static/'+this.$route.query.row.ygfz" :type="0"></vuePdfjs>
       </Modal>
       <!--填写变更原因-->
       <Modal
@@ -321,7 +321,7 @@
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
-        uploadFile: process.env.upload_BASE_URL + "/file/upload",
+        uploadFile: process.env.upload_BASE_URL + "/static/file/upload",  //文件上传的接口地址
         bgyy: false,
         ruleValidate: {
           xm: [
@@ -329,6 +329,7 @@
           ],
         },
         url:'',
+        zpdz:'',
         formItem: {
           xm: "",
           cym: "",
@@ -396,6 +397,7 @@
     },
     methods: {
       handleSuccess: function (res, file) {
+          console.log(res)
         if (res.success === true) {
           this.formItem.zpdz = res.path;
           this.update();
@@ -404,6 +406,8 @@
         }
       },
       handleSuccessPdf: function (res, file) {
+        console.log(this.formItem.zpdz,'上传pdf时候打印')
+        console.log(res)
         if (res.success === true) {
           this.formItem.ygfz = res.path;
           this.update();
@@ -490,7 +494,7 @@
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
-        this.formItem.zpdz = process.env.upload_BASE_URL+'/'+this.$route.query.row.zpdz
+        this.zpdz = process.env.upload_BASE_URL+'/static/'+this.$route.query.row.zpdz
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));
@@ -501,6 +505,7 @@
         this.formItem.htkssj = this.formatDate(new Date(new Date(this.$route.query.row.htkssj).getTime()));
         this.formItem.htjssj = this.formatDate(new Date(new Date(this.$route.query.row.htjssj).getTime()));
         this.formItem.csny = this.formatDate(new Date(new Date(this.$route.query.row.csny).getTime()));
+        console.log(this.formItem.zpdz)
         console.log(this.formItem,'修改后的')
       }
     }

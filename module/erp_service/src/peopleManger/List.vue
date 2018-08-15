@@ -689,7 +689,7 @@
       },
 //      临时退出
       exit:function () {
-        this.$fetch('http://10.50.0.144:8702/login/logout?access_token='+this.$VueCookie.get('access_token'))
+        this.$fetch('http://106.12.19.134:8702/login/logout?access_token='+this.$VueCookie.get('access_token'))
           .then(res => {
            console.log(res);
             if(res.success===true){

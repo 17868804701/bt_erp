@@ -62,7 +62,11 @@
             </div>
           </Form>
         </Card>
-        <h4 style="margin-top: 10px;">指标名称：线路收入、收入（XX公司）</h4>
+        <div style="display: flex;justify-content: space-between">
+          <span style="margin-top: 10px;">指标名称：线路收入、车次（集团公司）</span>
+          <span style="margin-top: 10px;">2018年</span>
+          <span style="margin-top: 10px;margin-right: 30px;">计算单位：立方米</span>
+        </div>
         <Table :columns="columns11" :data="data10" border height="560" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
       <TabPane label="分公司车次线路收入台账" name="name2">
@@ -96,7 +100,11 @@
             </div>
           </Form>
         </Card>
-        <h4 style="margin-top: 10px;">指标名称：线路收入、收入（XX公司）</h4>
+        <div style="display: flex;justify-content: space-between">
+          <span style="margin-top: 10px;">指标名称：线路收入、车次（公交一公司）</span>
+          <span style="margin-top: 10px;">2018年</span>
+          <span style="margin-top: 10px;margin-right: 30px;">计算单位：立方米</span>
+        </div>
         <Table :columns="columns12" :data="data12" border height="560" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
     </Tabs>
@@ -113,527 +121,266 @@
         },
         columns11: [
           {
-            title: '年份',
-            key: 'nf',
+            title: '项目/月别',
+            key: 'xmlb',
             width:150,
             align: 'center',
             fixed: 'left',
           },
           {
-            title: '计量单位',
+            title: '客运量（人次）',
             key: 'jldw',
             width:150,
             align: 'center',
-          },
-          {
-            title: '客运量',
-            align: 'center',
-            children: [
+            children:[
               {
                 title: '本年普票',
-                key: 'bnpp',
+                key: 'nf',
                 width:150,
                 align: 'center',
               },
               {
                 title: '本年IC卡',
-                key: 'bnick',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '本年小计',
-                key: 'bnxj',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '去年',
-                key: 'qn',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }, {
-                title: '较去年节超',
-                key: 'jqnjc',
+              },
+              {
+                title: '±%',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }
+              },
             ]
           },
           {
-            title: '普票收入',
+            title: '普票收入（元）',
             align: 'center',
             children: [
               {
                 title: '本年普票',
-                key: 'bnpp1',
+                key: 'bnxslc',
                 width:150,
                 align: 'center',
               },
               {
-                title: '本年IC卡收入优惠后金额',
-                key: 'bnick1',
+                title: '本年IC卡优惠后金额',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '本年IC卡补贴',
-                key: 'bnickbt',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '本年小计',
-                key: 'bnxj',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '去年',
-                key: 'qn',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
-                title: '较去年节超',
-                key: 'jqnjc',
+              },{
+                title: '±%',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }
+              },
             ]
           },
-
-
           {
-            title: '行驶车次',
+            title: '行驶车次（次）',
             align: 'center',
             children: [
               {
                 title: '本年',
-                key: 'bn',
+                key: 'bnxslc',
                 width:150,
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'qn',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
-                title: '节超',
-                key: 'jc',
+              },
+              {
+                title: '±%',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
               }
             ]
           },
-
-
-          {
-            title: '月别',
-            align: 'center',
-            children: [
-              {
-                title: '全年合计',
-                key: 'qnhj',
-                width:150,
-                align: 'center',
-              }, {
-                title: '上半年小计',
-                key: 'sbnxj',
-                width:150,
-                align: 'center',
-              },
-              {
-                title: '第一季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '一月',
-                    key: 'yiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '二月',
-                    key: 'eryue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '三月',
-                    key: 'sanyue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              },
-              {
-                title: '第二季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '四月',
-                    key: 'siyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '五月',
-                    key: 'wuyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '六月',
-                    key: 'liuyue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              },
-              {
-                title: '第三季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '七月',
-                    key: 'qiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '八月',
-                    key: 'bayue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '九月',
-                    key: 'jiuyue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              },
-              {
-                title: '第四季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '十月',
-                    key: 'shiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '十一月',
-                    key: 'shiyiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '十二月',
-                    key: 'shieryue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              }
-            ]
-          }
         ],
-        data10: [],
+        data10: [
+          {xmlb:'全年合计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'上半年小计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'三月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'四月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'五月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'六月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'七月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'八月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'九月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'十月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'十一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'十二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+        ],
 
 
         columns12: [
           {
-            title: '年份',
-            key: 'nf',
+            title: '项目/月别',
+            key: 'xmlb',
             width:150,
             align: 'center',
             fixed: 'left',
           },
           {
-            title: '计量单位',
+            title: '客运量（人次）',
             key: 'jldw',
             width:150,
             align: 'center',
-          },
-          {
-            title: '客运量',
-            align: 'center',
-            children: [
+            children:[
               {
                 title: '本年普票',
-                key: 'bnpp',
+                key: 'nf',
                 width:150,
                 align: 'center',
               },
               {
                 title: '本年IC卡',
-                key: 'bnick',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '本年小计',
-                key: 'bnxj',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '去年',
-                key: 'qn',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }, {
-                title: '较去年节超',
-                key: 'jqnjc',
+              },
+              {
+                title: '±%',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }
+              },
             ]
           },
           {
-            title: '普票收入',
+            title: '普票收入（元）',
             align: 'center',
             children: [
               {
                 title: '本年普票',
-                key: 'bnpp1',
+                key: 'bnxslc',
                 width:150,
                 align: 'center',
               },
               {
-                title: '本年IC卡收入优惠后金额',
-                key: 'bnick1',
+                title: '本年IC卡优惠后金额',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '本年IC卡补贴',
-                key: 'bnickbt',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '本年小计',
-                key: 'bnxj',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
+              },
+              {
                 title: '去年',
-                key: 'qn',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
-                title: '较去年节超',
-                key: 'jqnjc',
+              },{
+                title: '±%',
+                key: 'nf',
                 width:150,
                 align: 'center',
-              }
+              },
             ]
           },
-
-
           {
-            title: '行驶车次',
+            title: '行驶车次（次）',
             align: 'center',
             children: [
               {
                 title: '本年',
-                key: 'bn',
+                key: 'bnxslc',
                 width:150,
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'qn',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
-              }, {
-                title: '节超',
-                key: 'jc',
+              },
+              {
+                title: '±%',
+                key: 'qnxslc',
                 width:150,
                 align: 'center',
               }
             ]
           },
-
-
-          {
-            title: '月别',
-            align: 'center',
-            children: [
-              {
-                title: '全年合计',
-                key: 'qnhj',
-                width:150,
-                align: 'center',
-              }, {
-                title: '上半年小计',
-                key: 'sbnxj',
-                width:150,
-                align: 'center',
-              },
-              {
-                title: '第一季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '一月',
-                    key: 'yiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '二月',
-                    key: 'eryue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '三月',
-                    key: 'sanyue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              },
-              {
-                title: '第二季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '四月',
-                    key: 'siyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '五月',
-                    key: 'wuyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '六月',
-                    key: 'liuyue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              },
-              {
-                title: '第三季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '七月',
-                    key: 'qiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '八月',
-                    key: 'bayue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '九月',
-                    key: 'jiuyue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              },
-              {
-                title: '第四季度',
-                key: 'cname',
-                width:150,
-                align: 'center',
-                children: [
-                  {
-                    title: '十月',
-                    key: 'shiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '十一月',
-                    key: 'shiyiyue',
-                    width:150,
-                    align: 'center',
-                  },
-                  {
-                    title: '十二月',
-                    key: 'shieryue',
-                    width:150,
-                    align: 'center',
-                  },
-                ]
-              }
-            ]
-          }
         ],
-        data12: []
+        data12: [
+          {xmlb:'全年合计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'上半年小计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'三月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'四月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'五月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'六月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'七月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'八月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'九月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'十月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'十一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+          {xmlb:'十二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
+        ]
       }
     },
     methods: {},
     mounted () {
-      const data = [];
-      for (let i = 0; i < 10; i++) {
-        data.push({
-          key: i,
-          nf:'201'+i,
-          jldw:'立方米',
-          bnpp:'1451',
-          bnick:'15645',
-          bnxj:'115645',
-          qn:'315645',
-          jqnjc:'5645',
-          bnpp1:'645',
-          bnick1:'7784',
-          bnickbt:'55564',
-          name: 'John Brown',
-          age: i + 1,
-          street: 'Lake Park',
-          building: 'C',
-          door: 2035,
-          caddress: 'Lake Street 42',
-          cname: 'SoftLake Co',
-          gender: 'M',
-        });
-      }
-      this.data10 = data;
-
-
-      const data2 = [];
-      for (let i = 0; i < 10; i++) {
-        data2.push({
-          key: i,
-          nf:'201'+i,
-          jldw:'立方米',
-          bnpp:'1451',
-          bnick:'15645',
-          bnxj:'115645',
-          qn:'315645',
-          jqnjc:'5645',
-          bnpp1:'645',
-          bnick1:'7784',
-          bnickbt:'55564',
-          name: 'John Brown',
-          cname: 'SoftLake Co',
-          gender: 'M',
-        });
-      }
-      this.data12 = data2;
     }
   }
 </script>

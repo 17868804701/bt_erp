@@ -385,17 +385,18 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.add.llsj = this.$formatDate(this.add.llsj).substring(0,10)
-            this.$post(this.$url.savell, this.add)
-              .then(res => {
-                console.log(res);
-                if(res.success===true){
-                  this.addPicking = false;
-                  this.list();
-                  this.$Message.info('添加成功');
-                  this.add = {}
-                }
-
-              })
+            console.log(this.add)
+//            this.$post(this.$url.savell, this.add)
+//              .then(res => {
+//                console.log(res);
+//                if(res.success===true){
+//                  this.addPicking = false;
+//                  this.list();
+//                  this.$Message.info('添加成功');
+//                  this.add = {}
+//                }
+//
+//              })
           } else {
             this.$Message.error('请填写完整表单!');
           }

@@ -71,7 +71,7 @@
           </Form>
         </Card>
         <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
-        <Table :columns="columns10" :data="data10" border height="330" style="margin-top: 10px;" size="small"></Table>
+        <!--<Table :columns="columns10" :data="data10" border height="330" style="margin-top: 10px;" size="small"></Table>-->
       </TabPane>
       <TabPane label="经济活动分析" name="name2">
         <h2>经济活动分析,正在开发中.......</h2>

@@ -16,7 +16,7 @@
 
     <AddMMStepOne :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepOne>
     <AddMMStepTwo :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepTwo>
-    <AddMMStepThree></AddMMStepThree>
+    <AddMMStepThree :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepThree>
 
     <!--<div style="margin-top: 20px;width: 100%;display: flex;justify-content: center">-->
       <!--<Button v-if="this.currentStep === 0 || this.currentStep === 1" type="primary" @click="nextStep">{{nextStepText}}</Button>-->

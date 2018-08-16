@@ -490,13 +490,15 @@
         let jydData = this.sourceData.pageJyd.ysxmmc;
         let jydArray = JSON.parse(jydData);
         let tmpBindData = [];
-        for (let i = 0; i < jydArray.length; i++) {
-          let selectValues = jydArray[i].selectValues;
-          tmpBindData.push(selectValues);
-        }
-        if (typeof tmpBindData === 'object' && tmpBindData !== null && tmpBindData.length > 0) {
-          this.jydBindData = JSON.parse(JSON.stringify(tmpBindData));
-          this.jydData = JSON.parse(JSON.stringify(tmpBindData));
+        if (jydArray != null) {
+          for (let i = 0; i < jydArray.length; i++) {
+            let selectValues = jydArray[i].selectValues;
+            tmpBindData.push(selectValues);
+          }
+          if (typeof tmpBindData === 'object' && tmpBindData !== null && tmpBindData.length > 0) {
+            this.jydBindData = JSON.parse(JSON.stringify(tmpBindData));
+            this.jydData = JSON.parse(JSON.stringify(tmpBindData));
+          }
         }
 
         // 验收单数据

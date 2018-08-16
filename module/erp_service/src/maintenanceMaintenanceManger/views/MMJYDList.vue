@@ -6,13 +6,12 @@
       v-model="showDetailModal"
       title="查看检验项目"
       width="50%"
-      @on-ok="showDetailModal = false"
-      @on-cancel="showDetailModal = false">
+      @on-ok="showDetailModal = false">
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-        <div v-for="(item, itemIndex) in showDetailItem" :key="item+itemIndex">
-          <Tooltip v-for="(subItem, subItemIndex) in item.subItems" :key="subItem+subItemIndex">
-            <div slot="content">{{item.title}}</div>
-            <Tag style="margin-bottom: 10px;margin-right: 20px;" type="dot" color="green">{{subItem}}</Tag>
+        <div v-for="(item, itemIndex) in jydDetailData" :key="itemIndex">
+          <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">
+            <div slot="content">{{jydDictData[itemIndex].title}}</div>
+            <Tag style="margin-bottom: 10px;margin-right: 20px;" type="dot" color="green">{{jydTmpData[subItem]}}</Tag>
           </Tooltip>
         </div>
       </div>
@@ -49,6 +48,11 @@
           currPage: 1,
           pageSize: 10,
         },
+
+        jydDetailData: [], // 选中的数据
+        jydDictData: [], // 所有字典数据
+        jydTmpData: {},  // 用于匹配code与title的数据
+
         showDetailItem: [],
         totalSize: 0,
         tableData: [],
@@ -119,13 +123,25 @@
     },
     methods: {
       showDetail(row) {
-        // 需要修改接口
-        console.log(row);
-//        let params = {id : row.byid};
-//        this.$fetch(this.$url.maintain_BYGL_JYDGL_listDetail, params)
-//        .then(res => {
-//          console.log(res);
-//        })
+        let params = {id : row.byid};
+        this.$fetch(this.$url.maintain_BYGL_CLBY_recordDetail, params)
+        .then(res => {
+          // 检验单数据
+          let jydData = res.pageJyd.ysxmmc;
+          let jydArray = JSON.parse(jydData);
+          let tmpData = [];
+          if (jydArray != null) {
+            for (let i = 0; i < jydArray.length; i++) {
+              let selectValues = jydArray[i].selectValues;
+              tmpData.push(selectValues);
+            }
+            if (typeof tmpData === 'object' && tmpData !== null && tmpData.length > 0) {
+              this.jydDetailData = JSON.parse(JSON.stringify(tmpData));
+            }
+            console.log(this.jydDetailData);
+            this.showDetailModal = true;
+          }
+        })
       },
       setPage(page) {
         this.formItem.currPage = page;
@@ -156,9 +172,39 @@
         }
         this.$getExcel(url);
       },
+      // 初始化检验单字典数据
+      initData() { // 初始化验收单和检验单项目明细
+        var that = this;
+        let jydSourceData = [];
+        this.$fetch(this.$url.common_getAllDictListDataWithCode, {code : 'JYXM'})
+        .then(res => {
+          if (res.success === true) {
+            let data = res.data[0].children;
+            console.log(data);
+            // 简化数据
+            data.forEach(item => {
+              let obj = {
+                title: item.title,
+                code: item.code,
+                children: [],
+              }
+              item.children.forEach(subItem => {
+                that.jydTmpData[subItem.code] = subItem.title;
+                let subObj = {
+                  title: subItem.title,
+                  code: subItem.code,
+                }
+                obj.children.push(subObj);
+              })
+              jydSourceData.push(obj);
+            })
+            that.jydDictData = jydSourceData;
+          }
+        })
+      },
     },
     mounted () {
-
+      this.initData();
     }
   }
 </script>

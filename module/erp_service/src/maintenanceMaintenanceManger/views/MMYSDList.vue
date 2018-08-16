@@ -9,10 +9,10 @@
       @on-ok="showDetailModal = false"
       @on-cancel="showDetailModal = false">
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-        <div v-for="(item, itemIndex) in showDetailItem" :key="item+itemIndex">
-          <Tooltip v-for="(subItem, subItemIndex) in item.subItems" :key="subItem+subItemIndex">
-            <div slot="content">{{item.title}}</div>
-            <Tag style="margin-bottom: 10px;margin-right: 20px;" type="dot" color="green">{{subItem}}</Tag>
+        <div v-for="(item, itemIndex) in ysdDetailData" :key="itemIndex">
+          <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">
+            <div slot="content">{{ysdDictData[itemIndex].title}}</div>
+            <Tag style="margin-bottom: 10px;margin-right: 20px;" type="dot" color="green">{{ysdTmpData[subItem]}}</Tag>
           </Tooltip>
         </div>
       </div>
@@ -52,6 +52,11 @@
         tableData: [],
         totalSize: 0,
         showDetailItem: [],
+
+        ysdDetailData: [],
+        ysdDictData: [],
+        ysdTmpData: {},
+
         columns: [
           {
             type: 'index',
@@ -114,13 +119,18 @@
     },
     methods: {
       showDetail(row) {
-        // 需要修改接口
-        console.log(row);
-//        let params = {id : row.id};
-//        this.$fetch(this.$url.maintain_BYGL_YSDGL_listDetail, params)
-//        .then(res => {
-//          console.log(res);
-//        })
+        let params = {id: row.byid}
+        this.$fetch(this.$url.maintain_BYGL_CLBY_recordDetail, params)
+        .then(res => {
+          // 验收单数据
+          let ysdData = res.pageYsd.ysxmmc;
+          let ysdArray = JSON.parse(ysdData);
+          if (typeof ysdArray === 'object' && ysdArray != null && ysdArray.length > 0)  {
+            this.ysdDetailData = JSON.parse(JSON.stringify(ysdArray));
+          }
+          console.log(this.ysdDetailData);
+          this.showDetailModal = true;
+        })
       },
       setPage(page) {
         this.formItem.currPage = page;
@@ -151,9 +161,37 @@
         }
         this.$getExcel(url);
       },
+      initData() { // 初始化验收单和检验单项目明细
+        var that = this;
+        let ysdSourceData = [];
+        this.$fetch(this.$url.common_getAllDictListDataWithCode, {code : 'YSXM'})
+        .then(res => {
+          if (res.success === true) {
+            let data = res.data[0].children;
+            data.forEach(item => {
+              let obj = {
+                title: item.title,
+                code: item.code,
+                children: [],
+              }
+              item.children.forEach(subItem => {
+                that.ysdTmpData[subItem.code] = subItem.title;
+                let subObj = {
+                  title: subItem.title,
+                  code: subItem.code,
+                }
+                obj.children.push(subObj);
+              })
+              ysdSourceData.push(obj);
+            })
+            that.ysdDictData = ysdSourceData;
+            console.log(that.ysdDictData);
+          }
+        })
+      },
     },
     mounted () {
-
+      this.initData();
     }
   }
 </script>

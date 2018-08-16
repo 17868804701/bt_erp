@@ -2,7 +2,7 @@
  * Created by qismsom on 2018/7/24.
  */
 
-const baseURL = 'http://106.12.19.134:8702';
+const baseURL = 'http://10.50.0.144:8702';
 
 const NetworkInterface = {
 

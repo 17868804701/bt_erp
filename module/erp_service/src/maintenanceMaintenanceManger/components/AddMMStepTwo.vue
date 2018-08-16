@@ -151,7 +151,7 @@
         clItem: {
           cph: "",
           wpmc: "",
-          ghdw: "",
+          ghdw: "掌握公司",
           jldw: "",
           gg: "",
           ppxh: "",
@@ -289,7 +289,7 @@
             }
           }
         ],
-        
+
         jysmModal: false,
         jydBindData: [], // 检验单双向绑定的数据
         jydData: [],     // 检验单用于显示已选中项的数据
@@ -297,7 +297,7 @@
         jydTmpData: {},  // 用于匹配code与title的数据
 
         ysdData: '',
-        
+
         ysdBindData: [], // 验收单和checkBox绑定的data
         ysdList: [],     // 存放验收单所有项目的数据
         ysdTmpData: {},  // 用于匹配code与title的数据
@@ -307,7 +307,7 @@
     },
     methods: {
 
-      
+
       // *********  领料备料   ********** //
       addLLBL(name) {
         this.$refs[name].validate((valid) => {
@@ -319,6 +319,7 @@
         })
       },
       saveOrUpdateRow() {
+        this.clItem.byid = this.sourceData.clby.id;
         if (this.clItem.id !== '') {
           this.$post(this.$url.maintain_BYGL_CLBY_CL_update, this.clItem)
           .then(res => {
@@ -329,7 +330,7 @@
               this.clItem = {
                 cph: "",
                 wpmc: "",
-                ghdw: "",
+                ghdw: "掌握公司",
                 jldw: "",
                 gg: "",
                 ppxh: "",
@@ -349,6 +350,7 @@
           })
           console.log('更新领料备料记录');
         }else{
+          debugger;
           this.$post(this.$url.maintain_BYGL_CLBY_CL_save, this.clItem)
           .then(res => {
             if (res.code === 0) {
@@ -458,7 +460,7 @@
       },
       // *********  检验单   ********** //
 
-      
+
       // *********  验收单   ********** //
       checkYSXM() {
 //        console.log('选择了验收项目');
@@ -466,7 +468,7 @@
         let ysdSelectValues = JSON.stringify(this.ysdBindData);
         let params = {
           ysxmmc: ysdSelectValues,
-          byid: this.sourceData.clby.id,  
+          byid: this.sourceData.clby.id,
         };
         this.$post(this.$url.maintain_BYGL_CLBY_YSD_saveOrUpdate, params)
         .then(res => {
@@ -567,7 +569,7 @@
               })
               ysdSourceData.push(obj);
             })
-            
+
             that.ysdList = ysdSourceData;
             for (let i = 0; i < that.ysdList.length; i++){
               that.ysdBindData.push([]);

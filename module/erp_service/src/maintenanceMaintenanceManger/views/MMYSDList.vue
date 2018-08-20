@@ -6,8 +6,9 @@
       v-model="showDetailModal"
       title="查看验收项目"
       width="50%"
-      @on-ok="showDetailModal = false"
-      @on-cancel="showDetailModal = false">
+      :mask-closable="false"
+      :closable="false"
+      @on-ok="showDetailModal = false">
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <div v-for="(item, itemIndex) in ysdDetailData" :key="itemIndex">
           <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">
@@ -128,7 +129,6 @@
           if (typeof ysdArray === 'object' && ysdArray != null && ysdArray.length > 0)  {
             this.ysdDetailData = JSON.parse(JSON.stringify(ysdArray));
           }
-          console.log(this.ysdDetailData);
           this.showDetailModal = true;
         })
       },
@@ -139,7 +139,6 @@
       requestListData() {
         this.$fetch(this.$url.maintain_BYGL_YSDGL_recordList, this.formItem)
         .then(res=>{
-          console.log(res);
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.scsj = DateTool.timesToDate(item.scsj);
@@ -185,7 +184,6 @@
               ysdSourceData.push(obj);
             })
             that.ysdDictData = ysdSourceData;
-            console.log(that.ysdDictData);
           }
         })
       },
@@ -196,16 +194,4 @@
   }
 </script>
 
-<!--
-ysxm: [
-              {
-                title: '项目1',
-                subItems: ['子项目11', '子项目12', '子项目13', '子项目14', '子项目15']
-              },
-              {
-                title: '项目2',
-                subItems: ['子项目21', '子项目22', '子项目23', '子项目24', '子项目25']
-              }
-            ],
--->
 

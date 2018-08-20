@@ -675,7 +675,6 @@
       saveBasicData() { // 保存修改车辆基本信息
         this.$post(this.$url.maintain_BYGL_CLBY_updateRecord, this.basicData)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.basicDataIsEdit = false;
             this.$Message.success('更新成功!');
@@ -687,12 +686,9 @@
       },
 
       addDSJ() { // 添加或更新丢失件修配记录
-        console.log('添加丢失件修配记录');
         this.dsj.byid = this.sourceData.clby.id;
-        console.log(this.dsj);
         this.$post(this.$url.maintain_BYGL_CLBY_DSJ_saveUpdate, this.dsj)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('添加丢失件修配记录成功!');
             this.dsjModal = false;
@@ -713,7 +709,6 @@
         let params = {id: DSJData.id};
         this.$fetch(this.$url.maintain_BYGL_CLBY_DJSORCY_delete, params)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('删除成功!');
             this.$emit('updateInfo');
@@ -734,12 +729,9 @@
       },
 
       addCYZY() { // 添加超养记录
-        console.log('添加超养作业记录');
         this.cyItem.byid = this.sourceData.clby.id;
-        console.log(this.cyItem);
         this.$post(this.$url.maintain_BYGL_CLBY_CY_saveUpdate, this.cyItem)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('添加超养作业记录成功!');
             this.cyModal = false;
@@ -791,7 +783,6 @@
       updateFDJ(params) { // 更新发动机   字段为json字符串, 不论是添加还是修改, 都调用更新对应字段的接口
         this.$post(this.$url.maintain_BYGL_CLBY_FDJ_saveOrUpdate, params)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('保存成功!');
             this.fdjQGModal = false;
@@ -833,7 +824,6 @@
           stringArray = stringArray + stringObj;
         })
         stringArray = stringArray.substring(0, stringArray.length-1);
-        console.log(stringArray);
         return stringArray;
       },
       // *************** 发动机中list数据配置方法 ***************** //
@@ -855,7 +845,6 @@
       },
       deleteFDJ_QG_Data(index) {
         console.log(index);
-        debugger;
         // 深拷贝数组
         let deepCopyArray = JSON.parse(JSON.stringify(this.FDJ_QG_DATA));
         deepCopyArray.splice(index, 1);
@@ -902,8 +891,6 @@
         this.updateFDJ(params);
       },
       deleteFDJ_QZ_Data(index) {
-        console.log(index);
-        debugger;
         // 深拷贝数组
         let deepCopyArray = JSON.parse(JSON.stringify(this.FDJ_QZ_DATA));
         deepCopyArray.splice(index, 1);
@@ -939,8 +926,6 @@
         }
         return dataArray;
       },
-//      getData () {
-//      },
       configureData() {
         // step 1
         let clbyBasicData = this.sourceData.clby;       // 车辆保养基本信息
@@ -952,7 +937,6 @@
         for (let attr in clbyBasicData) {
           this.basicData[attr] = clbyBasicData[attr];
         }
-        console.log(clbyBasicData);
 
         // 处理发动机进场记录
         let tmpfdjData = {}; // 用来判断是否有发动机进场记录的object
@@ -970,7 +954,6 @@
           }
         }
         this.basicData.fdjSwitchValue = isHaveFDJData;
-        console.log(this.fdjData);
         // 处理成json
 //        console.log('======== 气缸数据 - 活塞数 - 凸轮轴数据 ==========');
         if (this.fdjData.qg !== null && this.fdjData.qg.length > 0) { // 气缸数据 - 活塞数 - 凸轮轴数据   注意: 由于页面问题,为了方便解析,前面三个数据均在qg字段中存储,格式为json字符串, 用&分割

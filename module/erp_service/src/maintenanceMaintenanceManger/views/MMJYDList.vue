@@ -6,7 +6,9 @@
       v-model="showDetailModal"
       title="查看检验项目"
       width="50%"
-      @on-ok="showDetailModal = false">
+      @on-ok="showDetailModal = false"
+      :mask-closable="false"
+      :closable="false">
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <div v-for="(item, itemIndex) in jydDetailData" :key="itemIndex">
           <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">

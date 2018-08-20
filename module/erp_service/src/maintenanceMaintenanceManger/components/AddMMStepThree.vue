@@ -1,5 +1,79 @@
 <template>
   <div style="margin-top: 40px;">
+
+    <!-- 发动机出厂技术记录 -->
+    <Card v-if="isHaveFDJCC" style="margin-top: 20px;">
+      <p slot="title" >
+        发动机出厂技术记录
+      </p>
+      <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="fdjEditIcon" @click="editBtnClick">{{fdjEditText}}</Button>
+      <Button v-if="fdjDataIsEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="saveFDJData">保存</Button>
+      <div>
+        <Form v-model="fdjccData" :label-width="150">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+            <FormItem label="发动机型号:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjccData.fdjxh" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjccData.fdjxh}}</div>
+            </FormItem>
+            <FormItem label="冷磨时间:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjccData.lmsj" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjccData.lmsj}}</div>
+            </FormItem>
+            <FormItem label="试热时间:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjccData.srsj" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjccData.srsj}}</div>
+            </FormItem>
+            <FormItem label="承修人:" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjccData.cxr"></Input>
+              <div v-else>{{fdjccData.cxr}}</div>
+            </FormItem>
+          </div>
+        </Form>
+        <Form v-model="fdjccData" :label-width="150">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+            <FormItem label="机油压力(怠速150r/min):" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjccData.jyds" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjccData.jyds}}MPa</div>
+            </FormItem>
+            <FormItem label="机油压力(中速2500r/min):" style="margin-top: 0px;">
+              <Input v-if="fdjDataIsEdit" v-model="fdjccData.jyzs" style="width:120px;"></Input>
+              <div style="width: 120px;" v-else>{{fdjccData.jyzs}}MPa</div>
+            </FormItem>
+          </div>
+        </Form>
+      </div>
+      <hr style="height:1px;border:none;border-top:1px solid lightgrey;margin-bottom: 5px; margin-top: 10px"/>
+      <div style="margin-bottom: 50px;">
+        <Button type="primary" size="small" icon="plus" @click="fdjqgModal=true">添加气缸压力数据</Button>
+        <Table border style="margin-top: 10px;" :data="fdjqgylList" :columns="fdjqgylColumns"></Table>
+      </div>
+    </Card>
+    <!--新增气缸压力-->
+    <Modal
+      v-model="fdjqgModal"
+      title="新增气缸压力检测数据"
+      width="50%"
+      :mask-closable="false"
+      :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="addFDJ_QGYL_Data">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="canceAddFDJ_QGYL_Data">取消</Button>
+      </div>
+      <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+        <Form v-model="fdjqgylData" :label-width="150">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+            <FormItem label="机油压力(怠速150r/min):" style="margin-top: 0px;">
+              <Input v-model="fdjqgylData.qgyl_ds" style="width:120px;"></Input>
+            </FormItem>
+            <FormItem label="机油压力(中速2500r/min):" style="margin-top: 0px;">
+              <Input v-model="fdjqgylData.qgyl_zs" style="width:120px;"></Input>
+            </FormItem>
+          </div>
+        </Form>
+      </div>
+    </Modal>
+
+    <!-- 出厂合格证 -->
     <Card style="margin-top: 20px;">
       <p slot="title" >
         出厂合格登记
@@ -64,6 +138,70 @@
     },
     data () {
       return {
+        isHaveFDJCC: false,
+        fdjDataIsEdit: false,
+        fdjccData: {
+          id: "",
+          byid: "",
+          fdjxh: "", //发动机型号
+          lmsj: "",  //冷磨时间
+          srsj: "",  //试热时间
+          cxr: "",   //承修人
+          jyds: "0",  //机油压力 怠速
+          jyzs: "0",  //机油压力 中速
+          qgds: "",  //气缸压力 怠速
+          qgzs: "",  //气缸压力 中速
+          zhpd: ""   //综合评定
+        },
+        fdjqgylColumns: [
+          {
+            title: '气缸压力',
+            align: 'center',
+            children: [
+              {
+                title: '序号',
+                type: 'index',
+                align: 'center',
+              },
+              {
+                title: '怠速150r/min',
+                align: 'center',
+                key: 'qgyl_ds',
+              },
+              {
+                title: '中速2500r/min',
+                align: 'center',
+                key: 'qgyl_zs',
+              },
+            ]
+          },
+          {
+            title: '操作',
+            align: 'center',
+            render: (h, params, index) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteQGYL(params.index);
+                    }
+                  }
+                }, '删除')
+              ]);
+            }
+          }
+        ],
+        fdjqgylList: [],
+        fdjqgylData:{
+          qgyl_ds: '',
+          qgyl_zs: '',
+        },
+        fdjqgModal: false,
+
         ccData: {
           id: "82de0dcd408d486f8d3f16c338b736cf",
           clzbh: "",
@@ -137,10 +275,26 @@
         }else{
           return this.ccData.ccrq;
         }
-      }
+      },
+      fdjEditText() {
+        if (!this.fdjDataIsEdit) {
+          return '编辑';
+        }else{
+          return '取消';
+        }
+      },
+      fdjEditIcon() {
+        if (!this.fdjDataIsEdit) {
+          return 'edit';
+        }else{
+          return 'close';
+        }
+      },
     },
     methods: {
-      clickEditCCInfo() { // 编辑车辆基本信息
+
+      // *********  出厂合格证   ********** //
+      clickEditCCInfo() { // 编辑出厂合格证
         console.log('点击了取消或者编辑');
         // 点击取消后还原数据
         if (this.ccDataIsEdit === true) {
@@ -153,11 +307,10 @@
         this.ccDataIsEdit = !this.ccDataIsEdit;
 
       },
-      saveCCData() { // 保存修改车辆基本信息
+      saveCCData() { // 保存修改出厂合格证
         console.log('保存信息');
         this.$post(this.$url.maintain_BYGL_CLBY_updateRecord, this.ccData)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.ccDataIsEdit = false;
             this.$Message.success('更新成功!');
@@ -167,15 +320,115 @@
           }
         })
       },
+      // *********  出厂合格证   ********** //
+
+
+      // *********  发动机出厂技术记录   ********** //
+      editBtnClick() {
+        if (!this.fdjDataIsEdit) {
+          console.log('点击了编辑按钮');
+        }else{
+          console.log('点击了取消按钮');
+          // 点击了取消, 即使修改了, 也需要把 双向绑定的数据 为初始的数据.
+          let clbyFdjccData = this.sourceData.clbyFdjcc;
+          for (let attr in this.fdjccData) {
+            this.fdjccData[attr] = clbyFdjccData[attr];
+          }
+        }
+        this.fdjDataIsEdit = !this.fdjDataIsEdit;
+      },
+      saveFDJData() { // 修改保存 发动机基本信息
+        this.fdjDataIsEdit = false;
+        debugger;
+        this.updateFDJCC_QGYL(this.fdjccData);
+      },
+
+      configureFDJ_QGYL_Data(data) {  // 根据源数据转换成json字符串
+        let stringData = JSON.stringify(data);
+        let params = {};
+        for (let attr in this.fdjccData) {
+          params[attr] = this.fdjccData[attr];
+        }
+        params.qgds = stringData;
+        params.byid = this.sourceData.clby.id;
+        return params;
+      },
+      deleteQGYL(index) {
+        console.log(index);
+        // 深拷贝数组
+        let deepCopyData = JSON.parse(JSON.stringify(this.fdjqgylList));
+        deepCopyData.splice(index, 1);
+        let params = this.configureFDJ_QGYL_Data(deepCopyData);
+        this.updateFDJCC_QGYL(params);
+      },
+      addFDJ_QGYL_Data() {
+        // 深拷贝数据
+        let deepCopyData = JSON.parse(JSON.stringify(this.fdjqgylList));
+        deepCopyData.push(this.fdjqgylData);
+        let params = this.configureFDJ_QGYL_Data(deepCopyData);
+        this.updateFDJCC_QGYL(params);
+      },
+      // 拿到修改后的参数去更新
+      updateFDJCC_QGYL(params) {
+        this.$post(this.$url.maintain_BYGL_CLBY_FDJCC_saveOrUpdate, params)
+        .then(res => {
+          console.log(res);
+          if (res.code === 0) {
+            this.fdjqgModal = false;
+            this.fdjqgylData = {
+              qgyl_ds: '',
+              qgyl_zs: '',
+            };
+          }else{
+            this.$Message.erro('保存失败, 请重试!');
+          }
+          this.$emit('updateInfo');
+        })
+      },
+      canceAddFDJ_QGYL_Data() {
+        this.fdjqgModal = false;
+        this.fdjqgylData = {
+          qgyl_ds: '',
+          qgyl_zs: '',
+        }
+      },
+      // *********  发动机出厂技术记录   ********** //
+
 
       // *********  初始化数据   ********** //
       configureData() {
         console.log(this.sourceData);
-        let clbyBasicData = this.sourceData.clby;
+        let clbyFdjjcData = this.sourceData.clbyFdjjc;  // 发动机进场记录
+        let clbyFdjccData = this.sourceData.clbyFdjcc;  // 发动机出场记录
+        let clbyBasicData = this.sourceData.clby;       // 出厂合格证
+
+
         for (let attr in clbyBasicData) {
           this.ccData[attr] = clbyBasicData[attr];
         }
         this.ccData.ccrq = DateTool.timesToDate(this.ccData.ccrq);
+
+
+        // 处理发动机出场技术记录数据   根据是否有发动进场的逻辑来判断是否有发动机出厂
+        let tmpfdjData = {}; // 用来判断是否有发动机进场记录的object
+        for (let attr in clbyFdjjcData) {
+          tmpfdjData[attr] = clbyFdjjcData[attr];
+        }
+        for (let attr in clbyFdjccData) {
+          this.fdjccData[attr] = clbyFdjccData[attr];
+        }
+        delete tmpfdjData['byid'];
+        delete tmpfdjData['id'];
+        delete tmpfdjData['jcsj'];
+        for (let attr in tmpfdjData) {
+          if(tmpfdjData[attr] !== null && tmpfdjData[attr] !== '') {
+            this.isHaveFDJCC = true;
+          }
+        }
+
+        let fdjccqgylTmpData = this.fdjccData.qgds;
+        let tmpArray = JSON.parse(fdjccqgylTmpData);
+        this.fdjqgylList = JSON.parse(JSON.stringify(tmpArray));
       }
       // *********  初始化数据   ********** //
     },
@@ -192,21 +445,3 @@
     }
   }
 </script>
-
-<!--
-  车辆自编号、车型、修别、发动机大修、承修单位、出厂日期、出厂说明、接车检验司机、检验员
--->
-
-<!--
-{
-	"clzbh": "Y3211",     车辆自编号
-	"cx": "大车",          车型
-	"sxr": "谢忠华",       送修人
-	"jyy": "谢忠华",       检验员
-	"xb": null,           修别
-	"fdjdx": null,        发动机大修
-	"cxgs": null,         承修单位
-	"ccrq": 1534298842000,出厂日期
-	"ccsm": null,         出厂说明
-}
--->

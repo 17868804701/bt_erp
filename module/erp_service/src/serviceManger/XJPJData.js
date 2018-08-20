@@ -9,7 +9,7 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '经费控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '18',
         },
       ],
@@ -24,7 +24,7 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '经费控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '18',
         },
       ],
@@ -39,7 +39,7 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '经费控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '18',
         },
       ],
@@ -54,7 +54,7 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '经费控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '18',
         },
       ],
@@ -69,7 +69,7 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '28',
         },
       ],
@@ -84,13 +84,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],
@@ -105,13 +105,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],
@@ -126,13 +126,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],
@@ -147,13 +147,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],
@@ -168,13 +168,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],
@@ -189,13 +189,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],
@@ -210,13 +210,13 @@ export const XJPJ_QG_DATA = [
         {
           subOptionName: '利润总额(万元)',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '8',
         },
         {
           subOptionName: '可控成本控制率',
           subOptionID: '',
-          score: '',
+          score: 0,
           maxScore: '10',
         },
       ],

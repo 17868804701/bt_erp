@@ -75,6 +75,7 @@ const NetworkInterface = {
   maintain_BYGL_CLBY_exportExcel: baseURL+'/weix/maintenanceManagement/clby/listExport',        // 车辆保养 - 列表导出excel
 
   maintain_BYGL_CLBY_FDJ_saveOrUpdate: '/weix/maintenanceManagement/clbyFdjjc/update',          // 车辆保养详情 - 发动机进场记录更新
+  maintain_BYGL_CLBY_FDJCC_saveOrUpdate: '/weix/maintenanceManagement/clbyFdjcc/update',        // 车辆保养详情 - 发动机出厂记录更新
 
   maintain_BYGL_CLBY_DSJ_saveUpdate: '/weix/maintenanceManagement/clbyMx/saveDspj',             // 车辆保养详情 - 添加或者保存丢失件修配记录
   maintain_BYGL_CLBY_CY_saveUpdate: '/weix/maintenanceManagement/clbyMx/saveCy',                // 车辆保养详情 - 添加或者保存超养作业记录
@@ -178,7 +179,10 @@ const NetworkInterface = {
   plclkfxx:'/fuw/kfxx/updateBatchKfxx',//批量处理
   updatekfxx:'/fuw/kfxx/updateKfxx',//更新客服信息
 
-
+  // 星级评价
+  getUserPFList: '/fuw/xjkp/getMbMap', // 获取当前登录用户需要打分的所有条目数据
+  commitPFWithID: '/fuw/xjkp/saveOrUpdXjkpKhfs', // 提交评分数据
+  getReportData: '/fuw/xjkp/getMbFsMap', // 获取单表的所有打分数据
 
   // 能源信息管理
   fgsdnList:'/nengy/Dnxxtj/getFgsdnxhList',  //分公司电能列表

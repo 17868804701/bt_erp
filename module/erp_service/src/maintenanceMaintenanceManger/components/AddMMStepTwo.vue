@@ -527,8 +527,6 @@
         .then(axios.spread(function(res1, res2){
           if (res1.success === true) {
             let data = res1.data[0].children;
-            console.log(data);
-            // 简化数据
             data.forEach(item => {
               let obj = {
                 title: item.title,
@@ -554,7 +552,6 @@
 
           if (res2.success === true) {
             let data = res2.data[0].children;
-            console.log(data);
             data.forEach(item => {
               let obj = {
                 title: item.title,

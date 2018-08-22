@@ -3,7 +3,7 @@ import iView from 'iview';
 import VueCookie from 'vue-cookie'
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL ='http://10.50.0.144:8702';//服务器
+axios.defaults.baseURL =process.env.BASE_URL;//服务器
 // axios.defaults.baseURL ='http://192.168.1.103:8089';//本地
 
 

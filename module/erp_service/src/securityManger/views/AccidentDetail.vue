@@ -9,7 +9,6 @@
       </router-link>
     </h2>
 
-
     <Card style="margin-top: 20px;">
       <p slot="title" >
         车辆事故基本信息
@@ -19,7 +18,6 @@
 
       <Form ref="updateDiv" :model="formValidate" :rules="ruleValidate" :label-width="150">
         <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-
           <FormItem prop="larq" label="立案日期:">
             <div style="width: 120px">{{formValidate.larq}}</div>
           </FormItem>
@@ -29,7 +27,7 @@
           </FormItem>
 
           <FormItem label="事故性质:">
-            <div style="width: 120px">{{formValidate.sgxz}}</div>
+            <div style="width: 120px">{{SGXZTitle}}</div>
           </FormItem>
 
           <FormItem label="事故总损失(元):">
@@ -119,9 +117,14 @@
             <div style="width: 120px;" v-else>{{formValidate.kcr}}</div>
           </FormItem>
 
-          <FormItem prop="ssrs" label="受伤人数:">
-            <Input v-if="isEdit" v-model="formValidate.ssrs" placeholder="受伤人数..." style="width: 120px"></Input>
-            <div style="width: 120px;" v-else>{{formValidate.ssrs}}</div>
+          <FormItem prop="ssrs" label="轻伤人数:">
+            <Input v-if="isEdit" v-model="formValidate.qsrs" placeholder="轻伤人数..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.qsrs}}</div>
+          </FormItem>
+
+          <FormItem prop="ssrs" label="重伤人数:">
+            <Input v-if="isEdit" v-model="formValidate.zsrs" placeholder="重伤人数..." style="width: 120px"></Input>
+            <div style="width: 120px;" v-else>{{formValidate.zsrs}}</div>
           </FormItem>
 
           <FormItem prop="swrs" label="死亡人数:">
@@ -195,8 +198,9 @@
           sgxz: '',
           kf: '',
           bz: '',
+          qsrs: 0,
+          zsrs: 0,
           swrs: 0,
-          ssrs: 0,
           gjjcs: 0,
           gjjcn: 0,
           gjjsz: 0,
@@ -251,6 +255,8 @@
         this.formValidate = params;
 //        console.log(params);
         this.formValidate.sgsx = this.formValidate.sgsx.split("、");
+        this.formValidate.sgxz = this.SGXZCode;
+        debugger;
       },
       changeType() {
         if (this.isEdit) {
@@ -282,6 +288,7 @@
         delete params.lasj;
         delete params.larq;
         params.sgsx = params.sgsx.join('、');
+        params.sgxz = this.SGXZCode();
         console.log(params);
 
         this.$refs['updateDiv'].validate(valid=>{
@@ -295,7 +302,8 @@
             this.$Message.error('请按照规则来修改更新信息!');
           }
         })
-      }
+      },
+
     },
     computed: {
       sgsxString() {
@@ -315,6 +323,78 @@
           return 'close';
         }
       },
+      SGXZTitle() {
+        let qsrs = Number(this.formValidate.qsrs);
+        let zsrs = Number(this.formValidate.zsrs);
+        let swrs = Number(this.formValidate.swrs);
+        let sgzss = Number(this.formValidate.gjjcs)+Number(this.formValidate.gjjcn)+Number(this.formValidate.gjjsz)+Number(this.formValidate.jqxss);
+        let result = '';
+
+        if (sgzss >= 10000 && sgzss < 50000 && qsrs > 0 && qsrs <= 3) {
+          result = '三级轻微事故';
+        }
+
+        if (sgzss >= 50000 && sgzss < 300000 && qsrs > 3 && qsrs <= 10) {
+          result = '二级轻微事故';
+        }
+
+        if (sgzss >= 300000 && sgzss < 500000 && qsrs > 10 && qsrs <= 50) {
+          result = '三级轻微事故';
+        }
+
+        if ((zsrs > 0 && zsrs <= 10) || (swrs > 0 && swrs <= 3) || (sgzss >= 500000 && sgzss <10000000)) {
+          result = '一般事故';
+        }
+
+        if ((zsrs > 10 && zsrs <= 50) || (swrs > 3 && swrs <= 10) || (sgzss >= 10000000 && sgzss <50000000)) {
+          result = '较大事故';
+        }
+
+        if ((zsrs > 50 && zsrs <= 100) || (swrs > 10 && swrs <= 30) || (sgzss >= 50000000 && sgzss <100000000)) {
+          result = '重大事故';
+        }
+
+        if (zsrs > 100 || swrs > 30 || sgzss >= 100000000) {
+          result = '特别重大事故';
+        }
+        return result;
+      },
+      SGXZCode() {
+        let qsrs = Number(this.formValidate.qsrs);
+        let zsrs = Number(this.formValidate.zsrs);
+        let swrs = Number(this.formValidate.swrs);
+        let sgzss = Number(this.formValidate.gjjcs)+Number(this.formValidate.gjjcn)+Number(this.formValidate.gjjsz)+Number(this.formValidate.jqxss);
+        let result = '';
+
+        if (sgzss >= 10000 && sgzss < 50000 && qsrs > 0 && qsrs <= 3) {
+          result = 'SJQW';
+        }
+
+        if (sgzss >= 50000 && sgzss < 300000 && qsrs > 3 && qsrs <= 10) {
+          result = 'EJQW';
+        }
+
+        if (sgzss >= 300000 && sgzss < 500000 && qsrs > 10 && qsrs <= 50) {
+          result = 'YJQW';
+        }
+
+        if ((zsrs > 0 && zsrs <= 10) || (swrs > 0 && swrs <= 3) || (sgzss >= 500000 && sgzss <10000000)) {
+          result = 'YBSG';
+        }
+
+        if ((zsrs > 10 && zsrs <= 50) || (swrs > 3 && swrs <= 10) || (sgzss >= 10000000 && sgzss <50000000)) {
+          result = 'JDSG';
+        }
+
+        if ((zsrs > 50 && zsrs <= 100) || (swrs > 10 && swrs <= 30) || (sgzss >= 50000000 && sgzss <100000000)) {
+          result = 'ZDSG';
+        }
+
+        if (zsrs > 100 || swrs > 30 || sgzss >= 100000000) {
+          result = 'TDSG';
+        }
+        return result;
+      }
     },
     mounted () {
       this.initialData();

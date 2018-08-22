@@ -271,8 +271,10 @@
         })
       },
       deleteRow(params) {
-        let p = {id : params.row.id};
-        this.$post(this.$url.maintain_BYGL_DATA_WXGXX_delete, p)
+//        let p = {id : params.row.id};
+        let url = this.$url.maintain_BYGL_DATA_WXGXX_delete;
+        url += '?id=' + params.row.id;
+        this.$post(url)
         .then(res => {
           console.log(res);
           if (res.code === 0) {

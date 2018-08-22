@@ -31,81 +31,57 @@
 <template>
   <div class="container">
     <h2>车次线路收入台账</h2>
-    <Tabs value="name1">
+    <Tabs value="name1" @on-click="clickTab">
       <TabPane label="集团公司车次线路收入台账" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
-              <!--<FormItem label="备用" style="margin: 0">-->
-              <!--<Input v-model="formItem.input" placeholder="备用字段" class="text_width"/>-->
-              <!--</FormItem>-->
-              <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
-                            class="text_width"></DatePicker>
-              </FormItem>
               <FormItem label="选择年份" style="margin: 0">
-                <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.jtgsDate"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择公司" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">公交一公司</Option>
-                  <Option value="shanghai">公交二公司</Option>
-                  <Option value="shenzhen">公交三公司</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestJTGSData">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-upload">打印</Button>
-                <Button type="ghost" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" @click="exportJTGSExcel">导出Excel</Button>
               </div>
             </div>
           </Form>
         </Card>
         <div style="display: flex;justify-content: space-between">
           <span style="margin-top: 10px;">指标名称：线路收入、车次（集团公司）</span>
-          <span style="margin-top: 10px;">2018年</span>
-          <span style="margin-top: 10px;margin-right: 30px;">计算单位：立方米</span>
+          <span style="margin-top: 10px;">{{jtgsND}}年</span>
         </div>
-        <Table :columns="columns11" :data="data10" border height="560" style="margin-top: 10px;" size="small"></Table>
+        <Table :columns="columns1" :data="jtgsTableData" border height="560" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
       <TabPane label="分公司车次线路收入台账" name="name2">
 
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
-              <!--<FormItem label="备用" style="margin: 0">-->
-              <!--<Input v-model="formItem.input" placeholder="备用字段" class="text_width"/>-->
-              <!--</FormItem>-->
-              <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
-                            class="text_width"></DatePicker>
-              </FormItem>
               <FormItem label="选择年份" style="margin: 0">
-                <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.fgsDate"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择公司" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">公交一公司</Option>
-                  <Option value="shanghai">公交二公司</Option>
-                  <Option value="shenzhen">公交三公司</Option>
+              <FormItem label="单位" style="margin: 0">
+                <Select v-model="formItem.select" style="width: 120px;">
+                  <Option value="公交一公司">公交一公司</Option>
+                  <Option value="公交二公司">公交二公司</Option>
+                  <Option value="公交三公司">公交三公司</Option>
+                  <Option value="公交四公司">公交四公司</Option>
                 </Select>
               </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestFGSData">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-upload">打印</Button>
-                <Button type="ghost" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" @click="exportFGSExcel">导出Excel</Button>
               </div>
             </div>
           </Form>
         </Card>
         <div style="display: flex;justify-content: space-between">
-          <span style="margin-top: 10px;">指标名称：线路收入、车次（公交一公司）</span>
-          <span style="margin-top: 10px;">2018年</span>
-          <span style="margin-top: 10px;margin-right: 30px;">计算单位：立方米</span>
+          <span style="margin-top: 10px;">指标名称：线路收入、车次（{{formItem.select}}）</span>
+          <span style="margin-top: 10px;">{{fgsND}}年</span>
         </div>
-        <Table :columns="columns12" :data="data12" border height="560" style="margin-top: 10px;" size="small"></Table>
+        <Table :columns="columns2" :data="fgsTableData" border height="560" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
     </Tabs>
   </div>
@@ -114,53 +90,50 @@
   export default {
     data () {
       return {
+        fgsTableData: [],
+        jtgsTableData: [],
+        jtgsND: '',
+        fgsND: '',
         formItem: {
-          input: '',
-          select: '',
-          date: ''
+          select: '公交一公司',
+          fgsDate: this.initDate(),
+          jtgsDate: this.initDate(),
         },
-        columns11: [
+        columns1: [
           {
             title: '项目/月别',
             key: 'xmlb',
-            width:150,
             align: 'center',
             fixed: 'left',
           },
           {
             title: '客运量（人次）',
             key: 'jldw',
-            width:150,
             align: 'center',
             children:[
               {
                 title: '本年普票',
-                key: 'nf',
-                width:150,
+                key: 'ky_bnpp',
                 align: 'center',
               },
               {
                 title: '本年IC卡',
-                key: 'nf',
-                width:150,
+                key: 'ky_bnick',
                 align: 'center',
               },
               {
                 title: '本年小计',
-                key: 'nf',
-                width:150,
+                key: 'ky_bnxj',
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'nf',
-                width:150,
+                key: 'ky_qn',
                 align: 'center',
               },
               {
                 title: '±%',
-                key: 'nf',
-                width:150,
+                key: 'ky_zzl',
                 align: 'center',
               },
             ]
@@ -171,37 +144,32 @@
             children: [
               {
                 title: '本年普票',
-                key: 'bnxslc',
-                width:150,
+                key: 'sr_bnpp',
                 align: 'center',
               },
               {
                 title: '本年IC卡优惠后金额',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_bnickyh',
                 align: 'center',
               },
               {
                 title: '本年IC卡补贴',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_bnickbt',
                 align: 'center',
               },
               {
                 title: '本年小计',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_bnxj',
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_qn',
                 align: 'center',
-              },{
+              },
+              {
                 title: '±%',
-                key: 'nf',
-                width:150,
+                key: 'sr_zzl',
                 align: 'center',
               },
             ]
@@ -212,85 +180,57 @@
             children: [
               {
                 title: '本年',
-                key: 'bnxslc',
-                width:150,
+                key: 'xscc_bn',
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'qnxslc',
-                width:150,
+                key: 'xscc_qn',
                 align: 'center',
               },
               {
                 title: '±%',
-                key: 'qnxslc',
-                width:150,
+                key: 'xscc_zzl',
                 align: 'center',
               }
             ]
           },
         ],
-        data10: [
-          {xmlb:'全年合计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'上半年小计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'三月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'四月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'五月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'六月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'七月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'八月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'九月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'十月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'十一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'十二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-        ],
-
-
-        columns12: [
+        columns2: [
           {
             title: '项目/月别',
-            key: 'xmlb',
-            width:150,
+            key: 'title',
             align: 'center',
             fixed: 'left',
           },
           {
             title: '客运量（人次）',
             key: 'jldw',
-            width:150,
             align: 'center',
             children:[
               {
                 title: '本年普票',
-                key: 'nf',
-                width:150,
+                key: 'ky_bnpp',
                 align: 'center',
               },
               {
                 title: '本年IC卡',
-                key: 'nf',
-                width:150,
+                key: 'ky_bnick',
                 align: 'center',
               },
               {
                 title: '本年小计',
-                key: 'nf',
-                width:150,
+                key: 'ky_bnxj',
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'nf',
-                width:150,
+                key: 'ky_qn',
                 align: 'center',
               },
               {
                 title: '±%',
-                key: 'nf',
-                width:150,
+                key: 'ky_zzl',
                 align: 'center',
               },
             ]
@@ -301,37 +241,32 @@
             children: [
               {
                 title: '本年普票',
-                key: 'bnxslc',
-                width:150,
+                key: 'sr_bnpp',
                 align: 'center',
               },
               {
                 title: '本年IC卡优惠后金额',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_bnickyh',
                 align: 'center',
               },
               {
                 title: '本年IC卡补贴',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_bnickbt',
                 align: 'center',
               },
               {
                 title: '本年小计',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_bnxj',
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'qnxslc',
-                width:150,
+                key: 'sr_qn',
                 align: 'center',
-              },{
+              },
+              {
                 title: '±%',
-                key: 'nf',
-                width:150,
+                key: 'sr_zzl',
                 align: 'center',
               },
             ]
@@ -342,45 +277,107 @@
             children: [
               {
                 title: '本年',
-                key: 'bnxslc',
-                width:150,
+                key: 'xscc_bn',
                 align: 'center',
               },
               {
                 title: '去年',
-                key: 'qnxslc',
-                width:150,
+                key: 'xscc_qn',
                 align: 'center',
               },
               {
                 title: '±%',
-                key: 'qnxslc',
-                width:150,
+                key: 'xscc_zzl',
                 align: 'center',
               }
             ]
           },
         ],
-        data12: [
-          {xmlb:'全年合计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'上半年小计', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'三月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'四月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'五月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'六月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'七月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'八月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'九月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'十月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'十一月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-          {xmlb:'十二月', nf:'22144', bnxslc:'154684', qnxslc:'416846'},
-        ]
       }
     },
-    methods: {},
+    methods: {
+      initDate() {
+        let now = new Date();
+        this.jtgsND = now.getFullYear();
+        this.fgsND = now.getFullYear();
+        return now;
+      },
+      clickTab(name) {
+        if (name === 'name1') {
+          this.requestJTGSData();
+        }else{
+          this.requestFGSData();
+        }
+      },
+      requestJTGSData() {
+        let params = {};
+        if (this.formItem.jtgsDate === null || this.formItem.jtgsDate === '') {
+          params.nd = '';
+          this.$Message.error('请先选择年份!');
+          return;
+        }else{
+          params.nd = this.formItem.jtgsDate.getFullYear();
+        }
+        console.log(params);
+        this.$fetch(this.$url.qygl_ccxlsrtz_jtgs, params)
+        .then(res => {
+          console.log(res);
+          if (res.success === true) {
+            this.jtgsTableData = res.data;
+            if (res.data.length > 0) {
+              let obj = res.data[0];
+              this.jtgsND = obj.nd;
+            }
+          }else{
+            this.$Message.error('获取数据失败, 请重试!');
+          }
+        })
+      },
+      requestFGSData() {
+        let params = {};
+        if (this.formItem.fgsDate === null || this.formItem.fgsDate === '') {
+          params.nd = '';
+          this.$Message.error('请先选择年份!');
+          return;
+        }else{
+          params.nd = this.formItem.fgsDate.getFullYear();
+        }
+        params.dw = this.formItem.select;
+        console.log(params);
+        this.$fetch(this.$url.qygl_ccxlsrtz_fgs, params)
+        .then(res => {
+          console.log(res);
+          if (res.success === true) {
+            this.fgsTableData = res.data;
+            if (res.data.length > 0) {
+              let obj = res.data[0];
+              this.fgsND = obj.nd;
+            }
+          }else{
+            this.$Message.error('获取数据失败, 请重试!');
+          }
+        })
+      },
+      exportJTGSExcel() {
+        if (this.formItem.jtgsDate === null || this.formItem.jtgsDate === '') {
+          this.$Message.error('请先选择年份!');
+          return;
+        }
+        let url = this.$url.qygl_ccxlsrtz_jtgs_export + '?nd=' + this.formItem.fgsDate.getFullYear();
+        this.$getExcel(url);
+      },
+      exportFGSExcel() {
+        if (this.formItem.fgsDate === null || this.formItem.fgsDate === '') {
+          this.$Message.error('请先选择年份!');
+          return;
+        }
+        let url = this.$url.qygl_ccxlsrtz_fgs_export + '?nd=' + this.formItem.fgsDate.getFullYear() + '&dw=' + this.formItem.select;
+        this.$getExcel(url);
+      }
+    },
     mounted () {
+      this.requestJTGSData();
     }
   }
 </script>
+

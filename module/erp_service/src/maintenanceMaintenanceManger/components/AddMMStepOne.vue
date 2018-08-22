@@ -109,6 +109,9 @@
       <div style="padding: 0px; height: 100%;">
         <Form v-model="dsj" :label-width="80">
           <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+            <FormItem label="商品编号:">
+              <Input v-model="dsj.spbh" placeholder="商品编号..." style="width: 100px"></Input>
+            </FormItem>
             <FormItem label="名称:">
               <Input v-model="dsj.name" placeholder="名称..." style="width: 100px"></Input>
             </FormItem>
@@ -150,17 +153,22 @@
       <div>
         <Form v-model="cyItem" :label-width="60">
           <Row>
-            <Col span="8">
+            <Col span="6">
+            <FormItem label="商品编号">
+              <Input v-model="cyItem.spbh" placeholder="商品编号..." style="width: 100px"></Input>
+            </FormItem>
+            </Col>
+            <Col span="6">
             <FormItem label="项目">
               <Input v-model="cyItem.name" placeholder="项目..." style="width: 100px"></Input>
             </FormItem>
             </Col>
-            <Col span="8">
+            <Col span="6">
             <FormItem label="数量">
               <Input v-model="cyItem.sl" placeholder="数量..." style="width: 100px"></Input>
             </FormItem>
             </Col>
-            <Col span="8">
+            <Col span="6">
             <FormItem label="修复方法">
               <Input v-model="cyItem.content" placeholder="修复方法..." style="width: 100px"></Input>
             </FormItem>
@@ -502,6 +510,10 @@
         // **************** 丢失件修配数据 ************** //
         dsjColumns: [
           {
+            key: 'spbh',
+            title: '商品编号',
+          },
+          {
             key: 'name',
             title: '名称',
           },
@@ -554,6 +566,7 @@
         ],
         dsjList: [],
         dsj: {
+          spbh: '',
           name: '',
           sl: '',
           content: '',
@@ -563,6 +576,10 @@
 
         // **************** 超养作业记录数据 ************** //
         cyColumns: [
+          {
+            key: 'spbh',
+            title: '商品编号',
+          },
           {
             key: 'name',
             title: '项目',
@@ -616,6 +633,7 @@
         ],
         cyList: [],
         cyItem: {
+          spbh: '',
           name: '',
           sl: '',
           content: '',
@@ -694,6 +712,7 @@
             this.dsjModal = false;
             this.$emit('updateInfo');
             this.dsj = {
+              spbh: '',
               name: '',
               sl: '',
               content: '',
@@ -720,6 +739,7 @@
       cancleAddDSJ() { // 取消添加丢失件修配记录
         this.dsjModal = false;
         this.dsj = {
+          spbh: '',
           name: '',
           sl: '',
           content: '',
@@ -737,6 +757,7 @@
             this.cyModal = false;
             this.$emit('updateInfo');
             this.cyItem = {
+              spbh: '',
               name: '',
               sl: '',
               content: '',
@@ -751,6 +772,7 @@
       cancleAddCYZY() {
         this.cyModal = false;
         this.cyItem = {
+          spbh: '',
           name: '',
           sl: '',
           content: '',

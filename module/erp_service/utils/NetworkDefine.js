@@ -198,6 +198,24 @@ const NetworkInterface = {
   daochull:'/nengy/Lljl/exportLljlExcel',  //领料导出
   jtdnList:'/nengy/Dnxxtj/getJtdnxhList',  //集团电能列表
   jtdnListdaochu:'/nengy/Dnxxtj/exportJtdnExcel',  //集团电能列表导出
+  
+  // 企业管理
+  qygl_nhlctz_fgs: '/qiy/Sctjtz/getFnhlcList',            //分公司能耗台账
+  qygl_nhlctz_jtgs: '/qiy/Sctjtz/getJtnhlcList',          //集团公司能耗台账
+  qygl_nhlctz_fgs_export: baseURL+'/qiy/Sctjtz/exportFnhlcExcel', //分公司能耗报表导出
+  qygl_nhlctz_jtgs_export: baseURL+'/qiy/Sctjtz/exportJtnhlcExcel',//集团公司能耗报表导出
+  
+  qygl_ccxlsrtz_fgs: '/qiy/Ccxltz/getFccxlsrList',            //分公司车次线路台账
+  qygl_ccxlsrtz_jtgs: '/qiy/Ccxltz/getCcxlsrList',            //集团公司车次线路台账
+  qygl_ccxlsrtz_fgs_export: baseURL+'/qiy/Ccxltz/exportFccxlsrExcel', //分公司车次线路台账报表导出
+  qygl_ccxlsrtz_jtgs_export: baseURL+'/qiy/Ccxltz/exportCcxlsrExcel', //集团公司车次线路台账报表导出
+  
+  qygl_yyscyszl_cclchyYDFX: '/qiy/cclchyYfx/cclchyYfxList',                       //车次里程耗油月度分析列表
+  qygl_yyscyszl_cclchyYDFX_export: baseURL+'/qiy/cclchyYfx/exportCclchyYfxExcel', //导出车次里程耗油月度分析列表
+  qygl_yyscyszl_cclchyJDFX: '/qiy/cclchy/cclchyList',                             //车次里程耗油季度汇总列表
+  qygl_yyscyszl_cclchyJDFX_export: baseURL+'/qiy/cclchy/exportCclchyExcel',       //导出车次里程耗油季度汇总列表
+  qygl_yyscyszl_kylyzsr: '/qiy/kylzsrhz/kylzsrhzList',                            //客运量与总收入汇总
+  qygl_yyscyszl_kylyzsr_export: baseURL+'/kylzsrhz/exportKylzsrhzExcel',          //导出客运量与总收入汇总
 };
 
 export default NetworkInterface;

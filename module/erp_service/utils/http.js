@@ -64,6 +64,8 @@ axios.interceptors.response.use(
           break;
         case 500:
           iView.Message.error('服务器错误');
+          debugger;
+          console.log(error);
           console.log('服务器错误');
           break;
       }

@@ -13,7 +13,7 @@
   }
 
   .text_width {
-    width: 195px;
+    width: 100px;
   }
 
   .search {
@@ -31,24 +31,42 @@
 <template>
   <div class="container">
     <h2>运营生产原始资料汇总</h2>
-    <Tabs value="name1">
+    <Tabs v-model="currentTab" @on-click="clickTab">
       <TabPane label="车次里程耗油季度汇总" name="name1">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem1" :label-width="80">
             <div class="search">
-              <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
-                            class="text_width"></DatePicker>
+              <FormItem label="开始月份" style="margin: 0">
+                <DatePicker
+                  type="month"
+                  placeholder="选择时间"
+                  :transfer="true"
+                  v-model="formItem1.startDate"
+                  style="width:120px;"
+                  @on-change="clickDate"></DatePicker>
               </FormItem>
+              <div style="margin-left: 20px;">
+                -
+              </div>
+              <FormItem label="截至月份" style="margin: 0">
+                <DatePicker
+                  type="month"
+                  placeholder="选择时间"
+                  :transfer="true"
+                  v-model="formItem1.endDate"
+                  style="width:120px;"
+                  @on-change="clickDate"></DatePicker>
+              </FormItem>
+
               <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
+                <Select v-model="formItem1.select" :transfer="true" style="width: 195px;">
+                  <Option value="第一季度">第一季度</Option>
+                  <Option value="第二季度">第二季度</Option>
+                  <Option value="第三季度">第三季度</Option>
+                  <Option value="第四季度">第四季度</Option>
                 </Select>
               </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestData">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
@@ -57,57 +75,56 @@
         </Card>
         <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-      <TabPane label="客运量与总收入季度汇总" name="name2">
 
+      <TabPane label="客运量与总收入季度汇总" name="name2">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem2" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem2.date"
                             class="text_width"></DatePicker>
               </FormItem>
               <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
+                <Select v-model="formItem2.select" :transfer="true" style="width: 195px;">
+                  <Option value="第一季度">第一季度</Option>
+                  <Option value="第二季度">第二季度</Option>
+                  <Option value="第三季度">第三季度</Option>
+                  <Option value="第四季度">第四季度</Option>
                 </Select>
               </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestData">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
             </div>
           </Form>
         </Card>
-        <!--<h4 style="margin-top: 10px;">指标名称：线路收入、收入（XX公司）</h4>-->
         <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
+
       <TabPane label="车次里程耗油月度分析" name="name3">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem3" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="date" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="date" placeholder="选择时间" :transfer="true" v-model="formItem3.date"
                             class="text_width"></DatePicker>
               </FormItem>
               <FormItem label="选择分公司" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一公司</Option>
-                  <Option value="shanghai">第二公司</Option>
-                  <Option value="shenzhen">第三公司</Option>
-                  <Option value="shenzhen">第四公司</Option>
+                <Select v-model="formItem3.select" :transfer="true" style="width: 195px;">
+                  <Option value="第一季度">第一季度</Option>
+                  <Option value="第二季度">第二季度</Option>
+                  <Option value="第三季度">第三季度</Option>
+                  <Option value="第四季度">第四季度</Option>
                 </Select>
               </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestData">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
             </div>
           </Form>
         </Card>
-
         <Table :columns="columns13" :data="data13" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
     </Tabs>
@@ -117,11 +134,25 @@
   export default {
     data () {
       return {
-        formItem: {
-          input: '',
+        currentTab: 'name1',
+        formItem1: {
           select: '',
-          date: ''
+          startDate: '',
+          endDate: '',
         },
+        formItem2: {
+          select: '',
+          startDate: '',
+          endDate: '',
+        },
+        formItem3: {
+          select: '',
+          startDate: '',
+          endDate: '',
+        },
+        tab1Data: [],
+        tab2Data: [],
+        tab3Data: [],
         columns11: [
           {
             title: '合计',
@@ -360,7 +391,66 @@
         data13: []
       }
     },
-    methods: {},
+    methods: {
+      clickDate() {
+        console.log('选择了时间!');
+        if (this.currentTab === 'name1') {
+          console.log(this.formItem1);
+        } else if (this.currentTab === 'name2') {
+          console.log(this.formItem2);
+        } else {
+          console.log(this.formItem3);
+        }
+      },
+      clickTab() {
+        this.requestData();
+      },
+      requestTab1Data() {
+        let params = {
+          nian: '',
+          startYue: '',
+          endYue: '',
+          jidu: '',
+        }
+        this.$fetch(this.$url.qygl_yyscyszl_cclchyJDFX, params)
+        .then(res => {
+          console.log(res);
+        })
+      },
+      requestTab2Data() {
+        let params = {
+          nian: '',
+          startYue: '',
+          endYue: '',
+          jidu: '',
+        }
+        this.$fetch(this.$url.qygl_yyscyszl_kylyzsr, params)
+        .then(res => {
+          console.log(res);
+        })
+      },
+      requestTab3Data() {
+        let params = {
+          nian: '',
+          startYue: '',
+          endYue: '',
+          jidu: '',
+        }
+        this.$fetch(this.$url.qygl_yyscyszl_cclchyYDFX, params)
+        .then(res => {
+          console.log(res);
+        })
+      },
+      requestData() {
+        if (this.currentTab === 'name1') {
+          this.requestTab1Data();
+        } else if (this.currentTab === 'name2') {
+          this.requestTab2Data();
+        } else {
+          this.requestTab3Data();
+        }
+      }
+    },
     mounted () {
       const data = [];
       for (let i =1; i < 10; i++) {

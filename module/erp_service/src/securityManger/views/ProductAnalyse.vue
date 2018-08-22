@@ -10,14 +10,14 @@
         <TabPane label="安全情况分析" name="name1">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div >
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab1Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab1Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab1Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -30,14 +30,14 @@
         <TabPane label="立案事故分布" name="name2">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab2Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab2Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab2Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -50,14 +50,14 @@
         <TabPane label="考核事故分布" name="name3">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab3Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab3Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab3Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -70,14 +70,14 @@
         <TabPane label="经济损失" name="name4">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab4Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab4Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab4Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -90,14 +90,14 @@
         <TabPane label="行车责任事故频率" name="name5">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab5Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab5Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab5Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -110,14 +110,14 @@
         <TabPane label="立案事故经损率指标" name="name6">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab6Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab6Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab6Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -130,14 +130,14 @@
         <TabPane label="车辆安检" name="name7">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab7Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab7Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab7Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -150,14 +150,14 @@
         <TabPane label="对外投保交强险及赔付情况" name="name8">
           <Card>
             <Form :model="formItem" :label-width="80">
-              <div>
+              <div style="display: flex;align-items: center">
                 <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab8Date"></DatePicker>
-                <RadioGroup v-model="formItem.tab8Select" style="margin-left: 20px;">
-                  <Radio label="第一季度"></Radio>
-                  <Radio label="第二季度"></Radio>
-                  <Radio label="第三季度"></Radio>
-                  <Radio label="第四季度"></Radio>
-                </RadioGroup>
+                <CheckboxGroup v-model="formItem.tab8Select" style="margin-left: 20px;">
+                  <Checkbox label="1">第一季度</Checkbox>
+                  <Checkbox label="2">第一季度</Checkbox>
+                  <Checkbox label="3">第三季度</Checkbox>
+                  <Checkbox label="4">第四季度</Checkbox>
+                </CheckboxGroup>
                 <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
                 <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="exportExcel">导出excel</Button>
               </div>
@@ -176,8 +176,10 @@
   import PATableData from './PATableData.js';
   import QuarterQuery from '../components/QuarterQuery.vue';
   import * as DateTool from '../../../utils/DateTool'
+  import Checkbox from "../../../node_modules/iview/src/components/checkbox/checkbox";
   export default {
     components: {
+      Checkbox,
       QuarterQuery
     },
     data () {
@@ -186,21 +188,21 @@
         exportURL: this.$url.security_AQQKFX_exportExcel,
         formItem: {
           tab1Date: this.initDate(),
-          tab1Select: '第一季度',
+          tab1Select: ['1'],
           tab2Date: this.initDate(),
-          tab2Select: '第一季度',
+          tab2Select: ['1'],
           tab3Date: this.initDate(),
-          tab3Select: '第一季度',
+          tab3Select: ['1'],
           tab4Date: this.initDate(),
-          tab4Select: '第一季度',
+          tab4Select: ['1'],
           tab5Date: this.initDate(),
-          tab5Select: '第一季度',
+          tab5Select: ['1'],
           tab6Date: this.initDate(),
-          tab6Select: '第一季度',
+          tab6Select: ['1'],
           tab7Date: this.initDate(),
-          tab7Select: '第一季度',
+          tab7Select: ['1'],
           tab8Date: this.initDate(),
-          tab8Select: '第一季度',
+          tab8Select: ['1'],
         },
 
         PA_Quarter_Columns: [],
@@ -272,14 +274,10 @@
       requestListData() {
         console.log('请求数据');
         let params = this.getParams();
-        let newParams = {
-          year: params.year,
-          jidu: params.jidu,
-        };
-        console.log(newParams);
         let that = this;
         if (this.currentTab === 'name1' || this.currentTab === 'name4') { // 安全生产情况分析 或者 经济损失
-          this.$fetch(this.$url.security_AQSCJTGS_list,newParams)
+          let url = this.$url.security_AQSCJTGS_list + '?year=' + params.year;
+          this.$post(url,params.jidus)
           .then(res => {
             console.log(res);
             if (res.data != null && res.data.length > 0) {
@@ -290,7 +288,8 @@
 
         }else{
           console.log('分公司数据');
-          this.$fetch(this.$url.security_AQSCFGS_list, newParams)
+          let url = this.$url.security_AQSCFGS_list + '?year=' + params.year;
+          this.$post(url, params.jidus)
           .then(res => {
             console.log(res);
             if (res.data != null && res.data.length > 0) {
@@ -304,75 +303,61 @@
         let params = this.getParams();
         let year = params.year;
         let url = params.exportURL;
-        let jidu = params.jidu;
-        url = url + '?year=' + year + '&jidu=' + jidu;
+        let jidus = params.jidus;
+        url = url + '?year=' + year + '&jidus=' + jidus;
         this.$getExcel(url);
-      },
-      convertJIDU(jiduString) {
-        let jidu = 1;
-        if (jiduString === '第一季度') {
-          jidu = 1;
-        } else if (jiduString === '第二季度') {
-          jidu = 2;
-        } else if (jiduString === '第三季度') {
-          jidu = 3;
-        } else {
-          jidu = 4;
-        }
-        return jidu;
       },
       getParams() {
         let params = {
-          jidu: '',
+          jidus: '',
           year: '',
           exportURL: ''
         };
         if (this.currentTab === 'name1') { // 安全情况分析 --- 报表导出
 
-
-          params.jidu = this.convertJIDU(this.formItem.tab1Select);
+          params.jidus = this.formItem.tab1Select;
           params.year = this.formItem.tab1Date.getFullYear();
           this.exportURL = this.$url.security_AQQKFX_exportExcel;
 
         } else if (this.currentTab === 'name2') { // 立案事故分布 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab2Select);
+          params.jidus = this.formItem.tab2Select;
           params.year = this.formItem.tab2Date.getFullYear();
           this.exportURL = this.$url.security_LASGFB_exportExcel;
 
         } else if (this.currentTab === 'name3') { // 考核事故分布 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab3Select);
+          params.jidus = this.formItem.tab3Select;
           params.year = this.formItem.tab3Date.getFullYear();
           this.exportURL = this.$url.security_KHSGFB_exportExcel;
 
         } else if (this.currentTab === 'name4') { // 经济损失 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab4Select);
+          params.jidus = this.formItem.tab4Select;
           params.year = this.formItem.tab4Date.getFullYear();
           this.exportURL = this.$url.security_JJSS_exportExcel;
 
         } else if (this.currentTab === 'name5') { // 行车责任事故频率 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab5Select);
+          params.jidus = this.formItem.tab5Select;
           params.year = this.formItem.tab5Date.getFullYear();
           this.exportURL = this.$url.security_SCZRSGPL_exportExcel;
 
         } else if (this.currentTab === 'name6') { // 立案事故经损率指标 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab6Select);
+          params.jidus = this.formItem.tab6Select;
           params.year = this.formItem.tab6Date.getFullYear();
           this.exportURL = this.$url.security_LASGJSLZB_exportExcel;
 
         } else if (this.currentTab === 'name7') { // 车辆安检 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab7Select);
+          params.jidus = this.formItem1.tab7Select;
           params.year = this.formItem.tab7Date.getFullYear();
           this.exportURL = this.$url.security_CLAJ_exportExcel;
 
         } else { // 对外投保交强险及赔付情况 --- 报表导出
 
-          params.jidu = this.convertJIDU(this.formItem.tab8Select);
+          params.jidus = this.formItem.tab8Select;
           params.year = this.formItem.tab8Date.getFullYear();
           this.exportURL = this.$url.security_DWTBJQXJPF_exportExcel;
         }

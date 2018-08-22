@@ -8,7 +8,7 @@
           <!--<div style="width: 120px">{{formValidate.larq}}</div>-->
         <!--</FormItem>-->
         <FormItem label="事故性质">
-          <div style="width: 120px">{{formValidate.sgxz}}</div>
+          <div style="width: 120px">{{SGXZ}}</div>
         </FormItem>
         <FormItem label="事故总损失(元)">
           <div style="width: 120px">{{SGZSS}}</div>
@@ -66,7 +66,7 @@
           <!--<DatePicker v-model="formValidate.lasj" type="date" placeholder="Select date" style="width: 120px"></DatePicker>-->
         <!--</FormItem>-->
         <FormItem prop="lalx" label="立案状态">
-          <Input v-model="formValidate.lalx" placeholder="立案状态..." style="width: 120px"></Input>
+          <div style="width: 120px">{{formValidate.lalx}}</div>
         </FormItem>
         <FormItem prop="bar" label="报案人">
           <Input v-model="formValidate.bar" placeholder="报案人..." style="width: 120px"></Input>
@@ -74,8 +74,11 @@
         <FormItem prop="kcr" label="勘察人">
           <Input v-model="formValidate.kcr" placeholder="勘察人..." style="width: 120px"></Input>
         </FormItem>
-        <FormItem prop="ssrs" label="受伤人数">
-          <Input v-model="formValidate.ssrs" placeholder="受伤人数..." style="width: 120px"></Input>
+        <FormItem prop="qsrs" label="轻伤人数">
+          <Input v-model="formValidate.qsrs" placeholder="轻伤人数..." style="width: 120px"></Input>
+        </FormItem>
+        <FormItem prop="zsrs" label="重伤人数">
+          <Input v-model="formValidate.zsrs" placeholder="重伤人数..." style="width: 120px"></Input>
         </FormItem>
         <FormItem prop="swrs" label="死亡人数">
           <Input v-model="formValidate.swrs" placeholder="死亡人数..." style="width: 120px"></Input>
@@ -127,7 +130,8 @@
         sgxz: String,
         kf: String,
         bz: String,
-        swrs: String,
+        qsrs: String,
+        zsrs: String,
         ssrs: String,
         gjjcs: String,
         gjjcn: String,
@@ -157,9 +161,6 @@
           ],
           dd: [
             { required: true, message: '此项不能为空', trigger: 'blur' },
-          ],
-          lalx: [
-            { required: true, message: '此项不能为空', trigger: 'blur' }
           ],
           lb: [
             { required: true, message: '此项不能为空', trigger: 'blur' }
@@ -195,27 +196,41 @@
         return Number(this.formValidate.gjjcs)+Number(this.formValidate.gjjcn)+Number(this.formValidate.gjjsz)+Number(this.formValidate.jqxss);
       },
       SGXZ() {
+        let qsrs = Number(this.formValidate.qsrs);
+        let zsrs = Number(this.formValidate.zsrs);
         let swrs = Number(this.formValidate.swrs);
-        let ssrs = Number(this.formValidate.ssrs);
         let sgzss = Number(this.formValidate.gjjcs)+Number(this.formValidate.gjjcn)+Number(this.formValidate.gjjsz)+Number(this.formValidate.jqxss);
         let result = '';
-        if (swrs>=30 || ssrs>=100 || sgzss>=100000000) {
-          result = '特别重大事故';
-        } else if ((swrs>=10 && swrs<30) || (ssrs>=50 && ssrs<100) || (sgzss>=50000000 && sgzss<100000000)) {
-          result = '重大事故';
-        } else if ((swrs>=3 && swrs<10) || (ssrs>=10 && ssrs<50) || (sgzss>=10000000 && sgzss<50000000)) {
-          result = '较大事故';
-        } else if (1<=swrs<3 || 1<=ssrs<10 || (sgzss>=500000 && sgzss<10000000)) {
-          result = '一般事故';
-        }else if (swrs==0&&ssrs==0&&sgzss>=300000 && sgzss<500000) {
-          result = '一级轻微事故';
-        }else if (swrs==0&&ssrs==0&&sgzss>=50000 && sgzss<300000) {
-          result = '二级轻微事故';
-        }else if (swrs==0&&ssrs==0&&sgzss>=10000 && sgzss<500000) {
+
+        if (sgzss >= 10000 && sgzss < 50000 && qsrs > 0 && qsrs <= 3) {
           result = '三级轻微事故';
-        }else{
-          result = '极其轻微事故';
         }
+
+        if (sgzss >= 50000 && sgzss < 300000 && qsrs > 3 && qsrs <= 10) {
+          result = '二级轻微事故';
+        }
+
+        if (sgzss >= 300000 && sgzss < 500000 && qsrs > 10 && qsrs <= 50) {
+          result = '三级轻微事故';
+        }
+
+        if ((zsrs > 0 && zsrs <= 10) || (swrs > 0 && swrs <= 3) || (sgzss >= 500000 && sgzss <10000000)) {
+          result = '一般事故';
+        }
+
+        if ((zsrs > 10 && zsrs <= 50) || (swrs > 3 && swrs <= 10) || (sgzss >= 10000000 && sgzss <50000000)) {
+          result = '较大事故';
+        }
+
+        if ((zsrs > 50 && zsrs <= 100) || (swrs > 10 && swrs <= 30) || (sgzss >= 50000000 && sgzss <100000000)) {
+          result = '重大事故';
+        }
+
+        if (zsrs > 100 || swrs > 30 || sgzss >= 100000000) {
+          result = '特别重大事故';
+        }
+
+        console.log(result);
         return result;
       }
     },

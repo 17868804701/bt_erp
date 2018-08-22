@@ -375,8 +375,11 @@
         this.requestListData();
       },
       requestListData() {
+        let year = this.formItem.date.getFullYear();
+        let month = this.formItem.date.getMonth()+1;
         let params = {
-          time: DateTool.yyyyddFormatDate(this.formItem.date),
+          year: year,
+          month: month
         }
         console.log('安全管理月考核表请求数据');
         console.log(params);

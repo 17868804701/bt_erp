@@ -464,7 +464,7 @@
       // *********  验收单   ********** //
       checkYSXM() {
 //        console.log('选择了验收项目');
-//        console.log(this.ysdBindData);
+        console.log(this.ysdBindData);
         let ysdSelectValues = JSON.stringify(this.ysdBindData);
         let params = {
           ysxmmc: ysdSelectValues,

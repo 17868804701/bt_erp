@@ -12,7 +12,7 @@
       title="新增立案事故登记"
       width="50%">
       <div slot="footer" style="height: 30px;">
-        <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddAccident">登记进场</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddAccident">保存</Button>
         <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddAccident">取消</Button>
       </div>
       <AddAccidentDiv ref="AddAccidentDiv" :formValidate="formValidate"/>
@@ -49,7 +49,7 @@
       </Form>
     </Card>
     <!--表格-->
-    <Table style="margin-top: 10px;" :data="tableData" border :columns="initTableColumns" border></Table>
+    <Table style="margin-top: 10px;" :row-class-name="rowColor" :data="tableData" border :columns="initTableColumns" border></Table>
     <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
   </div>
 </template>
@@ -90,15 +90,16 @@
           zbh: '',
           jsyxm: '',
           lb: '',
-          lalx: '',
+          lalx: '立案',
           bar: '',
           kcr: '',
           sgsx: [],
-          sgxz: '较大事故',
+          sgxz: '',
           kf: '',
           bz: '',
           swrs: 0,
-          ssrs: 0,
+          qsrs: 0,
+          zsrs: 0,
           gjjcs: 0,
           gjjcn: 0,
           gjjsz: 0,
@@ -123,7 +124,8 @@
           zjkf: 0,
           zjsz: 0,
           bz: 0,
-        }
+        },
+        LALXDict: {},
       }
     },
     computed: {
@@ -224,6 +226,16 @@
       },
     },
     methods: {
+      rowColor(row, index) {
+        if (row.lalx === '结案') {
+          return 'status-ja';
+        } else if (row.lalx === '销案') {
+          return 'status-xa';
+        } else {
+          return 'status-la';
+        }
+        return 'status-la';
+      },
       search() {
         console.log('搜索查询');
         this.requestListData();
@@ -272,6 +284,19 @@
       },
 
       // ***********  network ********** //
+      requestLALXDict() {
+        this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'LALX'})
+        .then(res => {
+          console.log(res);
+          if (res.success === true) {
+            let dicts = {};
+            res.cDic.forEach(item => {
+              dicts[item.code] = item.title;
+            })
+            this.LALXDict = dicts;
+          }
+        })
+      },
       requestListData() {
         let params = {};
         console.log(this.searchOptions);
@@ -291,6 +316,9 @@
           this.tableData = res.data.records;
           this.totalSize = res.data.total;
           this.searchOptions.current = res.data.current;
+          this.tableData.forEach(item => {
+            item.lalx = this.LALXDict[item.lalx];
+          })
         })
       },
       setPage(page) {
@@ -308,9 +336,10 @@
         params.zr = '责任';
         params.gjjhj = params.gjjsz+params.gjjcn+params.gjjcs;
         params.sgzss = params.gjjhj+params.jqxss;
-        params.sgxz = this.SGXZ;
-        console.log(params);
+        params.sgxz = this.SGXZ();
 
+        console.log(params);
+        debugger;
         this.$post(this.$url.security_LASG_add, params)
         .then(res => {
           console.log(res);
@@ -372,32 +401,74 @@
       },
       // action
       SGXZ() {
+        let qsrs = Number(this.formValidate.qsrs);
+        let zsrs = Number(this.formValidate.zsrs);
         let swrs = Number(this.formValidate.swrs);
-        let ssrs = Number(this.formValidate.ssrs);
         let sgzss = Number(this.formValidate.gjjcs)+Number(this.formValidate.gjjcn)+Number(this.formValidate.gjjsz)+Number(this.formValidate.jqxss);
         let result = '';
-        if (swrs>=30 || ssrs>=100 || sgzss>=100000000) {
-          result = '特别重大事故';
-        } else if ((swrs>=10 && swrs<30) || (ssrs>=50 && ssrs<100) || (sgzss>=50000000 && sgzss<100000000)) {
-          result = '重大事故';
-        } else if ((swrs>=3 && swrs<10) || (ssrs>=10 && ssrs<50) || (sgzss>=10000000 && sgzss<50000000)) {
-          result = '较大事故';
-        } else if (swrs<3 || ssrs<10 || (sgzss>=500000 && sgzss<10000000)) {
-          result = '一般事故';
-        }else if (sgzss>=300000 && sgzss<500000) {
-          result = '一级轻微事故';
-        }else if (sgzss>=50000 && sgzss<300000) {
-          result = '二级轻微事故';
-        }else if (sgzss>=10000 && sgzss<500000) {
+
+        if (sgzss >= 10000 && sgzss < 50000 && qsrs > 0 && qsrs <= 3) {
           result = '三级轻微事故';
-        }else{
-          result = '极其轻微事故';
+          result = 'SJQW';
+        }
+
+        if (sgzss >= 50000 && sgzss < 300000 && qsrs > 3 && qsrs <= 10) {
+          result = '二级轻微事故';
+          result = 'EJQW';
+        }
+
+        if (sgzss >= 300000 && sgzss < 500000 && qsrs > 10 && qsrs <= 50) {
+          result = '三级轻微事故';
+          result = 'YJQW';
+        }
+
+        if ((zsrs > 0 && zsrs <= 10) || (swrs > 0 && swrs <= 3) || (sgzss >= 500000 && sgzss <10000000)) {
+          result = '一般事故';
+          result = 'YBSG';
+        }
+
+        if ((zsrs > 10 && zsrs <= 50) || (swrs > 3 && swrs <= 10) || (sgzss >= 10000000 && sgzss <50000000)) {
+          result = '较大事故';
+          result = 'JDSG';
+        }
+
+        if ((zsrs > 50 && zsrs <= 100) || (swrs > 10 && swrs <= 30) || (sgzss >= 50000000 && sgzss <100000000)) {
+          result = '重大事故';
+          result = 'ZDSG';
+        }
+
+        if (zsrs > 100 || swrs > 30 || sgzss >= 100000000) {
+          result = '特别重大事故';
+          result = 'TDSG';
         }
         return result;
       }
     },
     mounted () {
       this.requestListData();
+      this.requestLALXDict();
+    },
+    watch: {
+      LALXDict() {
+        console.log('立案状态的数据字典更新了');
+        this.tableData.forEach(item => {
+          item.lalx = this.LALXDict[item.lalx];
+        })
+      }
     }
   }
 </script>
+
+<style>
+  .ivu-table .status-ja td{
+    background-color: #19be6b;
+    color: #fff;
+  }
+  .ivu-table .status-xa td{
+    background-color: #fff;
+  }
+  .ivu-table .status-la td{
+    background-color: #5cadff;
+    color: #fff
+  }
+</style>

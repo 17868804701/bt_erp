@@ -137,7 +137,11 @@
         this.requestListData();
       },
       requestListData() {
-        this.$fetch(this.$url.maintain_BYGL_YSDGL_recordList, this.formItem)
+        let params = {};
+        params.date = DateTool.yyyymm01FormatDate(this.formItem.date);
+        params.currPage = this.formItem.currPage;
+        params.pageSize = this.formItem.pageSize;
+        this.$fetch(this.$url.maintain_BYGL_YSDGL_recordList, params)
         .then(res=>{
           if (res.code === 0) {
             res.page.list.forEach(item => {

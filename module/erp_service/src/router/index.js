@@ -32,6 +32,7 @@ import ccsrtz from '../enterpriseManger/ccsrtz.vue'
 import yyscyl from '../enterpriseManger/yyscyl.vue'
 import xlxyhjjhdfx from '../enterpriseManger/xlxyhjjhdfx.vue'
 import jjzbwcqk from '../enterpriseManger/jjzbwcqk.vue'
+import jjhdfx from '../enterpriseManger/jjhdfx.vue'
 
 // 维修养护管理
 import MainMM from '../maintenanceMaintenanceManger/views/MainMM.vue'
@@ -156,9 +157,14 @@ const route = [
   }, {
     path: '/xlxyhjjhdfx',
     component: xlxyhjjhdfx
-  }, {
+  },
+  {
     path: '/jjzbwcqk',
     component: jjzbwcqk
+  },
+  {
+    path: '/jjhdfx',
+    component: jjhdfx
   },
   {
     path: '/MMDetail',

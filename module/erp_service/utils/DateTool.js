@@ -50,6 +50,9 @@ export function yyyymmddFormatDate(date) {
 
 // 转换成  某年某月1号格式
 export function yyyymm01FormatDate(date) {
+  if (date === null || date === '') {
+    return '';
+  }
   let year = date.getFullYear();
   let month = date.getMonth() + 1;
   if(month<10){

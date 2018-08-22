@@ -121,6 +121,9 @@
                 <a :href="url+'xlxyhjjhdfx'" target="erp_main">
                   <MenuItem name="4-5">线路效益和经济活动</MenuItem>
                 </a>
+                <a :href="url+'jjhdfx'" target="erp_main">
+                  <MenuItem name="4-6">经济活动分析</MenuItem>
+                </a>
                 <a :href="url+'jjzbwcqk'" target="erp_main">
                   <MenuItem name="4-7">经济指标完成情况</MenuItem>
                 </a>

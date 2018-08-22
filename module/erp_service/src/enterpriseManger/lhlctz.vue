@@ -71,7 +71,7 @@
                   <Option value="公交四公司">公交四公司</Option>
                 </Select>
               </FormItem>
-              <Button type="primary " icon="ios-search" class="search_btn" @click="requestFGSData">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestFGSData">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download" @click="exportFGSExcel">导出Excel</Button>
               </div>

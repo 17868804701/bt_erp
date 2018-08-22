@@ -313,7 +313,7 @@
       },
       requestListData() {
         let params = {};
-        params.date = DateTool.yyyyddFormatDate(this.formItem.date);
+        params.date = DateTool.yyyymm01FormatDate(this.formItem.date);
         params.currPage = this.formItem.currPage;
         params.pageSize = this.formItem.pageSize;
         console.log(params);

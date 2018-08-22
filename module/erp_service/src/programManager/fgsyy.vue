@@ -10,76 +10,66 @@
       style="height: auto"
       :scrollable="true"
       @on-cancel="cancel">
-      <Form :model="formItem" :label-width="90">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="add">新增
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
+      </div>
+      <Form :model="formItem1" :label-width="90">
         <div style="display: flex;flex-wrap: wrap">
-          <FormItem label="年份">
-            <DatePicker type="year" placeholder="选择年份" v-model="formItem.date" style="width: 195px;"></DatePicker>
-          </FormItem>
-          <FormItem label="路别">
-            <Select v-model="formItem.select" style="width: 195px;">
-              <Option value="beijing">1路</Option>
-              <Option value="shanghai">2路</Option>
-              <Option value="shenzhen">3路</Option>
+        <FormItem label="年份">
+          <DatePicker type="year" placeholder="选择年份" v-model="formItem1.nf" style="width: 195px;"></DatePicker>
+        </FormItem>
+        <FormItem label="路别">
+          <Select v-model="formItem1.lb" style="width: 195px;">
+            <Option value="1路">1路</Option>
+            <Option value="2路">2路</Option>
+            <Option value="3路">3路</Option>
+          </Select>
+        </FormItem>
+          <FormItem label="公司名">
+            <Select v-model="formItem1.gsm" style="width: 195px;">
+              <Option value="一公司">一公司</Option>
+              <Option value="二公司">二公司</Option>
+              <Option value="三公司">三公司</Option>
             </Select>
           </FormItem>
-          <FormItem label="班车数量">
-            <Input v-model="formItem.input" placeholder="班车数量" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="备用">
-            <Input v-model="formItem.input" placeholder="备用" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="合计">
-            <Input v-model="formItem.input" placeholder="合计" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="日车次">
-            <Input v-model="formItem.input" placeholder="日车次" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="年度车次">
-            <Input v-model="formItem.input" placeholder="年度车次" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="路线长度">
-            <Input v-model="formItem.input" placeholder="路线长度" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="运营日里程">
-            <Input v-model="formItem.input" placeholder="运营日里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="运营年度里程">
-            <Input v-model="formItem.input" placeholder="运营年度里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="日出入库里程">
-            <Input v-model="formItem.input" placeholder="日出入库里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="年度里程">
-            <Input v-model="formItem.input" placeholder="年度里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="日加气里程">
-            <Input v-model="formItem.input" placeholder="日加气里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="年度里程">
-            <Input v-model="formItem.input" placeholder="年度里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="小计">
-            <Input v-model="formItem.input" placeholder="小计" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="备用年度里程">
-            <Input v-model="formItem.input" placeholder="备用车年度里程" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="合计">
-            <Input v-model="formItem.input" placeholder="合计" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="说明">
-            <Input v-model="formItem.input" placeholder="说明" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="出入库台数">
-            <Input v-model="formItem.input" placeholder="出入库台数" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="加气台数">
-            <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="出入库说明">
-            <Input v-model="formItem.textarea" style="width: 480px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
-                   placeholder="出入库说明"></Input>
-          </FormItem>
+        <FormItem label="班车数量">
+          <Input v-model="formItem1.bcs" placeholder="班车数量" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="备用车数">
+          <Input v-model="formItem1.bys" placeholder="备用车数量" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="日车次">
+          <Input v-model="formItem1.rcc" placeholder="日车次" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="路线长度">
+          <Input v-model="formItem1.xlcd" placeholder="路线长度" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="运营日里程">
+          <Input v-model="formItem1.rlc" placeholder="运营日里程" style="width: 195px;"/>
+        </FormItem>
+        </div>
+      </Form>
+
+      <Form :model="formItem2" :label-width="90">
+        <div style="display: flex;flex-wrap: wrap">
+        <FormItem label="日出入库里程">
+          <Input v-model="formItem2.rcrklc" placeholder="日出入库里程" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="日加气里程">
+          <Input v-model="formItem2.rjqlc" placeholder="日加气里程" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="出入库台数">
+          <Input v-model="formItem2.crkts" placeholder="出入库台数" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="加气台数">
+          <Input v-model="formItem2.jqts" placeholder="加气台数" style="width: 195px;"/>
+        </FormItem>
+        <FormItem label="出入库说明">
+          <Input v-model="formItem2.crksm" style="width: 480px;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+                 placeholder="出入库说明"></Input>
+        </FormItem>
         </div>
       </Form>
     </Modal>
@@ -93,36 +83,44 @@
       style="height: auto"
       :scrollable="true"
       @on-cancel="cancel">
-      <Form :model="formItem" :label-width="90">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="update">确定
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
+      </div>
+      <Form :model="editItem" :label-width="90">
         <div style="display: flex;flex-wrap: wrap">
           <FormItem label="出入库台数">
-            <Input v-model="formItem.input" placeholder="出入库台数" style="width: 195px;"/>
+            <Input v-model="editItem.crkts" placeholder="出入库台数" style="width: 195px;"/>
           </FormItem>
           <FormItem label="加气台数">
-            <Input v-model="formItem.input" placeholder="加气台数" style="width: 195px;"/>
+            <Input v-model="editItem.jqts" placeholder="加气台数" style="width: 195px;"/>
           </FormItem>
           <FormItem label="出入库说明">
-            <Input v-model="formItem.textarea" style="width: 200%;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+            <Input v-model="editItem.crksm" style="width: 200%;" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                    placeholder="出入库说明"></Input>
           </FormItem>
         </div>
       </Form>
     </Modal>
     <Card>
-      <Form :model="formItem" :label-width="80">
-        <Row>
-          <Col span="24">
+      <Form :model="searchItem" :label-width="80">
+        <div style="display: flex;flex-wrap: wrap">
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
-                        v-model="formItem.year"></DatePicker>
-            <Button type="primary" icon="ios-search">搜索</Button>
-            <Button type="primary" icon="android-download" @click="addProgram=true"
-                    style="position: absolute;right: 110px;">新增计划
-            </Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
+                        v-model="searchItem.year"></DatePicker>
           </FormItem>
-          </Col>
-        </Row>
+          <FormItem label="公司名" style="margin: 0">
+            <Select v-model="searchItem.gsm" style="width: 195px;">
+              <Option value="四公司">四公司</Option>
+            </Select>
+          </FormItem>
+          <Button type="primary" icon="ios-search" style="position: relative;margin-left: 20px;" @click="sousuo">搜索</Button>
+          <Button type="primary" icon="android-download" @click="addProgram=true"
+                  style="position: absolute;right: 130px;">新增计划
+          </Button>
+          <Button type="primary" icon="android-download" style="position: absolute;right: 20px;" @click="daochu">导出excel</Button>
+        </div>
       </Form>
     </Card>
     <Table :columns="columns11" :data="data10" border height="515" size="small" style="margin-top: 20px;"></Table>
@@ -139,29 +137,58 @@
     data () {
       return {
         addProgram: false,
-        editProgram:false,
-        formItem: {
-          input: '',
-          textarea: '',
-          date: '',
-          select: ''
+        editProgram: false,
+        formItem1: {
+          lb: '',
+          bcs: '',
+          bys: '',
+          rcc: '',
+          xlcd:'',
+          rlc:'',
+          nf:'',
+          gsm:''
+        },
+        formItem2:{
+          rcrklc:'',
+          rjqlc:'',
+          crkts:'',
+          jqts:'',
+          crksm:''
+        },
+        editItem: {
+          id: '',
+          crksm: '',
+          crkts: '',
+          jqts: ''
+        },
+        searchItem: {
+          year: '',
+          gsm:'',
+          current: 1,
+          size: 10
         },
         columns11: [
           {
             title: '年份',
-            key: 'name',
+            key: 'nf',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '公司名',
+            key: 'gsm',
             align: 'center',
             width: 100,
           },
           {
             title: '路别',
             key: 'lb',
-            width: 100,
             align: 'center',
+            width: 100,
           },
           {
             title: '路线长度',
-            key: 'age',
+            key: 'xlcd',
             align: 'center',
             width: 100,
           },
@@ -171,19 +198,19 @@
             children: [
               {
                 title: '班车',
-                key: 'age',
+                key: 'bcs',
                 align: 'center',
                 width: 100,
               },
               {
                 title: '备用',
-                key: 'age',
+                key: 'bys',
                 align: 'center',
                 width: 100,
               },
               {
                 title: '合计',
-                key: 'age',
+                key: 'xj',
                 align: 'center',
                 width: 100,
               },
@@ -195,13 +222,13 @@
             children: [
               {
                 title: '日车次',
-                key: 'age',
+                key: 'rcc',
                 align: 'center',
                 width: 100,
               },
               {
                 title: '年度车次',
-                key: 'age',
+                key: 'ndcc',
                 align: 'center',
                 width: 100,
               },
@@ -214,13 +241,13 @@
             children: [
               {
                 title: '日里程',
-                key: 'age',
+                key: 'rlc',
                 align: 'center',
                 width: 100,
               },
               {
                 title: '年度里程',
-                key: 'age',
+                key: 'ndlc',
                 align: 'center',
                 width: 100,
               },
@@ -232,38 +259,24 @@
             children: [
               {
                 title: '出入库加气里程',
-                key: 'age',
                 align: 'center',
                 width: 100,
-//               ,
                 children: [
                   {
                     title: '日出入库里程',
-                    key: 'age',
+                    key: 'rcrklc',
                     align: 'center',
                     width: 100,
                   },
                   {
                     title: '年度里程',
-                    key: 'age',
+                    key: 'crkndlc',
                     align: 'center',
                     width: 100,
                   },
                   {
                     title: '日加气里程',
-                    key: 'age',
-                    align: 'center',
-                    width: 100,
-                  },
-                  {
-                    title: '年度里程',
-                    key: 'age',
-                    align: 'center',
-                    width: 100,
-                  },
-                  {
-                    title: '小计',
-                    key: 'age',
+                    key: 'rjqlc',
                     align: 'center',
                     width: 100,
                   }
@@ -271,45 +284,35 @@
               },
               {
                 title: '备用车年度里程',
-                key: 'age',
+                key: 'bycndlc',
                 align: 'center',
                 width: 100,
               },
               {
                 title: '合计',
-                key: 'age',
+                key: 'fyyxj',
                 align: 'center',
                 width: 100,
               },
             ]
           },
           {
-            title: '年度总里程',
-            align: 'center',
-          },
-          {
             title: '出入库台数',
-            key: 'gender1',
+            key: 'jqts',
             align: 'center',
-            width: 120,
-            fixed: 'right',
-            editable: true
+            width: 80,
           },
           {
             title: '加气台数',
-            key: 'gender2',
+            key: 'jqts',
             align: 'center',
-            width: 100,
-            fixed: 'right',
-            editable: true
+            width: 80,
           },
           {
             title: '出入库说明',
-            key: 'gender3',
+            key: 'crksm',
             align: 'center',
             width: 220,
-            fixed: 'right',
-            editable: true
           },
           {
             title: '操作',
@@ -320,20 +323,6 @@
               return h('div', [
                 h('Button', {
                   props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index)
-                    }
-                  }
-                }, '删除'),
-                h('Button', {
-                  props: {
                     type: 'primary',
                     size: 'small'
                   },
@@ -342,10 +331,37 @@
                   },
                   on: {
                     click: () => {
-                      this.editProgram = true
+                      this.editProgram = true;
+                      this.editItem.id = params.row.id;
+                      this.editItem.crksm = params.row.crksm;
+                      this.editItem.crkts = params.row.crkts;
+                      this.editItem.jqts = params.row.jqts
                     }
                   }
-                }, '修改')
+                }, '修改'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.$fetch(this.$url.delFgsjh + '?id=' + params.row.id)
+                        .then(res => {
+                          console.log(res)
+                          if (res.success === true) {
+                            this.$Message.info('删除成功')
+                            this.list()
+                          } else {
+                            this.$Message.error('删除失败')
+                          }
+                        })
+                    }
+                  }
+                }, '删除')
               ]);
             }
           }
@@ -358,28 +374,86 @@
         this.$Message.info('Clicked ok');
       },
       cancel () {
-        this.$Message.info('Clicked cancel');
+        this.$Message.info('取消');
+        this.formItem1 = {}
+        this.formItem2 = {}
       },
+      update: function () {
+        console.log(this.editItem)
+        this.$post(this.$url.updateFgssrjh + '?id=' + this.editItem.id + '&crksm=' + this.editItem.crksm + '&jqts=' + this.editItem.jqts + '&crkts=' + this.editItem.crkts)
+          .then(res => {
+            console.log(res)
+            if (res.success === true) {
+              this.$Message.info('修改成功')
+              this.editProgram = false
+              this.list()
+
+            } else {
+              this.$Message.error('修改失败')
+            }
+          })
+      },
+      add:function () {
+        console.log(this.formItem1)
+        console.log(this.formItem2)
+        if(this.formItem1.nf===''||this.formItem1.lb===''){
+            this.$Message.error('请输入年份或者路别')
+        }else {
+            this.formItem1.nf=this.$formatDate(this.formItem1.nf).substring(0,4)
+            let obj = {
+              yyscjh:this.formItem1,
+              fyylc:this.formItem2
+            }
+            console.log(obj)
+            this.$post(this.$url.addFgsyyjh, obj)
+              .then(res => {
+                if (res.success === true) {
+                  this.$Message.info('添加成功');
+                  this.addProgram = false
+                  this.formItem1 = {}
+                  this.formItem2 = {}
+                  this.list()
+                }else {
+                  this.$Message.info('添加失败')
+                }
+              })
+        }
+      },
+      list: function () {
+        this.$fetch(this.$url.fgsyyList, this.searchItem)
+          .then(res => {
+            console.log(res, '集团')
+            if (res.success === true) {
+              if (res.data.total === 0) {
+                this.$Message.info('暂无信息');
+                this.data10 = res.data.records;
+                this.totalPage = res.data.total
+              } else {
+                this.data10 = res.data.records;
+                this.totalPage = res.data.total
+              }
+            }
+          })
+      },
+      daochu:function () {
+        if(this.searchItem.year==''){
+          this.searchItem.year=''
+        }else {
+          this.searchItem.year = this.$formatDate(this.searchItem.year).substring(0,4)
+        }
+        this.$getExcel(process.env.BASE_URL + this.$url.fgsyyjhdc+'?year='+this.searchItem.year+'&gsm='+this.searchItem.gsm)
+      },
+      sousuo:function () {
+        if(this.searchItem.year==''){
+          this.searchItem.year=''
+        }else {
+          this.searchItem.year = this.$formatDate(this.searchItem.year).substring(0,4)
+        }
+        this.list()
+      }
     },
     mounted () {
-      const data = [];
-      for (let i = 0; i < 10; i++) {
-        data.push({
-          lb: '1' + i + '2',
-          key: i,
-          name: '2018年',
-          age: i + 1,
-          street: 'Lake Park',
-          building: 'C',
-          door: 2035,
-          caddress: 'Lake Street 42',
-          cname: 'SoftLake Co',
-          gender3: '这里是说明，可以修改的哦',
-          gender2: i + 25,
-          gender1: '21',
-        });
-        this.data10 = data;
-      }
+      this.list()
     }
   }
 </script>

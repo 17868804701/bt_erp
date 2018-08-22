@@ -6,15 +6,15 @@
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="请选择年份" :transfer="true" placement="bottom-end"
-                        v-model="formItem.year"></DatePicker>
+                        v-model="formItem.nf"></DatePicker>
             <Button type="primary" icon="ios-search" @click="search">搜索</Button>
 
 
-            <Button type="primary" icon="android-download" @click="exports=true"
-                    style="float: right;margin-right: 10px;">导入计划表
-            </Button>
+            <!--<Button type="primary" icon="android-download" @click="exports=true"-->
+            <!--style="float: right;margin-right: 10px;">导入计划表-->
+            <!--</Button>-->
             <Button type="primary" icon="android-download"
-                    style="float: right;margin-right: 10px">导出Excel
+                    style="float: right;margin-right: 10px" @click="daochu">导出Excel
             </Button>
             <Button type="primary" icon="plus" @click="addProgram=true"
                     style="float: right;margin-right: 10px;">新增
@@ -57,7 +57,8 @@
       style="height: 500px;"
       @on-cancel="quxiao">
       <div slot="footer" style="height: 30px;">
-        <Button type="primary" style="float: right;margin-right: 10px" @click="xiugai" v-if="this.type=='edit'">修改</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="xiugai" v-if="this.type=='edit'">修改
+        </Button>
         <Button type="primary" style="float: right;margin-right: 10px" @click="save('formItem1')" v-else>确定
         </Button>
         <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
@@ -100,7 +101,7 @@
       return {
         addProgram: false,
         exports: false,
-        type:'',
+        type: '',
         formItem: {
           nf: '',
           current: 1,
@@ -112,11 +113,11 @@
           ], lb: [
             {required: true, message: '必填字段', trigger: 'change'}
           ], jhsj: [
-            {required: true, message: '必填字段', trigger: 'blur',type:'date'}
+            {required: true, message: '必填字段', trigger: 'blur', type: 'date'}
           ], ndjh: [
             {required: true, message: '必填字段', trigger: 'blur'}
           ], nf: [
-            {required: true, message: '必填字段', trigger: 'blur',type:'date'}
+            {required: true, message: '必填字段', trigger: 'blur', type: 'date'}
           ],
         },
         formItem1: {
@@ -168,13 +169,13 @@
                   on: {
                     click: () => {
                       console.log(params.row.id)
-                      this.$fetch(this.$url.delFgssrjh, {id:params.row.id})
+                      this.$fetch(this.$url.delFgssrjh, {id: params.row.id})
                         .then(res => {
                           console.log(res)
                           if (res.success === true) {
-                              this.$Message.info('删除成功')
-                              this.list()
-                          }else {
+                            this.$Message.info('删除成功')
+                            this.list()
+                          } else {
                             this.$Message.error('删除失败')
                           }
                         })
@@ -213,7 +214,7 @@
         this.$Message.error('操作失败');
         this.list();
         this.type = '',
-        this.formItem1 = {}
+          this.formItem1 = {}
         this.addProgram = false
       },
       list: function () {
@@ -247,10 +248,10 @@
               .then(res => {
                 console.log(res)
                 if (res.success === true) {
-                    this.$Message.info('添加成功')
-                    this.list();
-                    this.formItem1 = {}
-                    this.addProgram = false
+                  this.$Message.info('添加成功')
+                  this.list();
+                  this.formItem1 = {}
+                  this.addProgram = false
                 }
               })
           } else {
@@ -259,19 +260,19 @@
         });
       },
       search: function () {
-        if (this.formItem.year == '') {
-          this.formItem.year = ''
+        if (this.formItem.nf == '') {
+          this.formItem.nf = ''
         } else {
-          this.formItem.year = this.$formatDate(this.formItem.year).substring(0, 4)
+          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
         }
         console.log(this.formItem)
         this.list()
       },
-      xiugai:function () {
+      xiugai: function () {
         console.log(this.formItem1)
         this.formItem1.nf = this.$formatDate(this.formItem1.nf).substring(0, 4)
         this.formItem1.jhsj = this.$formatDate(this.formItem1.jhsj).substring(0, 10)
-        this.$post(this.$url.updateFgssrjh,this.formItem1)
+        this.$post(this.$url.updatefgssrjh,this.formItem1)
           .then(res => {
             console.log(res)
             if (res.success === true) {
@@ -282,7 +283,16 @@
               this.$Message.error('修改失败')
             }
           })
-      }
+      },
+
+      daochu: function () {
+        if(this.formItem.nf==''){
+          this.formItem.nf=''
+        }else {
+          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0,4)
+        }
+        this.$getExcel(process.env.BASE_URL + this.$url.fgssrjhdc+'?nf='+this.formItem.nf)
+      },
     },
     mounted () {
       this.list()

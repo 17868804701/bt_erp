@@ -6,9 +6,9 @@
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
-                        v-model="formItem.year"></DatePicker>
+                        v-model="formItem.nf"></DatePicker>
             <Button type="primary" icon="ios-search" @click="search">搜索</Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0">导出excel</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="daochu">导出excel</Button>
           </FormItem>
           </Col>
         </Row>
@@ -24,10 +24,15 @@
       style="height: auto"
       :scrollable="true"
       @on-cancel="cancel">
-      <Form :model="formItem" :label-width="90">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="update">确定
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
+      </div>
+      <Form :model="editCrksm" :label-width="90">
         <div style="display: flex;flex-wrap: wrap">
           <FormItem label="出入库说明">
-            <Input v-model="formItem.textarea" style="width:200%" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+            <Input v-model="editCrksm.crksm" style="width:200%" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                    placeholder="出入库说明"></Input>
           </FormItem>
         </div>
@@ -41,9 +46,13 @@
     data () {
       return {
         formItem: {
-          year: '',
+          nf: '',
           current: 1,
           size: 10
+        },
+        editCrksm:{
+          crksm:'',
+          id:''
         },
         editProgram:false,
         totalPage: '',
@@ -138,7 +147,7 @@
                   },
                   {
                     title: '年度里程',
-                    key: 'ndlc',
+                    key: 'crkndlc',
                     align: 'center',
                     width: 100,
                   },
@@ -202,7 +211,10 @@
                   },
                   on: {
                     click: () => {
-                      this.editProgram = true
+                      this.editProgram = true;
+                      console.log(params.row.crksm);
+                      this.editCrksm.crksm = params.row.crksm;
+                      this.editCrksm.id = params.row.id;
                     }
                   }
                 }, '修改')
@@ -231,12 +243,35 @@
           })
       },
       search: function () {
-          if(this.formItem.year===''){
-            this.formItem.year = ''
+          if(this.formItem.nf===''){
+            this.formItem.nf = ''
           }else {
-            this.formItem.year = this.$formatDate(this.formItem.year).substring(0, 4);
+            this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4);
           }
            this.getList();
+      },
+      update:function () {
+        let url = this.$url.updateJtgs;
+        url += '?id='+this.editCrksm.id + '&crksm=' + this.editCrksm.crksm;
+        this.$post(url)
+          .then(res => {
+            if (res.success === true) {
+              this.$Message.info('修改成功')
+              this.editProgram = false
+              this.getList()
+            }else {
+              this.$Message.error('修改失败')
+            }
+          })
+      },
+      daochu:function () {
+          if(this.formItem.nf==''){
+              this.formItem.nf =''
+          }else {
+              this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0,4)
+          }
+          console.log(this.formItem.nf)
+          this.$getExcel(process.env.BASE_URL + this.$url.daochujtyyjh+'?nf='+this.formItem.nf)
       },
       cancel:function () {
 

@@ -84,7 +84,7 @@ const NetworkInterface = {
   maintain_BYGL_CLBY_CL_save: '/weix/maintenanceManagement/llmx/save',                          // 车辆保养详情 - 添加一条领料记录
   maintain_BYGL_CLBY_CL_update: '/weix/maintenanceManagement/llmx/update',                      // 车辆保养详情 - 更新修改一条领料记录
   maintain_BYGL_CLBY_CL_delete: '/weix/maintenanceManagement/llmx/delete',                      // 车辆保养详情 - 删除一条领料记录
-  
+
   maintain_BYGL_CLBY_JYD_saveOrUpdate: '/weix/maintenanceManagement/jyd/save',                  // 车辆保养详情 - 新增或更新 - 检验单明细
   maintain_BYGL_CLBY_YSD_saveOrUpdate: '/weix/maintenanceManagement/ysd/save',                  // 车辆保养详情 - 新增或更新 - 检验单明细
 
@@ -139,11 +139,23 @@ const NetworkInterface = {
   fgssrjhList:'/erp-modules-jih/fsrjh/getFsrjhList',//分公司收入计划
   saveFgssrjh:'/erp-modules-jih/fsrjh/saveFsrjh',//分公司收入计划新增
   delFgssrjh:'/erp-modules-jih/fsrjh/deleteFsrjh',//分公司收入计划删除
-  updateFgssrjh:'/erp-modules-jih/fsrjh/updateFsrjh',//分公司收入计划修改
+  updateFgssrjh:'/erp-modules-jih/yyscjh/updateJih',//分公计划修改
+  updateJtgs:'/erp-modules-jih/jtyyjh/updateJtyyjh',//集团公司修改
+  fgsyyList:'/erp-modules-jih/yyscjh/getYyjhList',//分公司运营列表
+  saveSngj:'/erp-modules-jih/jtsrjh/saveJtsrjh',//市内公交新增
+  delFgsjh:'/erp-modules-jih/yyscjh/deleteJih',//删除分公司计划
+
+  daochujtyyjh:'/erp-modules-jih/jtyyjh/exportJtyyjh' ,//导出集团运营计划
 
 
   snjhList:'/erp-modules-jih/jtsrjh/getJtsrjhList',//市内公交总计划制定列表
-
+  addFgsyyjh:'/erp-modules-jih/yyscjh/saveJih',//分公司运营计划新增
+  yyjhgldc:'/erp-modules-jih/yyjhtz/exportJtyyjh',//运营计划管理导出
+  fgssrjhdc:'/erp-modules-jih/fsrjh/exportFsrjh',//分公司收入计划导出
+  sngjjhdc:'/erp-modules-jih/jtsrjh/exportJtsrjh',//市内公交计划导出
+  fgsyyjhdc:'/erp-modules-jih/yyscjh/exportFgsjh',//导出分公司运营计划
+  updatefgssrjh:'/erp-modules-jih/fsrjh/updateFsrjh',//修改分公司收入计划
+  updateSnsrjh:'/erp-modules-jih/jtsrjh/updateJtsrjh',//修改分公司收入计划
   // 钢瓶检测
   gpjcList:'/weix/cylinderInspection/fysz/list',   //检测费用设定列表
   addFysd:'/weix/cylinderInspection/fysz/save',   //添加费用设定
@@ -198,24 +210,26 @@ const NetworkInterface = {
   daochull:'/nengy/Lljl/exportLljlExcel',  //领料导出
   jtdnList:'/nengy/Dnxxtj/getJtdnxhList',  //集团电能列表
   jtdnListdaochu:'/nengy/Dnxxtj/exportJtdnExcel',  //集团电能列表导出
-  
+
   // 企业管理
   qygl_nhlctz_fgs: '/qiy/Sctjtz/getFnhlcList',            //分公司能耗台账
   qygl_nhlctz_jtgs: '/qiy/Sctjtz/getJtnhlcList',          //集团公司能耗台账
   qygl_nhlctz_fgs_export: baseURL+'/qiy/Sctjtz/exportFnhlcExcel', //分公司能耗报表导出
   qygl_nhlctz_jtgs_export: baseURL+'/qiy/Sctjtz/exportJtnhlcExcel',//集团公司能耗报表导出
-  
+
   qygl_ccxlsrtz_fgs: '/qiy/Ccxltz/getFccxlsrList',            //分公司车次线路台账
   qygl_ccxlsrtz_jtgs: '/qiy/Ccxltz/getCcxlsrList',            //集团公司车次线路台账
   qygl_ccxlsrtz_fgs_export: baseURL+'/qiy/Ccxltz/exportFccxlsrExcel', //分公司车次线路台账报表导出
   qygl_ccxlsrtz_jtgs_export: baseURL+'/qiy/Ccxltz/exportCcxlsrExcel', //集团公司车次线路台账报表导出
-  
+
   qygl_yyscyszl_cclchyYDFX: '/qiy/cclchyYfx/cclchyYfxList',                       //车次里程耗油月度分析列表
   qygl_yyscyszl_cclchyYDFX_export: baseURL+'/qiy/cclchyYfx/exportCclchyYfxExcel', //导出车次里程耗油月度分析列表
   qygl_yyscyszl_cclchyJDFX: '/qiy/cclchy/cclchyList',                             //车次里程耗油季度汇总列表
   qygl_yyscyszl_cclchyJDFX_export: baseURL+'/qiy/cclchy/exportCclchyExcel',       //导出车次里程耗油季度汇总列表
   qygl_yyscyszl_kylyzsr: '/qiy/kylzsrhz/kylzsrhzList',                            //客运量与总收入汇总
   qygl_yyscyszl_kylyzsr_export: baseURL+'/kylzsrhz/exportKylzsrhzExcel',          //导出客运量与总收入汇总
+
+  ckgsList: '/qiy/jjzbFgs/jjzbCkgsList',                            //长客公司列表
 };
 
 export default NetworkInterface;

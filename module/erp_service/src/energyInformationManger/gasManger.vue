@@ -19,6 +19,14 @@
                       <Option value="公交二公司">公交二公司</Option>
                     </Select>
                   </FormItem>
+
+                  <FormItem label="燃料来源" style="margin: 0">
+                    <Select v-model="formItem.rlly" style="width: 195px;">
+                      <Option value="中燃">中燃</Option>
+                      <Option value="汇通">汇通</Option>
+                    </Select>
+                  </FormItem>
+
                   <Button type="primary" icon="ios-search" style="margin-left: 20px;" @click="chaxun1">搜索</Button>
                   <Button type="primary" icon="android-download"
                           style="right: 0;position: absolute;margin-top: 1px;margin-left: 50px;" @click="daochu1">导出Excel
@@ -28,7 +36,9 @@
               </Row>
             </Form>
           </Card>
-          <Tag checkable color="blue" style="position: absolute;right:15px;margin-top: 6px;">公司总金额：67.4万元</Tag>
+          <Tag checkable color="blue" style="position: absolute;right:15px;margin-top: 6px;">总金额：{{this.sjje}}万元</Tag>
+          <Tag checkable color="blue" style="position: absolute;right:185px;margin-top: 6px;">汇通总金额：{{this.htsjj}}万元</Tag>
+          <Tag checkable color="blue" style="position: absolute;right:385px;margin-top: 6px;">中燃总金额：{{this.zrsjj}}万元</Tag>
           <Table :columns="columns11" :data="data10" ref="selection" border height="500" style="margin-top: 35px;"
                  size="small"></Table>
           <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setpPage1"></Page>
@@ -150,9 +160,13 @@
         totalPage1:0,
         modal1: false,
         modal2: false,
+        sjje:'',
+        zrsjj:'',
+        htsjj:'',
         formItem: {
           ejdw: '',
           tjsj: '',
+          rlly:'',
           current:1,
           size:10
         },
@@ -282,13 +296,13 @@
                     width: 150,
                   },
                 ]
-              },
-              {
-                title: '备注',
-                key: 'bz',
-                align: 'center',
-                width: 200,
               }
+//              {
+//                title: '备注',
+//                key: 'bz',
+//                align: 'center',
+//                width: 200,
+//              }
             ]
           },
 //          {
@@ -443,7 +457,13 @@
       list1: function () {
         this.$fetch(this.$url.fgstrq, this.formItem)
           .then(res => {
-            console.log(res);
+            console.log(res.count);
+            console.log(res.count[0].htsjj);
+            console.log(res.count[0].zrsjj);
+            console.log(res.count[0].sjje);
+            this.sjje = res.count[0].sjje
+            this.zrsjj = res.count[0].zrsjj
+            this.htsjj = res.count[0].htsjj
             if (res.data.total === 0) {
               this.$Message.info('暂无信息');
               this.data10 = res.data.records;
@@ -474,7 +494,7 @@
         }else {
           this.formItem.tjsj = this.$formatDate(this.formItem.tjsj).substring(0,7)
         }
-        this.$getExcel(process.env.BASE_URL + this.$url.daochufgstrq + '?tjsj=' + this.formItem.tjsj+'&ejdw='+this.formItem.ejdw )
+        this.$getExcel(process.env.BASE_URL + this.$url.daochufgstrq + '?tjsj=' + this.formItem.tjsj+'&ejdw='+this.formItem.ejdw+'&rlly='+ this.formItem.rlly)
       },
 
 

@@ -33,9 +33,9 @@
       <table border="1" cellspacing="0" style="margin-top: 10px;width:630px">
         <tr>
           <td>指标名称</td>
-          <td>目标值</td>
+          <td style="width: 10px;">目标值</td>
           <td>分值</td>
-          <td>实际</td>
+          <td style="width: 200px;">实际</td>
           <td>得分</td>
         </tr>
         <tr>

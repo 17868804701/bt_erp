@@ -637,6 +637,12 @@
       },
 //      获取列表
       getList: function () {
+//        let gwzt = JSON.stringify(this.cxItem.gwzt);
+//        let params = {};
+//        for (let attr in this.cxItem) {
+//            params[attr] = this.cxItem[attr];
+//        }
+//        params.gwzt = gwzt;
         this.$fetch(this.$url.userManager_userList, this.cxItem)
           .then(res => {
               console.log(res)

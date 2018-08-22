@@ -50,7 +50,7 @@ import addKfxx from '../serviceManger/addKfxx.vue'
 import zrxts from '../serviceManger/zrxts.vue'
 import kfclqktj from '../serviceManger/kfclqktj.vue'
 import xjpj from '../serviceManger/xjpj.vue'
-import tableTemp from '../serviceManger/tableTemp.vue'
+import tableTemp from '../serviceManger/table/tableTemp.vue'
 
 Vue.use(VueRouter);
 const route = [

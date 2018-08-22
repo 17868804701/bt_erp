@@ -6,13 +6,14 @@
         <Row>
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.year"></DatePicker>
+            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
+                        v-model="formItem.nf"></DatePicker>
             <Button type="primary" icon="ios-search" @click="search">搜索</Button>
-            <Button type="primary" icon="android-download" @click="exports=true"
-                    style="float: right">导入计划表
-            </Button>
+            <!--<Button type="primary" icon="android-download" @click="exports=true"-->
+            <!--style="float: right">导入计划表-->
+            <!--</Button>-->
             <Button type="primary" icon="android-download"
-                    style="float: right;margin-right: 10px">导出Excel
+                    style="float: right;margin-right: 10px" @click="daochu">导出Excel
             </Button>
             <Button type="primary" icon="android-download" @click="addProgram=true"
                     style="float: right;margin-right: 10px;">计划生成
@@ -54,32 +55,34 @@
       :mask-closable="false"
       style="height: 500px;"
       @on-cancel="cancel">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" v-if="this.type=='edit'" @click="update">修改
+        </Button>
+        <Button type="primary" style="float: right;margin-right: 10px" v-else @click="add">新增
+        </Button>
+
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
+      </div>
       <div style="height:auto">
         <Form :model="formItem1" :label-width="120">
-          <FormItem label="单位">
-            <Input v-model="formItem1.input" placeholder="单位" style="width: 195px;"/>
-          </FormItem>
-          <FormItem label="时间">
-            <DatePicker type="date" placeholder="Select date" v-model="formItem1.date"></DatePicker>
-          </FormItem>
-          <FormItem label="路别">
-            <Select v-model="formItem1.select" style="width: 195px;">
-              <Option value="beijing">102路</Option>
-              <Option value="shanghai">103路</Option>
-              <Option value="shenzhen">286路</Option>
+          <FormItem label="路别" v-show="this.type!=='edit'">
+            <Select v-model="formItem1.lb" style="width: 195px;">
+              <Option value="102路">102路</Option>
+              <Option value="103路">103路</Option>
+              <Option value="286路">286路</Option>
             </Select>
           </FormItem>
-          <FormItem label="各年计划收入">
-            <Input v-model="formItem1.input" placeholder="各年计划收入" style="width: 195px;"/>
+          <FormItem label="本期实际">
+            <Input v-model="formItem1.bqsj" placeholder="本年1-10月本期" style="width: 195px;"/>
           </FormItem>
-          <FormItem label="各年实际收入">
-            <Input v-model="formItem1.input" placeholder="各年实际收入" style="width: 195px;"/>
+          <FormItem label="明年预计">
+            <Input v-model="formItem1.mnyj" placeholder="明年计划" style="width: 195px;"/>
           </FormItem>
-          <FormItem label="各年客运量">
-            <Input v-model="formItem1.input" placeholder="各年客运量" style="width: 195px;"/>
+          <FormItem label="明年计划车次">
+            <Input v-model="formItem1.mnjhcc" placeholder="明年计划车次" style="width: 195px;"/>
           </FormItem>
-          <FormItem label="每车次客运量">
-            <Input v-model="formItem1.input" placeholder="每车次客运量" style="width: 195px;"/>
+          <FormItem label="本年客运量">
+            <Input v-model="formItem1.bnkyl" placeholder="本年每车次客运量" style="width: 195px;"/>
           </FormItem>
         </Form>
       </div>
@@ -93,14 +96,19 @@
     data () {
       return {
         addProgram: false,
-        exports:false,
+        exports: false,
+        type: '',
         formItem: {
           current: 1,
-          size:10,
-          year:''
+          size: 10,
+          nf: ''
         },
-        formItem1:{
-
+        formItem1: {
+          lb: '',
+          bqsj: '',
+          mnyj: '',
+          mnjhcc: '',
+          bnkyl: ''
         },
         columns1: [
           {
@@ -163,7 +171,9 @@
                   },
                   on: {
                     click: () => {
-                  this.$Message.info('修改')
+                      this.addProgram = true;
+                      this.type = 'edit'
+                      this.formItem1 = params.row
                     }
                   }
                 }, '修改'),
@@ -176,12 +186,48 @@
     },
     methods: {
       ok () {
-        this.$Message.info('Clicked ok');
+//        this.$Message.info('Clicked ok');
       },
       cancel () {
-        this.$Message.info('Clicked cancel');
+//        this.$Message.info('Clicked cancel');
+        this.type = ''
       },
-      list:function () {
+      add: function () {
+        console.log(this.formItem1);
+        this.$post(this.$url.saveSngj + '?lb=' + this.formItem1.lb + '&bqsj=' + this.formItem1.bqsj + '&mnyj=' + this.formItem1.mnyj + '&mnjhcc=' + this.formItem1.mnjhcc + '&bnkyl=' + this.formItem1.bnkyl)
+          .then(res => {
+            console.log(res);
+            if (res.success === true) {
+              this.$Message.info('添加成功')
+              this.addProgram = false
+              this.list()
+            } else {
+              this.$Message.error('添加失败')
+            }
+          })
+      },
+      update: function () {
+        this.$post(this.$url.updateSnsrjh, this.formItem1)
+          .then(res => {
+            console.log(res);
+            if (res.success === true) {
+              this.$Message.info('修改成功')
+              this.addProgram = false
+              this.list()
+            } else {
+              this.$Message.error('修改失败')
+            }
+          })
+      },
+      daochu: function () {
+        if (this.formItem.nf == '') {
+          this.formItem.nf = ''
+        } else {
+          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
+        }
+        this.$getExcel(process.env.BASE_URL + this.$url.sngjjhdc + '?nf=' + this.formItem.nf)
+      },
+      list: function () {
         this.$fetch(this.$url.snjhList, this.formItem)
           .then(res => {
             console.log(res)
@@ -191,8 +237,8 @@
                 this.data1 = res.data.records;
                 this.totalPage = res.data.total
               } else {
-                res.data.records.forEach(item=>{
-                    item.nd = item.nd.toString()
+                res.data.records.forEach(item => {
+                  item.nd = item.nd.toString()
                 })
                 this.data1 = res.data.records;
                 this.totalPage = res.data.total
@@ -200,17 +246,17 @@
             }
           })
       },
-      search:function () {
-        if(this.formItem.year==''){
-            this.formItem.year = ''
-        }else {
-            this.formItem.year = this.$formatDate(this.formItem.year).substring(0,4)
+      search: function () {
+        if (this.formItem.nf == '') {
+          this.formItem.nf = ''
+        } else {
+          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
         }
         this.list();
       }
     },
     mounted(){
-     this.list()
+      this.list()
     }
   }
 </script>

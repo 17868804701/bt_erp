@@ -168,29 +168,13 @@
 
       <TabPane label="经济指标完成情况（表五）" name="name5">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem5" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="date" placeholder="选择时间" :transfer="true" v-model="formItem5.nian"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="选择分公司" style="margin: 0">
-                <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一公司</Option>
-                  <Option value="shanghai">第二公司</Option>
-                  <Option value="shenzhen">第三公司</Option>
-                  <Option value="shenzhen">第四公司</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="search5">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
@@ -211,6 +195,10 @@
           select: '',
           select1: '',
           date: ''
+        },
+        formItem5:{
+          nian:'',
+          yue:''
         },
         columns11: [
           {
@@ -663,63 +651,28 @@
             ]
           }
         ],
-        data15:[
-          {
-            dw: '一、周转量',
-            jsdw: '万吨（人）公里',
-            xj_jh: '',
-            xj_sj: '2292.3',
-            xj_add: '',
-            xj_sntq: '2545.54',
-          },
-          {
-            dw: '二、运营收入',
-            jsdw: '万元',
-            xj_jh: '',
-            xj_sj: '2292.3',
-            xj_add: '',
-            xj_sntq: '2545.54',
-          },
-          {
-            dw: '三、行车责任事故频率',
-            jsdw: '次/百万公里',
-            xj_jh: '1.6',
-            xj_sj: '0.00',
-            xj_add: '100.00',
-            xj_sntq: '3.54',
-          }
-        ]
+        data15:[]
       }
     },
-    methods: {},
+    methods: {
+        list5:function () {
+          this.$fetch(this.$url.ckgsList)
+            .then(res => {
+              console.log(res)
+              if (res.success === true) {
+
+              }else {
+                this.$Message.error('查询失败')
+              }
+            })
+        },
+        search5:function () {
+          console.log(this.formItem5)
+//          this.formItem5.nian = this.formItem5
+        }
+    },
     mounted () {
-      const data3 = [];
-      for (let i = 1; i < 10; i++) {
-        data3.push({
-          key: i,
-          dw:'万元',
-//          dwmc:'第'+i+'公司',
-          yylc:'15165',
-          jh:'541.2',
-          sj:'5.2',
-          shy:'454',
-          dey:'148948',
-          jc:"468416",
-          sh:'156456',
-          de:'54651',
-          gjdeyh:'54611151',
-          jgjdeyh:'111154611151',
-          name: 'John Brown',
-          age: i + 1,
-          street: 'Lake Park',
-          building: 'C',
-          door: 2035,
-          caddress: 'Lake Street 42',
-          cname: 'SoftLake Co',
-          gender: 'M',
-        });
-      }
-      this.data11 = data3;
+      this.list5()
     }
   }
 </script>

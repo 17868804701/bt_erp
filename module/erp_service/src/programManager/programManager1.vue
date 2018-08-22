@@ -8,7 +8,7 @@
         <div style="display: flex;flex-wrap: wrap">
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
-                        v-model="formItem.year"></DatePicker>
+                        v-model="formItem.nf"></DatePicker>
           </FormItem>
           <FormItem label="线路" style="margin: 0;">
             <Select v-model="formItem.lb" style="width: 195px;">
@@ -21,6 +21,7 @@
           <FormItem label="公司" style="margin: 0;">
             <Select v-model="formItem.gsm" style="width: 195px;">
               <Option value="">全部</Option>
+              <Option value="四公司">四公司</Option>
               <Option value="公交一公司">公交一公司</Option>
               <Option value="公交二公司">公交二公司</Option>
               <Option value="公交三公司">公交三公司</Option>
@@ -31,7 +32,7 @@
           </FormItem>
           <FormItem style="margin: 0">
             <Button type="primary" icon="android-download" @click="addyyProgram=true">新增计划</Button>
-            <Button type="primary" icon="android-download">导出excel</Button>
+            <Button type="primary" icon="android-download" @click="daochu">导出excel</Button>
           </FormItem>
           <!--添加-->
           <Modal
@@ -52,6 +53,7 @@
               <div style="display: flex;flex-wrap: wrap">
                 <FormItem label="公司名">
                   <Select v-model="program.gsm" style="width: 195px;">
+                    <Option value="四公司">四公司</Option>
                     <Option value="公交一公司">公交一公司</Option>
                     <Option value="公交二公司">公交二公司</Option>
                     <Option value="公交三公司">公交三公司</Option>
@@ -117,9 +119,9 @@
         type:'',
         editZd: false,
         formItem: {
-//          year: '',
-//          lb: '',
-//          gsm: '',
+          nf: '',
+          lb: '',
+          gsm: '',
           current: 1,
           size: 10,
         },
@@ -344,10 +346,10 @@
           })
       },
       search: function () {
-        if (this.formItem.year === '') {
-          this.formItem.year = ''
+        if (this.formItem.nf === '') {
+          this.formItem.nf = ''
         } else {
-          this.formItem.year = this.$formatDate(this.formItem.year).substring(0, 4);
+          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4);
         }
         this.getList();
       },
@@ -389,6 +391,14 @@
           console.log(current)
         this.formItem.current = current;
         this.getList();
+      },
+      daochu:function () {
+          if(this.formItem.nf==''){
+              this.formItem.nf=''
+          }else {
+              this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0,4)
+          }
+        this.$getExcel(process.env.BASE_URL + this.$url.yyjhgldc+'?nf='+this.formItem.nf+'&gsm='+this.formItem.gsm)
       }
     },
     mounted () {

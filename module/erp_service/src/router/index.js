@@ -33,7 +33,6 @@ import yyscyl from '../enterpriseManger/yyscyl.vue'
 import xlxyhjjhdfx from '../enterpriseManger/xlxyhjjhdfx.vue'
 import jjzbwcqk from '../enterpriseManger/jjzbwcqk.vue'
 import jjhdfx from '../enterpriseManger/jjhdfx.vue'
-
 // 维修养护管理
 import MainMM from '../maintenanceMaintenanceManger/views/MainMM.vue'
 import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
@@ -52,10 +51,19 @@ import kfclqktj from '../serviceManger/kfclqktj.vue'
 import xjpj from '../serviceManger/xjpj.vue'
 import tableTemp from '../serviceManger/table/tableTemp.vue'
 
+import Index from '../Index.vue'
+
+
+
+
 Vue.use(VueRouter);
 const route = [
   {
     path: '/',
+    component: Index
+  },
+  {
+    path: '/userinfo',
     component: List
   },
   {

@@ -55,7 +55,7 @@
                   <Icon type="ios-navigate"></Icon>
                     人力资源管理
                 </template>
-                <a :href="url" target="erp_main">
+                <a :href="url+'userinfo'" target="erp_main">
                   <MenuItem name="0-1">人员信息管理</MenuItem>
                 </a>
               </Submenu>
@@ -198,7 +198,7 @@
         <Layout :style="{padding: '0 24px 0px'}">
           <Content style="height: 90vh;margin-top: 10px;">
             <div style="position: relative;overflow-y: hidden;height: 100%">
-              <iframe :src="url" frameborder="0" style="width: 100%;height: 100%" scrolling="none"
+              <iframe href="http://localhost:8081/#/userinfo" frameborder="0" style="width: 100%;height: 100%" scrolling="none"
                       name="erp_main"></iframe>
             </div>
           </Content>

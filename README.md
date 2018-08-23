@@ -1,4 +1,4 @@
-# erp
+# main_platform
 
 > A Vue.js project
 

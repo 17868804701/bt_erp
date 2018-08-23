@@ -59,12 +59,12 @@ import Index from '../Index.vue'
 Vue.use(VueRouter);
 const route = [
   {
-    path: '/',
-    component: Index
-  },
-  {
     path: '/userinfo',
     component: List
+  },
+  {
+    path: '/',
+    component: Index
   },
   {
     path: '/ListInfo',

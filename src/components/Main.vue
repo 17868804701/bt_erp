@@ -52,7 +52,6 @@
 
   .menu-item span {
     display: inline-block;
-    overflow: hidden;
     width: 69px;
     font-size: 12px;
     text-overflow: ellipsis;
@@ -98,8 +97,7 @@
     width: 25px;
     height: 25px;
     margin-right: 10px;
-    margin-top: -4px;
-    margin-left: -10px;
+    margin-top: 10px;
   }
 
   .tip {
@@ -143,7 +141,9 @@
               <Icon type="ios-arrow-down"></Icon>
             </span>
             <DropdownMenu slot="list">
-              <DropdownItem>退出</DropdownItem>
+              <span @click="logout">
+                <DropdownItem>退出</DropdownItem>
+              </span>
               <span @click="userCenter">
                 <DropdownItem>个人中心</DropdownItem>
               </span>
@@ -203,71 +203,21 @@
       <Layout>
         <Sider ref="side1" width="120" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
                style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
-          <Menu active-name="0" theme="light" width="120" :class="menuitemClasses">
-            <MenuItem class="menuStyle" name="0">
+          <Menu :active-name="currentClassify" theme="light" width="120" :class="menuitemClasses" @on-select="selectClassify">
+            <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid">
               <Icon type="ios-keypad"/>
-              <span>全部（8）</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="1">
-              <Icon type="md-person"/>
-              <span>人力资源管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="2">
-              <Icon type="md-jet"/>
-              <span>计划管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="3">
-              <Icon type="md-planet"/>
-              <span> 运营管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="4">
-              <Icon type="ios-analytics"/>
-              <span>能源信息管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="5">
-              <Icon type="md-albums"/>
-              <span>企业管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="6">
-              <Icon type="md-bulb"/>
-              <span>安全管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="7">
-              <Icon type="md-construct"/>
-              <span>维修养护</span>
-            </MenuItem>
-            <MenuItem class="menuStyle" name="8">
-              <Icon type="md-restaurant"/>
-              <span>服务管理</span>
+              <span>{{classify.cname}}</span>
             </MenuItem>
           </Menu>
         </Sider>
-        <Sider ref="side1" width="170" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed"
+        <Sider ref="side1" width="200" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed"
                style="height: 90vh;margin-top: 1.5vh;background: rgb(255,255,255,0.3)">
-          <Menu active-name="1" theme="light" width="170" :class="menuitemClasses" style="background: none">
-            <MenuItem class="menuStyle1" name="1">
-              <img src="../assets/lo.jpg" alt="" class="icon">
-              <span>人力资源管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle1" name="2">
-              <img src="../assets/lo.jpg" alt="" class="icon">
-              <span>计划管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle1" name="3">
-              <img src="../assets/lo.jpg" alt="" class="icon">
-              <span> 运营管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle1" name="4">
-              <img src="../assets/lo.jpg" alt="" class="icon">
-              <span>能源信息管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle1" name="5">
-              <img src="../assets/lo.jpg" alt="" class="icon">
-              <span>企业管理</span>
-            </MenuItem>
-            <MenuItem class="menuStyle1" name="6">
-              <img src="../assets/lo.jpg" alt="" class="icon">
-              <span>安全管理</span>
+          <Menu active-name="1" theme="light" width="200" :class="menuitemClasses" style="background: none">
+            <MenuItem v-for="(item, index) in this.allAppList"  v-show="isShow(item)"  class="menuStyle1" :name="item.aname">
+              <a :href="'http://localhost:8081/#/'+item.apath" target="erp_main">
+                <img src="../assets/lo.jpg" alt="" class="icon">
+                <span>{{item.aname}}</span>
+              </a>
             </MenuItem>
           </Menu>
           <div class="tip">
@@ -283,7 +233,7 @@
           <Content style="margin:13px 0 0 40px;background: #fff;height: 90vh}">
             <div style="position: relative;overflow-y: hidden;height: 90vh">
               <iframe style="height: 100%;width: 100%" name="erp_main" frameborder="0"
-                      src="http://localhost:8081/#/userinfo"
+                      src="http://localhost:8081/#/"
                       scrolling="none"></iframe>
             </div>
           </Content>
@@ -293,10 +243,12 @@
   </div>
 </template>
 <script>
+  import VueCookie from 'vue-cookie';
   export default {
     data () {
       return {
         isCollapsed: false,
+        id:'',
         modal1: false,
         formItem: {
           input: 'admin',
@@ -308,8 +260,11 @@
           date: '',
           time: '',
           slider: [20, 50],
-          textarea: ''
-        }
+          textarea: '',
+        },
+        appClassfiyList: [],
+        allAppList: [],
+        currentClassify: 0,
       }
     },
     computed: {
@@ -338,16 +293,69 @@
       userCenter: function () {
         this.modal1 = true
       },
+      logout() {
+        console.log('退出登录');
+        this.$fetch('http://10.50.0.144:8702/login/logout?access_token='+VueCookie.get('access_token'))
+        .then(res => {
+          console.log(res);
+          if(res.success===true){
+            VueCookie.set('access_token','',-1);
+            window.top.location.href = process.env.BASE_URL+"/login?service=http://localhost:8080/#/";
+          }
+        })
+      },
       ok () {
         this.$Message.info('修改成功');
       },
       cancel () {
 //        this.$Message.info('取消');
+      },
+      getUserSetting() {
+        let that = this;
+        console.log('获取用户权限');
+        let appClassifyURL = process.env.BASE_URL+'/auth/app/getClassify';
+        this.$fetch(appClassifyURL)
+        .then(res => {
+          console.log(res);
+          let obj = {
+            cicon: "",
+            cid: 'all',
+            cname: "全部",
+          }
+          res.data.splice(0, 0, obj);
+          that.appClassfiyList = res.data;
+          this.$nextTick(() => {
+            that.currentClassify = 'all'
+          })
+        })
+
+        let allAppURL = process.env.BASE_URL+'/auth/app/getAllApp';
+        this.$fetch(allAppURL)
+        .then(res => {
+          console.log(res);
+          that.allAppList = res.data;
+        })
+      },
+      selectClassify(value) {
+        console.log(value);
+        this.currentClassify = value;
+      },
+      isShow(item) {
+        console.log(this.currentClassify);
+        if (this.currentClassify === 'all') {
+          return true;
+        }else{
+          return this.currentClassify ==item.cid;
+        }
+        return false;
       }
-    }
-    ,
+    },
     mounted(){
       this.list();
+      this.getUserSetting();
+    },
+    created() {
+
     }
   }
 </script>

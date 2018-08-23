@@ -87,6 +87,11 @@
       <TabPane label="集团人员查询" name="name1">
         <Card style="width:100%">
           <p slot="title">员工列表查询</p>
+          <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
+                  @click="addPerson">
+            <Icon type="plus"></Icon>
+            新建
+          </Button>
           <div>
             <div>
               <Form :model="cxItem" :label-width="120">
@@ -149,25 +154,24 @@
               </Form>
             </div>
             <!--筛选结果-->
-            <div style="width: 100%; text-align: center">
-              <Button type="primary" slot="extra" @click="search">
-                <Icon type="search"></Icon>
-                搜索
-              </Button>
-              <Button type="primary" size="default" @click="daochu" slot="extra" style="float: right;">
-                <Icon type="android-download"></Icon>
-                导出Excel
-              </Button>
-              <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
-                      @click="exports=true">
-                <Icon type="android-upload"></Icon>
-                导入Excel
-              </Button>
-              <Button type="primary" size="default" slot="extra" style="float: right;margin-right: 10px;"
-                      @click="addPerson">
-                <Icon type="plus"></Icon>
-                新建
-              </Button>
+            <div style="width: 100%; text-align: center;">
+              <ButtonGroup>
+                <Button type="primary" @click="search">
+                  <Icon type="search"></Icon>
+                  搜索
+                </Button>
+                <Button type="primary" size="default" @click="daochu" style="margin-right: 3px;margin-left: 3px;">
+                  <Icon type="android-download"></Icon>
+                  导出
+                </Button>
+                <Button type="primary" size="default"
+                        @click="exports=true">
+                  <Icon type="android-upload"></Icon>
+                  导入
+                </Button>
+              </ButtonGroup>
+
+
               <!--报表导入-->
               <Modal
                 v-model="exports"

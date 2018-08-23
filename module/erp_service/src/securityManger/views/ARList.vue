@@ -28,6 +28,8 @@
       <AddLossDiv ref="AddLossDiv" :lossForm="lossForm"/>
     </Modal>
     <Card style="width:100%; margin-top: 20px;">
+      <div slot="title">搜索查询</div>
+      <Button size="small" slot="extra" type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>
       <Form :model="searchOptions" :label-width="80">
         <div style="display: flex;flex-wrap: wrap; align-items: center">
           <FormItem label="车牌号" style="margin: 0px;">
@@ -42,7 +44,7 @@
           </FormItem>
           <Button style="margin-left: 20px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
           <div style="position: absolute;right: 20px;">
-            <Button type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>
+            <!--<Button type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>-->
             <Button type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
           </div>
         </div>

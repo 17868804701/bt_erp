@@ -29,8 +29,10 @@
   }
 </style>
 <template>
-  <div class="container">
+  <div>
+    <div style="padding: 20px 0 10px 20px;">
     <h2>检测费用结算</h2>
+    </div>
     <Tabs value="name1" @on-click="changes">
       <TabPane label="月份检测费用结算" name="name1">
         <Card style="padding-left: 15px;">

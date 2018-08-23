@@ -29,8 +29,10 @@
   }
 </style>
 <template>
-  <div class="container">
+  <div>
+    <div style="padding: 20px 0 10px 20px;">
     <h2>运营生产原始资料汇总</h2>
+    </div>
     <Tabs v-model="currentTab" @on-click="clickTab">
       <TabPane label="车次里程耗油季度汇总" name="name1">
         <Card style="padding-left: 15px;">

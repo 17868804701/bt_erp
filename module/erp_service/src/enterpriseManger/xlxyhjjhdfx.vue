@@ -29,8 +29,8 @@
   }
 </style>
 <template>
-  <div class="container">
-    <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;padding-top: 10px">
+  <div>
+    <div style="padding: 20px 0 10px 20px;border-bottom: 1px solid #eae9ec">
       <h2>线路效益和经济活动分析</h2>
     </div>
     <Card style="padding-left: 15px;margin-top: 10px;">

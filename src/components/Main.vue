@@ -6,7 +6,7 @@
   }
 
   .header {
-    height: 6vh;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,8 +52,9 @@
 
   .menu-item span {
     display: inline-block;
-    width: 69px;
+    overflow: hidden;
     font-size: 12px;
+    width: 120px;
     text-overflow: ellipsis;
     white-space: nowrap;
     vertical-align: bottom;
@@ -90,14 +91,13 @@
     height: 40px;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 5px;
   }
 
   .icon {
     width: 25px;
     height: 25px;
     margin-right: 10px;
-    margin-top: 10px;
   }
 
   .tip {
@@ -201,9 +201,10 @@
       </Modal>
       <!--个人信息完-->
       <Layout>
-        <Sider ref="side1" width="120" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
+        <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
                style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
-          <Menu :active-name="currentClassify" theme="light" width="120" :class="menuitemClasses" @on-select="selectClassify">
+          <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses"
+                @on-select="selectClassify">
             <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid">
               <Icon type="ios-keypad"/>
               <span>{{classify.cname}}</span>
@@ -211,19 +212,20 @@
           </Menu>
         </Sider>
         <Sider ref="side1" width="200" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed"
-               style="height: 90vh;margin-top: 1.5vh;background: rgb(255,255,255,0.3)">
+               style="height: 90vh;margin-top: 1.5vh;background: rgb(255,255,255,0.3);overflow-y: scroll">
           <Menu active-name="1" theme="light" width="200" :class="menuitemClasses" style="background: none">
-            <MenuItem v-for="(item, index) in this.allAppList"  v-show="isShow(item)"  class="menuStyle1" :name="item.aname">
-              <a :href="'http://localhost:8081/#/'+item.apath" target="erp_main">
+            <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1"
+                      :name="item.aname">
+              <a :href="'http://localhost:8081/#/'+item.apath" target="erp_main" class="menuStyle1">
                 <img src="../assets/lo.jpg" alt="" class="icon">
                 <span>{{item.aname}}</span>
               </a>
             </MenuItem>
           </Menu>
-          <div class="tip">
-            <img src="../assets/box.png" alt="">
-            <span>暂无可用应用</span>
-          </div>
+          <!--<div class="tip">-->
+            <!--<img src="../assets/box.png" alt="">-->
+            <!--<span>暂无可用应用</span>-->
+          <!--</div>-->
         </Sider>
         <Layout>
           <div class="side_menu" @click="collapsedSider">
@@ -231,7 +233,7 @@
             <Icon type="ios-arrow-forward" v-show="isCollapsed"/>
           </div>
           <Content style="margin:13px 0 0 40px;background: #fff;height: 90vh}">
-            <div style="position: relative;overflow-y: hidden;height: 90vh">
+            <div style="position: relative;overflow-y: hidden;height: 90vh;padding: 0px 10px 10px 10px;">
               <iframe style="height: 100%;width: 100%" name="erp_main" frameborder="0"
                       src="http://localhost:8081/#/"
                       scrolling="none"></iframe>
@@ -248,7 +250,7 @@
     data () {
       return {
         isCollapsed: false,
-        id:'',
+        id: '',
         modal1: false,
         formItem: {
           input: 'admin',
@@ -295,14 +297,14 @@
       },
       logout() {
         console.log('退出登录');
-        this.$fetch('http://10.50.0.144:8702/login/logout?access_token='+VueCookie.get('access_token'))
-        .then(res => {
-          console.log(res);
-          if(res.success===true){
-            VueCookie.set('access_token','',-1);
-            window.top.location.href = process.env.BASE_URL+"/login?service=http://localhost:8080/#/";
-          }
-        })
+        this.$fetch('http://10.50.0.144:8702/login/logout?access_token=' + VueCookie.get('access_token'))
+          .then(res => {
+            console.log(res);
+            if (res.success === true) {
+              VueCookie.set('access_token', '', -1);
+              window.top.location.href = process.env.BASE_URL + "/login?service=http://localhost:8080/#/";
+            }
+          })
       },
       ok () {
         this.$Message.info('修改成功');
@@ -313,28 +315,28 @@
       getUserSetting() {
         let that = this;
         console.log('获取用户权限');
-        let appClassifyURL = process.env.BASE_URL+'/auth/app/getClassify';
+        let appClassifyURL = process.env.BASE_URL + '/auth/app/getClassify';
         this.$fetch(appClassifyURL)
-        .then(res => {
-          console.log(res);
-          let obj = {
-            cicon: "",
-            cid: 'all',
-            cname: "全部",
-          }
-          res.data.splice(0, 0, obj);
-          that.appClassfiyList = res.data;
-          this.$nextTick(() => {
-            that.currentClassify = 'all'
+          .then(res => {
+            console.log(res);
+            let obj = {
+              cicon: "",
+              cid: 'all',
+              cname: "全部",
+            }
+            res.data.splice(0, 0, obj);
+            that.appClassfiyList = res.data;
+            this.$nextTick(() => {
+              that.currentClassify = 'all'
+            })
           })
-        })
 
-        let allAppURL = process.env.BASE_URL+'/auth/app/getAllApp';
+        let allAppURL = process.env.BASE_URL + '/auth/app/getAllApp';
         this.$fetch(allAppURL)
-        .then(res => {
-          console.log(res);
-          that.allAppList = res.data;
-        })
+          .then(res => {
+            console.log(res);
+            that.allAppList = res.data;
+          })
       },
       selectClassify(value) {
         console.log(value);
@@ -344,8 +346,8 @@
         console.log(this.currentClassify);
         if (this.currentClassify === 'all') {
           return true;
-        }else{
-          return this.currentClassify ==item.cid;
+        } else {
+          return this.currentClassify == item.cid;
         }
         return false;
       }

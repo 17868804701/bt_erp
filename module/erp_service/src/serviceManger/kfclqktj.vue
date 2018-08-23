@@ -29,8 +29,10 @@
   }
 </style>
 <template>
-  <div class="container">
+  <div>
+    <div style="padding: 20px 0 10px 20px;">
     <h2>客服处理情况报表统计</h2>
+    </div>
     <Tabs value="name1"  @on-click="changes">
       <TabPane label="投诉情况分类汇总表" name="name1">
         <Card style="padding-left: 15px;">

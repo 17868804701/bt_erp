@@ -30,8 +30,10 @@
   }
 </style>
 <template>
-  <div class="container">
+  <div>
+    <div style="padding: 20px 0 10px 20px;">
     <h2>客服信息列表</h2>
+    </div>
     <Tabs value="name1" @on-click="tabs">
       <TabPane label="客服信息登记列表" name="name1">
         <Card style="padding-left: 15px;">

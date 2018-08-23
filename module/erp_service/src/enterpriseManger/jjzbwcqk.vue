@@ -29,8 +29,10 @@
   }
 </style>
 <template>
-  <div class="container">
+  <div>
+    <div style="padding: 20px 0 10px 20px;">
     <h2>经济指标完成情况</h2>
+    </div>
     <Tabs value="name1" @on-click="clickTab">
       <TabPane label="经济指标完成情况（表一）" name="name1">
         <Card style="padding-left: 15px;">

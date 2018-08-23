@@ -30,53 +30,47 @@
 </style>
 <template>
   <div class="container">
-    <h2>线路效益和经济活动分析</h2>
-    <Tabs value="name1">
-      <TabPane label="线路效益分析" name="name1">
-        <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
-            <div class="search">
-              <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
-                            class="text_width"></DatePicker>
-              </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="选择公司" style="margin: 0">
-                <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">公交一公司</Option>
-                  <Option value="shanghai">公交二公司</Option>
-                  <Option value="shenzhen">公交三公司</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
-              <div class="btn">
-                <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
-                <Modal
-                  v-model="modal1"
-                  title="填写导出说明">
-                  <div>
-                  <FormItem label="填写导出说明">
-                    <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请填写导出说明"></Input>
-                  </FormItem>
-                  </div>
-                </Modal>
+    <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;padding-top: 10px">
+      <h2>线路效益和经济活动分析</h2>
+    </div>
+    <Card style="padding-left: 15px;margin-top: 10px;">
+      <Form :model="formItem" :label-width="80">
+        <div class="search">
+          <FormItem label="选择时间" style="margin: 0">
+            <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                        class="text_width"></DatePicker>
+          </FormItem>
+          <FormItem label="选择季度" style="margin: 0">
+            <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
+              <Option value="beijing">第一季度</Option>
+              <Option value="shanghai">第二季度</Option>
+              <Option value="shenzhen">第三季度</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="选择公司" style="margin: 0">
+            <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
+              <Option value="beijing">公交一公司</Option>
+              <Option value="shanghai">公交二公司</Option>
+              <Option value="shenzhen">公交三公司</Option>
+            </Select>
+          </FormItem>
+          <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+          <div class="btn">
+            <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
+            <Modal
+              v-model="modal1"
+              title="填写导出说明">
+              <div>
+                <FormItem label="填写导出说明">
+                  <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请填写导出说明"></Input>
+                </FormItem>
               </div>
-            </div>
-          </Form>
-        </Card>
-        <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
-        <!--<Table :columns="columns10" :data="data10" border height="330" style="margin-top: 10px;" size="small"></Table>-->
-      </TabPane>
-      <TabPane label="经济活动分析" name="name2">
-        <h2>经济活动分析,正在开发中.......</h2>
-      </TabPane>
-    </Tabs>
+            </Modal>
+          </div>
+        </div>
+      </Form>
+    </Card>
+    <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
   </div>
 </template>
 <script>

@@ -608,6 +608,8 @@
                   },
                   on: {
                     click: () => {
+                      params.row.ygfz = process.env.upload_BASE_URL+'/'+params.row.ygfz;
+                      console.log( params.row)
                       this.$router.push({
                         path: '/ListInfo',
                         query: {row: params.row}

@@ -31,32 +31,16 @@
 <template>
   <div class="container">
     <h2>经济指标完成情况</h2>
-    <Tabs value="name1">
+    <Tabs value="name1" @on-click="clickTab">
       <TabPane label="经济指标完成情况（表一）" name="name1">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem1" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem1.nian"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="选择分公司" style="margin: 0">
-                <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一公司</Option>
-                  <Option value="shanghai">第二公司</Option>
-                  <Option value="shenzhen">第三公司</Option>
-                  <Option value="shenzhen">第四公司</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="search1">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
@@ -67,29 +51,13 @@
       </TabPane>
       <TabPane label="经济指标完成情况（表二）" name="name2">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem2" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem2.nian"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="选择分公司" style="margin: 0">
-                <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一公司</Option>
-                  <Option value="shanghai">第二公司</Option>
-                  <Option value="shenzhen">第三公司</Option>
-                  <Option value="shenzhen">第四公司</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="search2">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
@@ -106,22 +74,6 @@
                 <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="选择分公司" style="margin: 0">
-                <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一公司</Option>
-                  <Option value="shanghai">第二公司</Option>
-                  <Option value="shenzhen">第三公司</Option>
-                  <Option value="shenzhen">第四公司</Option>
-                </Select>
-              </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
@@ -134,29 +86,13 @@
 
       <TabPane label="经济指标完成情况（表四）" name="name4">
         <Card style="padding-left: 15px;">
-          <Form :model="formItem" :label-width="80">
+          <Form :model="formItem4" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.date"
+                <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem4.nian"
                             class="text_width"></DatePicker>
               </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem.select" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一季度</Option>
-                  <Option value="shanghai">第二季度</Option>
-                  <Option value="shenzhen">第三季度</Option>
-                  <Option value="shenzhen">第四季度</Option>
-                </Select>
-              </FormItem>
-              <FormItem label="选择分公司" style="margin: 0">
-                <Select v-model="formItem.select1" :transfer="true" style="width: 195px;">
-                  <Option value="beijing">第一公司</Option>
-                  <Option value="shanghai">第二公司</Option>
-                  <Option value="shenzhen">第三公司</Option>
-                  <Option value="shenzhen">第四公司</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="search4">查询</Button>
               <div class="btn">
                 <Button type="primary" icon="android-download">导出Excel</Button>
               </div>
@@ -171,7 +107,7 @@
           <Form :model="formItem5" :label-width="80">
             <div class="search">
               <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="date" placeholder="选择时间" :transfer="true" v-model="formItem5.nian"
+                <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem5.nian"
                             class="text_width"></DatePicker>
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn" @click="search5">查询</Button>
@@ -196,21 +132,33 @@
           select1: '',
           date: ''
         },
-        formItem5:{
-          nian:'',
-          yue:''
+        formItem5: {
+          nian: '2018',
+          yue: '08'
+        },
+        formItem4: {
+          nian: '2018',
+          yue: '08'
+        },
+        formItem2: {
+          nian: '2018',
+          yue: '08'
+        },
+        formItem1: {
+          nian: '2018',
+          yue: '08'
         },
         columns11: [
           {
             title: '单位/名称',
-            key: 'dwmc',
+            key: 'mc',
             width: 150,
             align: 'center',
             fixed: 'left',
           },
           {
             title: '计算单位',
-            key: 'dw',
+            key: 'jldw',
             width: 90,
             align: 'center',
             fixed: 'left',
@@ -222,22 +170,22 @@
             children: [
               {
                 title: '计划',
-                key: 'jh',
+                key: 'jh1',
                 width: 100,
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'sj',
+                key: 'sj1',
                 width: 100,
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'jh',
+                key: 'zzl1',
                 width: 100,
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'jh',
+                key: 'sntq1',
                 width: 100,
                 align: 'center',
               },
@@ -250,22 +198,22 @@
             children: [
               {
                 title: '计划',
-                key: 'jh',
+                key: 'jh2',
                 width: 100,
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'sj',
+                key: 'sj2',
                 width: 100,
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'jh',
+                key: 'zzl2',
                 width: 100,
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'jh',
+                key: 'sntq2',
                 width: 100,
                 align: 'center',
               },
@@ -279,22 +227,22 @@
             children: [
               {
                 title: '计划',
-                key: 'jh',
+                key: 'jh3',
                 width: 100,
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'sj',
+                key: 'sj3',
                 width: 100,
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'jh',
+                key: 'zzl3',
                 width: 100,
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'jh',
+                key: 'sntq3',
                 width: 100,
                 align: 'center',
               },
@@ -307,22 +255,22 @@
             children: [
               {
                 title: '计划',
-                key: 'jh',
+                key: 'jh4',
                 width: 100,
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'sj',
+                key: 'sj4',
                 width: 100,
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'jh',
+                key: 'zzl4',
                 width: 100,
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'jh',
+                key: 'sntq4',
                 width: 100,
                 align: 'center',
               },
@@ -335,22 +283,22 @@
             children: [
               {
                 title: '计划',
-                key: 'jh',
+                key: 'jh5',
                 width: 100,
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'sj',
+                key: 'sj5',
                 width: 100,
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'jh',
+                key: 'zzl5',
                 width: 100,
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'jh',
+                key: 'sntq5',
                 width: 100,
                 align: 'center',
               },
@@ -363,22 +311,22 @@
             children: [
               {
                 title: '计划',
-                key: 'jh',
+                key: 'jh6',
                 width: 100,
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'sj',
+                key: 'sj6',
                 width: 100,
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'jh',
+                key: 'zzl6',
                 width: 100,
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'jh',
+                key: 'sntq6',
                 width: 100,
                 align: 'center',
               },
@@ -397,7 +345,7 @@
           },
           {
             title: '计算单位',
-            key: 'dw',
+            key: 'jldw',
             align: 'center',
             fixed: 'left',
           },
@@ -415,7 +363,7 @@
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'add',
+                key: 'zzl',
                 align: 'center',
               }, {
                 title: '上年同期',
@@ -425,74 +373,7 @@
             ]
           }
         ],
-        data12: [
-          {
-            mc: '一、总产值',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '其中工时收入',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '材料收入',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '二、总成本',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '其中：工资',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '材料费',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '三、利润总额',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '四、峻工交车质量',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '五、责任性返修',
-            dw: '万元',
-            jh: '15165',
-            sj: '1215',
-            add: '2.5%',
-            sntq: '20.07'
-          }, {
-            mc: '备注',
-          },
-        ],
+        data12: [],
 
 
         columns13: [
@@ -567,20 +448,16 @@
         ],
 
 
-
-
-
-
         columns14: [
           {
             title: '单位/名称',
-            key: 'xj_dw',
+            key: 'mc',
             align: 'center',
             fixed: 'left',
           },
           {
             title: '计算单位',
-            key: 'xj_dw',
+            key: 'jldw',
             align: 'center',
             fixed: 'left',
           },
@@ -590,40 +467,37 @@
             children: [
               {
                 title: '计划',
-                key: 'xj_jh',
+                key: 'jhSum',
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'xj_sj',
+                key: 'sjSum',
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'xj_add',
+                key: 'zzlAvg',
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'xj_add',
+                key: 'sntqSum',
                 align: 'center',
               }
             ]
           }
         ],
-
-
-
-
+        data14:[],
 
 
         columns15: [
           {
-            title: '',
-            key: 'dw',
+            title: '名称',
+            key: 'mc',
             align: 'center',
             fixed: 'left',
           },
           {
             title: '计算单位',
-            key: 'jsdw',
+            key: 'jldw',
             align: 'center',
             fixed: 'left',
           },
@@ -633,46 +507,150 @@
             children: [
               {
                 title: '计划',
-                key: 'xj_jh',
+                key: 'jh',
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'xj_sj',
+                key: 'sj',
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'xj_add',
+                key: 'zzl',
                 align: 'center',
               }, {
                 title: '上年同期',
-                key: 'xj_sntq',
+                key: 'sntq',
                 align: 'center',
               }
             ]
           }
         ],
-        data15:[]
+        data15: []
       }
     },
     methods: {
-        list5:function () {
-          this.$fetch(this.$url.ckgsList)
-            .then(res => {
-              console.log(res)
-              if (res.success === true) {
-
-              }else {
-                this.$Message.error('查询失败')
-              }
-            })
-        },
-        search5:function () {
-          console.log(this.formItem5)
-//          this.formItem5.nian = this.formItem5
+      list5:function () {
+        this.$fetch(this.$url.ckgsList, this.formItem5)
+          .then(res => {
+            console.log(res.data);
+            if (res.success === true) {
+               this.data15 = res.data
+            } else {
+              this.$Message.error('获取数据失败, 请重试!');
+            }
+          })
+      },
+      search5: function () {
+        if (this.formItem5.nian == '') {
+          this.formItem5.nian = ''
+          this.formItem5.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem5.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem5.nian).substring(5, 7)
+          this.formItem5.nian = nian
+          this.formItem5.yue = yue
         }
+        console.log(this.formItem5)
+        this.list5()
+      },
+
+
+
+      list4:function () {
+        this.$fetch(this.$url.gjhjList, this.formItem4)
+          .then(res => {
+            console.log(res.data);
+            if (res.success === true) {
+              this.data14= res.data
+            } else {
+              this.$Message.error('获取数据失败, 请重试!');
+            }
+          })
+      },
+      search4: function () {
+        if (this.formItem4.nian == '') {
+          this.formItem4.nian = ''
+          this.formItem4.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem4.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem4.nian).substring(5, 7)
+          this.formItem4.nian = nian
+          this.formItem4.yue = yue
+        }
+        console.log(this.formItem4)
+        this.list4()
+      },
+
+
+
+
+
+      list2:function () {
+        this.$fetch(this.$url.xlgsList, this.formItem2)
+          .then(res => {
+            console.log(res.data);
+            if (res.success === true) {
+              this.data12= res.data
+            } else {
+              this.$Message.error('获取数据失败, 请重试!');
+            }
+          })
+      },
+      search2: function () {
+        if (this.formItem2.nian == '') {
+          this.formItem2.nian = ''
+          this.formItem2.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem2.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem2.nian).substring(5, 7)
+          this.formItem2.nian = nian
+          this.formItem2.yue = yue
+        }
+        console.log(this.formItem2)
+        this.list2()
+      },
+
+
+
+      list1:function () {
+        this.$fetch(this.$url.gjfgsList, this.formItem1)
+          .then(res => {
+            console.log(res.data);
+            if (res.success === true) {
+              this.data11= res.data
+            } else {
+              this.$Message.error('获取数据失败, 请重试!');
+            }
+          })
+      },
+      search1: function () {
+        if (this.formItem1.nian == '') {
+          this.formItem1.nian = ''
+          this.formItem1.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem1.nian).substring(5, 7)
+          this.formItem1.nian = nian
+          this.formItem1.yue = yue
+        }
+        console.log(this.formItem1)
+        this.list1()
+      },
+      clickTab:function (name) {
+        console.log(name)
+        if(name==='name1'){
+            this.list1()
+        }else if(name==='name2'){
+          this.list2()
+        }else if(name==='name4'){
+          this.list4()
+        }else if(name==='name5') {
+          this.list5()
+        }
+      }
     },
     mounted () {
-      this.list5()
+      this.list1()
     }
   }
 </script>

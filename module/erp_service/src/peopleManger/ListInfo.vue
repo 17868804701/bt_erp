@@ -257,10 +257,6 @@
             <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.txsj"></DatePicker>
           </FormItem>
-          <!--<FormItem :label-width="120" label="公积金开户时间">-->
-          <!--<DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"-->
-          <!--v-model="formItem.gjjkhsj"></DatePicker>-->
-          <!--</FormItem>-->
           <FormItem :label-width="120" label="合同自起">
             <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
                         v-model="formItem.htkssj"></DatePicker>
@@ -289,7 +285,7 @@
         v-model="modalPdf"
         width="70%"
         title="查看pdf">
-        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':'http://106.12.19.134:8080/static/'+this.$route.query.row.ygfz" :type="0"></vuePdfjs>
+        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':this.$route.query.row.ygfz" :type="0"></vuePdfjs>
       </Modal>
       <!--填写变更原因-->
       <Modal
@@ -494,7 +490,7 @@
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
-        this.zpdz = process.env.upload_BASE_URL+'/static/'+this.$route.query.row.zpdz
+        this.zpdz = process.env.upload_BASE_URL+'/'+this.$route.query.row.zpdz;
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));
@@ -505,7 +501,7 @@
         this.formItem.htkssj = this.formatDate(new Date(new Date(this.$route.query.row.htkssj).getTime()));
         this.formItem.htjssj = this.formatDate(new Date(new Date(this.$route.query.row.htjssj).getTime()));
         this.formItem.csny = this.formatDate(new Date(new Date(this.$route.query.row.csny).getTime()));
-        console.log(this.formItem.zpdz)
+        console.log(this.zpdz);
         console.log(this.formItem,'修改后的')
       }
     }

@@ -153,6 +153,9 @@
               <span @click="logout">
                 <DropdownItem>退出</DropdownItem>
               </span>
+              <span @click="admin">
+                <DropdownItem>后台登陆</DropdownItem>
+              </span>
               <span @click="userCenter">
                 <DropdownItem>个人中心</DropdownItem>
               </span>
@@ -353,6 +356,9 @@
           return this.currentClassify == item.cid;
         }
         return false;
+      },
+      admin(){
+          window.location.href = 'http://106.12.19.134:8080/plat/#/home'
       }
     },
     mounted(){

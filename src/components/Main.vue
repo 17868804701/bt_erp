@@ -120,6 +120,15 @@
     font-size: 12px;
     margin-top: 10px;
   }
+  .side2 {
+    height: 90vh;margin-top: 1.5vh;background: rgb(255,255,255,0.3);overflow-y: scroll
+  }
+  .side2::-webkit-scrollbar {
+    display: none;
+  }
+  .side2 a {
+    color:#515a6e;
+  }
 </style>
 <template>
   <div class="layout">
@@ -201,23 +210,19 @@
       </Modal>
       <!--个人信息完-->
       <Layout>
-        <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
-               style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
-          <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses"
-                @on-select="selectClassify">
+        <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed" style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
+          <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses" @on-select="selectClassify">
             <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid">
               <Icon type="ios-keypad"/>
               <span>{{classify.cname}}</span>
             </MenuItem>
           </Menu>
         </Sider>
-        <Sider ref="side1" width="200" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed"
-               style="height: 90vh;margin-top: 1.5vh;background: rgb(255,255,255,0.3);overflow-y: scroll">
+        <Sider ref="side1" width="200" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed" class="side2">
           <Menu active-name="1" theme="light" width="200" :class="menuitemClasses" style="background: none">
-            <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1"
-                      :name="item.aname">
+            <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1" :name="item.aname">
               <a :href="'http://localhost:8081/#/'+item.apath" target="erp_main" class="menuStyle1">
-                <img src="../assets/lo.jpg" alt="" class="icon">
+                <img :src="'http://10.50.0.144:8088/'+item.aicon" alt="" class="icon">
                 <span>{{item.aname}}</span>
               </a>
             </MenuItem>
@@ -234,9 +239,7 @@
           </div>
           <Content style="margin:13px 0 0 40px;background: #fff;height: 90vh}">
             <div style="position: relative;overflow-y: hidden;height: 90vh;padding: 0px 10px 10px 10px;">
-              <iframe style="height: 100%;width: 100%" name="erp_main" frameborder="0"
-                      src="http://localhost:8081/#/"
-                      scrolling="none"></iframe>
+              <iframe style="height: 100%;width: 100%" name="erp_main" frameborder="0" src="http://localhost:8081/#/" scrolling="none"></iframe>
             </div>
           </Content>
         </Layout>

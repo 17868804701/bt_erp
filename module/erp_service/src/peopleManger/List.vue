@@ -714,6 +714,8 @@
     mounted () {
       this.changeTableColumns();
       this.getList();
+      console.log(this.$store.state.userAuth.authButtons);
+      debugger;
     }
   }
 </script>

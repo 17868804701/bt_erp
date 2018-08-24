@@ -191,6 +191,12 @@
         }
       }
     },
-    methods: {}
+    methods: {
+
+    },
+    mounted() {
+      console.log('初始化权限');
+      this.$store.commit('getCurrentAuth');
+    }
   }
 </script>

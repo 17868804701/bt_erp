@@ -11,6 +11,8 @@ import VueCookie from 'vue-cookie'
 import {post,fetch,patch,put,getExcel} from '../utils/http';
 import {formatDate_hs} from '../utils/DateTool';
 import URLUntil from '../utils/NetworkDefine';
+//store
+import store from './store';
 
 Vue.prototype.$url=URLUntil;
 Vue.prototype.$post=post;
@@ -31,5 +33,30 @@ Vue.use(vuePdfjs);
 new Vue({
   el: '#app',
   router: router,
-  render: h => h(App)
+  store: store,
+  render: h => h(App),
+  beforeCreate: function () {
+    console.group('beforeCreate 创建前状态===============》');
+  },
+  created: function () {
+    console.group('created 创建完毕状态===============》');
+  },
+  beforeMount: function () {
+    console.group('beforeMount 挂载前状态===============》');
+  },
+  mounted: function () {
+    console.group('mounted 挂载结束状态===============》');
+  },
+  beforeUpdate: function () {
+    console.group('beforeUpdate 更新前状态===============》');
+  },
+  updated: function () {
+    console.group('updated 更新完成状态===============》');
+  },
+  beforeDestroy: function () {
+    console.group('beforeDestroy 销毁前状态===============》');
+  },
+  destroyed: function () {
+    console.group('destroyed 销毁完成状态===============》');
+  }
 });

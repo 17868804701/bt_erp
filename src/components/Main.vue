@@ -305,7 +305,6 @@
         console.log('退出登录');
         this.$fetch('http://10.50.0.144:8702/login/logout?access_token=' + VueCookie.get('access_token'))
           .then(res => {
-            console.log(res);
             if (res.success === true) {
               VueCookie.set('access_token', '', -1);
               window.top.location.href = process.env.BASE_URL + "/login?service=http://localhost:8080/#/";
@@ -320,7 +319,6 @@
       },
       getUserSetting() {
         let that = this;
-        console.log('获取用户权限');
         let appClassifyURL = process.env.BASE_URL + '/auth/app/getClassify';
         this.$fetch(appClassifyURL)
           .then(res => {
@@ -340,16 +338,13 @@
         let allAppURL = process.env.BASE_URL + '/auth/app/getAllApp';
         this.$fetch(allAppURL)
           .then(res => {
-            console.log(res);
             that.allAppList = res.data;
           })
       },
       selectClassify(value) {
-        console.log(value);
         this.currentClassify = value;
       },
       isShow(item) {
-        console.log(this.currentClassify);
         if (this.currentClassify === 'all') {
           return true;
         } else {

@@ -62,7 +62,7 @@
       }
     },
     mounted () {
-
+      this.$store.commit('getCurrentAuth');
     }
   }
 </script>

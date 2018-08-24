@@ -135,7 +135,7 @@
     <Layout>
       <Header class="header">
         <div class="logo">
-          <span><Icon type="logo-twitter" style="margin-right: 10px;"/>智慧公交平台</span>
+          <span><Icon type="logo-twitter" style="margin-right: 10px;"/>包头公交平台</span>
           <div>
             <a href="http://localhost:8081/#/" target="erp_main">
               <Icon type="md-home" class="home_icon"/>

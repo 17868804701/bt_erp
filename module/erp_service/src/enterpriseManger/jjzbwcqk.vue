@@ -1,9 +1,5 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-  .container {
-    padding: 10px;
-  }
-
   .container h2 {
     margin-left: 15px;
   }
@@ -44,7 +40,7 @@
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn" @click="search1">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" @click="daochu1">导出Excel</Button>
               </div>
             </div>
           </Form>
@@ -61,7 +57,7 @@
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn" @click="search2">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" @click="daochu2">导出Excel</Button>
               </div>
             </div>
           </Form>
@@ -85,7 +81,6 @@
         </Card>
         <Table :columns="columns13" :data="data13" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-
       <TabPane label="经济指标完成情况（表四）" name="name4">
         <Card style="padding-left: 15px;">
           <Form :model="formItem4" :label-width="80">
@@ -96,14 +91,13 @@
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn" @click="search4">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" @click="daochu4">导出Excel</Button>
               </div>
             </div>
           </Form>
         </Card>
         <Table :columns="columns14" :data="data14" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-
       <TabPane label="经济指标完成情况（表五）" name="name5">
         <Card style="padding-left: 15px;">
           <Form :model="formItem5" :label-width="80">
@@ -114,7 +108,7 @@
               </FormItem>
               <Button type="primary" icon="ios-search" class="search_btn" @click="search5">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" @click="daochu5">导出Excel</Button>
               </div>
             </div>
           </Form>
@@ -337,7 +331,6 @@
         ],
         data11: [],
 
-
         columns12: [
           {
             title: '单位/指标名称',
@@ -376,7 +369,6 @@
           }
         ],
         data12: [],
-
 
         columns13: [
           {
@@ -449,7 +441,6 @@
           }
         ],
 
-
         columns14: [
           {
             title: '单位/名称',
@@ -488,7 +479,6 @@
           }
         ],
         data14:[],
-
 
         columns15: [
           {
@@ -543,7 +533,7 @@
           })
       },
       search5: function () {
-        if (this.formItem5.nian == '') {
+        if (this.formItem5.nian === '') {
           this.formItem5.nian = ''
           this.formItem5.yue = ''
         } else {
@@ -554,6 +544,20 @@
         }
         console.log(this.formItem5)
         this.list5()
+      },
+      daochu5:function () {
+        if (this.formItem5.nian === '') {
+          this.formItem5.nian = ''
+          this.formItem5.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem5.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem5.nian).substring(5, 7)
+          this.formItem5.nian = nian
+          this.formItem5.yue = yue
+        }
+        console.log(this.formItem5.nian)
+        console.log(this.formItem5.yue)
+        this.$getExcel(process.env.BASE_URL+this.$url.ckgsDaochu+'?nian='+this.formItem5.nian+'&yue='+this.formItem5.yue);
       },
 
 
@@ -570,7 +574,7 @@
           })
       },
       search4: function () {
-        if (this.formItem4.nian == '') {
+        if (this.formItem4.nian === '') {
           this.formItem4.nian = ''
           this.formItem4.yue = ''
         } else {
@@ -581,6 +585,18 @@
         }
         console.log(this.formItem4)
         this.list4()
+      },
+      daochu4:function () {
+        if (this.formItem4.nian === '') {
+          this.formItem4.nian = ''
+          this.formItem4.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem4.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem4.nian).substring(5, 7)
+          this.formItem4.nian = nian
+          this.formItem4.yue = yue
+        }
+        this.$getExcel(process.env.BASE_URL+this.$url.gjhjDaochu+'?nian='+this.formItem4.nian+'&yue='+this.formItem4.yue);
       },
 
 
@@ -599,7 +615,7 @@
           })
       },
       search2: function () {
-        if (this.formItem2.nian == '') {
+        if (this.formItem2.nian === '') {
           this.formItem2.nian = ''
           this.formItem2.yue = ''
         } else {
@@ -611,7 +627,18 @@
         console.log(this.formItem2)
         this.list2()
       },
-
+      daochu2:function () {
+        if (this.formItem2.nian === '') {
+          this.formItem2.nian = ''
+          this.formItem2.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem2.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem2.nian).substring(5, 7)
+          this.formItem2.nian = nian
+          this.formItem2.yue = yue
+        }
+        this.$getExcel(process.env.BASE_URL+this.$url.xlgsDaochu+'?nian='+this.formItem2.nian+'&yue='+this.formItem2.yue);
+      },
 
 
       list1:function () {
@@ -626,7 +653,7 @@
           })
       },
       search1: function () {
-        if (this.formItem1.nian == '') {
+        if (this.formItem1.nian === '') {
           this.formItem1.nian = ''
           this.formItem1.yue = ''
         } else {
@@ -637,6 +664,18 @@
         }
         console.log(this.formItem1)
         this.list1()
+      },
+      daochu1:function () {
+        if (this.formItem1.nian === '') {
+          this.formItem1.nian = ''
+          this.formItem1.yue = ''
+        } else {
+          let nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
+          let yue = this.$formatDate(this.formItem1.nian).substring(5, 7)
+          this.formItem1.nian = nian
+          this.formItem1.yue = yue
+        }
+        this.$getExcel(process.env.BASE_URL+this.$url.gjfgsDaochu+'?nian='+this.formItem1.nian+'&yue='+this.formItem1.yue);
       },
       clickTab:function (name) {
         console.log(name)

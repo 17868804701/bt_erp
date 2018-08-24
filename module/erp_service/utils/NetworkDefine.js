@@ -230,9 +230,13 @@ const NetworkInterface = {
   qygl_yyscyszl_kylyzsr_export: baseURL+'/kylzsrhz/exportKylzsrhzExcel',          //导出客运量与总收入汇总
 
   ckgsList: '/qiy/jjzbFgs/jjzbCkgsList',                            //长客公司列表
+  ckgsDaochu: '/qiy/jjzbFgs/exportJjzbCkgsExcel',                            //长客公司列表
   gjhjList: '/qiy/jjzbFgs/jjzbGjgsHzList',                            //公交合计列表
+  gjhjDaochu: '/qiy/jjzbFgs/exportJjzbGjgsHzExcel',                            //公交合计列表
   xlgsList: '/qiy/jjzbFgs/jjzbXlgsList',                            //修理公司列表
+  xlgsDaochu: '/qiy/jjzbFgs/exportJjzbXlgsExcel',                            //修理公司列表
   gjfgsList: '/qiy/jjzbFgs/jjzbGjgsList',                            //公交分公司列表
+  gjfgsDaochu: '/qiy/jjzbFgs/exportJjzbGjgsExcel',                            //公交分公司列表
 };
 
 export default NetworkInterface;

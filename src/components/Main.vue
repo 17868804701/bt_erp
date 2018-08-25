@@ -120,14 +120,20 @@
     font-size: 12px;
     margin-top: 10px;
   }
+
   .side2 {
-    height: 90vh;margin-top: 1.5vh;background: rgb(255,255,255,0.3);overflow-y: scroll
+    height: 90vh;
+    margin-top: 1.5vh;
+    background: rgb(255, 255, 255, 0.3);
+    overflow-y: scroll
   }
+
   .side2::-webkit-scrollbar {
     display: none;
   }
+
   .side2 a {
-    color:#515a6e;
+    color: #515a6e;
   }
 </style>
 <template>
@@ -213,26 +219,30 @@
       </Modal>
       <!--个人信息完-->
       <Layout>
-        <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed" style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
-          <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses" @on-select="selectClassify">
+        <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
+               style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
+          <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses"
+                @on-select="selectClassify">
             <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid">
               <Icon type="ios-keypad"/>
               <span>{{classify.cname}}</span>
             </MenuItem>
           </Menu>
         </Sider>
-        <Sider ref="side1" width="200" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed" class="side2">
+        <Sider ref="side1" width="200" hide-trigger collapsible :collapsed-width="0" v-model="isCollapsed"
+               class="side2">
           <Menu active-name="1" theme="light" width="200" :class="menuitemClasses" style="background: none">
-            <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1" :name="item.aname">
-              <a :href="'http://localhost:8081/#/'+item.apath" target="erp_main" class="menuStyle1">
-                <img :src="'http://10.50.0.144:8088/'+item.aicon" alt="" class="icon">
+            <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1"
+                      :name="item.aname">
+              <a :href="item.apath" target="erp_main" class="menuStyle1">
+                <img :src="item.aicon" alt="" class="icon">
                 <span>{{item.aname}}</span>
               </a>
             </MenuItem>
           </Menu>
           <!--<div class="tip">-->
-            <!--<img src="../assets/box.png" alt="">-->
-            <!--<span>暂无可用应用</span>-->
+          <!--<img src="../assets/box.png" alt="">-->
+          <!--<span>暂无可用应用</span>-->
           <!--</div>-->
         </Sider>
         <Layout>
@@ -242,7 +252,8 @@
           </div>
           <Content style="margin:13px 0 0 40px;background: #fff;height: 90vh}">
             <div style="position: relative;overflow-y: hidden;height: 90vh;padding: 0px 10px 10px 10px;">
-              <iframe style="height: 100%;width: 100%" name="erp_main" frameborder="0" src="http://localhost:8081/#/" scrolling="none"></iframe>
+              <iframe style="height: 100%;width: 100%" name="erp_main" frameborder="0"
+                      :src="URL" scrolling="none"></iframe>
             </div>
           </Content>
         </Layout>
@@ -257,6 +268,7 @@
       return {
         isCollapsed: false,
         id: '',
+        URL:'',
         modal1: false,
         formItem: {
           input: 'admin',
@@ -293,17 +305,12 @@
       collapsedSider () {
         this.$refs.side1.toggleCollapse();
       },
-      list: function () {
-//        this.$fetch('http://rap.taobao.org/mockjsdata/11793/test').then(res => {
-//          console.log(res)
-//        })
-      },
       userCenter: function () {
         this.modal1 = true
       },
       logout() {
         console.log('退出登录');
-        this.$fetch('http://10.50.0.144:8702/login/logout?access_token=' + VueCookie.get('access_token'))
+        this.$fetch(process.env.BASE_URL+'login/logout?access_token=' + VueCookie.get('access_token'))
           .then(res => {
             if (res.success === true) {
               VueCookie.set('access_token', '', -1);
@@ -315,7 +322,6 @@
         this.$Message.info('修改成功');
       },
       cancel () {
-//        this.$Message.info('取消');
       },
       getUserSetting() {
         let that = this;
@@ -327,18 +333,22 @@
               cicon: "",
               cid: 'all',
               cname: "全部",
-            }
+            };
             res.data.splice(0, 0, obj);
             that.appClassfiyList = res.data;
             this.$nextTick(() => {
               that.currentClassify = 'all'
             })
-          })
+          });
 
         let allAppURL = process.env.BASE_URL + '/auth/app/getAllApp';
         this.$fetch(allAppURL)
           .then(res => {
-            that.allAppList = res.data;
+              res.data.forEach(item=>{
+                item.apath = process.env.iframe_BASE_URL+item.apath,
+                item.aicon = process.env.upload_BASE_URL+item.aicon
+              });
+              that.allAppList = res.data;
           })
       },
       selectClassify(value) {
@@ -348,16 +358,16 @@
         if (this.currentClassify === 'all') {
           return true;
         } else {
-          return this.currentClassify == item.cid;
+          return this.currentClassify === item.cid;
         }
         return false;
       },
       admin(){
-          window.location.href = 'http://106.12.19.134:8080/plat/#/home'
+        window.location.href = process.env.admin_BASE_URL+'plat/#/home'
       }
     },
     mounted(){
-      this.list();
+      this.URL = process.env.iframe_BASE_URL
       this.getUserSetting();
     },
     created() {

@@ -54,6 +54,8 @@ axios.interceptors.response.use(
           break;
         case 2001:
           iView.Message.error('Token失效');
+
+          console.log()
           VueCookie.set('access_token','',-1);
           window.top.location.href = process.env.BASE_URL+"/login";
           break;

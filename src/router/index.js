@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
       },
       timeout:10000
     })
-    
+
   }else {
     next()
   }

@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgb(47, 79, 79, 0.8);
+    background: #2c83db;
   }
 
   .logo {
@@ -156,68 +156,21 @@
               <Icon type="ios-arrow-down"></Icon>
             </span>
             <DropdownMenu slot="list">
+              <a href="http://localhost:8081/#/UserCenter" target="erp_main">
+                <span>
+                  <DropdownItem>个人中心</DropdownItem>
+                </span>
+              </a>
+              <span @click="admin">
+                <DropdownItem>后台管理中心</DropdownItem>
+              </span>
               <span @click="logout">
                 <DropdownItem>退出</DropdownItem>
-              </span>
-              <span @click="admin">
-                <DropdownItem>后台登陆</DropdownItem>
-              </span>
-              <span @click="userCenter">
-                <DropdownItem>个人中心</DropdownItem>
               </span>
             </DropdownMenu>
           </Dropdown>
         </div>
       </Header>
-      <!--个人信息-->
-      <Modal
-        v-model="modal1"
-        title="个人信息"
-        @on-ok="ok"
-        @on-cancel="cancel">
-        <div>
-          <Form :model="formItem" :label-width="80">
-            <FormItem label="用户名">
-              <Input v-model="formItem.input" placeholder="用户名"></Input>
-            </FormItem>
-            <FormItem label="所在公司">
-              <Select v-model="formItem.select">
-                <Option value="公交一公司">公交一公司</Option>
-                <Option value="公交二公司">公交二公司</Option>
-                <Option value="公交三公司">公交三公司</Option>
-              </Select>
-            </FormItem>
-            <FormItem label="籍贯">
-              <Input v-model="formItem.jiguan" placeholder="用户名"></Input>
-            </FormItem>
-            <FormItem label="性别">
-              <RadioGroup v-model="formItem.radio">
-                <Radio label="男">男</Radio>
-                <Radio label="女">女</Radio>
-              </RadioGroup>
-            </FormItem>
-            <FormItem label="兴趣爱好">
-              <CheckboxGroup v-model="formItem.checkbox">
-                <Checkbox label="Eat"></Checkbox>
-                <Checkbox label="Sleep"></Checkbox>
-                <Checkbox label="Run"></Checkbox>
-                <Checkbox label="Movie"></Checkbox>
-              </CheckboxGroup>
-            </FormItem>
-            <FormItem label="是否在职">
-              <i-switch v-model="formItem.switch" size="large">
-                <span slot="open">是</span>
-                <span slot="close">否</span>
-              </i-switch>
-            </FormItem>
-            <FormItem label="个人简介">
-              <Input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
-                     placeholder="个人简介"></Input>
-            </FormItem>
-          </Form>
-        </div>
-      </Modal>
-      <!--个人信息完-->
       <Layout>
         <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
                style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
@@ -268,7 +221,7 @@
       return {
         isCollapsed: false,
         id: '',
-        URL:'',
+        URL: '',
         modal1: false,
         formItem: {
           input: 'admin',
@@ -305,12 +258,9 @@
       collapsedSider () {
         this.$refs.side1.toggleCollapse();
       },
-      userCenter: function () {
-        this.modal1 = true
-      },
       logout() {
         console.log('退出登录');
-        this.$fetch(process.env.BASE_URL+'login/logout?access_token=' + VueCookie.get('access_token'))
+        this.$fetch(process.env.BASE_URL + 'login/logout?access_token=' + VueCookie.get('access_token'))
           .then(res => {
             if (res.success === true) {
               VueCookie.set('access_token', '', -1);
@@ -344,11 +294,11 @@
         let allAppURL = process.env.BASE_URL + '/auth/app/getAllApp';
         this.$fetch(allAppURL)
           .then(res => {
-              res.data.forEach(item=>{
-                item.apath = process.env.iframe_BASE_URL+item.apath,
-                item.aicon = process.env.upload_BASE_URL+item.aicon
-              });
-              that.allAppList = res.data;
+            res.data.forEach(item => {
+              item.apath = process.env.iframe_BASE_URL + item.apath,
+                item.aicon = process.env.upload_BASE_URL + item.aicon
+            });
+            that.allAppList = res.data;
           })
       },
       selectClassify(value) {
@@ -363,7 +313,7 @@
         return false;
       },
       admin(){
-        window.location.href = process.env.admin_BASE_URL+'plat/#/home'
+        window.location.href = process.env.admin_BASE_URL + 'plat/#/home'
       }
     },
     mounted(){

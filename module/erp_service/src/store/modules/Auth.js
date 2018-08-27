@@ -11,21 +11,15 @@ const userAuth = {
   mutations: {
     getCurrentAuth(state){//这里的state对应着上面这个state
       if (state.authButtons.length <= 0) {
-        fetch(process.env.BASE_URL+'/auth/interface/getInters')
+        fetch(process.env.BASE_URL+'/auth/app/getResrouce')
         .then(res => {
           state.authButtons = res.data;
+          console.log(state.authButtons);
         })
       }
-      console.log(state.authButtons);
     },
     getAllMenu(state) {
       fetch(process.env.BASE_URL+'/auth/app/getMenu')
-      .then(res => {
-        state.menuList = res.data;
-      })
-    },
-    getMenuList(state, aid) {
-      fetch(process.env.BASE_URL+'/auth/app/getMenu', {aid: aid})
       .then(res => {
         state.menuList = res.data;
       })

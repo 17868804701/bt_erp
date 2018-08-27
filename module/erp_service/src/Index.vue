@@ -195,7 +195,7 @@
 
     },
     mounted() {
-      console.log('初始化权限');
+      this.$store.commit('getAllMenu');
       this.$store.commit('getCurrentAuth');
     }
   }

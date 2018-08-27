@@ -22,69 +22,107 @@
     <h2>
       人员信息管理
     </h2>
+
+    <Modal
+      v-model="modal2"
+      width="550"
+      style="height: auto"
+      :mask-closable="false"
+      title="选择要显示的列字段">
+      <Checkbox-group v-model="tableColumnsChecked" @on-change="changeTableColumns">
+        <Checkbox label="cym">曾用名</Checkbox>
+        <Checkbox label="xb">性别</Checkbox>
+        <Checkbox label="mz">民族</Checkbox>
+        <Checkbox label="xmdx">姓名首字母</Checkbox>
+        <Checkbox label="csny">出生年月</Checkbox>
+        <Checkbox label="jg">籍贯</Checkbox>
+        <Checkbox label="zzmm">政治面貌</Checkbox>
+        <Checkbox label="gh">工号</Checkbox>
+        <Checkbox label="rybh">人员编号</Checkbox>
+        <Checkbox label="sfzh">身份证号</Checkbox>
+        <Checkbox label="bxdh">保险档号</Checkbox>
+        <Checkbox label="bm">部门</Checkbox>
+        <Checkbox label="gjjzh">公积金账号</Checkbox>
+        <Checkbox label="gjjdh">公积金档号</Checkbox>
+        <Checkbox label="gjjzt">公积金状态</Checkbox>
+        <Checkbox label="gjjjcbz">公积金缴存情况备注</Checkbox>
+        <Checkbox label="gjjkhsj">公积金开户时间</Checkbox>
+        <Checkbox label="ylbx">医疗保险</Checkbox>
+        <Checkbox label="ylzh">养老证号</Checkbox>
+        <Checkbox label="fby">服兵役</Checkbox>
+        <Checkbox label="rdsj">入党时间</Checkbox>
+        <Checkbox label="gzsj">工作时间</Checkbox>
+        <Checkbox label="bdwgzsj">本单位工作时间</Checkbox>
+        <Checkbox label="txsj">退休时间</Checkbox>
+        <Checkbox label="txdz">通讯地址</Checkbox>
+        <Checkbox label="lxdh">联系电话</Checkbox>
+        <Checkbox label="dw">单位</Checkbox>
+        <Checkbox label="bm">部门</Checkbox>
+        <Checkbox label="zyjszc">专业技术职称</Checkbox>
+        <Checkbox label="qdsj">取得时间</Checkbox>
+        <Checkbox label="xl">学历</Checkbox>
+        <Checkbox label="byyx">毕业院校</Checkbox>
+        <Checkbox label="sxzy">所学专业</Checkbox>
+        <Checkbox label="zc">职称</Checkbox>
+        <Checkbox label="txlb">退休类别</Checkbox>
+        <Checkbox label="gzzw">公种职务</Checkbox>
+        <Checkbox label="gzzh">工作证号</Checkbox>
+        <Checkbox label="zyzgjn">职业资格技能</Checkbox>
+        <Checkbox label="jkzk">健康状况</Checkbox>
+        <Checkbox label="gsbx">工伤保险</Checkbox>
+        <Checkbox label="gwzt">岗位状态</Checkbox>
+        <Checkbox label="rybgqk">人员变更情况</Checkbox>
+        <Checkbox label="zgsf">职工身份</Checkbox>
+        <Checkbox label="poqk">配偶情况</Checkbox>
+        <Checkbox label="htkssj">合同开始时间</Checkbox>
+        <Checkbox label="htjssj">合同结束时间</Checkbox>
+        <Checkbox label="lrsj">录入时间</Checkbox>
+        <Checkbox label="bz">备注</Checkbox>
+        <Checkbox label="ld">路队</Checkbox>
+        <Checkbox label="zzqk">在职情况</Checkbox>
+        <Checkbox label="sscj">所属车间</Checkbox>
+        <Checkbox label="wxbz">维修班组</Checkbox>
+      </Checkbox-group>
+    </Modal>
+    <Modal
+      v-model="modal1"
+      width="300"
+      @on-ok="ok"
+      :mask-closable="false"
+      title="选择姓名首字母" style="text-align: center">
+      <Button type="primary" size="small" v-for="(item,index) in letterArray" :key="item+index"
+              id="letter"
+              @click="getLetter(item)">{{item}}
+      </Button>
+    </Modal>
+    <!--报表导入-->
+    <Modal
+      v-model="exports"
+      title="导入计划表"
+      width="400"
+      :mask-closable="false"
+      style="height:auto;">
+      <Steps :current="0" direction="vertical">
+        <Step title="第一步" content="下载导入报表模板"></Step>
+        <Step title="第二步" content="上传报表"></Step>
+        <Step title="第三部" content="系统自动导入"></Step>
+      </Steps>
+      <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
+        <Button type="dashed" icon="android-download"
+                style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载
+        </Button>
+        <Upload action="//jsonplaceholder.typicode.com/posts/">
+          <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传
+          </Button>
+        </Upload>
+      </div>
+    </Modal>
+
+
+
     <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
-      <Modal
-        v-model="modal2"
-        width="550"
-        style="height: auto"
-        :mask-closable="false"
-        title="选择要显示的列字段">
-        <Checkbox-group v-model="tableColumnsChecked" @on-change="changeTableColumns">
-          <Checkbox label="cym">曾用名</Checkbox>
-          <Checkbox label="xb">性别</Checkbox>
-          <Checkbox label="mz">民族</Checkbox>
-          <Checkbox label="xmdx">姓名首字母</Checkbox>
-          <Checkbox label="csny">出生年月</Checkbox>
-          <Checkbox label="jg">籍贯</Checkbox>
-          <Checkbox label="zzmm">政治面貌</Checkbox>
-          <Checkbox label="gh">工号</Checkbox>
-          <Checkbox label="rybh">人员编号</Checkbox>
-          <Checkbox label="sfzh">身份证号</Checkbox>
-          <Checkbox label="bxdh">保险档号</Checkbox>
-          <Checkbox label="bm">部门</Checkbox>
-          <Checkbox label="gjjzh">公积金账号</Checkbox>
-          <Checkbox label="gjjdh">公积金档号</Checkbox>
-          <Checkbox label="gjjzt">公积金状态</Checkbox>
-          <Checkbox label="gjjjcbz">公积金缴存情况备注</Checkbox>
-          <Checkbox label="gjjkhsj">公积金开户时间</Checkbox>
-          <Checkbox label="ylbx">医疗保险</Checkbox>
-          <Checkbox label="ylzh">养老证号</Checkbox>
-          <Checkbox label="fby">服兵役</Checkbox>
-          <Checkbox label="rdsj">入党时间</Checkbox>
-          <Checkbox label="gzsj">工作时间</Checkbox>
-          <Checkbox label="bdwgzsj">本单位工作时间</Checkbox>
-          <Checkbox label="txsj">退休时间</Checkbox>
-          <Checkbox label="txdz">通讯地址</Checkbox>
-          <Checkbox label="lxdh">联系电话</Checkbox>
-          <Checkbox label="dw">单位</Checkbox>
-          <Checkbox label="bm">部门</Checkbox>
-          <Checkbox label="zyjszc">专业技术职称</Checkbox>
-          <Checkbox label="qdsj">取得时间</Checkbox>
-          <Checkbox label="xl">学历</Checkbox>
-          <Checkbox label="byyx">毕业院校</Checkbox>
-          <Checkbox label="sxzy">所学专业</Checkbox>
-          <Checkbox label="zc">职称</Checkbox>
-          <Checkbox label="txlb">退休类别</Checkbox>
-          <Checkbox label="gzzw">公种职务</Checkbox>
-          <Checkbox label="gzzh">工作证号</Checkbox>
-          <Checkbox label="zyzgjn">职业资格技能</Checkbox>
-          <Checkbox label="jkzk">健康状况</Checkbox>
-          <Checkbox label="gsbx">工伤保险</Checkbox>
-          <Checkbox label="gwzt">岗位状态</Checkbox>
-          <Checkbox label="rybgqk">人员变更情况</Checkbox>
-          <Checkbox label="zgsf">职工身份</Checkbox>
-          <Checkbox label="poqk">配偶情况</Checkbox>
-          <Checkbox label="htkssj">合同开始时间</Checkbox>
-          <Checkbox label="htjssj">合同结束时间</Checkbox>
-          <Checkbox label="lrsj">录入时间</Checkbox>
-          <Checkbox label="bz">备注</Checkbox>
-          <Checkbox label="ld">路队</Checkbox>
-          <Checkbox label="zzqk">在职情况</Checkbox>
-          <Checkbox label="sscj">所属车间</Checkbox>
-          <Checkbox label="wxbz">维修班组</Checkbox>
-        </Checkbox-group>
-      </Modal>
-      <TabPane v-if="validateAuth('集团人员查询')" label="集团人员查询" name="name1">
+
+      <TabPane v-has:menuName="'集团人员查询'" label="集团人员查询" name="name1">
         <Card style="width:100%">
           <p slot="title">员工列表查询</p>
           <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
@@ -100,17 +138,6 @@
                     <input v-model="cxItem.xmszm" type="text" @focus="modal1 = true" placeholder="按照姓名首字母查询"
                            class="select_name">
                   </FormItem>
-                  <Modal
-                    v-model="modal1"
-                    width="300"
-                    @on-ok="ok"
-                    :mask-closable="false"
-                    title="选择姓名首字母" style="text-align: center">
-                    <Button type="primary" size="small" v-for="(item,index) in letterArray" :key="item+index"
-                            id="letter"
-                            @click="getLetter(item)">{{item}}
-                    </Button>
-                  </Modal>
                   <FormItem label="在职情况" style="margin-left: 10px;">
                     <Select v-model="cxItem.zzqk" style="width:180px">
                       <Option value="">全部</Option>
@@ -156,7 +183,7 @@
             <!--筛选结果-->
             <div style="width: 100%; text-align: center;">
               <ButtonGroup>
-                <Button type="primary" @click="search">
+                <Button type="primary" @click="search" v-has:btnCode="'person_people_menu1_search'">
                   <Icon type="search"></Icon>
                   搜索
                 </Button>
@@ -170,43 +197,18 @@
                   导入
                 </Button>
               </ButtonGroup>
-
-
-              <!--报表导入-->
-              <Modal
-                v-model="exports"
-                title="导入计划表"
-                width="400"
-                :mask-closable="false"
-                style="height:auto;">
-                <Steps :current="0" direction="vertical">
-                  <Step title="第一步" content="下载导入报表模板"></Step>
-                  <Step title="第二步" content="上传报表"></Step>
-                  <Step title="第三部" content="系统自动导入"></Step>
-                </Steps>
-                <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
-                  <Button type="dashed" icon="android-download"
-                          style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载
-                  </Button>
-                  <Upload action="//jsonplaceholder.typicode.com/posts/">
-                    <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传
-                    </Button>
-                  </Upload>
-                </div>
-              </Modal>
             </div>
           </div>
         </Card>
         <Table style="margin-top: 10px;" size="small" :data="tableData2" :columns="tableColumns2" border></Table>
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
-      <TabPane v-if="validateAuth('人员岗位统计')" label="人员岗位统计" name="name2">
+
+      <TabPane v-has:menuName="'人员岗位统计1111'" label="人员岗位统计" name="name2">
         <UserStatistics/>
       </TabPane>
-      <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
 
       <Button v-if="tabValue === 'name1'" type="primary" size="default" slot="extra" @click="modal2 = true" style="margin-right: 10px;">列表字段扩展</Button>
-      <!--<Button type="primary" size="default" slot="extra"  @click="exit" >临时退出</Button>-->
     </Tabs>
   </div>
 </template>
@@ -724,11 +726,6 @@
     mounted () {
       this.changeTableColumns();
       this.getList();
-//      let url = window.location.href;
-//      let urlArray = url.split('?aid=');
-//      let aid = urlArray[1];
-//      this.$store.commit('getMenuList', aid);
-      this.$initialAuth(window.location.href);
     }
   }
 </script>

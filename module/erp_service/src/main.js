@@ -14,7 +14,7 @@ import URLUntil from '../utils/NetworkDefine';
 //store
 import store from './store';
 //auth
-import {initialAuth} from '../utils/AuthTool';
+import has from '../plugins/CustomDirectives';
 
 Vue.prototype.$url=URLUntil;
 Vue.prototype.$post=post;
@@ -24,14 +24,13 @@ Vue.prototype.$put=put;
 Vue.prototype.$getExcel=getExcel;
 Vue.prototype.$formatDate=formatDate_hs;
 Vue.prototype.$VueCookie=VueCookie;
-Vue.prototype.$initialAuth = initialAuth;
-
 
 //定义全局变量
 
 Vue.use(iView);
 Vue.use(vueshowpdf);
 Vue.use(vuePdfjs);
+
 
 new Vue({
   el: '#app',
@@ -61,5 +60,5 @@ new Vue({
   },
   destroyed: function () {
     console.group('destroyed 销毁完成状态===============》');
-  }
+  },
 });

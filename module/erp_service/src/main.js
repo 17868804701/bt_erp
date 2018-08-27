@@ -13,6 +13,8 @@ import {formatDate_hs} from '../utils/DateTool';
 import URLUntil from '../utils/NetworkDefine';
 //store
 import store from './store';
+//auth
+import {initialAuth} from '../utils/AuthTool';
 
 Vue.prototype.$url=URLUntil;
 Vue.prototype.$post=post;
@@ -22,6 +24,7 @@ Vue.prototype.$put=put;
 Vue.prototype.$getExcel=getExcel;
 Vue.prototype.$formatDate=formatDate_hs;
 Vue.prototype.$VueCookie=VueCookie;
+Vue.prototype.$initialAuth = initialAuth;
 
 
 //定义全局变量

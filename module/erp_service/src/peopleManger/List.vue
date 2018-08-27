@@ -84,7 +84,7 @@
           <Checkbox label="wxbz">维修班组</Checkbox>
         </Checkbox-group>
       </Modal>
-      <TabPane label="集团人员查询" name="name1">
+      <TabPane v-if="validateAuth('集团人员查询')" label="集团人员查询" name="name1">
         <Card style="width:100%">
           <p slot="title">员工列表查询</p>
           <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
@@ -200,7 +200,7 @@
         <Table style="margin-top: 10px;" size="small" :data="tableData2" :columns="tableColumns2" border></Table>
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
-      <TabPane label="人员岗位统计" name="name2">
+      <TabPane v-if="validateAuth('人员岗位统计')" label="人员岗位统计" name="name2">
         <UserStatistics/>
       </TabPane>
       <!--<Button type="primary" size="small" slot="extra"  @click="tj" style="margin-right: 10px;">人员分布</Button>-->
@@ -709,13 +709,26 @@
               window.top.location.href = process.env.BASE_URL+"/login?service=http://localhost:8080/#/";
             }
           })
+      },
+      validateAuth(menuName) {
+        let menuList = this.$store.state.userAuth.menuList;
+        for (let i = 0; i < menuList.length; i++) {
+          let menu = menuList[i];
+          if (menu.mname === menuName) {
+            return true;
+          }
+        }
+        return false;
       }
     },
     mounted () {
       this.changeTableColumns();
       this.getList();
-      console.log(this.$store.state.userAuth.authButtons);
-      debugger;
+//      let url = window.location.href;
+//      let urlArray = url.split('?aid=');
+//      let aid = urlArray[1];
+//      this.$store.commit('getMenuList', aid);
+      this.$initialAuth(window.location.href);
     }
   }
 </script>

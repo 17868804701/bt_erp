@@ -6,6 +6,7 @@ import {post,fetch,patch,put,getExcel} from '../../../utils/http';
 const userAuth = {
   state: {
     authButtons: [],
+    menuList: [],
   },
   mutations: {
     getCurrentAuth(state){//这里的state对应着上面这个state
@@ -16,6 +17,18 @@ const userAuth = {
         })
       }
       console.log(state.authButtons);
+    },
+    getAllMenu(state) {
+      fetch(process.env.BASE_URL+'/auth/app/getMenu')
+      .then(res => {
+        state.menuList = res.data;
+      })
+    },
+    getMenuList(state, aid) {
+      fetch(process.env.BASE_URL+'/auth/app/getMenu', {aid: aid})
+      .then(res => {
+        state.menuList = res.data;
+      })
     }
   }
 }

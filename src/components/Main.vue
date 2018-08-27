@@ -187,7 +187,7 @@
           <Menu active-name="1" theme="light" width="200" :class="menuitemClasses" style="background: none">
             <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1"
                       :name="item.aname">
-              <a :href="item.apath" target="erp_main" class="menuStyle1">
+              <a :href="item.apath+'?aid='+item.aid" target="erp_main" class="menuStyle1">
                 <img :src="item.aicon" alt="" class="icon">
                 <span>{{item.aname}}</span>
               </a>
@@ -299,6 +299,7 @@
                 item.aicon = process.env.upload_BASE_URL + item.aicon
             });
             that.allAppList = res.data;
+            console.log(res);
           })
       },
       selectClassify(value) {

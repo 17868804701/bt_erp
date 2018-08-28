@@ -34,7 +34,7 @@
     <h2>检测费用结算</h2>
     </div>
     <Tabs value="name1" @on-click="changes">
-      <TabPane label="月份检测费用结算" name="name1">
+      <TabPane v-if="$showMenu('月份检测费用结算')" label="月份检测费用结算" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
@@ -62,7 +62,7 @@
         <Table :columns="columns1" :data="data1" size="small" border style="margin-top: 10px;"></Table>
         <Page :total="totalCount" show-total style="margin-top: 10px;" @on-change="setpPage"></Page>
       </TabPane>
-      <TabPane label="季度检测费用结算" name="name2">
+      <TabPane v-if="$showMenu('季度检测费用结算')" label="季度检测费用结算" name="name2">
         <Card style="padding-left: 15px;">
           <Form :model="formItem1" :label-width="80">
             <div class="search">

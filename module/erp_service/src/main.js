@@ -28,7 +28,6 @@ Vue.prototype.$VueCookie=VueCookie;
 Vue.prototype.$showMenu=showMenu;
 
 
-
 //定义全局变量
 
 Vue.use(iView);

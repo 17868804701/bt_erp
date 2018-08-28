@@ -5,7 +5,7 @@
         领料管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane label="领料历史记录" name="name1">
+        <TabPane v-if="$showMenu('领料历史记录')"  label="领料历史记录" name="name1">
           <Card>
             <Form :model="formItem" :label-width="110">
               <Row>

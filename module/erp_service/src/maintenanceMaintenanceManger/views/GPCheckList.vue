@@ -34,7 +34,7 @@
       <h2>检测登记</h2>
     </div>
     <Tabs value="name1" @on-click="changesTabs">
-      <TabPane label="检测费用设定" name="name1">
+      <TabPane v-if="$showMenu('检测费用设定')" label="检测费用设定" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="100">
             <div class="search">
@@ -92,7 +92,7 @@
         <Table :columns="columns1" :data="data1" size="small" border style="margin-top: 10px;"></Table>
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
-      <TabPane label="钢瓶检测登记" name="name2">
+      <TabPane v-if="$showMenu('钢瓶检测登记')" label="钢瓶检测登记" name="name2">
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">

@@ -6,11 +6,11 @@
       <h2 style="margin-left: 15px;">
         基础数据管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane label="维修工信息管理" name="name1">
+      <Tabs style="margin-top: 5px;" @on-click="clickTab">
+        <TabPane v-if="$showMenu('维修工信息管理')" label="维修工信息管理" name="name1">
           <WorkerManager ref="WorkerManager"></WorkerManager>
         </TabPane>
-        <TabPane label="配件信息管理" name="name2">
+        <TabPane v-if="$showMenu('配件信息管理')" label="配件信息管理" name="name2">
           <PJXXManager ref="PJXXManager"></PJXXManager>
         </TabPane>
       </Tabs>

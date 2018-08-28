@@ -9,10 +9,10 @@
         安全管理月考核表管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane label="安全管理月考核表" name="name1">
+        <TabPane v-if="$showMenu('安全管理月考核表')" label="安全管理月考核表" name="name1">
           <ExamineManager ref="ExamineManager"/>
         </TabPane>
-        <TabPane label="追加事故经损说明管理" name="name2">
+        <TabPane v-if="$showMenu('追加事故经损说明管理')" label="追加事故经损说明管理" name="name2">
           <AddLossList ref="AddLossList"/>
         </TabPane>
       </Tabs>

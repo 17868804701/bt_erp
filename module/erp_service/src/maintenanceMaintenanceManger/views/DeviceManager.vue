@@ -7,10 +7,10 @@
         设备保养管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane label="设备保养记录" name="name1">
+        <TabPane v-if="$showMenu('设备保养记录')" label="设备保养记录" name="name1">
           <DeviceBYList ref="DeviceBYList"></DeviceBYList>
         </TabPane>
-        <TabPane label="设备信息管理" name="name2">
+        <TabPane v-if="$showMenu('设备信息管理')" label="设备信息管理" name="name2">
           <DeviceList ref="DeviceList"></DeviceList>
         </TabPane>
       </Tabs>

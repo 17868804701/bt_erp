@@ -7,7 +7,8 @@
       </h2>
 
       <Tabs v-model="currentTab" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane label="安全情况分析" name="name1">
+
+        <TabPane v-if="$showMenu('安全情况分析')" label="安全情况分析" name="name1">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -27,7 +28,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="立案事故分布" name="name2">
+        <TabPane v-if="$showMenu('立案事故分布')" label="立案事故分布" name="name2">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -47,7 +48,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="考核事故分布" name="name3">
+        <TabPane v-if="$showMenu('考核事故分布')" label="考核事故分布" name="name3">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -67,7 +68,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="经济损失" name="name4">
+        <TabPane v-if="$showMenu('经济损失')" label="经济损失" name="name4">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -87,7 +88,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="行车责任事故频率" name="name5">
+        <TabPane v-if="$showMenu('行车责任事故频率')" label="行车责任事故频率" name="name5">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -107,7 +108,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="立案事故经损率指标" name="name6">
+        <TabPane v-if="$showMenu('立案事故经损率指标')" label="立案事故经损率指标" name="name6">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -127,7 +128,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="车辆安检" name="name7">
+        <TabPane v-if="$showMenu('车辆安检')" label="车辆安检" name="name7">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">
@@ -147,7 +148,7 @@
           </Table>
         </TabPane>
 
-        <TabPane label="对外投保交强险及赔付情况" name="name8">
+        <TabPane v-if="$showMenu('对外投保交强险及赔付情况')" label="对外投保交强险及赔付情况" name="name8">
           <Card>
             <Form :model="formItem" :label-width="80">
               <div style="display: flex;align-items: center">

@@ -3,7 +3,7 @@
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
       <h2 style="margin-left: 15px;">天然气汇总管理</h2>
       <Tabs value="name1" @on-click="tabs">
-        <TabPane label="分公司天然气汇总" name="name1">
+        <TabPane v-if="$showMenu('分公司天然气汇总')" label="分公司天然气汇总" name="name1">
           <Card>
             <Form :model="formItem" :label-width="80">
               <Row>
@@ -82,7 +82,7 @@
             <!--</div>-->
           <!--</Modal>-->
         </TabPane>
-        <TabPane label="天然气月终汇总" name="name2">
+        <TabPane v-if="$showMenu('天然气月终汇总')" label="天然气月终汇总" name="name2">
           <Card>
             <Form :model="formItem1" :label-width="80">
               <Row>

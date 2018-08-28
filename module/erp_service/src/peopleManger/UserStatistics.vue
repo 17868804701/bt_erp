@@ -128,7 +128,6 @@
           countData.push(this.tableData[i].tx);
           countData.push(this.tableData[i].wj);
           countData.push(this.tableData[i].tl);
-          countData.push(this.tableData[i].sm);
 
           dwData.push(this.tableData[i].dw);
           series.push({

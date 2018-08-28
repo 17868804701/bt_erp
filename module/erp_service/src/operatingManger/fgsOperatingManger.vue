@@ -36,42 +36,44 @@
           分公司行车月报表
         </h2>
       </div>
-      <Card style="padding-left: 15px;">
-        <Form :model="formItem" :label-width="80">
-          <div class="search">
-            <FormItem label="选择年月" style="margin: 0">
-              <DatePicker type="month" placeholder="选择时间" :transfer="true"
-                          class="text_width" v-model="formItem.sj"></DatePicker>
-            </FormItem>
-            <FormItem label="选择公司" style="margin: 0">
-              <Select :transfer="true" v-model="formItem.dw" style="width: 195px;">
-                <Option value="公交一公司">公交一公司</Option>
-                <Option value="公交二公司">公交二公司</Option>
-                <Option value="公交三公司">公交三公司</Option>
-              </Select>
-            </FormItem>
-            <Button type="primary" icon="ios-search" @click="search" class="search_btn">查询</Button>
-            <div class="btn">
-              <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
-              <Modal
-                v-model="modal1"
-                @on-ok="ok"
-                @on-cancel="cancel"
-                title="填写导出说明"
-              >
-                <Form :model="formItem" :label-width="80">
-                  <FormItem label="导出说明">
-                    <Input type="textarea" v-model="formItem.dcsm" :autosize="{minRows: 2,maxRows: 5}"
-                           placeholder="请输入导出说明"></Input>
-                  </FormItem>
-                </Form>
-              </Modal>
+      <div v-if="$showMenu('分公司行车月报管理')">
+        <Card style="padding-left: 15px;">
+          <Form :model="formItem" :label-width="80">
+            <div class="search">
+              <FormItem label="选择年月" style="margin: 0">
+                <DatePicker type="month" placeholder="选择时间" :transfer="true"
+                            class="text_width" v-model="formItem.sj"></DatePicker>
+              </FormItem>
+              <FormItem label="选择公司" style="margin: 0">
+                <Select :transfer="true" v-model="formItem.dw" style="width: 195px;">
+                  <Option value="公交一公司">公交一公司</Option>
+                  <Option value="公交二公司">公交二公司</Option>
+                  <Option value="公交三公司">公交三公司</Option>
+                </Select>
+              </FormItem>
+              <Button type="primary" icon="ios-search" @click="search" class="search_btn">查询</Button>
+              <div class="btn">
+                <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
+                <Modal
+                  v-model="modal1"
+                  @on-ok="ok"
+                  @on-cancel="cancel"
+                  title="填写导出说明"
+                >
+                  <Form :model="formItem" :label-width="80">
+                    <FormItem label="导出说明">
+                      <Input type="textarea" v-model="formItem.dcsm" :autosize="{minRows: 2,maxRows: 5}"
+                             placeholder="请输入导出说明"></Input>
+                    </FormItem>
+                  </Form>
+                </Modal>
+              </div>
             </div>
-          </div>
-        </Form>
-      </Card>
-      <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
-      <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
+          </Form>
+        </Card>
+        <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
+        <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
+      </div>
     </div>
   </div>
 </template>

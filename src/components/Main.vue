@@ -176,7 +176,7 @@
                style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
           <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses"
                 @on-select="selectClassify">
-            <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid">
+            <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid" :key="classify+index">
               <Icon type="ios-keypad"/>
               <span>{{classify.cname}}</span>
             </MenuItem>
@@ -186,7 +186,7 @@
                class="side2">
           <Menu active-name="1" theme="light" width="200" :class="menuitemClasses" style="background: none">
             <MenuItem v-for="(item, index) in this.allAppList" v-show="isShow(item)" class="menuStyle1"
-                      :name="item.aname">
+                      :name="item.aname" :key="item+index">
               <a :href="item.apath+'?aid='+item.aid" target="erp_main" class="menuStyle1">
                 <img :src="item.aicon" alt="" class="icon">
                 <span>{{item.aname}}</span>

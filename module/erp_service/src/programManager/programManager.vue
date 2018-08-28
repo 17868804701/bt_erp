@@ -5,10 +5,10 @@
         计划管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane label="集团公司运营计划管理" name="name1">
+        <TabPane v-if="$showMenu('集团公司运营计划管理')" label="集团公司运营计划管理" name="name1">
             <jtgsyy></jtgsyy>
         </TabPane>
-        <TabPane label="分公司运营计划管理" name="name2">
+        <TabPane v-if="$showMenu('分公司运营计划管理')" label="分公司运营计划管理" name="name2">
           <fgsyy></fgsyy>
         </TabPane>
       </Tabs>

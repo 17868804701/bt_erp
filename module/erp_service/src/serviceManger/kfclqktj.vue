@@ -34,7 +34,7 @@
     <h2>客服处理情况报表统计</h2>
     </div>
     <Tabs value="name1"  @on-click="changes">
-      <TabPane label="投诉情况分类汇总表" name="name1">
+      <TabPane v-if="$showMenu('投诉情况分类汇总表')" label="投诉情况分类汇总表" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="tsqkfl" :label-width="80">
             <div class="search">
@@ -52,7 +52,7 @@
         </Card>
         <Table :columns="columns11" :data="data11" border height="470" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-      <TabPane label="分公司投诉情况分类汇总表" name="name2">
+      <TabPane v-if="$showMenu('分公司投诉情况分类汇总表')" label="分公司投诉情况分类汇总表" name="name2">
         <Card style="padding-left: 15px;">
           <Form :model="fgstsqkfl" :label-width="80">
             <div class="search">
@@ -74,7 +74,7 @@
         <Table :columns="columns12" :data="data12" border height="auto" style="margin-top: 10px;" size="small"></Table>
         <!--<Page :total="100" show-total style="margin-top: 10px;"></Page>-->
       </TabPane>
-      <TabPane label="客服处理情况报表统计" name="name3">
+      <TabPane v-if="$showMenu('客服处理情况报表统计')" label="客服处理情况报表统计" name="name3">
         <Card style="padding-left: 15px;">
           <Form :model="kfxxtj" :label-width="80">
             <div class="search">

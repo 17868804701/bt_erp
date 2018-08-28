@@ -35,7 +35,7 @@
     <h2>客服信息列表</h2>
     </div>
     <Tabs value="name1" @on-click="tabs">
-      <TabPane label="客服信息登记列表" name="name1">
+      <TabPane v-if="$showMenu('客服信息登记列表')" label="客服信息登记列表" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="110">
             <div class="search">
@@ -64,7 +64,7 @@
         <Table :columns="columns11" :data="data10" border height="470" style="margin-top: 10px;" size="small"></Table>
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setp"></Page>
       </TabPane>
-      <TabPane label="待我处理列表" name="name2">
+      <TabPane v-if="$showMenu('待我处理列表')" label="待我处理列表" name="name2">
         <Card style="padding-left: 15px;">
           <Form :model="formItem1" :label-width="110">
             <div class="search">

@@ -6,7 +6,7 @@
       报表管理
     </h2>
     <Tabs v-model="currentTab" style="margin-top: 5px;" @on-click="clickTab">
-      <TabPane label="三级保养台账" name="name1">
+      <TabPane v-if="$showMenu('三级保养台账')" label="三级保养台账" name="name1">
         <Card>
           <Form :model="form1Item">
             <Row>
@@ -23,7 +23,7 @@
         <Table style="margin-top: 10px;" :data="tableData" border :columns="tzColumns" border></Table>
         <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
-      <TabPane label="三级维护材料使用情况" name="name2">
+      <TabPane v-if="$showMenu('三级维护材料使用情况')" label="三级维护材料使用情况" name="name2">
         <Card>
           <Form :model="form2Item">
             <Row>

@@ -7,10 +7,10 @@
         事故情况报表管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane label="集团公司事故情况月汇总表" name="name1">
+        <TabPane v-if="$showMenu('集团公司事故情况月汇总表')" label="集团公司事故情况月汇总表" name="name1">
           <JTAccidentMonthFee ref="JTAccidentMonthFee"/>
         </TabPane>
-        <TabPane label="各分公司交通事故月报表" name="name2">
+        <TabPane v-if="$showMenu('各分公司交通事故月报表')" label="各分公司交通事故月报表" name="name2">
           <FGSAccidentMonthFee ref="FGSAccidentMonthFee"/>
         </TabPane>
       </Tabs>

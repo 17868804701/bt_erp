@@ -30,7 +30,7 @@
     <h2>经济指标完成情况</h2>
     </div>
     <Tabs value="name1" @on-click="clickTab">
-      <TabPane label="经济指标完成情况（表一）" name="name1">
+      <TabPane v-if="$showMenu('经济指标完成情况（表一）')" label="经济指标完成情况（表一）" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="formItem1" :label-width="80">
             <div class="search">
@@ -47,7 +47,7 @@
         </Card>
         <Table :columns="columns11" :data="data11" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-      <TabPane label="经济指标完成情况（表二）" name="name2">
+      <TabPane v-if="$showMenu('经济指标完成情况（表二）')" label="经济指标完成情况（表二）" name="name2">
         <Card style="padding-left: 15px;">
           <Form :model="formItem2" :label-width="80">
             <div class="search">
@@ -64,7 +64,7 @@
         </Card>
         <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-      <TabPane label="各单位星级考核结果(表三)" name="name3">
+      <TabPane v-if="$showMenu('经济指标完成情况（表三）')" label="各单位星级考核结果(表三)" name="name3">
         <Card style="padding-left: 15px;">
           <Form :model="formItem" :label-width="80">
             <div class="search">
@@ -81,7 +81,7 @@
         </Card>
         <Table :columns="columns13" :data="data13" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-      <TabPane label="经济指标完成情况（表四）" name="name4">
+      <TabPane v-if="$showMenu('经济指标完成情况（表四）')" label="经济指标完成情况（表四）" name="name4">
         <Card style="padding-left: 15px;">
           <Form :model="formItem4" :label-width="80">
             <div class="search">
@@ -98,7 +98,7 @@
         </Card>
         <Table :columns="columns14" :data="data14" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
-      <TabPane label="经济指标完成情况（表五）" name="name5">
+      <TabPane v-if="$showMenu('经济指标完成情况（表五）')" label="经济指标完成情况（表五）" name="name5">
         <Card style="padding-left: 15px;">
           <Form :model="formItem5" :label-width="80">
             <div class="search">

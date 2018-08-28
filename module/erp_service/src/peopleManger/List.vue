@@ -183,7 +183,7 @@
             <!--筛选结果-->
             <div style="width: 100%; text-align: center;">
               <ButtonGroup>
-                <Button type="primary" @click="search" v-has:btnCode="'person_people_menu1_search'">
+                <Button type="primary" @click="search" v-has="'person_people_menu1_search'">
                   <Icon type="search"></Icon>
                   搜索
                 </Button>
@@ -204,7 +204,7 @@
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
 
-      <TabPane v-if="$showMenu('人员岗位统计111')" label="人员岗位统计" name="name2">
+      <TabPane v-if="$showMenu('人员岗位统计')" label="人员岗位统计" name="name2">
         <UserStatistics/>
       </TabPane>
 
@@ -214,11 +214,9 @@
 </template>
 <script>
   import UserStatistics from './UserStatistics.vue'
-  import MyTabPane from  '../components/common/MyTabPane.vue'
   export default {
     components: {
       UserStatistics,
-      MyTabPane
     },
     data () {
       return {
@@ -714,6 +712,16 @@
             }
           })
       },
+      validateAuth(menuName) {
+        let menuList = this.$store.state.userAuth.menuList;
+        for (let i = 0; i < menuList.length; i++) {
+          let menu = menuList[i];
+          if (menu.mname === menuName) {
+            return true;
+          }
+        }
+        return false;
+      }
     },
     mounted () {
       this.changeTableColumns();

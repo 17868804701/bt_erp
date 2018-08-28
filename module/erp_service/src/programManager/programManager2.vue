@@ -5,10 +5,10 @@
         计划管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane label="分公司收入计划制定" name="name1">
+        <TabPane v-if="$showMenu('分公司收入计划制定')" label="分公司收入计划制定" name="name1">
           <fgssrjh></fgssrjh>
         </TabPane>
-          <TabPane label="市内公交总收入计划制定" name="name2">
+          <TabPane v-if="$showMenu('市内公交总收入计划制定')" label="市内公交总收入计划制定" name="name2">
             <sngjzsrjh></sngjzsrjh>
           </TabPane>
       </Tabs>

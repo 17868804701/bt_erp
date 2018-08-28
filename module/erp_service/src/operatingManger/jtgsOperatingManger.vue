@@ -14,7 +14,7 @@
         </h2>
       </div>
       <Tabs value="name1" style="margin-top: 5px;" @on-click="changes">
-        <TabPane label="线路车次正点统计表" name="name1">
+        <TabPane v-if="$showMenu('线路车次正点统计表')" label="线路车次正点统计表" name="name1">
           <Card>
             <Form :model="formItem1" :label-width="80">
               <div style="display: flex;flex-wrap: wrap;margin-left: 10px;">
@@ -63,7 +63,7 @@
           <Table :columns="columns11" :data="data10" border height="520" size="small" style="margin-top: 10px;"></Table>
           <Page :total="totalPage1" show-total style="margin-top: 10px;" @on-change="setPage1"></Page>
         </TabPane>
-        <TabPane label="各公司与集团汇总表" name="name2">
+        <TabPane v-if="$showMenu('各公司与集团汇总表')" label="各公司与集团汇总表" name="name2">
           <Card>
             <Form :model="formItem2" :label-width="80">
               <div style="display: flex;flex-wrap: wrap;margin-left: 10px;">

@@ -3,109 +3,111 @@
     <div style="padding: 10px;border-bottom: 1px solid #e9eaec">
       <h2>运营计划调整管理</h2>
     </div>
-    <Card style="margin-top: 10px;">
-      <Form :model="formItem" :label-width="80">
-        <div style="display: flex;flex-wrap: wrap">
-          <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
-                        v-model="formItem.nf"></DatePicker>
-          </FormItem>
-          <FormItem label="线路" style="margin: 0;">
-            <Select v-model="formItem.lb" style="width: 195px;">
-              <Option value="全部">全部</Option>
-              <Option value="1路">1路</Option>
-              <Option value="2路">2路</Option>
-              <Option value="3路">3路</Option>
-            </Select>
-          </FormItem>
-          <FormItem label="公司" style="margin: 0;">
-            <Select v-model="formItem.gsm" style="width: 195px;">
-              <Option value="">全部</Option>
-              <Option value="四公司">四公司</Option>
-              <Option value="公交一公司">公交一公司</Option>
-              <Option value="公交二公司">公交二公司</Option>
-              <Option value="公交三公司">公交三公司</Option>
-            </Select>
-          </FormItem>
-          <FormItem style="margin: 0;">
-            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
-          </FormItem>
-          <FormItem style="margin: 0">
-            <Button type="primary" icon="android-download" @click="addyyProgram=true">新增计划</Button>
-            <Button type="primary" icon="android-download" @click="daochu">导出excel</Button>
-          </FormItem>
-          <!--添加-->
-          <Modal
-            v-model="addyyProgram"
-            title="新增计划"
-            width="80%"
-            :mask-closable="false"
-            @on-cancel="quxiao"
-            :scrollable="true"
-            style="height: auto">
-            <div slot="footer" style="height: 30px;">
-              <Button type="primary" style="float: right;margin-right: 10px" @click="update" v-if="this.type=='edit'">修改</Button>
-              <Button type="primary" style="float: right;margin-right: 10px" @click="save" v-else >确定
-              </Button>
-              <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
-            </div>
-            <Form :model="program" :label-width="90">
-              <div style="display: flex;flex-wrap: wrap">
-                <FormItem label="公司名">
-                  <Select v-model="program.gsm" style="width: 195px;">
-                    <Option value="四公司">四公司</Option>
-                    <Option value="公交一公司">公交一公司</Option>
-                    <Option value="公交二公司">公交二公司</Option>
-                    <Option value="公交三公司">公交三公司</Option>
-                  </Select>
-                </FormItem>
-                <FormItem label="路别">
-                  <Select v-model="program.lb" style="width: 195px;">
-                    <Option value="1路">1路</Option>
-                    <Option value="2路">2路</Option>
-                    <Option value="3路">3路</Option>
-                  </Select>
-                </FormItem>
-                <FormItem label="班车数量">
-                  <Input v-model="program.bcs" placeholder="班车数量" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="备用车数">
-                  <Input v-model="program.bys" placeholder="备用车数" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="日车次">
-                  <Input v-model="program.rcc" placeholder="日车次" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="路线长度">
-                  <Input v-model="program.xlcd" placeholder="路线长度" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="日出入库里程">
-                  <Input v-model="program.rcrklc" placeholder="日出入库里程" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="日加气里程">
-                  <Input v-model="program.rjqlc" placeholder="日加气里程" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="年份">
-                  <DatePicker type="year" placeholder="选择年份" :transfer="true" style="width: 195px;"
-                              v-model="program.nf"></DatePicker>
-                </FormItem>
-                <FormItem label="出入库台数">
-                  <Input v-model="program.crkts" placeholder="出入库台数" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="加气台数">
-                  <Input v-model="program.jqts" placeholder="加气台数" style="width: 195px;"/>
-                </FormItem>
-                <FormItem label="出入库说明">
-                  <Input v-model="program.crksm" style="width: 480px;" type="textarea"
-                         :autosize="{minRows: 2,maxRows: 5}" placeholder="出入库说明"></Input>
-                </FormItem>
+    <div v-if="$showMenu('运营计划调整管理')">
+      <Card style="margin-top: 10px;">
+        <Form :model="formItem" :label-width="80">
+          <div style="display: flex;flex-wrap: wrap">
+            <FormItem label="按年份查询" style="margin: 0;">
+              <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
+                          v-model="formItem.nf"></DatePicker>
+            </FormItem>
+            <FormItem label="线路" style="margin: 0;">
+              <Select v-model="formItem.lb" style="width: 195px;">
+                <Option value="全部">全部</Option>
+                <Option value="1路">1路</Option>
+                <Option value="2路">2路</Option>
+                <Option value="3路">3路</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="公司" style="margin: 0;">
+              <Select v-model="formItem.gsm" style="width: 195px;">
+                <Option value="">全部</Option>
+                <Option value="四公司">四公司</Option>
+                <Option value="公交一公司">公交一公司</Option>
+                <Option value="公交二公司">公交二公司</Option>
+                <Option value="公交三公司">公交三公司</Option>
+              </Select>
+            </FormItem>
+            <FormItem style="margin: 0;">
+              <Button type="primary" icon="ios-search" @click="search">搜索</Button>
+            </FormItem>
+            <FormItem style="margin: 0">
+              <Button type="primary" icon="android-download" @click="addyyProgram=true">新增计划</Button>
+              <Button type="primary" icon="android-download" @click="daochu">导出excel</Button>
+            </FormItem>
+            <!--添加-->
+            <Modal
+              v-model="addyyProgram"
+              title="新增计划"
+              width="80%"
+              :mask-closable="false"
+              @on-cancel="quxiao"
+              :scrollable="true"
+              style="height: auto">
+              <div slot="footer" style="height: 30px;">
+                <Button type="primary" style="float: right;margin-right: 10px" @click="update" v-if="this.type=='edit'">修改</Button>
+                <Button type="primary" style="float: right;margin-right: 10px" @click="save" v-else >确定
+                </Button>
+                <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
               </div>
-            </Form>
-          </Modal>
-        </div>
-      </Form>
-    </Card>
-    <Table border :columns="columns11" size="small" :data="data10" style="margin-top: 20px;"></Table>
-    <Page :total="totalPage" show-total  @on-change = 'step'/>
+              <Form :model="program" :label-width="90">
+                <div style="display: flex;flex-wrap: wrap">
+                  <FormItem label="公司名">
+                    <Select v-model="program.gsm" style="width: 195px;">
+                      <Option value="四公司">四公司</Option>
+                      <Option value="公交一公司">公交一公司</Option>
+                      <Option value="公交二公司">公交二公司</Option>
+                      <Option value="公交三公司">公交三公司</Option>
+                    </Select>
+                  </FormItem>
+                  <FormItem label="路别">
+                    <Select v-model="program.lb" style="width: 195px;">
+                      <Option value="1路">1路</Option>
+                      <Option value="2路">2路</Option>
+                      <Option value="3路">3路</Option>
+                    </Select>
+                  </FormItem>
+                  <FormItem label="班车数量">
+                    <Input v-model="program.bcs" placeholder="班车数量" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="备用车数">
+                    <Input v-model="program.bys" placeholder="备用车数" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="日车次">
+                    <Input v-model="program.rcc" placeholder="日车次" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="路线长度">
+                    <Input v-model="program.xlcd" placeholder="路线长度" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="日出入库里程">
+                    <Input v-model="program.rcrklc" placeholder="日出入库里程" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="日加气里程">
+                    <Input v-model="program.rjqlc" placeholder="日加气里程" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="年份">
+                    <DatePicker type="year" placeholder="选择年份" :transfer="true" style="width: 195px;"
+                                v-model="program.nf"></DatePicker>
+                  </FormItem>
+                  <FormItem label="出入库台数">
+                    <Input v-model="program.crkts" placeholder="出入库台数" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="加气台数">
+                    <Input v-model="program.jqts" placeholder="加气台数" style="width: 195px;"/>
+                  </FormItem>
+                  <FormItem label="出入库说明">
+                    <Input v-model="program.crksm" style="width: 480px;" type="textarea"
+                           :autosize="{minRows: 2,maxRows: 5}" placeholder="出入库说明"></Input>
+                  </FormItem>
+                </div>
+              </Form>
+            </Modal>
+          </div>
+        </Form>
+      </Card>
+      <Table border :columns="columns11" size="small" :data="data10" style="margin-top: 20px;"></Table>
+      <Page :total="totalPage" show-total  @on-change = 'step'/>
+    </div>
   </div>
 </template>
 <script>

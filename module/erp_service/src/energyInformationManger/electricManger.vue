@@ -5,7 +5,7 @@
         电能消耗管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;" @on-click="tabsChange">
-        <TabPane label="分公司电能消耗统计" name="name1">
+        <TabPane v-if="$showMenu('分公司电能消耗统计')" label="分公司电能消耗统计" name="name1">
           <Card style="padding-left: 15px;">
             <Form :model="formItem" :label-width="80">
               <div class="search">
@@ -41,7 +41,7 @@
           <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
           <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setpPage1"></Page>
         </TabPane>
-        <TabPane label="集团电能消耗统计" name="name2">
+        <TabPane v-if="$showMenu('集团电能消耗统计')" label="集团电能消耗统计" name="name2">
           <Card style="padding-left: 15px;">
             <Form :model="formItem1" :label-width="80">
               <div class="search">

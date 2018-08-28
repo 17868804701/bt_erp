@@ -34,7 +34,7 @@
     <h2>运营生产原始资料汇总</h2>
     </div>
     <Tabs v-model="currentTab" @on-click="clickTab">
-      <TabPane label="车次里程耗油季度汇总" name="name1">
+      <TabPane v-if="$showMenu('车次里程耗油季度汇总')" label="车次里程耗油季度汇总" name="name1">
         <Card style="padding-left: 15px;">
           <Form :model="formItem1" :label-width="80">
             <div class="search">
@@ -78,7 +78,7 @@
         <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
 
-      <TabPane label="客运量与总收入季度汇总" name="name2">
+      <TabPane v-if="$showMenu('客运量与总收入季度汇总')" label="客运量与总收入季度汇总" name="name2">
         <Card style="padding-left: 15px;">
           <Form :model="formItem2" :label-width="80">
             <div class="search">
@@ -104,7 +104,7 @@
         <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
       </TabPane>
 
-      <TabPane label="车次里程耗油月度分析" name="name3">
+      <TabPane v-if="$showMenu('车次里程耗油月度分析')" label="车次里程耗油月度分析" name="name3">
         <Card style="padding-left: 15px;">
           <Form :model="formItem3" :label-width="80">
             <div class="search">

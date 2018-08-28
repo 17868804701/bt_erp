@@ -7,52 +7,54 @@
         立案事故管理
       </h2>
     </Row>
-    <Modal
-      v-model="accidentModal"
-      title="新增立案事故登记"
-      width="50%">
-      <div slot="footer" style="height: 30px;">
-        <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddAccident">保存</Button>
-        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddAccident">取消</Button>
-      </div>
-      <AddAccidentDiv ref="AddAccidentDiv" :formValidate="formValidate"/>
-    </Modal>
-    <Modal
-      v-model="lossModal"
-      title="追加事故经损"
-      width="50%">
-      <div slot="footer" style="height: 30px;">
-        <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddLoss">追加经损</Button>
-        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddLoss">取消</Button>
-      </div>
-      <AddLossDiv ref="AddLossDiv" :lossForm="lossForm"/>
-    </Modal>
-    <Card style="width:100%; margin-top: 20px;">
-      <div slot="title">搜索查询</div>
-      <Button size="small" slot="extra" type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>
-      <Form :model="searchOptions" :label-width="80">
-        <div style="display: flex;flex-wrap: wrap; align-items: center">
-          <FormItem label="车牌号" style="margin: 0px;">
-            <Input v-model="searchOptions.pz" placeholder="请输入牌照查询..." clearable style="width: 180px"></Input>
-          </FormItem>
-          <FormItem label="驾驶员姓名" style="margin: 0px;">
-            <Input v-model="searchOptions.jsyxm" placeholder="请输入驾驶员姓名查询..." clearable style="width: 180px"></Input>
-          </FormItem>
-          <FormItem label="立案时间" style="margin: 0px;" >
-            <DatePicker v-model="searchOptions.date" style="width: 180px;" type="date"
-                        placeholder="请选择立案时间"></DatePicker>
-          </FormItem>
-          <Button style="margin-left: 20px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-          <div style="position: absolute;right: 20px;">
-            <!--<Button type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>-->
-            <Button type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
-          </div>
+    <div v-if="$showMenu('立案事故管理')">
+      <Modal
+        v-model="accidentModal"
+        title="新增立案事故登记"
+        width="50%">
+        <div slot="footer" style="height: 30px;">
+          <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddAccident">保存</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddAccident">取消</Button>
         </div>
-      </Form>
-    </Card>
-    <!--表格-->
-    <Table style="margin-top: 10px;" :row-class-name="rowColor" :data="tableData" border :columns="initTableColumns" border></Table>
-    <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
+        <AddAccidentDiv ref="AddAccidentDiv" :formValidate="formValidate"/>
+      </Modal>
+      <Modal
+        v-model="lossModal"
+        title="追加事故经损"
+        width="50%">
+        <div slot="footer" style="height: 30px;">
+          <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddLoss">追加经损</Button>
+          <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddLoss">取消</Button>
+        </div>
+        <AddLossDiv ref="AddLossDiv" :lossForm="lossForm"/>
+      </Modal>
+      <Card style="width:100%; margin-top: 20px;">
+        <div slot="title">搜索查询</div>
+        <Button size="small" slot="extra" type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>
+        <Form :model="searchOptions" :label-width="80">
+          <div style="display: flex;flex-wrap: wrap; align-items: center">
+            <FormItem label="车牌号" style="margin: 0px;">
+              <Input v-model="searchOptions.pz" placeholder="请输入牌照查询..." clearable style="width: 180px"></Input>
+            </FormItem>
+            <FormItem label="驾驶员姓名" style="margin: 0px;">
+              <Input v-model="searchOptions.jsyxm" placeholder="请输入驾驶员姓名查询..." clearable style="width: 180px"></Input>
+            </FormItem>
+            <FormItem label="立案时间" style="margin: 0px;" >
+              <DatePicker v-model="searchOptions.date" style="width: 180px;" type="date"
+                          placeholder="请选择立案时间"></DatePicker>
+            </FormItem>
+            <Button style="margin-left: 20px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
+            <div style="position: absolute;right: 20px;">
+              <!--<Button type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>-->
+              <Button type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
+            </div>
+          </div>
+        </Form>
+      </Card>
+      <!--表格-->
+      <Table style="margin-top: 10px;" :row-class-name="rowColor" :data="tableData" border :columns="initTableColumns" border></Table>
+      <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
+    </div>
   </div>
 </template>
 <script>

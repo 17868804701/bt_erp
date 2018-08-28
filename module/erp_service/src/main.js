@@ -15,6 +15,7 @@ import URLUntil from '../utils/NetworkDefine';
 import store from './store';
 //auth
 import has from '../plugins/CustomDirectives';
+import {showMenu} from '../utils/AuthTool'
 
 Vue.prototype.$url=URLUntil;
 Vue.prototype.$post=post;
@@ -24,6 +25,9 @@ Vue.prototype.$put=put;
 Vue.prototype.$getExcel=getExcel;
 Vue.prototype.$formatDate=formatDate_hs;
 Vue.prototype.$VueCookie=VueCookie;
+Vue.prototype.$showMenu=showMenu;
+
+
 
 //定义全局变量
 

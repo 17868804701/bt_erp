@@ -122,7 +122,7 @@
 
     <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
 
-      <TabPane v-has:menuName="'集团人员查询'" label="集团人员查询" name="name1">
+      <TabPane v-if="$showMenu('集团人员查询')" label="集团人员查询" name="name1">
         <Card style="width:100%">
           <p slot="title">员工列表查询</p>
           <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
@@ -204,7 +204,7 @@
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
 
-      <TabPane v-has:menuName="'人员岗位统计1111'" label="人员岗位统计" name="name2">
+      <TabPane v-if="$showMenu('人员岗位统计111')" label="人员岗位统计" name="name2">
         <UserStatistics/>
       </TabPane>
 
@@ -214,9 +214,11 @@
 </template>
 <script>
   import UserStatistics from './UserStatistics.vue'
+  import MyTabPane from  '../components/common/MyTabPane.vue'
   export default {
     components: {
-      UserStatistics
+      UserStatistics,
+      MyTabPane
     },
     data () {
       return {
@@ -712,16 +714,6 @@
             }
           })
       },
-      validateAuth(menuName) {
-        let menuList = this.$store.state.userAuth.menuList;
-        for (let i = 0; i < menuList.length; i++) {
-          let menu = menuList[i];
-          if (menu.mname === menuName) {
-            return true;
-          }
-        }
-        return false;
-      }
     },
     mounted () {
       this.changeTableColumns();

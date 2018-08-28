@@ -23,6 +23,17 @@ const userAuth = {
       .then(res => {
         state.menuList = res.data;
       })
+    },
+    showMenu(state, menuName) {
+      debugger;
+      for (let i = 0; i < state.menuList.length; i++) {
+        let menu = state.menuList[i];
+        if (menu.mname === menuName) {
+          debugger;
+          return true;
+        }
+      }
+      return false;
     }
   }
 }

@@ -318,7 +318,7 @@
       }
     },
     mounted(){
-      this.URL = process.env.iframe_BASE_URL
+      this.URL = process.env.iframe_BASE_URL;
       this.getUserSetting();
     },
     created() {

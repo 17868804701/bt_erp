@@ -17,9 +17,8 @@ const has = Vue.directive('has', {
       }
     }else if (arg === 'menuName') {
       if (!Vue.prototype.$_hasMenu(code)) {
-        debugger;
-        el.parentNode.removeChild(el);
-        el.style = 'display: none';
+        // el.parentNode.removeChild(el);
+        // // el.style = 'display: none';
       }
     }else {
       console.log('权限类型有误!');

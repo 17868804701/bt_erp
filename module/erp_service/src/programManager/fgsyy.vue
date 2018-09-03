@@ -354,7 +354,7 @@
                           console.log(res)
                           if (res.success === true) {
                             this.$Message.info('删除成功')
-                            this.list()
+                            this.getList()
                           } else {
                             this.$Message.error('删除失败')
                           }
@@ -386,7 +386,7 @@
             if (res.success === true) {
               this.$Message.info('修改成功')
               this.editProgram = false
-              this.list()
+              this.getList()
 
             } else {
               this.$Message.error('修改失败')
@@ -412,14 +412,14 @@
                   this.addProgram = false
                   this.formItem1 = {}
                   this.formItem2 = {}
-                  this.list()
+                  this.getList()
                 }else {
                   this.$Message.info('添加失败')
                 }
               })
         }
       },
-      list: function () {
+      getList: function () {
         this.$fetch(this.$url.fgsyyList, this.searchItem)
           .then(res => {
             console.log(res, '集团')
@@ -449,11 +449,11 @@
         }else {
           this.searchItem.year = this.$formatDate(this.searchItem.year).substring(0,4)
         }
-        this.list()
+        this.getList()
       }
     },
     mounted () {
-      this.list()
+      this.getList()
     }
   }
 </script>

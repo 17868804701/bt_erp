@@ -200,7 +200,7 @@
             if (res.success === true) {
               this.$Message.info('添加成功')
               this.addProgram = false
-              this.list()
+              this.getList()
             } else {
               this.$Message.error('添加失败')
             }
@@ -213,7 +213,7 @@
             if (res.success === true) {
               this.$Message.info('修改成功')
               this.addProgram = false
-              this.list()
+              this.getList()
             } else {
               this.$Message.error('修改失败')
             }
@@ -227,7 +227,7 @@
         }
         this.$getExcel(process.env.BASE_URL + this.$url.sngjjhdc + '?nf=' + this.formItem.nf)
       },
-      list: function () {
+      getList: function () {
         this.$fetch(this.$url.snjhList, this.formItem)
           .then(res => {
             console.log(res)
@@ -252,11 +252,11 @@
         } else {
           this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
         }
-        this.list();
+        this.getList();
       }
     },
     mounted(){
-      this.list()
+
     }
   }
 </script>

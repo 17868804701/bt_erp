@@ -4,12 +4,12 @@
       <h2 style="margin-left: 15px;">
         计划管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane v-if="$showMenu('分公司收入计划制定')" label="分公司收入计划制定" name="name1">
-          <fgssrjh></fgssrjh>
+      <Tabs :value="tabValue" style="margin-top: 5px;" @on-click="changes">
+        <TabPane v-if="$showMenu('分公司收入计划制定')" label="分公司收入计划制定" name="fgssrjh">
+          <fgssrjh ref="fgssrjh"></fgssrjh>
         </TabPane>
-          <TabPane v-if="$showMenu('市内公交总收入计划制定')" label="市内公交总收入计划制定" name="name2">
-            <sngjzsrjh></sngjzsrjh>
+          <TabPane v-if="$showMenu('市内公交总收入计划制定')" label="市内公交总收入计划制定" name="sngjzsrjh">
+            <sngjzsrjh ref="sngjzsrjh"></sngjzsrjh>
           </TabPane>
       </Tabs>
     </div>
@@ -21,10 +21,7 @@
   export default {
     data () {
       return {
-        formItem: {
-          select: '',
-          date: ''
-        },
+        tabValue:''
       }
     },
     components:{
@@ -32,6 +29,16 @@
       sngjzsrjh
     },
     mounted () {
-    }
+      for (let item in this.$refs) {
+        this.$refs[item].getList();
+        this.tabValue = item;
+        return;
+      }
+    },
+    methods: {
+      changes(name){
+        this.$refs[name].getList()
+      }
+    },
   }
 </script>

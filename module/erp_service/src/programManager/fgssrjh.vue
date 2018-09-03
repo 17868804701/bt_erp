@@ -174,7 +174,7 @@
                           console.log(res)
                           if (res.success === true) {
                             this.$Message.info('删除成功')
-                            this.list()
+                            this.getList()
                           } else {
                             this.$Message.error('删除失败')
                           }
@@ -212,12 +212,12 @@
       },
       quxiao () {
         this.$Message.error('操作失败');
-        this.list();
+        this.getList();
         this.type = '',
           this.formItem1 = {}
         this.addProgram = false
       },
-      list: function () {
+      getList: function () {
         this.$fetch(this.$url.fgssrjhList, this.formItem)
           .then(res => {
             console.log(res)
@@ -249,7 +249,7 @@
                 console.log(res)
                 if (res.success === true) {
                   this.$Message.info('添加成功')
-                  this.list();
+                  this.getList();
                   this.formItem1 = {}
                   this.addProgram = false
                 }
@@ -266,7 +266,7 @@
           this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
         }
         console.log(this.formItem)
-        this.list()
+        this.getList()
       },
       xiugai: function () {
         console.log(this.formItem1)
@@ -278,7 +278,7 @@
             if (res.success === true) {
               this.$Message.info('修改成功');
               this.addProgram = false
-              this.list()
+              this.getList()
             }else {
               this.$Message.error('修改失败')
             }
@@ -295,7 +295,7 @@
       },
     },
     mounted () {
-      this.list()
+
     }
   }
 </script>

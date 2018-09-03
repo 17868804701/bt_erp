@@ -52,6 +52,14 @@
         </Form>
       </Card>
       <!--表格-->
+      <!--<can-edit-table-->
+        <!--style="margin-top: 10px;"-->
+        <!--v-model="tableData"-->
+        <!--:columnsList="columns11"-->
+        <!--:row-class-name="rowColor"-->
+        <!--@on-cell-change="handleCellChange"-->
+        <!--@on-change="handleChange">-->
+      <!--</can-edit-table>-->
       <Table style="margin-top: 10px;" :row-class-name="rowColor" :data="tableData" border :columns="initTableColumns" border></Table>
       <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
     </div>
@@ -61,8 +69,10 @@
   import AddAccidentDiv from '../components/AddAccidentDiv.vue'
   import AddLossDiv from '../components/AddLossDiv.vue';
   import * as DateTool from '../../../utils/DateTool'
+  import CanEditTable from "../../components/common/canEditTable";
   export default {
     components: {
+      CanEditTable,
       AddLossDiv,
       AddAccidentDiv
     },
@@ -211,17 +221,27 @@
                   }
                 }
               }, '追加经损'),
-              h('Button', {
+              h('Poptip', {
                 props: {
-                  type: 'error',
-                  size: 'small'
+                  confirm: true,
+                  title: '您确定要删除这条数据吗?',
+                  transfer: true
                 },
                 on: {
-                  click: () => {
+                  'on-ok': () => {
+                    console.log('确认删除');
                     this.deleteLASG(params.row);
                   }
                 }
-              }, '删除'),
+              }, [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small',
+                    placement: 'top'
+                  }
+                }, '删除')
+              ]),
             ]);
           }
         });
@@ -313,16 +333,18 @@
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
           console.log(res);
-          res.data.records.forEach(item=>{
-            item.lasj = this.formatDate(item.lasj);
-            item.larq = this.formatDate(item.larq);
-          })
-          this.tableData = res.data.records;
-          this.totalSize = res.data.total;
-          this.searchOptions.current = res.data.current;
-          this.tableData.forEach(item => {
-            item.lalx = this.LALXDict[item.lalx];
-          })
+          if (res.success === true) {
+            res.data.records.forEach(item=>{
+              item.lasj = this.formatDate(item.lasj);
+              item.larq = this.formatDate(item.larq);
+            })
+            this.tableData = res.data.records;
+            this.totalSize = res.data.total;
+            this.searchOptions.current = res.data.current;
+            this.tableData.forEach(item => {
+              item.lalx = this.LALXDict[item.lalx];
+            })
+          }
         })
       },
       setPage(page) {
@@ -343,15 +365,15 @@
         params.sgxz = this.SGXZ();
 
         console.log(params);
-        debugger;
         this.$post(this.$url.security_LASG_add, params)
         .then(res => {
           console.log(res);
           if (res.success === true) {
             this.accidentModal = false;
             this.requestListData();
+            this.$Message.success('添加成功!');
           }else{
-            this.$Message.error('未知错误, 添加失败!');
+            this.$Message.error('添加失败, 请重试!');
           }
         })
       },
@@ -361,6 +383,7 @@
           console.log(res);
           if (res.success === true) {
             this.requestListData();
+            this.$Message.success('删除成功!');
           }else{
             this.$Message.error('删除失败,请重试!');
           }
@@ -391,7 +414,6 @@
             this.$Message.error('添加失败!');
           }
         })
-
       },
       exportExcel() {
         let url = this.$url.security_LASG_exportExcel;

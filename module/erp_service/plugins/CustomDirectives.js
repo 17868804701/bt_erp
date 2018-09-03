@@ -10,8 +10,17 @@ const has = Vue.directive('has', {
   bind: function (el, binding) {
     // 获取页面按钮权限
     let code = binding.value;
-    if (!Vue.prototype.$_hasBtn(code)) {
-      el.parentNode.removeChild(el);
+    let arg = binding.arg;
+    if (arg === 'btn') {
+      if (!Vue.prototype.$_hasBtn(code)) {
+        el.parentNode.removeChild(el);
+      }
+    }else if (arg === 'menu'){
+      if (!Vue.prototype.$_hasMenu(code)) {
+        el.parentNode.removeChild(el);
+      }
+    }else{
+      console.log('权限类型出错!');
     }
   }
 });
@@ -26,10 +35,25 @@ Vue.prototype.$_hasBtn = function (value) {
     let button = buttons[i];
     if (button.icode === value) {
       isExist = true;
+      return isExist;
     }
-    return isExist;
   }
+  return isExist;
 };
 
+// 菜单权限检查方法
+Vue.prototype.$_hasMenu = function (value) {
+  let isExist = false;
+  // 获取用户按钮权限
+  let menuList = store.state.userAuth.menuList;
+  for (let i = 0; i < menuList.length; i++) {
+    let menu = menuList[i];
+    if (menu.mname === value) {
+      isExist = true;
+      return isExist;
+    }
+  }
+  return isExist;
+};
 
 export {has}

@@ -122,7 +122,7 @@
 
     <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
 
-      <TabPane v-if="$showMenu('集团人员查询')" label="集团人员查询" name="name1">
+      <TabPane v-if="$showMenu('集团人员查询111111111')" label="集团人员查询">
         <Card style="width:100%">
           <p slot="title">员工列表查询</p>
           <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
@@ -183,7 +183,7 @@
             <!--筛选结果-->
             <div style="width: 100%; text-align: center;">
               <ButtonGroup>
-                <Button type="primary" @click="search" v-has="'person_people_menu1_search'">
+                <Button type="primary" @click="search" v-has:btn="'person_people_menu1_search'">
                   <Icon type="search"></Icon>
                   搜索
                 </Button>
@@ -204,7 +204,7 @@
         <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
       </TabPane>
 
-      <TabPane v-if="$showMenu('人员岗位统计')" label="人员岗位统计" name="name2">
+      <TabPane v-if="$showMenu('人员岗位统计')" label="人员岗位统计">
         <UserStatistics/>
       </TabPane>
 
@@ -279,12 +279,15 @@
           'cz',
           'wxbz'],
         modal2: false,
-        tabValue: 'name1'
+        tabValue: 0
       }
     },
     methods: {
       changeTab() {
         console.log(this.tabValue);
+      },
+      test() {
+
       },
       getTable2Columns () {
         const table2ColumnList = {

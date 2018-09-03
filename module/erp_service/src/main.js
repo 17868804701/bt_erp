@@ -6,6 +6,7 @@ import vueshowpdf from 'vueshowpdf'
 import vuePdfjs from 'vue-pdfjs'
 import 'iview/dist/styles/iview.css';
 import {Message} from 'iview';
+import canEditTable from './components/common/canEditTable.vue'
 import VueCookie from 'vue-cookie'
 // 网络相关 全局变量
 import {post,fetch,patch,put,getExcel} from '../utils/http';
@@ -33,7 +34,7 @@ Vue.prototype.$showMenu=showMenu;
 Vue.use(iView);
 Vue.use(vueshowpdf);
 Vue.use(vuePdfjs);
-
+Vue.use(canEditTable);
 
 new Vue({
   el: '#app',

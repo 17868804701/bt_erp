@@ -256,7 +256,6 @@
 //        console.log(params);
         this.formValidate.sgsx = this.formValidate.sgsx.split("、");
         this.formValidate.sgxz = this.SGXZCode;
-        debugger;
       },
       changeType() {
         if (this.isEdit) {
@@ -295,8 +294,12 @@
           if (valid) {
             this.$post(this.$url.security_LASG_update, params)
             .then(res=>{
-              this.$Message.success('修改成功!');
-              this.isEdit = false;
+              if (res.success === true) {
+                this.$Message.success('修改成功!');
+                this.isEdit = false;
+              }else{
+                this.$Message.error('修改失败, 请重试!');
+              }
             })
           }else{
             this.$Message.error('请按照规则来修改更新信息!');

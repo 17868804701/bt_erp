@@ -58,7 +58,7 @@
           width: 200,
           fixed: 'right',
           align: 'center',
-          handle: ['edit', 'delete'],
+          handle: ['edit'],
         });
 
         return coulumns;

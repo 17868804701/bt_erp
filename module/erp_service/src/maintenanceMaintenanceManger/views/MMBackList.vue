@@ -156,17 +156,26 @@
             align: 'center',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteRow(params);
                     }
                   }
-                }, '删除')
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small',
+                      placement: 'top'
+                    },
+                  }, '删除')
+                ])
               ]);
             }
           },
@@ -196,7 +205,6 @@
             })
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
-            this.$Message.success('获取数据成功!');
           }else{
             this.$Message.error('请求失败!');
           }

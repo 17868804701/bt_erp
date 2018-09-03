@@ -7,10 +7,10 @@
         基础数据管理
       </h2>
       <Tabs style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane v-if="$showMenu('维修工信息管理')" label="维修工信息管理" name="name1">
+        <TabPane v-if="$showMenu('维修工信息管理')" label="维修工信息管理" name="WorkerManager">
           <WorkerManager ref="WorkerManager"></WorkerManager>
         </TabPane>
-        <TabPane v-if="$showMenu('配件信息管理')" label="配件信息管理" name="name2">
+        <TabPane v-if="$showMenu('配件信息管理')" label="配件信息管理" name="PJXXManager">
           <PJXXManager ref="PJXXManager"></PJXXManager>
         </TabPane>
       </Tabs>
@@ -28,20 +28,20 @@
     },
     data () {
       return {
-
+        currentTab: '',
       }
     },
     methods: {
       clickTab(name) {
-        if (name === 'name1') {
-          this.$refs['WorkerManager'].requestListData();
-        } else {
-          this.$refs['PJXXManager'].requestListData();
-        }
+        this.$refs[name].requestListData();
       }
     },
     mounted () {
-      this.$refs['WorkerManager'].requestListData();
+      for (let item in this.$refs) {
+        this.$refs[item].requestListData();
+        this.currentTab = item;
+        return;
+      }
     }
   }
 </script>

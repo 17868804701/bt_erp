@@ -122,7 +122,7 @@
 
     <Tabs style="margin-top: 10px;" @on-click="changeTab" v-model="tabValue">
 
-      <TabPane v-if="$showMenu('集团人员查询111111111')" label="集团人员查询">
+      <TabPane v-if="$showMenu('集团人员查询')" label="集团人员查询">
         <Card style="width:100%">
           <p slot="title">员工列表查询</p>
           <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"

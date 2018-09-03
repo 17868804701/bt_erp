@@ -6,11 +6,11 @@
       <h2 style="margin-left: 15px;">
         设备保养管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane v-if="$showMenu('设备保养记录')" label="设备保养记录" name="name1">
+      <Tabs  style="margin-top: 5px;" @on-click="clickTab">
+        <TabPane v-if="$showMenu('设备保养记录')" label="设备保养记录" name="DeviceBYList">
           <DeviceBYList ref="DeviceBYList"></DeviceBYList>
         </TabPane>
-        <TabPane v-if="$showMenu('设备信息管理')" label="设备信息管理" name="name2">
+        <TabPane v-if="$showMenu('设备信息管理')" label="设备信息管理" name="DeviceList">
           <DeviceList ref="DeviceList"></DeviceList>
         </TabPane>
       </Tabs>
@@ -28,20 +28,20 @@
     },
     data () {
       return {
-
+        currentTab: '',
       }
     },
     methods: {
       clickTab(name) {
-        if (name === 'name1') {
-          this.$refs['DeviceBYList'].requestListData();
-        } else {
-          this.$refs['DeviceList'].requestListData();
-        }
+        this.$refs[name].requestListData();
       }
     },
     mounted () {
-      this.$refs['DeviceBYList'].requestListData();
+      for (let item in this.$refs) {
+        this.$refs[item].requestListData();
+        this.currentTab = item;
+        return;
+      }
     }
   }
 </script>

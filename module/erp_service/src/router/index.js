@@ -37,7 +37,7 @@ import jjhdfx from '../enterpriseManger/jjhdfx.vue'
 import MainMM from '../maintenanceMaintenanceManger/views/MainMM.vue'
 import GPCheckList from '../maintenanceMaintenanceManger/views/GPCheckList.vue'
 import DeviceManager from '../maintenanceMaintenanceManger/views/DeviceManager.vue'
-import ReportList from '../maintenanceMaintenanceManger/views/ReportList.vue'
+import ReportManager from '../maintenanceMaintenanceManger/views/ReportManager.vue'
 import MMDetail from '../maintenanceMaintenanceManger/views/MMDetail.vue'
 import JCfyjs from '../maintenanceMaintenanceManger/views/JCfyjs.vue'
 import gpjcInfo from '../maintenanceMaintenanceManger/views/gpjcInfo.vue'
@@ -154,8 +154,8 @@ const route = [
     component: DeviceManager
   },
   {
-    path: '/ReportList',
-    component: ReportList
+    path: '/ReportManager',
+    component: ReportManager
   },
   {
     path: '/ccsrtz',

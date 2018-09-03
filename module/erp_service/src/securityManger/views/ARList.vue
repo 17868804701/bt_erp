@@ -30,36 +30,32 @@
       </Modal>
       <Card style="width:100%; margin-top: 20px;">
         <div slot="title">搜索查询</div>
-        <Button size="small" slot="extra" type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>
-        <Form :model="searchOptions" :label-width="80">
-          <div style="display: flex;flex-wrap: wrap; align-items: center">
-            <FormItem label="车牌号" style="margin: 0px;">
-              <Input v-model="searchOptions.pz" placeholder="请输入牌照查询..." clearable style="width: 180px"></Input>
-            </FormItem>
-            <FormItem label="驾驶员姓名" style="margin: 0px;">
-              <Input v-model="searchOptions.jsyxm" placeholder="请输入驾驶员姓名查询..." clearable style="width: 180px"></Input>
-            </FormItem>
-            <FormItem label="立案时间" style="margin: 0px;" >
-              <DatePicker v-model="searchOptions.date" style="width: 180px;" type="date"
-                          placeholder="请选择立案时间"></DatePicker>
-            </FormItem>
-            <Button style="margin-left: 20px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-            <div style="position: absolute;right: 20px;">
-              <!--<Button type="primary" icon="android-download" style="margin-right: 10px" @click="exportExcel">导出Excel</Button>-->
-              <Button type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
+        <Button slot="extra" size="small" type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
+        <div>
+          <div>
+            <Form :model="searchOptions" :label-width="80">
+              <div style="display: flex;flex-wrap: wrap;">
+                <FormItem label="驾驶员姓名" style="margin: 0px;">
+                  <Input v-model="searchOptions.jsyxm" placeholder="请输入驾驶员姓名查询..." clearable style="width: 180px"></Input>
+                </FormItem>
+                <FormItem label="车牌号" style="margin: 0px;">
+                  <Input v-model="searchOptions.pz" placeholder="请输入牌照查询..." clearable style="width: 180px"></Input>
+                </FormItem>
+                <FormItem label="立案时间" style="margin: 0px;" >
+                  <DatePicker v-model="searchOptions.date" style="width: 180px;" type="date"
+                              placeholder="请选择立案时间"></DatePicker>
+                </FormItem>
+              </div>
+            </Form>
+            <div style="width: 100%; text-align: center; margin-top: 20px;">
+              <ButtonGroup>
+                <Button style="margin-right: 3px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
+                <Button type="primary" icon="android-download" @click="exportExcel">导出</Button>
+              </ButtonGroup>
             </div>
           </div>
-        </Form>
+        </div>
       </Card>
-      <!--表格-->
-      <!--<can-edit-table-->
-        <!--style="margin-top: 10px;"-->
-        <!--v-model="tableData"-->
-        <!--:columnsList="columns11"-->
-        <!--:row-class-name="rowColor"-->
-        <!--@on-cell-change="handleCellChange"-->
-        <!--@on-change="handleChange">-->
-      <!--</can-edit-table>-->
       <Table style="margin-top: 10px;" :row-class-name="rowColor" :data="tableData" border :columns="initTableColumns" border></Table>
       <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
     </div>
@@ -189,6 +185,27 @@
           align: 'center',
           render: (h, params) => {
             return h('div', [
+              h('Poptip', {
+                props: {
+                  confirm: true,
+                  title: '您确定要删除这条数据吗?',
+                  transfer: true
+                },
+                on: {
+                  'on-ok': () => {
+                    console.log('确认删除');
+                    this.deleteLASG(params.row);
+                  }
+                }
+              }, [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small',
+                    placement: 'top'
+                  }
+                }, '删除')
+              ]),
               h('Button', {
                 props: {
                   type: 'primary',
@@ -221,27 +238,6 @@
                   }
                 }
               }, '追加经损'),
-              h('Poptip', {
-                props: {
-                  confirm: true,
-                  title: '您确定要删除这条数据吗?',
-                  transfer: true
-                },
-                on: {
-                  'on-ok': () => {
-                    console.log('确认删除');
-                    this.deleteLASG(params.row);
-                  }
-                }
-              }, [
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small',
-                    placement: 'top'
-                  }
-                }, '删除')
-              ]),
             ]);
           }
         });

@@ -242,7 +242,6 @@
           if (res.code === 0) {
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
-            this.$Message.success('获取数据成功!');
           }else{
             this.$Message.error('请求失败!');
           }

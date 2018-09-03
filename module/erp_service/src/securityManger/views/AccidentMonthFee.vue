@@ -7,10 +7,10 @@
         事故情况报表管理
       </h2>
       <Tabs v-model="tabValue" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane v-has:menu="'集团公司事故情况月汇总表'" label="集团公司事故情况月汇总表">
+        <TabPane v-if="$showMenu('集团公司事故情况月汇总表')" label="集团公司事故情况月汇总表" name="JTAccidentMonthFee">
           <JTAccidentMonthFee ref="JTAccidentMonthFee"/>
         </TabPane>
-        <TabPane v-has:menu="'各分公司交通事故月报表1111'" label="各分公司交通事故月报表">
+        <TabPane v-if="$showMenu('各分公司交通事故月报表')" label="各分公司交通事故月报表" name="FGSAccidentMonthFee">
           <FGSAccidentMonthFee ref="FGSAccidentMonthFee"/>
         </TabPane>
       </Tabs>
@@ -29,20 +29,20 @@
     },
     data () {
       return {
-        tabValue: 0
+        tabValue: ''
       }
     },
     methods: {
       clickTab(name) {
-        if (name === '0') {
-          this.$refs['JTAccidentMonthFee'].requestListData();
-        } else {
-          this.$refs['FGSAccidentMonthFee'].requestListData();
-        }
+        this.$refs[name].requestListData();
       }
     },
     mounted () {
-      this.$refs['JTAccidentMonthFee'].requestListData();
+      for (let item in this.$refs) {
+        this.$refs[item].requestListData();
+        this.tabValue = item;
+        return;
+      }
     }
   }
 </script>

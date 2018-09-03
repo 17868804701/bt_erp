@@ -197,13 +197,33 @@
             width: 150,
             render: (h, params) => {
               return h('div', [
+                h('Poptip', {
+                  props: {
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
+                  },
+                  on: {
+                    'on-ok': () => {
+                      this.deleteRow(params.row);
+                    }
+                  }
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small',
+                      placement: 'top'
+                    },
+                  }, '删除')
+                ]),
                 h('Button', {
                   props: {
                     type: 'primary',
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginLeft: '10px'
                   },
                   on: {
                     click: () => {
@@ -215,17 +235,6 @@
                     }
                   }
                 }, '查看'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.deleteRow(params.row);
-                    }
-                  }
-                }, '删除')
               ]);
             }
           },
@@ -293,12 +302,9 @@
       },
       deleteRow(row) {
         var that = this;
-        console.log('删除进场登记');
-        console.log(row);
         let params = {id : row.id};
         this.$fetch(this.$url.maintain_BYGL_CLBY_deleteRecord, params)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('删除成功!');
             that.requestListData();
@@ -319,14 +325,12 @@
         console.log(params);
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordList, params)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.jcsj = DateTool.timesToDate(item.jcsj);
             })
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
-            this.$Message.success('请求成功!');
           }else{
             this.$Message.error('获取数据失败!');
           }

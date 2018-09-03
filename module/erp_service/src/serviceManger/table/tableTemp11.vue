@@ -136,6 +136,9 @@
 </template>
 <script>
   export default {
+    props: {
+      scoreList: [],
+    },
     data () {
       return {
         value1:1,

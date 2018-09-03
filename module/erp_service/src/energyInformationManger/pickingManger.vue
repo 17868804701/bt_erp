@@ -5,7 +5,7 @@
         领料管理
       </h2>
       <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane v-if="$showMenu('领料历史记录')"  label="领料历史记录" name="name1">
+        <TabPane v-if="$showMenu('领料管理')"  label="领料历史记录" name="name1">
           <Card>
             <Form :model="formItem" :label-width="110">
               <Row>
@@ -303,13 +303,16 @@
                     }
                   }
                 }, '修改'),
-                h('Button', {
+                h('Poptip', {
                   props: {
+                    confirm: true,
                     type: 'error',
-                    size: 'small'
+                    size: 'large',
+                    transfer:'true',
+                    title: '你确定要删除吗?'
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       console.log(params.row.id);
                       let arr = []
                       arr.push(params.row.id)
@@ -327,7 +330,17 @@
                         })
                     }
                   }
-                }, '删除')
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                  },'删除')
+                ]),
               ]);
             }
           }

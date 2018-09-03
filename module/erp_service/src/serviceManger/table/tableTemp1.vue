@@ -39,46 +39,46 @@
           <td>得分</td>
         </tr>
         <tr>
-          <td>一、经费空置率</td>
+          <td>一、经费控制率</td>
           <td></td>
           <td>18</td>
           <td></td>
-          <td></td>
+          <td>{{scoreList['经费控制率']}}</td>
         </tr>
         <tr>
           <td>二、点钞抽检误差率</td>
           <td></td>
           <td>10</td>
           <td></td>
-          <td></td>
+          <td>{{scoreList['点钞抽检误差率']}}</td>
         </tr>
         <tr>
           <td>三、各岗位操作规范</td>
           <td></td>
           <td>15</td>
           <td></td>
-          <td></td>
+          <td>{{scoreList['各岗位操作规范']}}</td>
         </tr>
         <tr>
           <td>四、责任性服务投诉</td>
           <td></td>
           <td>15</td>
           <td></td>
-          <td></td>
+          <td>{{scoreList['责任性服务投诉']}}</td>
         </tr>
         <tr>
           <td>五、行车责任事故</td>
           <td></td>
           <td>10</td>
           <td></td>
-          <td></td>
+          <td>{{scoreList['行车责任事故']}}</td>
         </tr>
         <tr>
           <td>六、行政管理</td>
           <td></td>
           <td>12</td>
           <td></td>
-          <td rowspan="6"></td>
+          <td rowspan="6">{{scoreList['四防工作']+scoreList['现场管理']+scoreList['人力资源管理']+scoreList['基础管理']+scoreList['计划生育']}}</td>
         </tr>
         <tr>
           <td>1、“四防”工作</td>
@@ -115,13 +115,24 @@
           <td></td>
           <td>20</td>
           <td></td>
-          <td></td>
+          <td>{{scoreList['党建工会工作']}}</td>
         </tr>
         <tr>
           <td colspan="2">综合得分率（%）</td>
           <td>100</td>
           <td></td>
-          <td></td>
+          <td>{{
+          scoreList['人力资源管理']+
+          scoreList['党建工会工作']+
+          scoreList['各岗位操作规范']+
+          scoreList['四防工作']+
+          scoreList['基础管理']+
+          scoreList['点钞抽检误差率']+
+          scoreList['现场管理']+
+          scoreList['经费控制率']+
+          scoreList['行车责任事故']+
+          scoreList['计划生育']+
+          scoreList['责任性服务投诉']}}</td>
         </tr>
         <tr>
           <td>工资总额考核</td>
@@ -156,6 +167,9 @@
 </template>
 <script>
   export default {
+    props: {
+      scoreList: [],
+    },
     data () {
       return {
         value1:1,
@@ -166,6 +180,9 @@
         },
       }
     },
-    methods: {}
+    methods: {},
+    mounted(){
+        console.log(scoreList)
+    }
   }
 </script>

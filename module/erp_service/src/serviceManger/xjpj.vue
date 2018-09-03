@@ -10,7 +10,8 @@
   .container h2 {
     margin-left: 15px;
   }
-  td{
+
+  td {
     text-align: center;
     width: 120px;
     height: 30px;
@@ -39,24 +40,38 @@
             <Modal
               v-model="modal1"
               width="700"
+              @on-ok="ok"
               title="预览表单">
-              <TPL1 v-show="this.formItem.table_title.indexOf('票款')==0"></TPL1>
-              <TPL2 v-show="this.formItem.table_title.indexOf('公交')==0"></TPL2>
-              <TPL3 v-show="this.formItem.table_title.indexOf('站务管理')==0"></TPL3>
-              <TPL4 v-show="this.formItem.table_title.indexOf('职工培训')==0"></TPL4>
-              <TPL5 v-show="this.formItem.table_title.indexOf('修理公司')==0"></TPL5>
-              <TPL6 v-show="this.formItem.table_title.indexOf('稽查大队')==0"></TPL6>
-              <TPL7 v-show="this.formItem.table_title.indexOf('吉运')==0"></TPL7>
-              <TPL8 v-show="this.formItem.table_title.indexOf('长客')==0"></TPL8>
-              <TPL9 v-show="this.formItem.table_title.indexOf('大自然')==0"></TPL9>
-              <TPL10 v-show="this.formItem.table_title.indexOf('机关部室')==0"></TPL10>
-              <TPL11 v-show="this.formItem.table_title.indexOf('经营业绩')==0"></TPL11>
-              <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0"></TPL12>
+              <div id="pdfDom">
+              <TPL1 v-show="this.formItem.table_title.indexOf('票款')==0" :scoreList="this.scoreList"></TPL1>
+              <TPL2 v-show="this.formItem.table_title.indexOf('公交')==0" :scoreList="this.scoreList"></TPL2>
+              <TPL3 v-show="this.formItem.table_title.indexOf('站务管理')==0" :scoreList="this.scoreList"></TPL3>
+              <TPL4 v-show="this.formItem.table_title.indexOf('职工培训')==0" :scoreList="this.scoreList"></TPL4>
+              <TPL5 v-show="this.formItem.table_title.indexOf('修理公司')==0" :scoreList="this.scoreList"></TPL5>
+              <TPL6 v-show="this.formItem.table_title.indexOf('稽查大队')==0" :scoreList="this.scoreList"></TPL6>
+              <TPL7 v-show="this.formItem.table_title.indexOf('吉运')==0" :scoreList="this.scoreList"></TPL7>
+
+              <TPL8 v-show="this.formItem.table_title.indexOf('长客')==0" :scoreList="this.scoreList"></TPL8>
+
+              <TPL9 v-show="this.formItem.table_title.indexOf('大自然')==0" :scoreList="this.scoreList"></TPL9>
+              <TPL10 v-show="this.formItem.table_title.indexOf('机关部室')==0" :scoreList="this.scoreList"></TPL10>
+              <TPL11 v-show="this.formItem.table_title.indexOf('经营业绩')==0" :scoreList="this.scoreList"></TPL11>
+              <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0" :scoreList="this.scoreList"></TPL12>
+              </div>
             </Modal>
             <Button type="primary" icon="android-download" style="margin-left: 10px;">导出表格</Button>
           </div>
         </Form>
       </Card>
+      <Card style="width:98%;margin-left: 1%;margin-top: 10px;">
+        <div style="margin-left:36px;">
+          打分时间
+          <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="dftime"
+                      style="margin-left: 10px;"></DatePicker>
+          <span style="font-size: 12px;margin-left: 10px;color: red">*打分之前务必选择给哪一个月打分</span>
+        </div>
+      </Card>
+
       <Collapse style="width: 98%;margin-left: 1%;margin-top: 40px;">
         <Panel v-for="(item, index) in userPJList" :name="item+index" :key="item+index">
           {{item.tableTitle}}
@@ -65,19 +80,26 @@
               <td style="width: 120px;">序号</td>
               <td style="width: 120px;">考核指标</td>
               <td style="width: 120px;">实际得分</td>
+              <td style="width: 120px;">描述</td>
               <td style="width: 120px;">最高分值</td>
             </tr>
             <tr v-for="(subOption, subOptionIndex) in item.options.subOptions" :key="subOption+subOptionIndex">
-              <td>{{subOptionIndex+1}}</td>
+              <td>{{subOptionIndex + 1}}</td>
               <td>{{subOption.subOptionName}}</td>
               <td>
-                <InputNumber v-model="subOption.score" :max="subOption.maxScore" :min="0" style="width: 50px"></InputNumber>&nbsp;&nbsp;分
+                <InputNumber v-model="subOption.score" :max="subOption.maxScore" :min="0"
+                             style="width: 50px"></InputNumber>&nbsp;&nbsp;分
+              </td>
+              <td>
+                <Input v-model="subOption.kfsm" placeholder="说明扣分原因" style="width: 300px" />
               </td>
               <td>{{subOption.maxScore}}分</td>
             </tr>
             <tr>
               <td>
-                <Button type="primary" icon="checkmark-circled" style="margin-left: 40px;" @click="commitPJWithReportIndex(index)">提交</Button>
+                <Button type="primary" icon="checkmark-circled" style="margin-left: 40px;"
+                        @click="commitPJWithReportIndex(index)">提交
+                </Button>
               </td>
             </tr>
           </table>
@@ -121,8 +143,10 @@
     data () {
 
       return {
-        modal1:false,
-        value1:1,
+        modal1: false,
+        dftime: '',
+        value1: 1,
+        scoreList:{},
         formItem: {
           table_title: '',
           time: ''
@@ -136,43 +160,48 @@
     methods: {
       // 提交分数
       commitPJWithReportIndex(index) {
-        let report = this.userPJList[index];
-        let subOptionsArray = report.options.subOptions;
-        let requestArray = [];
-        subOptionsArray.forEach(subOption => {
-          let params = {
-            khMonth: 9,
-            khYear: 2018,
-            score: subOption.score,
-            xmid: subOption.subOptionID,
-          };
-          console.log(params);
-          let request = this.$post(this.$url.commitPFWithID, params);
-          requestArray.push(request);
-        })
-        var that = this;
-        axios.all(requestArray)
-        .then(axios.spread(function(...res){
-          console.log(...res);
-          let statusArray = [];
-          statusArray.push(...res);
-          let status = true;
-          statusArray.forEach(item => {
-            if (item.success === false) {
-              status = false;
-              that.$Message.error('提交失败!');
-              return;
-            }
+        if (this.dftime === '') {
+          this.$Message.error('请选择打分时间')
+        } else {
+          let report = this.userPJList[index];
+          let subOptionsArray = report.options.subOptions;
+          let requestArray = [];
+          subOptionsArray.forEach(subOption => {
+            let params = {
+              khMonth: this.$formatDate(this.dftime).substring(5, 7),
+              khYear: this.$formatDate(this.dftime).substring(0, 4),
+              score: subOption.score,
+              kfsm: subOption.kfsm,
+              xmid: subOption.subOptionID,
+            };
+            console.log(params);
+            let request = this.$post(this.$url.commitPFWithID, params);
+            requestArray.push(request);
           })
-          that.$Message.success('提交成功!');
-          // 重新加载模板
-          that.requestBaseData();
-        }));
+          var that = this;
+          axios.all(requestArray)
+            .then(axios.spread(function (...res) {
+              console.log(...res);
+              let statusArray = [];
+              statusArray.push(...res);
+              let status = true;
+              statusArray.forEach(item => {
+                if (item.success === false) {
+                  status = false;
+                  that.$Message.error('提交失败!');
+                  return;
+                }
+              })
+              that.$Message.success('提交成功!');
+              // 重新加载模板
+              that.requestBaseData();
+            }));
+        }
       },
 
       // 请求一张表的所有分值
       requestReportData() {
-          console.log(this.formItem.table_title)
+        console.log(this.formItem.table_title)
         console.log(this.formItem.table_title.indexOf('票款'))
         if (typeof this.formItem.time === 'date' || this.formItem.time === null || this.formItem.time === '') {
           this.$Message.error('请先选择时间, 再进行操作!');
@@ -185,43 +214,52 @@
         }
 
         let year = this.formItem.time.getFullYear();
-        let month = this.formItem.time.getMonth()+1;
+        let month = this.formItem.time.getMonth() + 1;
         let params = {
-          tableTitle : this.formItem.table_title,
+          tableTitle: this.formItem.table_title,
           khYear: year,
           khMonth: month,
         };
         this.$fetch(this.$url.getReportData, params)
-        .then(res => {
-          console.log(res);
-          if (res.success === true) {
-            this.TPLData = res.data;
-            this.modal1=true;
-          }else{
-            this.$Message.error('获取数据失败, 请重试!');
-          }
-        })
+          .then(res => {
+            console.log(res);
+            if (res.success === true) {
+              this.TPLData = res.data;
+              let arr = {};
+              res.data.forEach(item => {
+                arr[item['subOptionName']] = item['score']
+              });
+              console.log(arr);
+              this.scoreList = arr;
+              this.modal1 = true;
+            } else {
+              this.$Message.error('获取数据失败, 请重试!');
+            }
+          })
       },
 
       // 请求当前用户的所有报表的打分选项
       requestBaseData() {
         var that = this;
         this.$fetch(this.$url.getUserPFList)
-        .then(res => {
-          if (res.success === true) {
-            let dataArray = res.data;
-            dataArray.forEach(item => {
-              that.allReportTitle.push(item.tableTitle);
-              item.options.subOptions.forEach(subOptions => {
-                subOptions.score = 0; // 给每条数据增加一个用来双向绑定的分值
+          .then(res => {
+            if (res.success === true) {
+              let dataArray = res.data;
+              dataArray.forEach(item => {
+                that.allReportTitle.push(item.tableTitle);
+                item.options.subOptions.forEach(subOptions => {
+                  subOptions.score = 0; // 给每条数据增加一个用来双向绑定的分值
+                })
               })
-            })
-            that.userPJList = dataArray;
-            console.log(dataArray);
-          }else{
-            this.$Message.error('加载配置数据失败!');
-          }
-        })
+              that.userPJList = dataArray;
+              console.log(dataArray);
+            } else {
+              this.$Message.error('加载配置数据失败!');
+            }
+          })
+      },
+      ok(){
+        this.getPdf()
       }
     },
     mounted() {

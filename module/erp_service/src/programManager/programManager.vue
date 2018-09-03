@@ -4,12 +4,12 @@
       <h2 style="margin-left: 15px;">
         计划管理
       </h2>
-      <Tabs value="name1" style="margin-top: 5px;">
-        <TabPane v-if="$showMenu('集团公司运营计划管理')" label="集团公司运营计划管理" name="name1">
-            <jtgsyy></jtgsyy>
+      <Tabs :value="tabValue" style="margin-top: 5px;" @on-click="clickTab">
+        <TabPane v-if="$showMenu('集团公司运营计划管理')" label="集团公司运营计划管理" name="jtgsyy">
+            <jtgsyy ref="jtgsyy"></jtgsyy>
         </TabPane>
-        <TabPane v-if="$showMenu('分公司运营计划管理')" label="分公司运营计划管理" name="name2">
-          <fgsyy></fgsyy>
+        <TabPane v-if="$showMenu('分公司运营计划管理')" label="分公司运营计划管理" name="fgsyy">
+          <fgsyy ref="fgsyy"></fgsyy>
         </TabPane>
       </Tabs>
     </div>
@@ -21,17 +21,24 @@
   export default {
     data () {
       return {
-        formItem: {
-          select: '',
-          date: ''
-        },
+        tabValue: ''
       }
     },
     components:{
       jtgsyy,
       fgsyy,
     },
+    methods:{
+      clickTab(name){
+        this.$refs[name].getList()
+      }
+    },
     mounted () {
+      for (let item in this.$refs) {
+        this.$refs[item].getList();
+        this.tabValue = item;
+        return;
+      }
     }
   }
 </script>

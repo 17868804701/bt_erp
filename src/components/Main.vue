@@ -143,7 +143,7 @@
         <div class="logo">
           <span><Icon type="logo-twitter" style="margin-right: 10px;"/>包头公交平台</span>
           <div>
-            <a href="http://localhost:8081/#/" target="erp_main">
+            <a :href="URL" target="erp_main">
               <Icon type="md-home" class="home_icon"/>
             </a>
           </div>
@@ -156,7 +156,7 @@
               <Icon type="ios-arrow-down"></Icon>
             </span>
             <DropdownMenu slot="list">
-              <a href="http://localhost:8081/#/UserCenter" target="erp_main">
+              <a :href="URL+'UserCenter'" target="erp_main">
                 <span>
                   <DropdownItem>个人中心</DropdownItem>
                 </span>

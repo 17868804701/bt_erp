@@ -233,16 +233,15 @@
                     }
                   }
                 }, '操作'),
-                h('Button', {
+                h('Poptip', {
                   props: {
+                    confirm: true,
                     type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
+                    size: 'large',
+                    title: '你确定要删除吗?'
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.$fetch(this.$url.gpjcxqDel + '?id=' + params.row.id)
                         .then(res => {
                           console.log(res);
@@ -255,7 +254,17 @@
                         })
                     }
                   }
-                }, '删除'),
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                  },'删除')
+                ])
               ]);
             }
           }

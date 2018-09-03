@@ -40,14 +40,25 @@
         <td></td>
         <td>10</td>
         <td></td>
-        <td></td>
+        <td>
+          {{
+          scoreList['利润总额(万元)']
+          }}
+        </td>
       </tr>
       <tr>
         <td>二、运营服务安全生产</td>
         <td></td>
         <td>40</td>
         <td></td>
-        <td rowspan="5"></td>
+        <td rowspan="5">
+          {{
+          scoreList['四防工作']+
+          scoreList['经损率(元/万公里)']+
+          scoreList['行车责任事故']+
+          scoreList['车次率']
+          }}
+        </td>
       </tr>
       <tr>
         <td>1、车次率</td>
@@ -78,7 +89,13 @@
         <td></td>
         <td>30</td>
         <td></td>
-        <td rowspan="4"></td>
+        <td rowspan="4">
+          {{
+          scoreList['办公秩序']+
+          scoreList['基础管理']+
+          scoreList['服务满意度']
+          }}
+        </td>
       </tr>
       <tr>
         <td>1、基础管理</td>
@@ -103,13 +120,29 @@
         <td></td>
         <td>20</td>
         <td></td>
-        <td></td>
+        <td>
+          {{
+          scoreList['党建工会工作']
+          }}
+        </td>
       </tr>
       <tr>
         <td colspan="2">综合得分率</td>
         <td>100</td>
         <td></td>
-        <td></td>
+        <td>
+          {{
+          scoreList['党建工会工作']+
+          scoreList['利润总额(万元)']+
+          scoreList['办公秩序']+
+          scoreList['四防工作']+
+          scoreList['基础管理']+
+          scoreList['服务满意度']+
+          scoreList['经损率(元/万公里)']+
+          scoreList['行车责任事故']+
+          scoreList['车次率']
+          }}
+        </td>
       </tr>
       <tr>
         <td>工资总额考核</td>
@@ -144,6 +177,9 @@
 </template>
 <script>
   export default {
+    props: {
+      scoreList: [],
+    },
     data () {
       return {
         value1:1,

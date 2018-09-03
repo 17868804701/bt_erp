@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <Button type="primary" icon="paper-airplane" size="small">人员详细信息</Button>
-    <router-link to="/">
+    <router-link to="/userinfo">
       <span class="back">返回列表页>></span>
     </router-link>
     <Form :model="formItem" :label-width="80" style="margin-top:10px;">
@@ -317,7 +317,7 @@
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
-        uploadFile: process.env.upload_BASE_URL + "/static/file/upload",  //文件上传的接口地址
+        uploadFile: process.env.upload_BASE_URL + "file/upload",  //文件上传的接口地址
         bgyy: false,
         ruleValidate: {
           xm: [

@@ -10,6 +10,6 @@ import Auth from './modules/Auth';
 
 export default new vuex.Store({//store对象
   modules: {
-    userAuth: Auth
+    userAuth: Auth,
   }
 })

@@ -18,6 +18,12 @@ import store from './store';
 import has from '../plugins/CustomDirectives';
 import {showMenu} from '../utils/AuthTool'
 
+// pdf导出
+import htmlToPdf from '../utils/htmlToPdf'
+Vue.use(htmlToPdf);
+
+
+
 Vue.prototype.$url=URLUntil;
 Vue.prototype.$post=post;
 Vue.prototype.$fetch=fetch;

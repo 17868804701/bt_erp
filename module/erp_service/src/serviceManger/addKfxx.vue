@@ -21,7 +21,7 @@
 
 </style>
 <template>
-  <div class="container">
+  <div>
     <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;">
       <h2> <span v-if="this.tip=='edit'">修改客服信息</span> <span v-else>添加客服信息</span>
         <router-link to="/kfxxList">

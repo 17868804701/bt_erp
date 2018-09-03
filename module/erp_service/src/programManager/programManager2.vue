@@ -4,12 +4,12 @@
       <h2 style="margin-left: 15px;">
         计划管理
       </h2>
-      <Tabs :value="tabValue" style="margin-top: 5px;" @on-click="clickTab">
-        <TabPane v-if="$showMenu('分公司收入计划制定')" label="分公司收入计划制定" name="fgssrjh">
-          <fgssrjh ref="fgssrjh"></fgssrjh>
+      <Tabs value="name1" style="margin-top: 5px;">
+        <TabPane v-if="$showMenu('分公司收入计划制定')" label="分公司收入计划制定" name="name1">
+          <fgssrjh></fgssrjh>
         </TabPane>
-          <TabPane v-if="$showMenu('市内公交总收入计划制定')" label="市内公交总收入计划制定" name="sngjzsrjh">
-            <sngjzsrjh ref="sngjzsrjh"></sngjzsrjh>
+          <TabPane v-if="$showMenu('市内公交总收入计划制定')" label="市内公交总收入计划制定" name="name2">
+            <sngjzsrjh></sngjzsrjh>
           </TabPane>
       </Tabs>
     </div>
@@ -19,26 +19,19 @@
   import fgssrjh from './fgssrjh.vue'
   import sngjzsrjh from './sngjzsrjh.vue'
   export default {
+    data () {
+      return {
+        formItem: {
+          select: '',
+          date: ''
+        },
+      }
+    },
     components:{
       fgssrjh,
       sngjzsrjh
     },
-    data () {
-      return {
-        tabValue: ''
-      }
-    },
-    methods: {
-      clickTab(name){
-        this.$refs[name].getList()
-      }
-    },
     mounted () {
-      for (let item in this.$refs) {
-        this.$refs[item].getList();
-        this.tabValue = item;
-        return;
-      }
     }
   }
 </script>

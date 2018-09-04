@@ -56,8 +56,8 @@
         <Form :model="formItem">
           <FormItem label="按姓名查询" style="margin: 0;">
             <Input v-model="formItem.name" style="width: 120px;"></Input>
-            <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-            <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true">新增</Button>
+            <Button type="primary" icon="ios-search" @click="requestListData" v-has="'jcsjgl_wxgxxgl_search'">搜索</Button>
+            <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true" v-has="'jcsjgl_wxgxxgl_add'">新增</Button>
           </FormItem>
         </Form>
       </Card>
@@ -183,6 +183,12 @@
                       size: 'small',
                       placement: 'top'
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'jcsjgl_wxgxxgl_delete',
+                      }
+                    ]
                   }, '删除')
                 ]),
                 h('Button', {
@@ -200,7 +206,13 @@
                       }
                       this.addModal = true;
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'jcsjgl_wxgxxgl_update',
+                    }
+                  ]
                 }, '修改'),
               ]);
             }

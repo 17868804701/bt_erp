@@ -33,9 +33,9 @@
             <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem2.nian"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search2">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'jjzbwcqk_ber_search'">查询</Button>
           <div class="btn">
-            <Button type="primary" icon="android-download" @click="daochu2">导出Excel</Button>
+            <Button type="primary" icon="android-download" @click="daochu2" v-has="'jjzbwcqk_ber_daochu'">导出Excel</Button>
           </div>
         </div>
       </Form>

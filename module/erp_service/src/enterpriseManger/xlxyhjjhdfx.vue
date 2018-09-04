@@ -69,8 +69,8 @@
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
             <ButtonGroup>
-              <Button type="primary" @click="search2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
-              <Button type="primary" icon="android-download" @click="modal1=true">导出</Button>
+              <Button type="primary" @click="search2" style="margin-right: 3px;" v-has="'xlxyfx_search'"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" icon="android-download" @click="modal1=true" v-has="'xlxyfx_daochu'">导出</Button>
             </ButtonGroup>
           </div>
         </Form>

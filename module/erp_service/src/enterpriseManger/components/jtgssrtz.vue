@@ -37,9 +37,9 @@
             <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.jtgsDate"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="getList">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="getList" v-has="'ccxlsrtz_jtgs_search'">查询</Button>
           <div class="btn">
-            <Button type="primary" icon="android-download" @click="exportJTGSExcel">导出Excel</Button>
+            <Button type="primary" icon="android-download" @click="exportJTGSExcel" v-has="'ccxlsrtz_jtgs_daochu'">导出Excel</Button>
           </div>
         </div>
       </Form>

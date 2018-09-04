@@ -65,9 +65,9 @@
                   <Option value="第四季度">第四季度</Option>
                 </Select>
               </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn" @click="requestData">查询</Button>
+              <Button type="primary" icon="ios-search" class="search_btn" @click="requestData" v-has="'yyscysyl_cclcjdhz_chaxun'">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-download">导出Excel</Button>
+                <Button type="primary" icon="android-download" v-has="'yyscysyl_cclcjdhz_daochu'">导出Excel</Button>
               </div>
             </div>
           </Form>

@@ -34,8 +34,8 @@
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
             <ButtonGroup>
-              <Button type="primary" @click="search2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
-              <Button type="primary" @click="modal2=true"><Icon type="md-cloud-download" /> 导出</Button>
+              <Button type="primary" v-has="'yygl_jtyybb_ggsyjthz_search'" @click="search2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" v-has="'yygl_jtyybb_ggsyjthz_daochu'" @click="modal2=true"><Icon type="md-cloud-download" /> 导出</Button>
             </ButtonGroup>
           </div>
         </Form>

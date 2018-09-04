@@ -25,8 +25,8 @@
             <Col span="24">
             <FormItem label="按验收时间进行查询" style="margin: 0;">
               <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search" @click="this.requestListData">搜索</Button>
-              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
+              <Button type="primary" icon="ios-search" @click="this.requestListData" v-has="'bygl_ysdgl_search'">搜索</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'bygl_ysdgl_daochu'">导出Excel</Button>
             </FormItem>
             </Col>
           </Row>
@@ -107,7 +107,13 @@
                     click: () => {
                       this.showDetail(params.row);
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'bygl_ysdgl_show',
+                    }
+                  ]
                 }, '查看验收项目')
               ]);
             }

@@ -51,9 +51,9 @@
                   <Option value="公交三公司">公交三公司</Option>
                 </Select>
               </FormItem>
-              <Button type="primary" icon="ios-search" @click="search" class="search_btn">查询</Button>
+              <Button type="primary" v-has="'yygl_fgsxcyb_search'" icon="ios-search" @click="search" class="search_btn">查询</Button>
               <div class="btn">
-                <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
+                <Button type="primary" v-has="'yygl_fgsxcyb_daochu'" icon="android-download" @click="modal1=true">导出Excel</Button>
                 <Modal
                   v-model="modal1"
                   @on-ok="ok"

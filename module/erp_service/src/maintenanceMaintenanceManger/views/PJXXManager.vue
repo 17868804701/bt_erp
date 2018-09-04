@@ -47,8 +47,8 @@
         <Form :model="formItem">
           <FormItem label="按物品名称查询" style="margin: 0;">
             <Input v-model="formItem.wpmc" style="width: 120px;"></Input>
-            <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-            <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true">新增</Button>
+            <Button type="primary" icon="ios-search" @click="requestListData" v-has="'jcsjgl_pjxxgl_search'">搜索</Button>
+            <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true" v-has="'jcsjgl_pjxxgl_add'">新增</Button>
           </FormItem>
         </Form>
       </Card>
@@ -165,6 +165,12 @@
                       size: 'small',
                       placement: 'top'
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'jcsjgl_pjxxgl_delete',
+                      }
+                    ]
                   }, '删除')
                 ]),
                 h('Button', {
@@ -182,7 +188,13 @@
                       }
                       this.addModal = true;
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'jcsjgl_pjxxgl_update',
+                    }
+                  ]
                 }, '修改')
               ]);
             }

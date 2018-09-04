@@ -45,9 +45,9 @@
               <Option value="公交四公司">公交四公司</Option>
             </Select>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="getList">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="getList" v-has="'ccxlsrtz_fgs_search'">查询</Button>
           <div class="btn">
-            <Button type="primary" icon="android-download" @click="exportFGSExcel">导出Excel</Button>
+            <Button type="primary" icon="android-download" @click="exportFGSExcel" v-has="'ccxlsrtz_fgs_daochu'">导出Excel</Button>
           </div>
         </div>
       </Form>

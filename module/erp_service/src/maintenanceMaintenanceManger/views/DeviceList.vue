@@ -66,8 +66,8 @@
       <Card>
         <Form :model="formItem">
           <div>
-            <Button type="primary" icon="plus" style="margin-right: 10px" @click="addModal=true">新增</Button>
-            <Button type="primary" icon="android-download" @click="exportExcel">导出Excel</Button>
+            <Button type="primary" v-has="'sbbygl_sbxxgl_search'" icon="plus" style="margin-right: 10px" @click="addModal=true">新增11</Button>
+            <Button type="primary" v-has="'sbbygl_sbxxgl_daochu'" icon="android-download" @click="exportExcel">导出Excel</Button>
           </div>
         </Form>
       </Card>
@@ -220,6 +220,12 @@
                       size: 'small',
                       placement: 'top'
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'sbbygl_sbxxgl_delete',
+                      }
+                    ]
                   }, '删除')
                 ]),
                 h('Button', {
@@ -234,7 +240,13 @@
                     click: () => {
                       this.updateRow(params);
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'sbbygl_sbxxgl_update',
+                    }
+                  ]
                 }, '修改')
               ]);
             }

@@ -107,11 +107,11 @@
             <FormItem label="按养护日期查询" style="margin: 0;">
               <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end"
                           v-model="formItem.wxrq"></DatePicker>
-              <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
+              <Button type="primary" v-has="'sbbygl_sbbygl_search'" icon="ios-search" @click="requestListData">搜索</Button>
               <Button type="primary" icon="android-download"
-                      style="float: right;margin-right: 10px" @click="chooseDeviceModal=true">导出Excel
+                      style="float: right;margin-right: 10px" v-has="'sbbygl_sbbygl_daochu'" @click="chooseDeviceModal=true">导出Excel
               </Button>
-              <Button type="primary" icon="plus"
+              <Button type="primary" icon="plus" v-has="'sbbygl_sbbygl_add'"
                       style="float: right;margin-right: 10px" @click="addModal=true">新增
               </Button>
             </FormItem>
@@ -287,8 +287,14 @@
                     props: {
                       type: 'error',
                       size: 'small',
-                      placement: 'top'
+                      placement: 'top',
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'sbbygl_sbbygl_delete',
+                      }
+                    ]
                   }, '删除')
                 ]),
                 h('Button', {
@@ -303,7 +309,13 @@
                     click: () => {
                       this.clickUpdateBtn(params);
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'sbbygl_sbbygl_update',
+                    }
+                  ]
                 }, '修改')
               ]);
             }

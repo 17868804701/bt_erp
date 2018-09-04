@@ -33,7 +33,7 @@
     <Card style="padding-left: 15px;">
       <Form :model="formItem" :label-width="80">
         <div class="search">
-          <Button type="primary" icon="plus" @click="modal2=true" style="margin-left: 20px;">进厂登记</Button>
+          <Button type="primary" icon="plus" @click="modal2=true" v-has="'gpjc_gpjcdj_add'" style="margin-left: 20px;">进厂登记</Button>
 
           <!--进厂登记-->
           <Modal
@@ -151,89 +151,6 @@
             {required: true, message: '必填项', trigger: 'change'}
           ]
         },
-        columns1: [
-          {
-            title: '分类名称',
-            key: 'flmc'
-          },
-          {
-            title: '体积',
-            key: 'tj'
-          },
-          {
-            title: '单价',
-            key: 'dj'
-          },
-          {
-            title: '备注',
-            key: 'bz'
-          },
-          {
-            title: '增加时间',
-            key: 'xzsj'
-          },
-          {
-            title: '操作',
-            align: 'center',
-            key: 'time',
-            render: (h, params) => {
-              return h('div', [
-                h('Poptip', {
-                  props: {
-                    confirm: true,
-                    type: 'error',
-                    title: '你确定要删除吗?'
-                  },
-                  on: {
-                    'on-ok': () => {
-                      this.$fetch(this.$url.delFysd + '?id=' + params.row.id)
-                        .then(res => {
-                          console.log(res);
-                          if (res.msg === 'success') {
-                            this.$Message.info('删除成功');
-                            this.getgpjcdjList();
-                          } else {
-                            this.$Message.error('删除失败');
-                          }
-                        })
-                    }
-                  }
-                }, [
-                  h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small'
-                    },
-                    style: {
-                      marginRight: '5px'
-                    },
-                  },'删除')
-                ]),
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      console.log(params.row);
-                      this.madalType = 'update';
-                      this.modal1 = true;
-                      for (let attr in params.row) {
-                        this.addFysd[attr] = params.row[attr];
-                      }
-                    }
-                  }
-                }, '修改')
-              ]);
-            }
-          }
-        ],
-        data1: [],
-
 
         columns2: [
           {
@@ -276,7 +193,13 @@
                     click: () => {
                       this.$router.push({path: '/gpjcInfo', query: {djInfo: params.row}});
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'gpjc_gpjcdj_info',
+                    }
+                  ]
                 }, '详情'),
                 h('Poptip', {
                   props: {
@@ -309,6 +232,12 @@
                     style: {
                       marginRight: '5px'
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'gpjc_gpjcdj_delete',
+                      }
+                    ]
                   },'删除')
                 ])
               ]);
@@ -339,6 +268,12 @@
             this.$Message.error('请输入完整信息!');
           }
         });
+      },
+      cancel: function () {
+        this.modal1 = false;
+        this.addFysd = {}
+        this.modal2 = false;
+        this.formItem1 = {}
       },
       getList: function () {
         this.$fetch(this.$url.gpjcdjList, this.gpjcdjLists)

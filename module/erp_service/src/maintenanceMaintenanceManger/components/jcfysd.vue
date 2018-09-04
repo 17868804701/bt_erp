@@ -41,9 +41,9 @@
               <Option value="钢瓶3">钢瓶3</Option>
             </Select>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search" v-has="'gpjc_jcfysd_search'">查询</Button>
           <FormItem label="" style="margin: 0">
-            <Button type="primary" icon="plus" @click="add">新增</Button>
+            <Button type="primary" icon="plus" @click="add" v-has="'gpjc_jcfysd_add'">新增</Button>
           </FormItem>
 
           <!--添加钢瓶类型-->
@@ -203,6 +203,12 @@
                     style: {
                       marginRight: '5px'
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'gpjc_jcfysd_delete',
+                      }
+                    ]
                   },'删除')
                 ]),
                 h('Button', {
@@ -222,7 +228,13 @@
                         this.addFysd[attr] = params.row[attr];
                       }
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'gpjc_jcfysd_update',
+                    }
+                  ]
                 }, '修改')
               ]);
             }

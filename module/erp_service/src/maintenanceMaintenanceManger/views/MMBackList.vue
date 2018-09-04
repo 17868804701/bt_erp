@@ -45,9 +45,9 @@
             <Col span="24">
             <FormItem label="按返修进场时间查询" style="margin: 0;">
               <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search" @click="this.requestListData">搜索</Button>
-              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出Excel</Button>
-              <Button type="primary" icon="plus" style="float: right;margin-right: 10px" @click="backModal=true">新增</Button>
+              <Button type="primary" icon="ios-search" @click="this.requestListData" v-has="'bygl_fxgl_search'">搜索</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'bygl_fxgl_daochu'">导出Excel</Button>
+              <Button type="primary" icon="plus" style="float: right;margin-right: 10px" @click="backModal=true" v-has="'bygl_fxgl_add'">新增</Button>
             </FormItem>
             </Col>
           </Row>
@@ -174,6 +174,12 @@
                       size: 'small',
                       placement: 'top'
                     },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'bygl_fxgl_delete',
+                      }
+                    ]
                   }, '删除')
                 ])
               ]);

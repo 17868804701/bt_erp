@@ -38,8 +38,8 @@
             <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem1.startTime"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search2">查询</Button>
-          <Button type="primary" icon="android-download" class="search_btn" @click="plcl">批量处理</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'kfxxlbym_dwcllb_search'">查询</Button>
+          <Button type="primary" icon="android-download" class="search_btn" @click="plcl" v-has="'kfxxlbym_dwcllb_mutipledeal'">批量处理</Button>
         </div>
       </Form>
     </Card>
@@ -236,7 +236,13 @@
                       this.formItem2.ids.push(params.row.id)
                       this.modal1 = true;
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'kfxxlbym_dwcllb_deal',
+                    }
+                  ],
                 }, '处理'),
               ]);
             }

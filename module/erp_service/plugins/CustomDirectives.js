@@ -13,7 +13,7 @@ const has = Vue.directive('has', {
     if (!Vue.prototype.$_hasBtn(code)) {
       el.parentNode.removeChild(el);
     } else {
-      console.log('找不到对应的按钮');
+      // console.log('已找到对应的按钮');
     }
   }
 });

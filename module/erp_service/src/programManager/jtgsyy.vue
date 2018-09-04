@@ -7,8 +7,8 @@
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
                         v-model="formItem.nf"></DatePicker>
-            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="daochu">导出excel</Button>
+            <Button type="primary" icon="ios-search" @click="search" v-has="'yyjhgl_jtgsyyjh_search'">搜索</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="daochu" v-has="'yyjhgl_jtgsyyjh_export'">导出excel</Button>
           </FormItem>
           </Col>
         </Row>
@@ -216,7 +216,13 @@
                       this.editCrksm.crksm = params.row.crksm;
                       this.editCrksm.id = params.row.id;
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'yyjhgl_jtgsyyjh_edit',
+                    }
+                  ],
                 }, '修改')
               ]);
             }

@@ -24,9 +24,9 @@
                 </Select>
               </FormItem>
 
-              <Button type="primary" icon="ios-search" style="margin-left: 20px;" @click="chaxun1">搜索</Button>
+              <Button type="primary" icon="ios-search" style="margin-left: 20px;" @click="chaxun1" v-has="'trqtjgl_fgshz_search'">搜索</Button>
               <Button type="primary" icon="android-download"
-                      style="right: 0;position: absolute;margin-top: 1px;margin-left: 50px;" @click="daochu1">导出Excel
+                      style="right: 0;position: absolute;margin-top: 1px;margin-left: 50px;" @click="daochu1" v-has="'trqtjgl_fgshz_export'">导出Excel
               </Button>
             </div>
             </Col>

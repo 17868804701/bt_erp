@@ -28,8 +28,8 @@
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
             <ButtonGroup>
-              <Button type="primary"  @click="chaxun2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
-              <Button type="primary" @click="daochu2" icon="android-download">导出</Button>
+              <Button type="primary"  @click="chaxun2" style="margin-right: 3px;" v-has="'dnxhtj_jtgs_search'"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" @click="daochu2" icon="android-download" v-has="'dnxhtj_jtgs_export'">导出</Button>
             </ButtonGroup>
           </div>
         </Form>

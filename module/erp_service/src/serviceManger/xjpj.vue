@@ -36,7 +36,7 @@
               <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem.time"
                           class="text_width"></DatePicker>
             </FormItem>
-            <Button type="primary" icon="eye" style="margin-left: 120px;" @click="requestReportData">查看预览</Button>
+            <Button type="primary" icon="eye" style="margin-left: 120px;" @click="requestReportData" v-has="'xjpj_xjpj_view'">查看预览</Button>
             <Modal
               v-model="modal1"
               width="700"
@@ -59,7 +59,7 @@
               <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0" :scoreList="this.scoreList"></TPL12>
               </div>
             </Modal>
-            <Button type="primary" icon="android-download" style="margin-left: 10px;">导出表格</Button>
+            <Button type="primary" icon="android-download" style="margin-left: 10px;" v-has="'xjpj_xjpj_export'">导出表格</Button>
           </div>
         </Form>
       </Card>

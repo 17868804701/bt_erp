@@ -7,17 +7,17 @@
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="请选择年份" :transfer="true" placement="bottom-end"
                         v-model="formItem.nf"></DatePicker>
-            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
+            <Button type="primary" icon="ios-search" @click="search" v-has="'srjhzd_fgssr_search'">搜索</Button>
 
 
             <!--<Button type="primary" icon="android-download" @click="exports=true"-->
             <!--style="float: right;margin-right: 10px;">导入计划表-->
             <!--</Button>-->
             <Button type="primary" icon="android-download"
-                    style="float: right;margin-right: 10px" @click="daochu">导出Excel
+                    style="float: right;margin-right: 10px" @click="daochu" v-has="'srjhzd_fgssr_export'">导出Excel
             </Button>
             <Button type="primary" icon="plus" @click="addProgram=true"
-                    style="float: right;margin-right: 10px;">新增
+                    style="float: right;margin-right: 10px;" v-has="'srjhzd_fgssr_add'">新增
             </Button>
           </FormItem>
           </Col>
@@ -161,7 +161,8 @@
                 h('Button', {
                   props: {
                     type: 'error',
-                    size: 'small'
+                    size: 'small',
+
                   },
                   style: {
                     marginRight: '5px'
@@ -179,8 +180,14 @@
                             this.$Message.error('删除失败')
                           }
                         })
+                    },
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'srjhzd_fgssr_delete',
                     }
-                  }
+                  ],
                 }, '删除'),
                 h('Button', {
                   props: {
@@ -197,7 +204,13 @@
                       this.addProgram = true;
                       this.formItem1 = params.row
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'srjhzd_fgssr_edit',
+                    }
+                  ],
                 }, '修改'),
               ]);
             }

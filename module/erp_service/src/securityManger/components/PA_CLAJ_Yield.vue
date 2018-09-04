@@ -11,8 +11,8 @@
             <Checkbox label="3">第三季度</Checkbox>
             <Checkbox label="4">第四季度</Checkbox>
           </CheckboxGroup>
-          <Button type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-          <Button type="primary" icon="android-download" style="position: absolute;right: 10px" @click="exportExcel">导出excel</Button>
+          <Button type="primary" icon="ios-search" @click="requestListData" v-has="'aqscqkfx_claj_search'">搜索</Button>
+          <Button type="primary" icon="android-download" style="position: absolute;right: 10px" @click="exportExcel" v-has="'aqscqkfx_claj_export'">导出excel</Button>
         </div>
       </Form>
     </Card>

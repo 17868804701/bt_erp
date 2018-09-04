@@ -118,9 +118,9 @@
         </div>
         <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
           <ButtonGroup>
-            <Button type="primary" @click="sousuo" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
-            <Button type="primary" icon="android-download" @click="addProgram=true" style="margin-right: 3px;">新增计划</Button>
-            <Button type="primary" @click="daochu" icon="android-download">导出</Button>
+            <Button type="primary" @click="sousuo" style="margin-right: 3px;"><Icon type="search" v-has="'yyjhgl_fgsyyjh_search'"></Icon>搜索</Button>
+            <Button type="primary" icon="android-download" @click="addProgram=true" style="margin-right: 3px;" v-has="'yyjhgl_fgsyyjh_add'">新增计划</Button>
+            <Button type="primary" @click="daochu" icon="android-download" v-has="'yyjhgl_fgsyyjh_export'">导出</Button>
           </ButtonGroup>
         </div>
       </Form>
@@ -339,7 +339,13 @@
                       this.editItem.crkts = params.row.crkts;
                       this.editItem.jqts = params.row.jqts
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'yyjhgl_fgsyyjh_edit',
+                    }
+                  ],
                 }, '修改'),
                 h('Button', {
                   props: {
@@ -362,7 +368,13 @@
                           }
                         })
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'yyjhgl_fgsyyjh_delete',
+                    }
+                  ],
                 }, '删除')
               ]);
             }

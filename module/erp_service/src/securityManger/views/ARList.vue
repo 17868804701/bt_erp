@@ -49,8 +49,8 @@
             </Form>
             <div style="width: 100%; text-align: center; margin-top: 20px;">
               <ButtonGroup>
-                <Button style="margin-right: 3px;" type="primary" icon="ios-search" @click="requestListData">搜索</Button>
-                <Button type="primary" icon="android-download" @click="exportExcel">导出</Button>
+                <Button style="margin-right: 3px;" type="primary" icon="ios-search" @click="requestListData" v-has="'lasggl_lasggl_search'">搜索</Button>
+                <Button type="primary" icon="android-download" @click="exportExcel" v-has="'lasggl_lasggl_export'">导出</Button>
               </ButtonGroup>
             </div>
           </div>
@@ -196,14 +196,20 @@
                     console.log('确认删除');
                     this.deleteLASG(params.row);
                   }
-                }
+                },
               }, [
                 h('Button', {
                   props: {
                     type: 'error',
                     size: 'small',
                     placement: 'top'
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'lasggl_lasggl_delete',
+                    }
+                  ],
                 }, '删除')
               ]),
               h('Button', {
@@ -219,7 +225,13 @@
                   click: () => {
                     this.showDetail(params.row)
                   }
-                }
+                },
+                directives: [
+                  {
+                    name: 'has',
+                    value: 'lasggl_lasggl_detail',
+                  }
+                ],
               }, '查看'),
               h('Button', {
                 props: {
@@ -237,7 +249,13 @@
                     this.lossForm.pz = params.row.pz;
                     this.lossModal = true;
                   }
-                }
+                },
+                directives: [
+                  {
+                    name: 'has',
+                    value: 'lasggl_lasggl_zjloss',
+                  }
+                ],
               }, '追加经损'),
             ]);
           }
@@ -468,6 +486,8 @@
       }
     },
     mounted () {
+
+//      axios.all()
       this.requestListData();
       this.requestLALXDict();
     },

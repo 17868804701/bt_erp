@@ -8,10 +8,10 @@
             <FormItem label="按年份查询" style="margin: 0;">
               <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
                           v-model="formItem1.tjsj"></DatePicker>
-              <Button type="primary" icon="ios-search" @click="chaxun2">搜索</Button>
+              <Button type="primary" icon="ios-search" @click="chaxun2" v-has="'trqtjgl_trqyhz_search'">搜索</Button>
 
               <Button type="primary" icon="android-download"
-                      style="float: right;margin-right: 10px" @click="daochu2">导出Excel
+                      style="float: right;margin-right: 10px" @click="daochu2" v-has="'trqtjgl_trqyhz_export'">导出Excel
               </Button>
             </FormItem>
             </Col>

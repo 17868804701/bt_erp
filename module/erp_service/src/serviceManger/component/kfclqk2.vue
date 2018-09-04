@@ -40,10 +40,10 @@
               <Option value="三公司">三公司</Option>
             </Select>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search2">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'kfclqktj_fgstsqkflhzb_search'">查询</Button>
           <div class="btn">
             <!--<Button type="primary" icon="android-upload">导入</Button>-->
-            <Button type="primary" icon="android-download" @click="daochu2">导出Excel</Button>
+            <Button type="primary" icon="android-download" @click="daochu2" v-has="'kfclqktj_fgstsqkflhzb_export'">导出Excel</Button>
           </div>
         </div>
       </Form>

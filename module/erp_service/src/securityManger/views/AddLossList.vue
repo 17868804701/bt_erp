@@ -7,8 +7,8 @@
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-            <Button type="primary" icon="ios-search" @click="searchData">搜索</Button>
-            <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="expertExcel">导出excel</Button>
+            <Button type="primary" icon="ios-search" @click="searchData" v-has="'aqglykhbgl_zjsgjssmgl_search'">搜索</Button>
+            <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="expertExcel" v-has="'aqglykhbgl_zjsgjssmgl_export'">导出excel</Button>
           </FormItem>
           </Col>
         </Row>

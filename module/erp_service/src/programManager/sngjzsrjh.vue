@@ -8,15 +8,15 @@
           <FormItem label="按年份查询" style="margin: 0;">
             <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end"
                         v-model="formItem.nf"></DatePicker>
-            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
+            <Button type="primary" icon="ios-search" @click="search" v-has="'srjhzd_sngjzsr_search'">搜索</Button>
             <!--<Button type="primary" icon="android-download" @click="exports=true"-->
             <!--style="float: right">导入计划表-->
             <!--</Button>-->
             <Button type="primary" icon="android-download"
-                    style="float: right;margin-right: 10px" @click="daochu">导出Excel
+                    style="float: right;margin-right: 10px" @click="daochu" v-has="'srjhzd_sngjzsr_export'">导出Excel
             </Button>
             <Button type="primary" icon="android-download" @click="addProgram=true"
-                    style="float: right;margin-right: 10px;">计划生成
+                    style="float: right;margin-right: 10px;" v-has="'srjhzd_sngjzsr_add'">计划生成
             </Button>
           </FormItem>
           </Col>
@@ -175,7 +175,13 @@
                       this.type = 'edit'
                       this.formItem1 = params.row
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'srjhzd_sngjzsr_edit',
+                    }
+                  ],
                 }, '修改'),
               ]);
             }

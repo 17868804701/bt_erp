@@ -37,10 +37,10 @@
             <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="tsqkfl.time"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search1">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search1" v-has="'kfclqktj_tsqkflhzb_search'">查询</Button>
           <div class="btn">
             <!--<Button type="primary" icon="android-upload">导入</Button>-->
-            <Button type="primary" icon="android-download" @click="daochu1">导出Excel</Button>
+            <Button type="primary" icon="android-download" @click="daochu1" v-has="'kfclqktj_tsqkflhzb_export'">导出Excel</Button>
           </div>
         </div>
       </Form>

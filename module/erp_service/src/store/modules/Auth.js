@@ -21,7 +21,6 @@ const userAuth = {
     getAllMenu(state) {
       fetch(process.env.BASE_URL+'/auth/app/getMenu')
       .then(res => {
-        debugger;
         state.menuList = res.data;
       })
     },

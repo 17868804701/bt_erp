@@ -13,12 +13,12 @@
                 <FormItem label="选择月份或者状态" style="margin: 0;">
                   <DatePicker type="daterange" placeholder="选择时间段" :transfer="true" placement="bottom-end"
                               v-model="formItem.kssj"></DatePicker>
-                  <Button type="primary" icon="ios-search" @click="search">搜索</Button>
+                  <Button type="primary" icon="ios-search" @click="search" v-has="'llgl_llgl_search'">搜索</Button>
                   <Button type="primary" icon="android-download"
-                          style="float: right;margin-right: 10px" @click="daochuExcel">导出Excel
+                          style="float: right;margin-right: 10px" @click="daochuExcel" v-has="'llgl_llgl_export'">导出Excel
                   </Button>
                   <!--<Button type="ghost" icon="android-download"  style="float: right;margin-right:10px">批量派发</Button>-->
-                  <Button type="primary" icon="plus" style="float: right;margin-right:10px" @click="addPicking=true">
+                  <Button type="primary" icon="plus" style="float: right;margin-right:10px" @click="addPicking=true" v-has="'llgl_llgl_add'">
                     新增领料
                   </Button>
                 </FormItem>
@@ -301,7 +301,13 @@
                       this.type = 'edit'
                       this.add = params.row
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'llgl_llgl_edit',
+                    }
+                  ],
                 }, '修改'),
                 h('Button', {
                   props: {
@@ -326,7 +332,13 @@
 
                         })
                     }
-                  }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'llgl_llgl_delete',
+                    }
+                  ],
                 }, '删除')
               ]);
             }

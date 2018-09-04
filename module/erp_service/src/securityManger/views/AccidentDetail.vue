@@ -287,7 +287,7 @@
         delete params.lasj;
         delete params.larq;
         params.sgsx = params.sgsx.join('、');
-        params.sgxz = this.SGXZCode();
+        params.sgxz = this.SGXZCode;
         console.log(params);
 
         this.$refs['updateDiv'].validate(valid=>{

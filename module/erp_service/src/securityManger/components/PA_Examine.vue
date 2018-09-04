@@ -7,7 +7,7 @@
           <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.tab3Date"></DatePicker>
           <CheckboxGroup v-model="formItem.tab3Select" style="margin-left: 20px;">
             <Checkbox label="1">第一季度</Checkbox>
-            <Checkbox label="2">第一季度</Checkbox>
+            <Checkbox label="2">第二季度</Checkbox>
             <Checkbox label="3">第三季度</Checkbox>
             <Checkbox label="4">第四季度</Checkbox>
           </CheckboxGroup>

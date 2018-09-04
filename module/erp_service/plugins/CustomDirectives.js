@@ -10,17 +10,10 @@ const has = Vue.directive('has', {
   bind: function (el, binding) {
     // 获取页面按钮权限
     let code = binding.value;
-    let arg = binding.arg;
-    if (arg === 'btn') {
-      if (!Vue.prototype.$_hasBtn(code)) {
-        el.parentNode.removeChild(el);
-      }
-    }else if (arg === 'menu'){
-      if (!Vue.prototype.$_hasMenu(code)) {
-        el.parentNode.removeChild(el);
-      }
-    }else{
-      console.log('权限类型出错!');
+    if (!Vue.prototype.$_hasBtn(code)) {
+      el.parentNode.removeChild(el);
+    } else {
+      console.log('找不到对应的按钮');
     }
   }
 });

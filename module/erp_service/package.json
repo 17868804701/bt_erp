@@ -12,7 +12,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "echarts": "^4.1.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "iview": "^2.14.3",
+    "jspdf": "^1.4.1",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
     "vue-pdf": "^3.3.1",

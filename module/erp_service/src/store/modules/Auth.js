@@ -21,15 +21,14 @@ const userAuth = {
     getAllMenu(state) {
       fetch(process.env.BASE_URL+'/auth/app/getMenu')
       .then(res => {
+        debugger;
         state.menuList = res.data;
       })
     },
     showMenu(state, menuName) {
-      debugger;
       for (let i = 0; i < state.menuList.length; i++) {
         let menu = state.menuList[i];
         if (menu.mname === menuName) {
-          debugger;
           return true;
         }
       }

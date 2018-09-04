@@ -212,7 +212,8 @@
                   size: 'small'
                 },
                 style: {
-                  marginRight: '20px'
+                  marginRight: '10px',
+                  marginLeft: '10px'
                 },
                 on: {
                   click: () => {

@@ -115,11 +115,13 @@
               <Option value="四公司">四公司</Option>
             </Select>
           </FormItem>
-          <Button type="primary" icon="ios-search" style="position: relative;margin-left: 20px;" @click="sousuo">搜索</Button>
-          <Button type="primary" icon="android-download" @click="addProgram=true"
-                  style="position: absolute;right: 130px;">新增计划
-          </Button>
-          <Button type="primary" icon="android-download" style="position: absolute;right: 20px;" @click="daochu">导出excel</Button>
+        </div>
+        <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
+          <ButtonGroup>
+            <Button type="primary" @click="sousuo" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+            <Button type="primary" icon="android-download" @click="addProgram=true" style="margin-right: 3px;">新增计划</Button>
+            <Button type="primary" @click="daochu" icon="android-download">导出</Button>
+          </ButtonGroup>
         </div>
       </Form>
     </Card>

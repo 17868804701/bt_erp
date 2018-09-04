@@ -25,8 +25,12 @@
             <FormItem label="车牌号" style="margin: 0">
               <Input v-model="formItem1.cph" placeholder="车牌号" class="text_width"/>
             </FormItem>
-            <Button type="primary" icon="ios-search" class="search_btn" @click="chaxun2">查询</Button>
-            <Button type="primary" icon="android-download" style="margin-left: 20px;" @click="daochu2">导出Excel</Button>
+          </div>
+          <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
+            <ButtonGroup>
+              <Button type="primary"  @click="chaxun2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" @click="daochu2" icon="android-download">导出</Button>
+            </ButtonGroup>
           </div>
         </Form>
       </Card>

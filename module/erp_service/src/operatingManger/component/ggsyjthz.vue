@@ -31,14 +31,14 @@
                 <Option value="公交三公司">公交三公司</Option>
               </Select>
             </FormItem>
-            <div style="margin-left: 10px;margin-top: 1px;">
-              <Button type="primary" icon="ios-search" @click="search2">搜索</Button>
-            </div>
+          </div>
+          <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
+            <ButtonGroup>
+              <Button type="primary" @click="search2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" @click="modal2=true"><Icon type="md-cloud-download" /> 导出</Button>
+            </ButtonGroup>
           </div>
         </Form>
-        <Button type="primary" icon="android-download" style="position: absolute;right: 10px;top:17px;"
-                @click="modal2=true">导出Excel
-        </Button>
         <Modal
           v-model="modal2"
           title="填写导出说明"

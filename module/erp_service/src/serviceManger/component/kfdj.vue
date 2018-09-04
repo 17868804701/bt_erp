@@ -46,14 +46,19 @@
               <Option value="2">普通事件</Option>
             </Select>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search1">查询</Button>
+          <div style="margin-left: 30px;">
+            <ButtonGroup>
+              <Button type="primary" @click="search1" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" @click="daochu" icon="android-download">导出</Button>
+            </ButtonGroup>
+          </div>
           <router-link to="/addKfxx">
             <Button type="primary" icon="plus" class="search_btn">添加</Button>
           </router-link>
-          <div class="btn">
-            <Button type="primary" icon="android-download" @click="daochu">导出Excel</Button>
-          </div>
+
+
         </div>
+
       </Form>
     </Card>
     <Table :columns="columns11" :data="data10" border height="470" style="margin-top: 10px;" size="small"></Table>

@@ -55,9 +55,7 @@
                 <Option value="shenzhen">公交三公司</Option>
               </Select>
             </FormItem>
-            <Button type="primary" icon="ios-search" class="search_btn">查询</Button>
             <div class="btn">
-              <Button type="primary" icon="android-download" @click="modal1=true">导出Excel</Button>
               <Modal
                 v-model="modal1"
                 title="填写导出说明">
@@ -68,6 +66,12 @@
                 </div>
               </Modal>
             </div>
+          </div>
+          <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
+            <ButtonGroup>
+              <Button type="primary" @click="search2" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+              <Button type="primary" icon="android-download" @click="modal1=true">导出</Button>
+            </ButtonGroup>
           </div>
         </Form>
       </Card>

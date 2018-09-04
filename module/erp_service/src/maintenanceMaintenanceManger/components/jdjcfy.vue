@@ -51,10 +51,12 @@
           <FormItem label="车牌号" style="margin: 0 0 0px 0">
             <Input v-model="formItem1.cph" placeholder="车牌号" class="text_width"/>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search_jd">查询</Button>
-          <FormItem label="" style="margin: 0">
-            <Button type="primary" icon="android-download" @click="jdjcfydc">导出Excel</Button>
-          </FormItem>
+        </div>
+        <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
+          <ButtonGroup>
+            <Button type="primary" @click="search_jd" style="margin-right: 3px;"><Icon type="search"></Icon>  搜索</Button>
+            <Button type="primary" @click="jdjcfydc" icon="android-download"> 导出</Button>
+          </ButtonGroup>
         </div>
       </Form>
     </Card>

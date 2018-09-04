@@ -56,6 +56,11 @@
           </div>
         </div>
       </Card>
+      <div style="margin-top: 10px;width: 100%;height: 40px;">
+        <Tag type="dot" color="#dcdee2" style="float: right; margin-right: 0px;">销案</Tag>
+        <Tag type="dot" color="#5cadff" style="float: right; margin-right: 10px;">结案</Tag>
+        <Tag type="dot" color="#19be6b" style="float: right; margin-right: 10px;">立案</Tag>
+      </div>
       <Table style="margin-top: 10px;" :row-class-name="rowColor" :data="tableData" border :columns="initTableColumns" border></Table>
       <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
     </div>
@@ -66,6 +71,7 @@
   import AddLossDiv from '../components/AddLossDiv.vue';
   import * as DateTool from '../../../utils/DateTool'
   import CanEditTable from "../../components/common/canEditTable";
+  import axios from 'axios';
   export default {
     components: {
       CanEditTable,
@@ -75,7 +81,7 @@
     data () {
       return {
         //   jafy 结案费用   swrs 死亡人数  ssrs  受伤人数  kf  扣分  xczrsgfl ??
-        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案类型', '责任','备注'],
+        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案状态', '责任','备注'],
         columnsCode: ['dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','zr','bz'],
         gsColumnsTitle: ['公积金车损', '公积金车内', '公积金三者', '公积金定损金额合计', '交强险损失', '事故总损失'],
         gsColumnsCode: [ 'gjjcs', 'gjjcn', 'gjjsz', 'gjjhj', 'jqxss', 'sgzss'],
@@ -136,6 +142,8 @@
           bz: 0,
         },
         LALXDict: {},
+        SGSXDict: {},
+        SGXZDict: {},
       }
     },
     computed: {
@@ -324,6 +332,54 @@
 
       // ***********  network ********** //
       requestLALXDict() {
+        let that = this;
+
+        let request_LALX = this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'LALX'});
+        let request_SGXZ = this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'SGXZ'});
+        let request_SGSX = this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'SGSX'});
+        let requestArray = [request_LALX, request_SGXZ, request_SGSX];
+        axios.all(requestArray)
+        .then(axios.spread(function (...res) {
+          let resArray = [];
+          resArray.push(...res);
+          let status = true;
+          resArray.forEach(res => {
+            if (res.success === false) {
+              status = false;
+              return;
+            }
+          })
+
+          let lalxData = resArray[0];
+          let sgxzData = resArray[1];
+          let sgsxData = resArray[2];
+
+          let lalxdicts = {};
+          lalxData.cDic.forEach(item => {
+            lalxdicts[item.code] = item.title;
+          })
+          that.LALXDict = lalxdicts;
+
+          let sgxzDicts = {};
+          sgxzData.cDic.forEach(item => {
+            sgxzDicts[item.code] = item.title;
+          })
+          that.SGXZDict = sgxzDicts;
+
+          let sgsxDicts = {};
+          sgsxData.cDic.forEach(item => {
+            sgsxDicts[item.code] = item.title;
+          })
+          that.SGSXDict = sgsxDicts;
+
+
+          debugger;
+          if (status === true) {
+            that.requestListData();
+          }
+
+        }));
+
         this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'LALX'})
         .then(res => {
           console.log(res);
@@ -333,6 +389,7 @@
               dicts[item.code] = item.title;
             })
             this.LALXDict = dicts;
+            that.requestListData();
           }
         })
       },
@@ -486,19 +543,8 @@
       }
     },
     mounted () {
-
-//      axios.all()
-      this.requestListData();
       this.requestLALXDict();
     },
-    watch: {
-      LALXDict() {
-        console.log('立案状态的数据字典更新了');
-        this.tableData.forEach(item => {
-          item.lalx = this.LALXDict[item.lalx];
-        })
-      }
-    }
   }
 </script>
 
@@ -508,7 +554,7 @@
     color: #fff;
   }
   .ivu-table .status-xa td{
-    background-color: #fff;
+    background-color: #dcdee2;
   }
   .ivu-table .status-la td{
     background-color: #5cadff;

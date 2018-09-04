@@ -197,6 +197,7 @@
     mounted() {
       this.$store.commit('getAllMenu');
       this.$store.commit('getCurrentAuth');
+      this.$store.commit('getAllDict');
     }
   }
 </script>

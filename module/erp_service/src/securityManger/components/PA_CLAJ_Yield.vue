@@ -77,6 +77,7 @@
       requestListData() {
         let params = this.getParams();
         params.jidus = params.jidus.join(',');
+        this.getTableTitle();
         let that = this;
         let url = this.$url.security_AQSCFGS_list + '?year=' + params.year + '&jidus=' + params.jidus;
         this.$fetch(url)

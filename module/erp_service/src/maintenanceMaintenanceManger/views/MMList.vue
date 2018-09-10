@@ -21,7 +21,7 @@
                 <Input v-model="basicData.djbh" style="width: 140px;"></Input>
               </FormItem>
               <FormItem label="车辆自编号:" style="margin-top: 0px;">
-                <Select v-model="selectCLSelfNum" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
+                <Select v-model="basicData.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
                   <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index">{{ item }}</Option>
                 </Select>
               </FormItem>

@@ -16,7 +16,19 @@
         </div>
       </Form>
     </Card>
-    <Table border style="margin-top: 10px;" :data="PA_XCZR_Rate_Data" :columns="PA_XCZR_Rate"></Table>
+    <Table border style="margin-top: 10px;" :data="PA_XCZR_Rate_Data" :columns="PA_XCZR_Rate">
+      <div slot="header" style="height: 50px;font-size: 18px;text-align: center">
+        {{tableTitle}}
+      </div>
+      <div slot="footer" style="display: flex;justify-content: flex-start;height: 50px;font-size: 13px;text-align: center;font-weight: 500;">
+        <div style="width: 50%">
+          行驶里程:{{xslc}}万公里
+        </div>
+        <div style="width: 50%">
+          去年同期:{{qntq}}万公里
+        </div>
+      </div>
+    </Table>
   </div>
 </template>
 
@@ -35,9 +47,11 @@
           tab5Date: this.initDate(),
           tab5Select: ['1'],
         },
-
+        tableTitle: '',
         PA_XCZR_Rate: [],
         PA_XCZR_Rate_Data: [],
+        xslc: '',
+        qntq: '',
       }
     },
     computed: {
@@ -46,6 +60,24 @@
       initDate() {
         let now = new Date();
         return now;
+      },
+      getTableTitle() {
+        let year = this.formItem.tab5Date.getFullYear();
+        let jiduArray = [];
+        this.formItem.tab5Select.forEach(item => {
+          if (item === '1') {
+            jiduArray.push('一');
+          } else if (item === '2') {
+            jiduArray.push('二');
+          } else if (item === '3') {
+            jiduArray.push('三');
+          } else {
+            jiduArray.push('四');
+          }
+        })
+        let jiduStr = jiduArray.join('、');
+        let title = year+'年第'+jiduStr+'季度行车责任事故频率';
+        this.tableTitle = title;
       },
       getData () {
           //行车责任事故频率
@@ -60,6 +92,8 @@
         .then(res => {
           if (res.data != null && res.data.length > 0) {
             that.PA_XCZR_Rate_Data = res.data;
+            that.xslc = res.data[0].yylcSum;
+            that.qntq = res.data[0].oldyylcSum;
           }
         });
       },
@@ -86,6 +120,7 @@
       },
     },
     mounted () {
+      this.getTableTitle();
     },
     created () {
       this.getData();

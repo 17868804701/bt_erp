@@ -39,23 +39,13 @@
           </FormItem>
 
           <FormItem prop="sgsx" label="事故属性:">
-            <CheckboxGroup v-if="isEdit" v-model="formValidate.sgsx">
-              <Checkbox label="交强"></Checkbox>
-              <Checkbox label="车损"></Checkbox>
-              <Checkbox label="车内"></Checkbox>
-              <Checkbox label="三者"></Checkbox>
-            </CheckboxGroup>
+            <CommonSelect v-if="isEdit" iviewType="checkbox" type="SGSX" :selectValue="formValidate.sgsx"></CommonSelect>
             <div style="width: 120px;" v-else>{{sgsxString}}</div>
           </FormItem>
 
           <FormItem prop="xczrsgfl" label="行车责任:">
-            <Select v-if="isEdit" v-model="formValidate.xczrsgfl" style="width: 120px;">
-              <Option value="QBZR">全部责任</Option>
-              <Option value="ZYZR">主要责任</Option>
-              <Option value="TDZR">同等责任</Option>
-              <Option value="SJQW">次要责任</Option>
-            </Select>
-            <div style="width: 120px;" v-else>{{formValidate.xczrsgfl}}</div>
+            <CommonSelect v-if="isEdit" type="XCSGZRFL" :selectValue="formValidate.xczrsgfl"></CommonSelect>
+            <div style="width: 120px;" v-else>{{xcsgzrflString}}</div>
           </FormItem>
 
           <FormItem prop="jafy" label="结案费用:">
@@ -68,13 +58,8 @@
         <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
 
           <FormItem prop="dw" label="登记单位:">
-            <Select v-if="isEdit" v-model="formValidate.dw" style="width: 120px;">
-              <Option value="公交一公司">公交一公司</Option>
-              <Option value="公交二公司">公交二公司</Option>
-              <Option value="公交三公司">公交三公司</Option>
-              <Option value="公交四公司">公交四公司</Option>
-            </Select>
-            <div style="width: 120px;" v-else>{{formValidate.dw}}</div>
+            <CommonSelect v-if="isEdit" type="EJGS" :selectValue="formValidate.dw"></CommonSelect>
+            <div style="width: 120px;" v-else>{{dwString}}</div>
           </FormItem>
 
           <FormItem prop="pz" label="牌照:">
@@ -103,8 +88,8 @@
           </FormItem>
 
           <FormItem prop="lalx" label="立案状态:">
-            <Input v-if="isEdit" v-model="formValidate.lalx" placeholder="立案状态..." style="width: 120px"></Input>
-            <div style="width: 120px;" v-else>{{formValidate.lalx}}</div>
+            <CommonSelect v-if="isEdit" type="LALX" :selectValue="formValidate.lalx"></CommonSelect>
+            <div style="width: 120px;" v-else>{{lalxString}}</div>
           </FormItem>
 
           <FormItem prop="bar" label="报案人:">
@@ -175,11 +160,13 @@
 </template>
 
 <script>
-
-  import ARAddLossList from '../components/ARAddLossList.vue'
+  import * as DateTool from '../../../utils/DateTool';
+  import ARAddLossList from '../components/ARAddLossList.vue';
+  import CommonSelect from '../../components/common/CommonSelect.vue';
   export default {
     components: {
       ARAddLossList,
+      CommonSelect,
     },
     data () {
       return {
@@ -213,7 +200,7 @@
         },
         ruleValidate: {
           dw: [
-            {required: true, message: '此项不能为空', trigger: 'blur'}
+            {required: true, message: '此项不能为空', trigger: 'change'}
           ],
           xczrsgfl: [
             {required: true, message: '此项不能为空', trigger: 'blur'}
@@ -237,7 +224,7 @@
             {required: true, message: '此项不能为空', trigger: 'blur'}
           ],
           sgsx: [
-            {required: true, type: 'array', min: 1, message: '请至少选择一个', trigger: 'change'},
+            {required: true, type: 'array', min: 1, message: '请至少选择一个', trigger: 'change',},
           ],
           zr: [
             {required: true, message: '此项不能为空', trigger: 'blur'}
@@ -252,17 +239,15 @@
         for (let attr in this.$route.query.rowData) {
           params[attr] = this.$route.query.rowData[attr];
         }
+        params.lasj = DateTool.timesToDate(params.lasj);
+        params.larq = DateTool.timesToDate(params.larq);
         this.formValidate = params;
-//        console.log(params);
-        this.formValidate.sgsx = this.formValidate.sgsx.split("、");
-        this.formValidate.sgxz = this.SGXZCode;
       },
       changeType() {
         if (this.isEdit) {
-          console.log('编辑状态下,点击了取消,还原原始数据');
           this.initialData();
         }else{
-          console.log('点击了编辑');
+          this.formValidate.sgsx = this.formValidate.sgsx.split('、');
         }
         this.isEdit = !this.isEdit;
       },
@@ -284,25 +269,28 @@
         }
         delete params._index;
         delete params._rowKey;
-        delete params.lasj;
-        delete params.larq;
+
+
         params.sgsx = params.sgsx.join('、');
         params.sgxz = this.SGXZCode;
         console.log(params);
 
+        let that = this;
         this.$refs['updateDiv'].validate(valid=>{
           if (valid) {
             this.$post(this.$url.security_LASG_update, params)
             .then(res=>{
               if (res.success === true) {
-                this.$Message.success('修改成功!');
-                this.isEdit = false;
+                that.$Message.success('修改成功!');
+                that.formValidate.sgsx = that.formValidate.sgsx.join('、');
+                that.formValidate.sgxz = this.SGXZCode;
+                that.isEdit = false;
               }else{
-                this.$Message.error('修改失败, 请重试!');
+                that.$Message.error('修改失败, 请重试!');
               }
             })
           }else{
-            this.$Message.error('请按照规则来修改更新信息!');
+            that.$Message.error('请按照规则来修改更新信息!');
           }
         })
       },
@@ -310,7 +298,30 @@
     },
     computed: {
       sgsxString() {
-        return this.formValidate.sgsx.join('、');l
+        if (this.formValidate.sgsx.length > 0) {
+//          debugger;
+          let sgsxArray = this.formValidate.sgsx.split('、');
+          let sgsxStrArray = [];
+          let allDict = this.$store.state.dictData.parseDict;
+          sgsxArray.forEach(item => {
+            sgsxStrArray.push(allDict.SGSX[item]);
+          })
+          return sgsxStrArray.join('、');
+        }else{
+          return '';
+        }
+      },
+      dwString() {
+        let allDict = this.$store.state.dictData.parseDict;
+        return (this.formValidate.dw.length > 0) ? allDict.EJGS[this.formValidate.dw] : '';
+      },
+      xcsgzrflString() {
+        let allDict = this.$store.state.dictData.parseDict;
+        return (this.formValidate.xczrsgfl.length > 0) ? allDict.XCSGZRFL[this.formValidate.xczrsgfl] : '';
+      },
+      lalxString() {
+        let allDict = this.$store.state.dictData.parseDict;
+        return (this.formValidate.lalx.length > 0) ? allDict.LALX[this.formValidate.lalx] : '';
       },
       editText() {
         if (!this.isEdit) {

@@ -274,17 +274,25 @@
                     }
                   }
                 }, '修改'),
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteCLRow(params.row);
                     }
-                  }
-                }, '删除')
+                  },
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -350,7 +358,7 @@
           })
           console.log('更新领料备料记录');
         }else{
-          debugger;
+//          debugger;
           this.$post(this.$url.maintain_BYGL_CLBY_CL_save, this.clItem)
           .then(res => {
             if (res.code === 0) {

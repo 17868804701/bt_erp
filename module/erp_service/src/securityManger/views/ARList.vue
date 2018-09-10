@@ -16,7 +16,7 @@
           <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddAccident">保存</Button>
           <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddAccident">取消</Button>
         </div>
-        <AddAccidentDiv ref="AddAccidentDiv" :formValidate="formValidate"/>
+        <AddAccidentDiv ref="AddAccidentDiv" :formValidate="formValidate" @selectCL="updateCLInfo"/>
       </Modal>
       <Modal
         v-model="lossModal"
@@ -81,11 +81,12 @@
     data () {
       return {
         //   jafy 结案费用   swrs 死亡人数  ssrs  受伤人数  kf  扣分  xczrsgfl ??
-        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案状态', '责任','备注'],
-        columnsCode: ['dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','zr','bz'],
+        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案状态','备注'],
+        columnsCode: ['dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','bz'],
         gsColumnsTitle: ['公积金车损', '公积金车内', '公积金三者', '公积金定损金额合计', '交强险损失', '事故总损失'],
         gsColumnsCode: [ 'gjjcs', 'gjjcn', 'gjjsz', 'gjjhj', 'jqxss', 'sgzss'],
         tableData: [],
+        sourceData: [], // 原始数据
         searchOptions: {
           current: 1,
           size: 10,
@@ -100,7 +101,9 @@
         accidentModal: false,
         lossModal: false,
         formValidate: {
-          dw: '',
+          lasj: DateTool.getNow(),
+          larq: DateTool.getNow(),
+          dw: 'JTGS',
           dd: '',
           pz: '',
           zbh: '',
@@ -122,7 +125,7 @@
           gjjhj: 0,
           jqxss: 0,
           sgzss: 0,
-          zr: '责任',
+          zr: '',
           jafy: 0,
           xczrsgfl: '',
         },
@@ -141,9 +144,6 @@
           zjsz: 0,
           bz: 0,
         },
-        LALXDict: {},
-        SGSXDict: {},
-        SGXZDict: {},
       }
     },
     computed: {
@@ -231,7 +231,7 @@
                 },
                 on: {
                   click: () => {
-                    this.showDetail(params.row)
+                    this.showDetail(params)
                   }
                 },
                 directives: [
@@ -284,7 +284,6 @@
         return 'status-la';
       },
       search() {
-        console.log('搜索查询');
         this.requestListData();
       },
       confirmAddLoss() {
@@ -313,8 +312,8 @@
       cancleAddAccident() {
         this.accidentModal = false;
       },
-      showDetail(rowData) {
-        console.log('查看详情');
+      showDetail(params) {
+        let rowData = this.sourceData.data.records[params.index];
         this.$router.push({
           path: '/AccidentDetail',
           query: {
@@ -322,100 +321,45 @@
           }
         })
       },
-      formatDate(time) {
-        let date =  new Date(time);
-        let y = 1900+date.getYear();
-        let m = "0"+(date.getMonth()+1);
-        let d = "0"+date.getDate();
-        return y+"-"+m.substring(m.length-2,m.length)+"-"+d.substring(d.length-2,d.length);
+      updateCLInfo(info) {
+        this.formValidate.pz = info.busNum;
+        this.formValidate.lb = info.lineName;
       },
 
       // ***********  network ********** //
-      requestLALXDict() {
-        let that = this;
-
-        let request_LALX = this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'LALX'});
-        let request_SGXZ = this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'SGXZ'});
-        let request_SGSX = this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'SGSX'});
-        let requestArray = [request_LALX, request_SGXZ, request_SGSX];
-        axios.all(requestArray)
-        .then(axios.spread(function (...res) {
-          let resArray = [];
-          resArray.push(...res);
-          let status = true;
-          resArray.forEach(res => {
-            if (res.success === false) {
-              status = false;
-              return;
-            }
-          })
-
-          let lalxData = resArray[0];
-          let sgxzData = resArray[1];
-          let sgsxData = resArray[2];
-
-          let lalxdicts = {};
-          lalxData.cDic.forEach(item => {
-            lalxdicts[item.code] = item.title;
-          })
-          that.LALXDict = lalxdicts;
-
-          let sgxzDicts = {};
-          sgxzData.cDic.forEach(item => {
-            sgxzDicts[item.code] = item.title;
-          })
-          that.SGXZDict = sgxzDicts;
-
-          let sgsxDicts = {};
-          sgsxData.cDic.forEach(item => {
-            sgsxDicts[item.code] = item.title;
-          })
-          that.SGSXDict = sgsxDicts;
-
-
-          debugger;
-          if (status === true) {
-            that.requestListData();
-          }
-
-        }));
-
-        this.$fetch(this.$url.common_getDictListDataWithCode, {code: 'LALX'})
-        .then(res => {
-          console.log(res);
-          if (res.success === true) {
-            let dicts = {};
-            res.cDic.forEach(item => {
-              dicts[item.code] = item.title;
-            })
-            this.LALXDict = dicts;
-            that.requestListData();
-          }
-        })
-      },
       requestListData() {
         let params = {};
-        console.log(this.searchOptions);
         for (let attr in this.searchOptions) {
           params[attr] = this.searchOptions[attr];
         }
         params.lasjStart = DateTool.yyyymmddFormatDate(this.searchOptions.date);
         params.lasjEnd = params.lasjStart;
         console.log(params);
+
+        let that = this;
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
-          console.log(res);
+          let allDict = this.$store.state.dictData.parseDict;
           if (res.success === true) {
-            res.data.records.forEach(item=>{
-              item.lasj = this.formatDate(item.lasj);
-              item.larq = this.formatDate(item.larq);
+            let newRes = JSON.parse(JSON.stringify(res));
+            newRes.data.records.forEach(item=>{
+              item.lasj = DateTool.timesToDate(item.lasj);
+              item.larq = DateTool.timesToDate(item.larq);
+              item.lalx = allDict.LALX[item.lalx];
+              item.sgxz = allDict.SGXZ[item.sgxz];
+              item.dw = allDict.EJGS[item.dw];
+              item.xczrsgfl = allDict.XCSGZRFL[item.xczrsgfl];
+              let sgsxArray = item.sgsx.split("、");
+              let stringArray = [];
+              sgsxArray.forEach(sgsxItem => {
+                stringArray.push(allDict.SGSX[sgsxItem]);
+              })
+              item.sgsx = stringArray.join("、");
             })
-            this.tableData = res.data.records;
-            this.totalSize = res.data.total;
-            this.searchOptions.current = res.data.current;
-            this.tableData.forEach(item => {
-              item.lalx = this.LALXDict[item.lalx];
-            })
+            that.tableData = newRes.data.records;
+            that.totalSize = newRes.data.total;
+            that.searchOptions.current = newRes.data.current;
+            that.sourceData = res;
           }
         })
       },
@@ -429,14 +373,14 @@
         for (let attr in this.formValidate) {
           params[attr] = this.formValidate[attr];
         }
-
+        params.lalx = 'LA';
         params.sgsx = this.formValidate.sgsx.join('、');
-        params.zr = '责任';
         params.gjjhj = params.gjjsz+params.gjjcn+params.gjjcs;
         params.sgzss = params.gjjhj+params.jqxss;
         params.sgxz = this.SGXZ();
 
-        console.log(params);
+//        console.log(params);
+//        debugger;
         this.$post(this.$url.security_LASG_add, params)
         .then(res => {
           console.log(res);
@@ -462,12 +406,13 @@
         })
       },
       addLASGZJSG() {
+        let that = this;
         this.$post(this.$url.security_LASG_addLoss, this.lossForm)
         .then(res => {
           if (res.success === true) {
-            this.$Message.success('添加成功!');
-            this.lossModal = false;
-            this.lossForm = {
+            that.$Message.success(' 追加成功!');
+            that.lossModal = false;
+            that.lossForm = {
               jsyxm: "",
               laid: "",
               lb: "",
@@ -482,6 +427,7 @@
               zjsz: 0,
               bz: 0,
             }
+            that.requestListData();
           }else{
             this.$Message.error('添加失败!');
           }
@@ -543,20 +489,20 @@
       }
     },
     mounted () {
-      this.requestLALXDict();
+      this.requestListData();
     },
   }
 </script>
 
 <style>
-  .ivu-table .status-ja td{
+  .ivu-table .status-la td{
     background-color: #19be6b;
     color: #fff;
   }
   .ivu-table .status-xa td{
     background-color: #dcdee2;
   }
-  .ivu-table .status-la td{
+  .ivu-table .status-ja td{
     background-color: #5cadff;
     color: #fff
   }

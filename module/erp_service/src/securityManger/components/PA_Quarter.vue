@@ -16,7 +16,11 @@
         </div>
       </Form>
     </Card>
-    <Table border style="margin-top: 10px;" :data="PA_Quarter_Data" :columns="PA_Quarter_Columns"></Table>
+    <Table border style="margin-top: 10px;" :data="PA_Quarter_Data" :columns="PA_Quarter_Columns">
+      <div slot="header" style="height: 50px;font-size: 18px;text-align: center">
+        {{tableTitle}}
+      </div>
+    </Table>
   </div>
 </template>
 
@@ -31,6 +35,7 @@
     data () {
       return {
         currentTab: 'name1',
+        tableTitle: '',
         exportURL: this.$url.security_AQQKFX_exportExcel,
         formItem: {
           tab1Date: this.initDate(),
@@ -48,6 +53,24 @@
         let now = new Date();
         return now;
       },
+      getTableTitle() {
+        let year = this.formItem.tab1Date.getFullYear();
+        let jiduArray = [];
+        this.formItem.tab1Select.forEach(item => {
+          if (item === '1') {
+            jiduArray.push('一');
+          } else if (item === '2') {
+            jiduArray.push('二');
+          } else if (item === '3') {
+            jiduArray.push('三');
+          } else {
+            jiduArray.push('四');
+          }
+        })
+        let jiduStr = jiduArray.join('、');
+        let title = year+'年第'+jiduStr+'季度安全生产情况分析';
+        this.tableTitle = title;
+      },
       getData () {
           // 2018 年第一季度安全生产情况分析
           this.PA_Quarter_Columns = PATableData.PA_Quarter_Columns;
@@ -55,6 +78,7 @@
       requestListData() {
         let params = this.getParams();
         params.jidus = params.jidus.join(',');
+        this.getTableTitle();
         let that = this;
         let url = this.$url.security_AQSCJTGS_list + '?year=' + params.year + '&jidus=' + params.jidus;
         this.$fetch(url)
@@ -86,6 +110,7 @@
       },
     },
     mounted () {
+      this.getTableTitle();
     },
     created () {
       this.getData();

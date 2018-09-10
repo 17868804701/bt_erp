@@ -2,6 +2,11 @@
  * Created by qismsom on 2018/7/31.
  */
 
+export function getNow() {
+  let date =  new Date();
+  return date;
+}
+
 export function formatDate(now) {
   let year = now.getFullYear();
   let month = now.getMonth() + 1;

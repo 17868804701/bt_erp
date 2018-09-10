@@ -16,7 +16,11 @@
         </div>
       </Form>
     </Card>
-    <Table border style="margin-top: 10px;" :data="PA_Examine_Data" :columns="PA_Examine"></Table>
+    <Table border style="margin-top: 10px;" :data="PA_Examine_Data" :columns="PA_Examine">
+      <div slot="header" style="height: 50px;font-size: 18px;text-align: center">
+        {{tableTitle}}
+      </div>
+    </Table>
   </div>
 </template>
 
@@ -35,7 +39,7 @@
           tab3Date: this.initDate(),
           tab3Select: ['1'],
         },
-
+        tableTitle: '',
         PA_Examine: [],
         PA_Examine_Data: [],
       }
@@ -47,7 +51,24 @@
         let now = new Date();
         return now;
       },
-
+      getTableTitle() {
+        let year = this.formItem.tab3Date.getFullYear();
+        let jiduArray = [];
+        this.formItem.tab3Select.forEach(item => {
+          if (item === '1') {
+            jiduArray.push('一');
+          } else if (item === '2') {
+            jiduArray.push('二');
+          } else if (item === '3') {
+            jiduArray.push('三');
+          } else {
+            jiduArray.push('四');
+          }
+        })
+        let jiduStr = jiduArray.join('、');
+        let title = year+'年第'+jiduStr+'季度考试事故分布';
+        this.tableTitle = title;
+      },
       getData () {
         // 考核事故分布
         this.PA_Examine = PATableData.PA_Examine;
@@ -87,6 +108,7 @@
       },
     },
     mounted () {
+      this.getTableTitle();
     },
     created () {
       this.getData();

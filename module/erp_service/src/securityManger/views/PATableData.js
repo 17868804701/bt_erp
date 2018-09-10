@@ -1,161 +1,155 @@
 // 2018 年第一季度安全生产情况分析   少车内事故所有内容
 export const PA_Quarter_Columns = [
   {
-    title: '2018年第一季度安全生产情况分析',
+    title: '立案事故',
+    key: 'xczrsgcsSum',
+    align: 'center',
+    width: 90,
+  },
+  {
+    title: '考核事故',
+    key: 'khsgSum',
+    align: 'center',
+    width: 90,
+  },
+  {
+    title: '立案事故比较去年同期比较',
     align: 'center',
     children: [
       {
-        title: '立案事故',
-        key: 'xczrsgcsSum',
+        title: '去年同期（起）',
+        key: 'oldxczrsgcsSum',
         align: 'center',
         width: 90,
       },
       {
-        title: '考核事故',
-        key: 'khsgSum',
+        title: '趋势',
+        key: 'xczrsgcsqs',
         align: 'center',
         width: 90,
       },
       {
-        title: '立案事故比较去年同期比较',
+        title: '趋势值',
+        key: 'xczrsgcsqsVal',
         align: 'center',
-        children: [
-          {
-            title: '去年同期（起）',
-            key: 'oldxczrsgcsSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势',
-            key: 'xczrsgcsqs',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势值',
-            key: 'xczrsgcsqsVal',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '幅度',
-            key: 'xczrsgcsqsFd',
-            align: 'center',
-            width: 90,
-          },
-        ],
+        width: 90,
       },
       {
-        title: '考核事故一般事故比较去年同期比较',
+        title: '幅度',
+        key: 'xczrsgcsqsFd',
         align: 'center',
-        children: [
-          {
-            title: '本期',
-            key: 'ybsgSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '去年同期（起）',
-            key: 'ybsgSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势',
-            key: 'ybsgqs',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势值',
-            key: 'ybsgqsVal',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '幅度',
-            key: 'ybsgqsFd',
-            align: 'center',
-            width: 90,
-          },
-        ],
+        width: 90,
       },
-      {
-        title: '考核事故二级轻微事故比较去年同期比较',
-        align: 'center',
-        children: [
-          {
-            title: '本期',
-            key: 'ejqwSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '去年同期（起）',
-            key: 'oldejqwSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势',
-            key: 'ejqwqs',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势值',
-            key: 'ejqwqsVal',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '幅度',
-            key: 'ejqwqsFd',
-            align: 'center',
-            width: 90,
-          },
-        ],
-      },
-      {
-        title: '考核事故三级轻微事故比较去年同期比较',
-        align: 'center',
-        children: [
-          {
-            title: '本期',
-            key: 'sjqwSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '去年同期（起）',
-            key: 'oldsjqwSum',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势',
-            key: 'sjqwqs',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '趋势值',
-            key: 'sjqwqsVal',
-            align: 'center',
-            width: 90,
-          },
-          {
-            title: '幅度',
-            key: 'sjqwqsFd',
-            align: 'center',
-            width: 90,
-          },
-        ],
-      },
-    ]
+    ],
   },
+  {
+    title: '考核事故一般事故比较去年同期比较',
+    align: 'center',
+    children: [
+      {
+        title: '本期',
+        key: 'ybsgSum',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '去年同期（起）',
+        key: 'ybsgSum',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '趋势',
+        key: 'ybsgqs',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '趋势值',
+        key: 'ybsgqsVal',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '幅度',
+        key: 'ybsgqsFd',
+        align: 'center',
+        width: 90,
+      },
+    ],
+  },
+  {
+    title: '考核事故二级轻微事故比较去年同期比较',
+    align: 'center',
+    children: [
+      {
+        title: '本期',
+        key: 'ejqwSum',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '去年同期（起）',
+        key: 'oldejqwSum',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '趋势',
+        key: 'ejqwqs',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '趋势值',
+        key: 'ejqwqsVal',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '幅度',
+        key: 'ejqwqsFd',
+        align: 'center',
+        width: 90,
+      },
+    ],
+  },
+  {
+    title: '考核事故三级轻微事故比较去年同期比较',
+    align: 'center',
+    children: [
+      {
+        title: '本期',
+        key: 'sjqwSum',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '去年同期（起）',
+        key: 'oldsjqwSum',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '趋势',
+        key: 'sjqwqs',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '趋势值',
+        key: 'sjqwqsVal',
+        align: 'center',
+        width: 90,
+      },
+      {
+        title: '幅度',
+        key: 'sjqwqsFd',
+        align: 'center',
+        width: 90,
+      },
+    ],
+  }
 ];
 
 // 2018 年第一季度安全生产情况分析 --- 静态数据
@@ -196,40 +190,34 @@ export const PA_Quarter_Data = {
 // 立案事故分布情况
 export const PA_LASG_Columns = [
   {
-    title: '立案事故分布情况',
+    title: '单位',
+    key: 'dw',
     align: 'center',
-    children: [
-      {
-        title: '单位',
-        key: 'dw',
-        align: 'center',
-      },
-      {
-        title: '本期',
-        key: 'xczrsgcsSum',
-        align: 'center',
-      },
-      {
-        title: '去年同期',
-        key: 'oldxczrsgcsSum',
-        align: 'center',
-      },
-      {
-        title: '趋势',
-        key: 'xczrsgcsqs',
-        align: 'center',
-      },
-      {
-        title: '趋势值',
-        key: 'xczrsgcsqsVal',
-        align: 'center',
-      },
-      {
-        title: '幅度',
-        key: 'xczrsgcsqsFd',
-        align: 'center',
-      },
-    ],
+  },
+  {
+    title: '本期',
+    key: 'xczrsgcsSum',
+    align: 'center',
+  },
+  {
+    title: '去年同期',
+    key: 'oldxczrsgcsSum',
+    align: 'center',
+  },
+  {
+    title: '趋势',
+    key: 'xczrsgcsqs',
+    align: 'center',
+  },
+  {
+    title: '趋势值',
+    key: 'xczrsgcsqsVal',
+    align: 'center',
+  },
+  {
+    title: '幅度',
+    key: 'xczrsgcsqsFd',
+    align: 'center',
   }
 ];
 // 立案事故分布情况 --- 静态数据
@@ -245,35 +233,29 @@ export const PA_LASG_Data = {
 // 经济损失
 export const PA_Economic_Losses = [
   {
-    title: '经济损失',
+    title: '本期',
+    key: 'jsSum',
     align: 'center',
-    children: [
-      {
-        title: '本期',
-        key: 'jsSum',
-        align: 'center',
-      },
-      {
-        title: '去年同期',
-        key: 'oldjsSum',
-        align: 'center',
-      },
-      {
-        title: '趋势',
-        key: 'jsqs',
-        align: 'center',
-      },
-      {
-        title: '趋势值',
-        key: 'jsqsVal',
-        align: 'center',
-      },
-      {
-        title: '幅度',
-        key: 'jsqsFd',
-        align: 'center',
-      },
-    ],
+  },
+  {
+    title: '去年同期',
+    key: 'oldjsSum',
+    align: 'center',
+  },
+  {
+    title: '趋势',
+    key: 'jsqs',
+    align: 'center',
+  },
+  {
+    title: '趋势值',
+    key: 'jsqsVal',
+    align: 'center',
+  },
+  {
+    title: '幅度',
+    key: 'jsqsFd',
+    align: 'center',
   }
 ]
 // 经济损失 --- 静态数据
@@ -289,35 +271,29 @@ export const PA_Economic_Losses_Data = {
 // 考核事故分布
 export const PA_Examine = [
   {
-    title: '考试事故分布',
+    title: '单位',
+    key: 'dw',
     align: 'center',
-    children: [
-      {
-        title: '单位',
-        key: 'dw',
-        align: 'center',
-      },
-      {
-        title: '考核事故',
-        key: 'khsgSum',
-        align: 'center',
-      },
-      {
-        title: '一般事故',
-        key: 'ybsgSum',
-        align: 'center',
-      },
-      {
-        title: '二级轻微事故',
-        key: 'ejqwSum',
-        align: 'center',
-      },
-      {
-        title: '三级轻微事故',
-        key: 'sjqwSum',
-        align: 'center',
-      },
-    ],
+  },
+  {
+    title: '考核事故',
+    key: 'khsgSum',
+    align: 'center',
+  },
+  {
+    title: '一般事故',
+    key: 'ybsgSum',
+    align: 'center',
+  },
+  {
+    title: '二级轻微事故',
+    key: 'ejqwSum',
+    align: 'center',
+  },
+  {
+    title: '三级轻微事故',
+    key: 'sjqwSum',
+    align: 'center',
   }
 ];
 // 考核事故分布 --- 静态数据
@@ -332,68 +308,62 @@ export const PA_Examine_Data = {
 //行车责任事故频率
 export const PA_XCZR_Rate = [
   {
+    title: '单位',
+    key: 'dw',
+    align: 'center',
+  },
+  {
     title: '行车责任事故频率',
+    key: 'sgplSum',
+    align: 'center',
+  },
+  {
+    title: '计划比较',
     align: 'center',
     children: [
       {
-        title: '单位',
-        key: 'dw',
+        title: '计划',
+        key: 'sgpljhSum',
         align: 'center',
       },
       {
-        title: '行车责任事故频率',
-        key: 'sgplSum',
+        title: '趋势',
+        key: 'sgpljhqs',
         align: 'center',
       },
       {
-        title: '计划比较',
+        title: '趋势值',
+        key: 'sgpljhVal',
         align: 'center',
-        children: [
-          {
-            title: '计划',
-            key: 'sgpljhSum',
-            align: 'center',
-          },
-          {
-            title: '趋势',
-            key: 'sgpljhqs',
-            align: 'center',
-          },
-          {
-            title: '趋势值',
-            key: 'sgpljhVal',
-            align: 'center',
-          },
-        ],
-      },
-      {
-        title: '去年同期比较',
-        align: 'center',
-        children: [
-          {
-            title: '去年同期',
-            key: 'oldsgplSum',
-            align: 'center',
-          },
-          {
-            title: '趋势',
-            key: 'sgplqs',
-            align: 'center',
-          },
-          {
-            title: '趋势值',
-            key: 'sgplqsVal',
-            align: 'center',
-          },
-          {
-            title: '幅度',
-            key: 'sgplqsFd',
-            align: 'center',
-          },
-        ],
       },
     ],
-  }
+  },
+  {
+    title: '去年同期比较',
+    align: 'center',
+    children: [
+      {
+        title: '去年同期',
+        key: 'oldsgplSum',
+        align: 'center',
+      },
+      {
+        title: '趋势',
+        key: 'sgplqs',
+        align: 'center',
+      },
+      {
+        title: '趋势值',
+        key: 'sgplqsVal',
+        align: 'center',
+      },
+      {
+        title: '幅度',
+        key: 'sgplqsFd',
+        align: 'center',
+      },
+    ],
+  },
 ];
 //行车责任事故频率 --- 静态数据
 export const PA_XCZR_Rate_Data = {
@@ -413,78 +383,72 @@ export const PA_XCZR_Rate_Data = {
 //立案事故经损率指标完成情况 --- 静态数据
 export const PA_LASG_LossRateTarget = [
   {
-    title: '立案事故经损率指标完成情况',
+    title: '单位',
+    key: 'dw',
+    align: 'center',
+  },
+  {
+    title: '事故（起）',
+    key: 'xczrsgcsSum',
+    align: 'center',
+  },
+  {
+    title: '经损（万元）',
+    key: 'jsSum',
+    align: 'center',
+  },
+  {
+    title: '经损率（元/万公里）',
+    key: 'jslSum',
+    align: 'center',
+  },
+  {
+    title: '计划比较',
     align: 'center',
     children: [
       {
-        title: '单位',
-        key: 'dw',
+        title: '计划（元/万公里）',
+        key: 'jsljhSum',
         align: 'center',
       },
       {
-        title: '事故（起）',
-        key: 'xczrsgcsSum',
+        title: '趋势',
+        key: 'jsljhqs',
         align: 'center',
       },
       {
-        title: '经损（万元）',
-        key: 'jsSum',
+        title: '趋势值',
+        key: 'jsljhqsVal',
         align: 'center',
-      },
-      {
-        title: '经损率（元/万公里）',
-        key: 'jslSum',
-        align: 'center',
-      },
-      {
-        title: '计划比较',
-        align: 'center',
-        children: [
-          {
-            title: '计划（元/万公里）',
-            key: 'jsljhSum',
-            align: 'center',
-          },
-          {
-            title: '趋势',
-            key: 'jsljhqs',
-            align: 'center',
-          },
-          {
-            title: '趋势值',
-            key: 'jsljhqsVal',
-            align: 'center',
-          },
-        ],
-      },
-      {
-        title: '去年同期比较',
-        align: 'center',
-        children: [
-          {
-            title: '去年同期（元/万公里）',
-            key: 'oldjslSum',
-            align: 'center',
-          },
-          {
-            title: '趋势',
-            key: 'oldjslSum',
-            align: 'center',
-          },
-          {
-            title: '趋势值',
-            key: 'jslqsVal',
-            align: 'center',
-          },
-          {
-            title: '幅度',
-            key: 'jslqsVal',
-            align: 'center',
-          },
-        ],
       },
     ],
-  }
+  },
+  {
+    title: '去年同期比较',
+    align: 'center',
+    children: [
+      {
+        title: '去年同期（元/万公里）',
+        key: 'oldjslSum',
+        align: 'center',
+      },
+      {
+        title: '趋势',
+        key: 'oldjslSum',
+        align: 'center',
+      },
+      {
+        title: '趋势值',
+        key: 'jslqsVal',
+        align: 'center',
+      },
+      {
+        title: '幅度',
+        key: 'jslqsVal',
+        align: 'center',
+      },
+    ],
+  },
 ];
 //立案事故经损率指标完成情况 --- 静态数据
 export const PA_LASG_LossRateTarget_Data = {
@@ -506,30 +470,24 @@ export const PA_LASG_LossRateTarget_Data = {
 // 车辆按键台次及合格率
 export const PA_CLAJ_Yield = [
   {
-    title: '车辆安检台次及合格率',
+    title: '单位',
+    key: 'dw',
     align: 'center',
-    children: [
-      {
-        title: '单位',
-        key: 'dw',
-        align: 'center',
-      },
-      {
-        title: '检车台次',
-        key: 'jctcSum',
-        align: 'center',
-      },
-      {
-        title: '不合格',
-        key: 'bhgSum',
-        align: 'center',
-      },
-      {
-        title: '合格率',
-        key: 'jctcHgl',
-        align: 'center',
-      },
-    ],
+  },
+  {
+    title: '检车台次',
+    key: 'jctcSum',
+    align: 'center',
+  },
+  {
+    title: '不合格',
+    key: 'bhgSum',
+    align: 'center',
+  },
+  {
+    title: '合格率',
+    key: 'jctcHgl',
+    align: 'center',
   },
 ];
 // 车辆按键台次及合格率 --- 静态数据
@@ -565,7 +523,7 @@ export const PA_Insure_Paid = [
     ],
   },
   {
-    title: '对外投保交强险及赔付情况',
+    title: '车辆保险缴费及案件理赔情况',
     align: 'center',
     children: [
       {

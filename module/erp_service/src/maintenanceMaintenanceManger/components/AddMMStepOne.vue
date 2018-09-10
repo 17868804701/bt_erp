@@ -16,24 +16,27 @@
             <div style="width: 120px;" v-else>{{basicData.djbh}}</div>
           </FormItem>
           <FormItem label="车辆自编号:" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicData.clzbh" style="width:120px;"></Input>
+            <Select v-if="basicDataIsEdit" v-model="basicData.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
+              <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index">{{ item }}</Option>
+            </Select>
             <div style="width: 120px;" v-else>{{basicData.clzbh}}</div>
           </FormItem>
+
           <FormItem label="车牌号:" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicData.cph" style="width:120px;"></Input>
-            <div style="width: 120px;" v-else>{{basicData.cph}}</div>
+            <!--<Input v-if="basicDataIsEdit" v-model="basicData.cph" style="width:120px;"></Input>-->
+            <div style="width: 120px;">{{basicData.cph}}</div>
           </FormItem>
           <FormItem label="车型:" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicData.cx" style="width:120px;"></Input>
-            <div style="width: 120px;" v-else>{{basicData.cx}}</div>
+            <!--<Input v-if="basicDataIsEdit" v-model="basicData.cx" style="width:120px;"></Input>-->
+            <div style="width: 120px;">{{basicData.cx}}</div>
           </FormItem>
           <FormItem label="线路:" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicData.xl" style="width:120px;"></Input>
-            <div style="width: 120px;" v-else>{{basicData.xl}}</div>
+            <!--<Input v-if="basicDataIsEdit" v-model="basicData.xl" style="width:120px;"></Input>-->
+            <div style="width: 120px;">{{basicData.xl}}</div>
           </FormItem>
           <FormItem label="分公司:" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicData.fgs" style="width:120px;"></Input>
-            <div style="width: 120px;" v-else>{{basicData.fgs}}</div>
+            <!--<Input v-if="basicDataIsEdit" v-model="basicData.fgs" style="width:120px;"></Input>-->
+            <div style="width: 120px;">{{basicData.fgs}}</div>
           </FormItem>
           <FormItem label="进厂时间:" style="margin-top: 0px;">
             <Input v-if="basicDataIsEdit" v-model="basicData.jcsj" style="width:120px;"></Input>
@@ -98,7 +101,7 @@
     </Card>
     <Modal
       v-model="dsjModal"
-      title="新增丢失件修配记录"
+      title="丢失件修配记录"
       width="50%"
       :mask-closable="false"
       :closable="false">
@@ -151,29 +154,21 @@
         <Button type="primary" style="float: right;margin-right: 10px" @click="cancleAddCYZY">取消</Button>
       </div>
       <div>
-        <Form v-model="cyItem" :label-width="60">
-          <Row>
-            <Col span="6">
+        <Form v-model="cyItem" :label-width="80">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
             <FormItem label="商品编号">
               <Input v-model="cyItem.spbh" placeholder="商品编号..." style="width: 100px"></Input>
             </FormItem>
-            </Col>
-            <Col span="6">
             <FormItem label="项目">
               <Input v-model="cyItem.name" placeholder="项目..." style="width: 100px"></Input>
             </FormItem>
-            </Col>
-            <Col span="6">
             <FormItem label="数量">
               <Input v-model="cyItem.sl" placeholder="数量..." style="width: 100px"></Input>
             </FormItem>
-            </Col>
-            <Col span="6">
             <FormItem label="修复方法">
               <Input v-model="cyItem.content" placeholder="修复方法..." style="width: 100px"></Input>
             </FormItem>
-            </Col>
-          </Row>
+          </div>
         </Form>
       </div>
     </Modal>
@@ -252,10 +247,11 @@
   </div>
 </template>
 <script>
-  import canEditTable from '../../components/common/canEditTable.vue'
-  import FDJData from './StepOneTableData'
-  import AddFDJQZView from './AddFDJQZView.vue'
-  import AddFDJQGView from './AddFDJQGView.vue'
+  import canEditTable from '../../components/common/canEditTable.vue';
+  import FDJData from './StepOneTableData';
+  import AddFDJQZView from './AddFDJQZView.vue';
+  import AddFDJQGView from './AddFDJQGView.vue';
+  import * as DateTool from '../../../utils/DateTool';
   export default {
     name: 'AddMMStepOne',
     components: {
@@ -382,17 +378,26 @@
             align: 'center',
             render: (h, params, index) => {
               return h('div', [
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteFDJ_QG_Data(params.index);
                     }
-                  }
-                }, '删除')
+                  },
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
+
               ]);
             }
           }
@@ -452,17 +457,25 @@
             align: 'center',
             render: (h, params, index) => {
               return h('div', [
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteFDJ_QZ_Data(params.index);
                     }
-                  }
-                }, '删除')
+                  },
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -549,17 +562,25 @@
                     }
                   }
                 }, '修改'),
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteDSJOrCY(params.row);
                     }
-                  }
-                }, '删除')
+                  },
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -616,17 +637,25 @@
                     }
                   }
                 }, '修改'),
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteDSJOrCY(params.row);
                     }
-                  }
-                }, '删除')
+                  },
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -682,6 +711,14 @@
       }
     },
     methods: {
+      selectCLItem(value) {
+        this.selectCL = this.$store.state.dictData.CLDict[value];
+        this.basicData.clzbh = this.selectCL.selfNum;
+        this.basicData.cph = this.selectCL.busNum;
+        this.basicData.cx = this.selectCL.busModelName;
+        this.basicData.xl = this.selectCL.lineName;
+        this.basicData.fgs = this.selectCL.orgName;
+      },
       clickEditBasicData() { // 编辑车辆基本信息
         // 点击取消后还原数据
         if (this.basicDataIsEdit === true) {
@@ -691,7 +728,17 @@
 
       },
       saveBasicData() { // 保存修改车辆基本信息
-        this.$post(this.$url.maintain_BYGL_CLBY_updateRecord, this.basicData)
+        let params = {};
+        for (let attr in this.basicData) {
+          params[attr] = this.basicData[attr];
+        }
+        let fgsDict = this.$store.state.dictData.parseDict.EJGS;
+        for (let attr in fgsDict) {
+          if (fgsDict[attr] === params.fgs) {
+            params.fgs = attr;
+          }
+        }
+        this.$post(this.$url.maintain_BYGL_CLBY_updateRecord, params)
         .then(res => {
           if (res.code === 0) {
             this.basicDataIsEdit = false;
@@ -708,7 +755,7 @@
         this.$post(this.$url.maintain_BYGL_CLBY_DSJ_saveUpdate, this.dsj)
         .then(res => {
           if (res.code === 0) {
-            this.$Message.success('添加丢失件修配记录成功!');
+            this.$Message.success('保存成功!');
             this.dsjModal = false;
             this.$emit('updateInfo');
             this.dsj = {
@@ -753,7 +800,7 @@
         this.$post(this.$url.maintain_BYGL_CLBY_CY_saveUpdate, this.cyItem)
         .then(res => {
           if (res.code === 0) {
-            this.$Message.success('添加超养作业记录成功!');
+            this.$Message.success('保存成功!');
             this.cyModal = false;
             this.$emit('updateInfo');
             this.cyItem = {
@@ -806,7 +853,7 @@
         this.$post(this.$url.maintain_BYGL_CLBY_FDJ_saveOrUpdate, params)
         .then(res => {
           if (res.code === 0) {
-            this.$Message.success('保存成功!');
+            this.$Message.success('操作成功!');
             this.fdjQGModal = false;
             this.fdjQZModal = false;
             this.fdjDataIsEdit = false;
@@ -955,10 +1002,17 @@
         let clbyDspjData = this.sourceData.clbyDspj;    // 丢失配件记录
         let clbyCyData = this.sourceData.clbyCy;        // 超养作业记录
 
+//        debugger;
+
+        let allDict = this.$store.state.dictData.parseDict;
+
         // 处理车辆保养基本信息
         for (let attr in clbyBasicData) {
           this.basicData[attr] = clbyBasicData[attr];
         }
+        this.basicData.jcsj = DateTool.timesToDate(this.basicData.jcsj);
+        let fgsDict = this.$store.state.dictData.parseDict.EJGS;
+        this.basicData.fgs = fgsDict[this.basicData.fgs];
 
         // 处理发动机进场记录
         let tmpfdjData = {}; // 用来判断是否有发动机进场记录的object

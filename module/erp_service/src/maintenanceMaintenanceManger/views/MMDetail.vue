@@ -1,18 +1,18 @@
 <template>
   <div style="padding: 20px; height: 100%;">
     <h2>
-      新增车辆维修养护
+      车辆维修养护
       <router-link to="/MainMM">
         <Button type="primary" size="small" style="margin-right: 10px;"><<返回列表页</Button>
       </router-link>
     </h2>
-    <div style="margin-top: 20px;">
-      <Steps :current="currentStep">
-        <Step title="进厂检验接单"></Step>
-        <Step title="维修养护测试阶段"></Step>
-        <Step title="出厂"></Step>
-      </Steps>
-    </div>
+    <!--<div style="margin-top: 20px;">-->
+      <!--<Steps :current="currentStep">-->
+        <!--<Step title="进厂检验接单"></Step>-->
+        <!--<Step title="维修养护测试阶段"></Step>-->
+        <!--<Step title="出厂"></Step>-->
+      <!--</Steps>-->
+    <!--</div>-->
 
     <AddMMStepOne :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepOne>
     <AddMMStepTwo :sourceData="networkData" @updateInfo="requestDetailData"></AddMMStepTwo>
@@ -81,6 +81,7 @@
 //          if (false){
 //            this.currentStep = 2;
 //          }
+          debugger;
           this.networkData = res;
         })
       },

@@ -7,7 +7,7 @@
       <!--新增维修工-->
       <Modal
         v-model="addModal"
-        title="新增维修工信息"
+        title="维修工信息"
         width="50%"
         :mask-closable="false"
         :closable="false">
@@ -31,16 +31,10 @@
                 </Select>
               </FormItem>
               <FormItem prop="shcj" label="所属车间" style="margin-top: 0px;">
-                <Select v-model="worker.shcj" style="width: 110px;">
-                  <Option value="第一车间">第一车间</Option>
-                  <Option value="第二车间">第二车间</Option>
-                </Select>
+                <CommonSelect type="CJXX" :selectValue="worker.shcj"></CommonSelect>
               </FormItem>
               <FormItem prop="wxbz" label="维修班组" style="margin-top: 0px;">
-                <Select v-model="worker.wxbz" style="width: 110px;">
-                  <Option value="维修一组">维修一组</Option>
-                  <Option value="维修二组">维修二组</Option>
-                </Select>
+                <CommonSelect type="WXBZ" :selectValue="worker.wxbz"></CommonSelect>
               </FormItem>
               <FormItem prop="lxdh" label="联系电话" style="margin-top: 0px;">
                 <Input v-model="worker.lxdh" style="width: 110px;"></Input>
@@ -119,6 +113,7 @@
         },
         columns: [
           {
+            title: '序号',
             type: 'index',
             align: 'center',
             width: 60,
@@ -151,6 +146,11 @@
           {
             title: '维修班组',
             key: 'wxbz',
+            align: 'center',
+          },
+          {
+            title: '联系电话',
+            key: 'lxdh',
             align: 'center',
           },
           {
@@ -232,7 +232,7 @@
       requestListData() {
         this.$fetch(this.$url.maintain_BYGL_DATA_WXGXX_list, this.formItem)
         .then(res => {
-          console.log(res);
+//          debugger;
           if (res.code === 0) {
             this.tableData = res.page.records;
             this.totalSize = res.page.total;

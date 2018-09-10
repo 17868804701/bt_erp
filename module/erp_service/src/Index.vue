@@ -198,6 +198,8 @@
       this.$store.commit('getAllMenu');
       this.$store.commit('getCurrentAuth');
       this.$store.commit('getAllDict');
+      this.$store.commit('getAllCLList');
+      this.$store.commit('getOriganzation');
     }
   }
 </script>

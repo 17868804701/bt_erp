@@ -12,7 +12,7 @@
       </div>
       <div>
         <Form :model="backItem" ref="backItem" :rules="ruleValidate" :label-width="100">
-          <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start">
             <FormItem prop="ch" label="车号" style="margin-top: 0px;">
               <Input v-model="backItem.ch" style="width:110px;"></Input>
             </FormItem>
@@ -44,7 +44,7 @@
           <Row>
             <Col span="24">
             <FormItem label="按返修进场时间查询" style="margin: 0;">
-              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+              <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
               <Button type="primary" icon="ios-search" @click="this.requestListData" v-has="'bygl_fxgl_search'">搜索</Button>
               <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'bygl_fxgl_daochu'">导出Excel</Button>
               <Button type="primary" icon="plus" style="float: right;margin-right: 10px" @click="backModal=true" v-has="'bygl_fxgl_add'">新增</Button>
@@ -108,6 +108,7 @@
         },
         columns: [
           {
+            title: '序号',
             type: 'index',
             align: 'center',
             width: 60,
@@ -203,7 +204,6 @@
         params.pageSize = this.formItem.pageSize;
         this.$fetch(this.$url.maintain_BYGL_FXGL_recordList, params)
         .then(res=>{
-          console.log(res);
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.fxccsj = DateTool.timesToDate(item.fxccsj);
@@ -217,7 +217,6 @@
         })
       },
       confirmFX(name) {
-        debugger;
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.saveRow();
@@ -236,7 +235,6 @@
         console.log(params);
         this.$post(this.$url.maintain_BYGL_FXGL_save, this.backItem)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('保存成功, 请在列表查看!');
             this.backModal = false;

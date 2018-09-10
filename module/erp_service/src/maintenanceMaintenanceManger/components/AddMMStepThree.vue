@@ -2,7 +2,7 @@
   <div style="margin-top: 40px;">
 
     <!-- 发动机出厂技术记录 -->
-    <Card v-if="isHaveFDJCC" style="margin-top: 20px;">
+    <Card  style="margin-top: 20px;">
       <p slot="title" >
         发动机出厂技术记录
       </p>
@@ -51,7 +51,7 @@
     <!--新增气缸压力-->
     <Modal
       v-model="fdjqgModal"
-      title="新增气缸压力检测数据"
+      title="气缸压力检测数据"
       width="50%"
       :mask-closable="false"
       :closable="false">
@@ -62,10 +62,10 @@
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <Form v-model="fdjqgylData" :label-width="150">
           <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-            <FormItem label="机油压力(怠速150r/min):" style="margin-top: 0px;">
+            <FormItem label="气缸压力(怠速150r/min):" style="margin-top: 0px;">
               <Input v-model="fdjqgylData.qgyl_ds" style="width:120px;"></Input>
             </FormItem>
-            <FormItem label="机油压力(中速2500r/min):" style="margin-top: 0px;">
+            <FormItem label="气缸压力(中速2500r/min):" style="margin-top: 0px;">
               <Input v-model="fdjqgylData.qgyl_zs" style="width:120px;"></Input>
             </FormItem>
           </div>
@@ -180,17 +180,25 @@
             align: 'center',
             render: (h, params, index) => {
               return h('div', [
-                h('Button', {
+                h('Poptip', {
                   props: {
-                    type: 'error',
-                    size: 'small'
+                    confirm: true,
+                    title: '您确定要删除这条数据吗?',
+                    transfer: true
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.deleteQGYL(params.index);
                     }
-                  }
-                }, '删除')
+                  },
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    }
+                  }, '删除')
+                ])
               ]);
             }
           }
@@ -339,7 +347,7 @@
       },
       saveFDJData() { // 修改保存 发动机基本信息
         this.fdjDataIsEdit = false;
-        debugger;
+//        debugger;
         this.updateFDJCC_QGYL(this.fdjccData);
       },
 
@@ -420,15 +428,19 @@
         delete tmpfdjData['byid'];
         delete tmpfdjData['id'];
         delete tmpfdjData['jcsj'];
+
         for (let attr in tmpfdjData) {
           if(tmpfdjData[attr] !== null && tmpfdjData[attr] !== '') {
             this.isHaveFDJCC = true;
           }
         }
 
-        let fdjccqgylTmpData = this.fdjccData.qgds;
-        let tmpArray = JSON.parse(fdjccqgylTmpData);
-        this.fdjqgylList = JSON.parse(JSON.stringify(tmpArray));
+        if (this.isHaveFDJCC === true) {
+          let fdjccqgylTmpData = this.fdjccData.qgds;
+          let tmpArray = JSON.parse(fdjccqgylTmpData);
+          this.fdjqgylList = JSON.parse(JSON.stringify(tmpArray));
+        }
+
       }
       // *********  初始化数据   ********** //
     },

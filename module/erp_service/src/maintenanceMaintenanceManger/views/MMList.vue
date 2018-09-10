@@ -7,7 +7,9 @@
         ok-text="登记进场"
         v-model="newRecordModal"
         title="新增车辆基本信息"
-        width="50%">
+        width="50%"
+        :mask-closable="false"
+        :closable="false">
         <div slot="footer" style="height: 30px;">
           <Button type="primary" style="float: right;margin-right: 10px" @click="startMaintain('basicData')">登记进场</Button>
           <Button type="primary" style="float: right;margin-right: 10px" @click="cancle">取消</Button>
@@ -15,32 +17,29 @@
         <div style="padding: 0px; height: 100%;">
           <Form :model="basicData" ref="basicData" :rules="ruleValidate" :label-width="90">
             <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-              <FormItem prop="djbh" label="登记编号" style="margin-top: 0px;">
-                <Input v-model="basicData.djbh" style="width: 110px;"></Input>
+              <FormItem prop="djbh" label="登记编号:" style="margin-top: 0px;">
+                <Input v-model="basicData.djbh" style="width: 140px;"></Input>
               </FormItem>
-              <FormItem prop="clzbh" label="车辆自编号" style="margin-top: 0px;">
-                <Input v-model="basicData.clzbh" style="width: 110px;"></Input>
-              </FormItem>
-              <FormItem prop="cph" label="车牌号" style="margin-top: 0px;">
-                <Input v-model="basicData.cph" style="width: 110px;"></Input>
-              </FormItem>
-              <FormItem prop="cx" label="车型" style="margin-top: 0px;">
-                <Input v-model="basicData.cx" style="width: 110px;"></Input>
-              </FormItem>
-              <FormItem prop="xl" label="线路" style="margin-top: 0px;">
-                <Input v-model="basicData.xl" style="width: 110px;"></Input>
-              </FormItem>
-              <FormItem prop="fgs" label="分公司" style="margin-top: 0px;">
-                <Select v-model="basicData.fgs" style="width: 110px;">
-                  <Option value="公交一公司">公交一公司</Option>
-                  <Option value="公交二公司">公交二公司</Option>
-                  <Option value="公交三公司">公交三公司</Option>
-                  <Option value="公交四公司">公交四公司</Option>
+              <FormItem label="车辆自编号:" style="margin-top: 0px;">
+                <Select v-model="selectCLSelfNum" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
+                  <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index">{{ item }}</Option>
                 </Select>
               </FormItem>
-              <FormItem prop="jcsj" label="进厂时间" style="margin-top: 0px;">
+              <FormItem label="车牌号:" style="margin-top: 0px;">
+                <div style="width: 140px;">{{basicData.cph}}</div>
+              </FormItem>
+              <FormItem label="车型:" style="margin-top: 0px;">
+                <div style="width: 140px;">{{basicData.cx}}</div>
+              </FormItem>
+              <FormItem label="线路:" style="margin-top: 0px;">
+                <div style="width: 140px;">{{basicData.xl}}</div>
+              </FormItem>
+              <FormItem label="分公司:" style="margin-top: 0px;">
+                <div style="width: 140px;">{{basicData.fgs}}</div>
+              </FormItem>
+              <FormItem prop="jcsj" label="进厂时间:" style="margin-top: 0px;">
                 <DatePicker
-                  style="width: 110px;"
+                  style="width: 140px;"
                   type="date"
                   placeholder="选择时间"
                   :transfer="true"
@@ -48,14 +47,14 @@
                   v-model="basicData.jcsj">
                 </DatePicker>
               </FormItem>
-              <FormItem prop="sxr" label="送修人" style="margin-top: 0px;">
-                <Input v-model="basicData.sxr" style="width: 110px;"></Input>
+              <FormItem prop="sxr" label="送修人:" style="margin-top: 0px;">
+                <Input v-model="basicData.sxr" style="width: 140px;"></Input>
               </FormItem>
-              <FormItem prop="jyy" label="检验员" style="margin-top: 0px;">
-                <Input v-model="basicData.jyy" style="width: 110px;"></Input>
+              <FormItem prop="jyy" label="检验员:" style="margin-top: 0px;">
+                <Input v-model="basicData.jyy" style="width: 140px;"></Input>
               </FormItem>
-              <FormItem prop="bylb" label="保养类别" style="margin-top: 0px;">
-                <Input v-model="basicData.bylb" style="width: 110px;"></Input>
+              <FormItem prop="bylb" label="保养类别:" style="margin-top: 0px;">
+                <Input v-model="basicData.bylb" style="width: 140px;"></Input>
               </FormItem>
             </div>
           </Form>
@@ -82,13 +81,16 @@
   </div>
 </template>
 <script>
-  import * as DateTool from '../../../utils/DateTool'
+  import * as DateTool from '../../../utils/DateTool';
+  import CommonSelect from '../../components/common/CommonSelect.vue';
   export default {
     components: {
+      CommonSelect
     },
     data () {
       return {
-
+        selectCL: '',
+        selectCLSelfNum: '',
         basicData: {
           djbh: '',
           clzbh: '',
@@ -278,13 +280,32 @@
       },
       cancle() {
         this.newRecordModal = false;
+        this.basicData = {
+          djbh: '',
+            clzbh: '',
+            cph: '',
+            cx: '',
+            xl: '',
+            fgs: '',
+            jcsj: '',
+            sxr: '',
+            jyy: '',
+            bylb: '',
+        }
       },
       saveRow() {
+        let fgsDict = this.$store.state.dictData.parseDict.EJGS;
         let params = {};
         for (let attr in this.basicData) {
           params[attr] = this.basicData[attr];
         }
         params.jcsj = DateTool.yyyymmddFormatDate(this.basicData.jcsj);
+        for (let attr in fgsDict) {
+          if (fgsDict[attr] === params.fgs) {
+            params.fgs = attr;
+          }
+        }
+        debugger;
         console.log(params);
         var that = this;
         this.$post(this.$url.maintain_BYGL_CLBY_saveRecord, params)
@@ -334,12 +355,13 @@
         params.date = DateTool.yyyymm01FormatDate(this.formItem.date);
         params.currPage = this.formItem.currPage;
         params.pageSize = this.formItem.pageSize;
-        console.log(params);
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordList, params)
         .then(res => {
           if (res.code === 0) {
+            let allDict = this.$store.state.dictData.parseDict;
             res.page.list.forEach(item => {
               item.jcsj = DateTool.timesToDate(item.jcsj);
+              item.fgs = allDict.EJGS[item.fgs];
             })
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
@@ -356,6 +378,15 @@
         }
         this.$getExcel(url);
       },
+      selectCLItem(value) {
+        this.selectCL = this.$store.state.dictData.CLDict[value];
+        this.basicData.clzbh = this.selectCL.selfNum;
+        this.basicData.cph = this.selectCL.busNum;
+        this.basicData.cx = this.selectCL.busModelName;
+        this.basicData.xl = this.selectCL.lineName;
+        this.basicData.fgs = this.selectCL.orgName;
+        debugger;
+      }
     },
     mounted () {
       this.requestListData();

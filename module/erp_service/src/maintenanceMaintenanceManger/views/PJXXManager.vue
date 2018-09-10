@@ -7,7 +7,7 @@
       <!--新增维修工-->
       <Modal
         v-model="addModal"
-        title="新增配件信息"
+        title="配件信息"
         width="50%"
         :mask-closable="false"
         :closable="false">

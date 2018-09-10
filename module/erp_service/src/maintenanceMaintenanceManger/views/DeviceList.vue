@@ -6,7 +6,7 @@
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
       <Modal
         v-model="addModal"
-        title="新增设备信息"
+        title="设备信息"
         width="50%">
         <div slot="footer" style="height: 30px;">
           <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddDevice('deviceItem')">保存</Button>
@@ -66,7 +66,7 @@
       <Card>
         <Form :model="formItem">
           <div>
-            <Button type="primary" v-has="'sbbygl_sbxxgl_search'" icon="plus" style="margin-right: 10px" @click="addModal=true">新增11</Button>
+            <Button type="primary" v-has="'sbbygl_sbxxgl_search'" icon="plus" style="margin-right: 10px" @click="addModal=true">新增</Button>
             <Button type="primary" v-has="'sbbygl_sbxxgl_daochu'" icon="android-download" @click="exportExcel">导出Excel</Button>
           </div>
         </Form>
@@ -141,6 +141,7 @@
         addModal: false,
         columns: [
           {
+            title: '序号',
             type: 'index',
             align: 'center',
             width: 60,

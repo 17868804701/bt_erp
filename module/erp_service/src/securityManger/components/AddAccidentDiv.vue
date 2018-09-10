@@ -17,20 +17,10 @@
           <div style="width: 120px">{{GJJHJ}}</div>
         </FormItem>
         <FormItem prop="sgsx" label="事故属性">
-          <CheckboxGroup v-model="formValidate.sgsx">
-            <Checkbox label="交强"></Checkbox>
-            <Checkbox label="车损"></Checkbox>
-            <Checkbox label="车内"></Checkbox>
-            <Checkbox label="三者"></Checkbox>
-          </CheckboxGroup>
+          <CommonSelect iviewType="checkbox" type="SGSX" :selectValue="formValidate.sgsx"></CommonSelect>
         </FormItem>
         <FormItem prop="xczrsgfl" label="行车责任">
-          <Select v-model="formValidate.xczrsgfl" style="width: 120px;">
-            <Option value="QBZR">全部责任</Option>
-            <Option value="ZYZR">主要责任</Option>
-            <Option value="TDZR">同等责任</Option>
-            <Option value="SJQW">次要责任</Option>
-          </Select>
+          <CommonSelect type="XCSGZRFL" :selectValue="formValidate.xczrsgfl" @update=""></CommonSelect>
         </FormItem>
         <FormItem prop="jafy" label="结案费用">
           <Input v-model="formValidate.jafy" placeholder="结案费用..." style="width: 120px"></Input>
@@ -39,21 +29,25 @@
 
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <FormItem prop="dw" label="登记单位">
-          <Select v-model="formValidate.dw" style="width: 120px;">
-            <Option value="公交一公司">公交一公司</Option>
-            <Option value="公交二公司">公交二公司</Option>
-            <Option value="公交三公司">公交三公司</Option>
-            <Option value="公交四公司">公交四公司</Option>
-          </Select>
-        </FormItem>
-        <FormItem prop="pz" label="牌照">
-          <Input v-model="formValidate.pz" placeholder="请输入牌照..." style="width: 120px"></Input>
+          <CommonSelect type="EJGS" :selectValue="formValidate.dw"></CommonSelect>
         </FormItem>
         <FormItem prop="zbh" label="自编号">
-          <Input v-model="formValidate.zbh" placeholder="请输入车辆自编号..." style="width: 120px"></Input>
+          <Select v-model="formValidate.zbh" filterable @on-change="selectCLItem" style="width: 120px;" placeholder="请选择">
+            <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index">{{ item }}</Option>
+          </Select>
+          <!--<Input v-model="formValidate.zbh" placeholder="请输入车辆自编号..." style="width: 120px"></Input>-->
         </FormItem>
-        <FormItem prop="lb" label="路别">
-          <Input v-model="formValidate.lb" placeholder="请输入路别..." style="width: 120px"></Input>
+        <FormItem label="牌照">
+          <!--<Input v-model="formValidate.pz" placeholder="请输入牌照..." style="width: 120px"></Input>-->
+          <div style="width: 120px">
+            {{formValidate.pz}}
+          </div>
+        </FormItem>
+        <FormItem label="路别">
+          <div style="width: 120px">
+            {{formValidate.lb}}
+          </div>
+          <!--<Input v-model="formValidate.lb" placeholder="请输入路别..." style="width: 120px"></Input>-->
         </FormItem>
         <FormItem prop="jsyxm" label="驾驶员姓名">
           <Input v-model="formValidate.jsyxm" placeholder="驾驶员姓名..." style="width: 120px"></Input>
@@ -112,7 +106,7 @@
 </template>
 
 <script>
-
+  import CommonSelect from '../../components/common/CommonSelect.vue';
   export default {
     name: 'AddAccidentDiv',
     props: {
@@ -145,13 +139,13 @@
       },
     },
     components: {
-
+      CommonSelect,
     },
     data () {
       return {
         ruleValidate: {
           dw: [
-            { required: true, message: '此项不能为空', trigger: 'blur' }
+            {required: true, message: '此项不能为空', trigger: 'change'},
           ],
           xczrsgfl: [
             { required: true, message: '此项不能为空', trigger: 'blur' }
@@ -186,7 +180,16 @@
     methods: {
       checkSGSX() {
         console.log('选择了事故属性');
+      },
+      selectCLItem(value) {
+        this.selectCL = this.$store.state.dictData.CLDict[value];
+        this.$emit('selectCL', this.selectCL);
       }
+//      validateDW(rule, value, callback) {
+//        debugger;
+//
+//        callback(new Error('自定义验证规则'));
+//      },
     },
     computed: {
       GJJHJ() {
@@ -232,7 +235,8 @@
 
         console.log(result);
         return result;
-      }
+      },
+
     },
     mounted () {
 

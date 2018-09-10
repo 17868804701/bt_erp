@@ -60,6 +60,7 @@
         tableData: [],
         columns: [
           {
+            title: '序号',
             type: 'index',
             align: 'center',
             width: 60,
@@ -162,7 +163,6 @@
         params.pageSize = this.formItem.pageSize;
         this.$fetch(this.$url.maintain_BYGL_JYDGL_recordList, params)
         .then(res=>{
-          console.log(res);
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.jjcsj = DateTool.timesToDate(item.jjcsj);

@@ -32,8 +32,8 @@
         formItem: {
           date: this.initDate(),
         },
-        columnsTitle: ['牌照','单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案类型', '责任','备注'],
-        columnsCode: ['pz','dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','zr','bz'],
+        columnsTitle: ['牌照','单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案类型','备注'],
+        columnsCode: ['pz','dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','bz'],
         gsColumnsTitle: ['公积金车损', '公积金车内', '公积金三者', '公积金定损金额合计', '交强险损失', '事故总损失'],
         gsColumnsCode: [ 'gjjcs', 'gjjcn', 'gjjsz', 'gjjhj', 'jqxss', 'sgzss'],
         data10: [],
@@ -92,7 +92,7 @@
         return now;
       },
       requestListData() {
-        console.log('请求集团公司数据');
+
         let firstDay = DateTool.getFirstDay(this.formItem.date);
         let lastDay = DateTool.getLastDay(this.formItem.date);
         let params = {
@@ -101,17 +101,27 @@
           lasjStart: firstDay,
           lasjEnd: lastDay
         }
-        console.log(params);
+
+        let that = this;
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
           console.log(res);
           if (res.data.records.length > 0 && res.data.records != null) {
-
+            let allDict = this.$store.state.dictData.parseDict;
             res.data.records.forEach(item => {
               item.lasj = DateTool.timesToDate(item.lasj);
               item.larq = DateTool.timesToDate(item.larq);
+              item.lalx = allDict.LALX[item.lalx];
+              item.sgxz = allDict.SGXZ[item.sgxz];
+              item.dw = allDict.EJGS[item.dw];
+              item.xczrsgfl = allDict.XCSGZRFL[item.xczrsgfl];
+              let sgsxArray = item.sgsx.split("、");
+              let stringArray = [];
+              sgsxArray.forEach(sgsxItem => {
+                stringArray.push(allDict.SGSX[sgsxItem]);
+              })
+              item.sgsx = stringArray.join("、");
             })
-
             this.tableData = res.data.records;
             this.totalSize = res.data.total;
           }

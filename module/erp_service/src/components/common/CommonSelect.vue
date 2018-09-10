@@ -1,13 +1,11 @@
-<!--公用组件 下拉框-->
+<!--公用组件 下拉框  必须在formitem中使用-->
 <template>
-  <div >
-    <Select v-if="isSelect" v-model="selectValue" style="width: 110px;" @on-change="selectOption">
+    <Select v-if="isSelect" :value="selectValue" style="width: 110px;" @on-change="selectOption">
       <Option v-for="(item, index) in sourceData" :key="item+index" :value="item.code">{{item.title}}</Option>
     </Select>
-    <CheckboxGroup v-else v-model="selectValue">
-      <Checkbox v-for="(item, index) in sourceData" :key="item+index" :value="item.code" :label="item.title"></Checkbox>
+    <CheckboxGroup v-else :value="selectValue" @on-change="check">
+      <Checkbox v-for="(item, index) in sourceData" :key="item+index" :label="item.code">{{item.title}}</Checkbox>
     </CheckboxGroup>
-  </div>
 </template>
 
 <script>
@@ -41,26 +39,24 @@
     },
     methods: {
       selectOption(val) {
-        console.log(val);
+        this.$parent.form.model[this.$parent._props.prop] = val;
+      },
+      check(val) {
+        this.$parent.form.model[this.$parent._props.prop] = val;
       },
       requestDictData() {
-        console.log(this.type);
-        console.log('根据type请求数据!');
-        let params = {code: this.type}
-        this.$fetch(this.$url.common_getDictListDataWithCode, params)
-        .then(res => {
-          console.log(res);
-          if (res.success === true && res.cDic.length > 0) {
-            this.sourceData = res.cDic;
-          }
-        })
+
+        let allDict = this.$store.state.dictData.allDict;
+        let type = this.type;
+        let origanazation = this.$store.state.dictData.orginazationArray;
+
+        this.sourceData = allDict[type];
       }
     },
     mounted () {
-      console.log(this.iviewType);
       this.requestDictData();
     },
     created() {
-    },
+    }
   }
 </script>

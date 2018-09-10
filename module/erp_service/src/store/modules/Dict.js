@@ -7,11 +7,16 @@ const Dict = {
   state: {
     parseDict: {},
     allDict: {},
+    CLArray: [],
+    CLDict: {},
+    orginazationDict: {},
+    orginazationArray : [],
   },
   mutations: {
-    getAllDict(state){
+    getAllDict(state){ // 数据字典数据
       fetch(process.env.BASE_URL+'/auth/dic/getAllByCode')
       .then(res => {
+    
         // 用于解析数据
         let dict = {};
         res.data.forEach(item => {
@@ -32,20 +37,50 @@ const Dict = {
             }
 
           })
-
-          dict[item.code] = subDict;
+  
+          state.parseDict[item.code] = subDict;
         });
-        state.parseDict = dict;
-
+    
         // 用于commonselect
-        let allDict = {};
         res.data.forEach(item => {
-          allDict[item.code] = item.children;
+          state.allDict[item.code] = item.children;
         })
-        state.allDict = allDict;
-
+        
       })
     },
+    getAllCLList(state){  // 车辆数据
+      post(process.env.BASE_URL+'/chel/vehicleAccount/listAll')
+      .then(res => {
+        if (res.code === 0) {
+        
+          let data = res.page;
+          data.forEach(item => {
+            if (item.selfNum !== null && item.selfNum.length > 0 && item.selfNum.indexOf("null") === -1) {
+              state.CLDict[item.selfNum] = item;
+              state.CLArray.push(item.selfNum);
+            }
+          })
+        }
+      })
+    },
+    getOriganzation(state) {
+      fetch('http://106.12.19.134:8702/auth/group/trees')
+      .then(res => {
+        if (res.success === true) {
+          res.data.forEach(item => {
+            if (item.grouptype === 'EJGS') {
+              item.title = item.groupname;
+              item.code = item.groupcode;
+              state.orginazationArray.push(item);
+              state.orginazationDict[item.groupcode] = item.groupname;
+            }
+          })
+          
+          state.allDict.EJGS = state.orginazationArray;
+          state.parseDict.EJGS = state.orginazationDict;
+        }
+      })
+    }
   }
 }
 

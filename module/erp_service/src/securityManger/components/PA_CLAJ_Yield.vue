@@ -16,7 +16,11 @@
         </div>
       </Form>
     </Card>
-    <Table border style="margin-top: 10px;" :data="PA_CLAJ_Yield_Data" :columns="PA_CLAJ_Yield"></Table>
+    <Table border style="margin-top: 10px;" :data="PA_CLAJ_Yield_Data" :columns="PA_CLAJ_Yield">
+      <div slot="header" style="height: 50px;font-size: 18px;text-align: center">
+        {{tableTitle}}
+      </div>
+    </Table>
   </div>
 </template>
 
@@ -36,7 +40,7 @@
           tab7Date: this.initDate(),
           tab7Select: ['1'],
         },
-
+        tableTitle: '',
         PA_CLAJ_Yield: [],
         PA_CLAJ_Yield_Data: [],
       }
@@ -47,6 +51,24 @@
       initDate() {
         let now = new Date();
         return now;
+      },
+      getTableTitle() {
+        let year = this.formItem.tab7Date.getFullYear();
+        let jiduArray = [];
+        this.formItem.tab7Select.forEach(item => {
+          if (item === '1') {
+            jiduArray.push('一');
+          } else if (item === '2') {
+            jiduArray.push('二');
+          } else if (item === '3') {
+            jiduArray.push('三');
+          } else {
+            jiduArray.push('四');
+          }
+        })
+        let jiduStr = jiduArray.join('、');
+        let title = year+'年第'+jiduStr+'季度车辆安检台次及合格率';
+        this.tableTitle = title;
       },
       getData () {
         //车辆安检台次及合格率
@@ -87,6 +109,7 @@
       },
     },
     mounted () {
+      this.getTableTitle();
     },
     created () {
       this.getData();

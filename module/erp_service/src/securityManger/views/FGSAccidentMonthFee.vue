@@ -15,8 +15,11 @@
         </Row>
       </Form>
     </Card>
-    <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="columns11" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange" @on-change="handleChange">
-    </can-edit-table>
+    <Table border style="margin-top: 10px;" :data="tableData" :columns="columns11" >
+      <div slot="header" style="height: 50px;font-size: 18px;text-align: center">
+        {{this.getTableTitle}}
+      </div>
+    </Table>
   </div>
 </template>
 
@@ -34,159 +37,153 @@
         },
         columns11: [
           {
-            title: '2018年3月交通事故报表',
+            title: '单位/项目',
+            key: 'dw',
+            align: 'center',
+            width: 120,
+          },
+          {
+            title: '运营里程(百万公里)',
+            key: 'yylc',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '行车责任事故次数',
+            key: 'xczrsgcs',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '责任事故次数, 其中:',
             align: 'center',
             children: [
               {
-                title: '单位/项目',
-                key: 'dw',
-                align: 'center',
-                width: 120,
-              },
-              {
-                title: '运营里程(百万公里)',
-                key: 'yylc',
+                title: '特大事故',
+                key: 'tdsg',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '行车责任事故次数',
-                key: 'xczrsgcs',
+                title: '重大事故',
+                key: 'zdsg',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '责任事故次数, 其中:',
-                align: 'center',
-                children: [
-                  {
-                    title: '特大事故',
-                    key: 'tdsg',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                  {
-                    title: '重大事故',
-                    key: 'zdsg',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                  {
-                    title: '较大事故',
-                    key: 'jdsg',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                  {
-                    title: '一般事故',
-                    key: 'ybsg',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                  {
-                    title: '一级轻微',
-                    key: 'yjqw',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                  {
-                    title: '二级轻微',
-                    key: 'ejqw',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                  {
-                    title: '三级轻微',
-                    key: 'sjqw',
-                    align: 'center',
-                    width: 120,
-                    sortable: true
-                  },
-                ]
-              },
-              {
-                title: '事故死亡人数',
-                key: 'sgswrs',
+                title: '较大事故',
+                key: 'jdsg',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '事故受伤人数',
-                key: 'sgssrs',
+                title: '一般事故',
+                key: 'ybsg',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '事故频率(次/百万公里)',
-                key: 'sgpl',
+                title: '一级轻微',
+                key: 'yjqw',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '经损(含追加)(元)',
-                key: 'js',
+                title: '二级轻微',
+                key: 'ejqw',
                 align: 'center',
                 width: 120,
                 sortable: true
               },
               {
-                title: '经损率(元/万公里)',
-                key: 'jsl',
+                title: '三级轻微',
+                key: 'sjqw',
                 align: 'center',
                 width: 120,
                 sortable: true
-              },
-              {
-                title: '本月累计考核事故',
-                key: 'bykhsgSum',
-                align: 'center',
-                width: 120,
-                sortable: true,
               },
             ]
+          },
+          {
+            title: '事故死亡人数',
+            key: 'sgswrs',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '事故受伤人数',
+            key: 'sgssrs',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '事故频率(次/百万公里)',
+            key: 'sgpl',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '经损(含追加)(元)',
+            key: 'js',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '经损率(元/万公里)',
+            key: 'jsl',
+            align: 'center',
+            width: 120,
+            sortable: true
+          },
+          {
+            title: '本月累计考核事故',
+            key: 'bykhsgSum',
+            align: 'center',
+            width: 120,
+            sortable: true,
           },
         ],
         tableData: [],
       }
+    },
+    computed: {
+      getTableTitle() {
+        let year = this.formItem.date.getFullYear();
+        let month = this.formItem.date.getMonth() + 1;
+        let title = year+'年'+month+'月交通事故报表';
+        return title;
+      },
     },
     methods:{
       initDate() {
         let now = new Date();
         return now;
       },
-      handleCellChange (val, index, key) {
-        this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-      },
-      handleChange (val, index) {
-        this.$Message.success('修改了第' + (index + 1) + '行数据');
-      },
       requestListData() {
-        console.log('请求分公司数据');
+
         let params = {
           time: DateTool.yyyyddFormatDate(this.formItem.date)
         }
-        console.log(params);
+        let that = this;
         this.$fetch(this.$url.security_GFGSJTSG_list, params)
         .then(res => {
-          console.log('----------');
-          console.log(res);
           if (res.success === true) {
             if (res.data.length > 0) {
-              this.tableData = res.data;
+              that.tableData = res.data;
             }
           }else{
-            this.$Message.error('数据获取失败, 请重试!');
+            that.$Message.error('数据获取失败, 请重试!');
           }
         })
       },

@@ -57,41 +57,7 @@
       },
     },
     methods: {
-      mockTableData () {
-        let data = [];
-        function getNum() {
-          return Math.floor(Math.random () * 100 + 1);
-        }
-        for (let i = 0; i < 17; i++) {
-          data.push({
-            dw: '单位'+ i,
-            zj: getNum(),
-            bhtl: getNum(),
-            zgng: getNum(),
-            gsld: getNum(),
-            ej: getNum(),
-            sj: getNum(),
-            ybgl: getNum(),
-            fz: getNum(),
-            siji: getNum(),
-            xl: getNum(),
-            qtzg: getNum(),
-            qtbzg: getNum(),
-            nt: getNum(),
-            bj: getNum(),
-            cj: getNum(),
-            ngcj: getNum(),
-            xg: getNum(),
-            gs: getNum(),
-            dg: getNum(),
-            tx: getNum(),
-            wj: getNum(),
-            tl: getNum(),
-          })
-        }
-        return data;
-      },
-      requestData() {
+      getList() {
         this.$fetch(this.$url.userManager_counts)
         .then(res => {
           this.tableData = res.data;
@@ -194,7 +160,7 @@
     },
     mounted () {
       this.$nextTick(() => {
-        this.requestData();
+        this.getList();
       });
     }
   }

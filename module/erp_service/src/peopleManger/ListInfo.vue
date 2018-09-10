@@ -317,6 +317,7 @@
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
+        personId: '',
         uploadFile: process.env.upload_BASE_URL + "file/upload",  //文件上传的接口地址
         bgyy: false,
         ruleValidate: {
@@ -324,8 +325,8 @@
             {required: true, message: '必填项不能为空', trigger: 'blur'}
           ],
         },
-        url:'',
-        zpdz:'',
+        url: '',
+        zpdz: '',
         formItem: {
           xm: "",
           cym: "",
@@ -393,7 +394,7 @@
     },
     methods: {
       handleSuccess: function (res, file) {
-          console.log(res)
+        console.log(res)
         if (res.success === true) {
           this.formItem.zpdz = res.path;
           this.update();
@@ -402,7 +403,7 @@
         }
       },
       handleSuccessPdf: function (res, file) {
-        console.log(this.formItem.zpdz,'上传pdf时候打印')
+        console.log(this.formItem.zpdz, '上传pdf时候打印')
         console.log(res)
         if (res.success === true) {
           this.formItem.ygfz = res.path;
@@ -477,12 +478,25 @@
               this.$Message.error('修改失败')
             }
           })
+      },
+      getLog: function () {
+        this.$fetch(this.$url.userManager_userChangeList, {id: this.personId})
+          .then(res => {
+            console.log(res.data.records, '操作记录');
+            if (res.success === true) {
+
+            } else {
+
+            }
+          })
       }
     },
     components: {
       vuePdfjs
     },
     mounted () {
+//      this.getLog()
+//      this.personId = this.$route.query.row.id
       let tip = this.$route.query.tip;
       this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
@@ -490,7 +504,7 @@
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
-        this.zpdz = process.env.upload_BASE_URL+'/'+this.$route.query.row.zpdz;
+        this.zpdz = process.env.upload_BASE_URL + '/' + this.$route.query.row.zpdz;
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));
@@ -502,7 +516,7 @@
         this.formItem.htjssj = this.formatDate(new Date(new Date(this.$route.query.row.htjssj).getTime()));
         this.formItem.csny = this.formatDate(new Date(new Date(this.$route.query.row.csny).getTime()));
         console.log(this.zpdz);
-        console.log(this.formItem,'修改后的')
+        console.log(this.formItem, '修改后的')
       }
     }
   }

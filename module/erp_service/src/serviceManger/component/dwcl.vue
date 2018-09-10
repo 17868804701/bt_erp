@@ -38,8 +38,12 @@
             <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem1.startTime"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'kfxxlbym_dwcllb_search'">查询</Button>
-          <Button type="primary" icon="android-download" class="search_btn" @click="plcl" v-has="'kfxxlbym_dwcllb_mutipledeal'">批量处理</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'kfxxlbym_dwcllb_search'">
+            查询
+          </Button>
+          <Button type="primary" icon="android-download" class="search_btn" @click="plcl"
+                  v-has="'kfxxlbym_dwcllb_mutipledeal'">批量处理
+          </Button>
         </div>
       </Form>
     </Card>
@@ -234,6 +238,7 @@
                     click: () => {
                       console.log(params.row.id);
                       this.formItem2.ids.push(params.row.id)
+                      console.log(this.formItem2.ids)
                       this.modal1 = true;
                     }
                   },
@@ -288,22 +293,25 @@
         this.getList();
       },
       selectAll: function (selection) {
-        this.selection = selection;
+        this.selection = selection
         console.log(this.selection)
       },
       plclSubmit: function () {
-          console.log(this.formItem2);
+        console.log(this.formItem2);
         this.$post(this.$url.plclkfxx, this.formItem2)
           .then(res => {
             console.log(res)
           })
       },
       plcl: function () {
+        let arr = []
         if (this.selection.length === 0) {
           this.$Message.error('请选择数据')
         } else {
           this.selection.forEach(item => {
-            this.formItem2.ids.push(item.id)
+              arr.push(item.id)
+            this.formItem2.ids = arr
+            console.log(this.formItem2.ids)
           });
           this.modal1 = true;
         }

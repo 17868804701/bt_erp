@@ -126,7 +126,7 @@
               <Form :model="cxItem" :label-width="120">
                 <div style="display: flex;flex-wrap: wrap">
                   <FormItem label="首字母查询" style="margin-left: -50px;">
-                    <input v-model="cxItem.xmszm" type="text" @focus="modal1 = true" placeholder="按照姓名首字母查询"
+                    <input v-model="cxItem.xmszm" type="text" @focus="focusChoose" placeholder="按照姓名首字母查询"
                            class="select_name">
                   </FormItem>
                   <FormItem label="在职情况" style="margin-left: 10px;">
@@ -134,6 +134,9 @@
                       <Option value="">全部</Option>
                       <Option value="在职">在职</Option>
                       <Option value="离职">离职</Option>
+                      <Option value="正式">正式</Option>
+                      <Option value="实习">实习</Option>
+                      <Option value="退休">退休</Option>
                     </Select>
                   </FormItem>
                 </div>
@@ -419,7 +422,7 @@
           },
           txdz: {
             title: '通讯地址',
-            key: 'txsj',
+            key: 'txdz',
             width: 150,
             sortable: true
           },
@@ -655,6 +658,11 @@
               this.tableData2 = res.data.records;
             }
           })
+      },
+      focusChoose:function () {
+        this.cxItem.xmszm  = ''
+        this.getLetters = []
+        this.modal1 = true
       },
 //      查询区域
       addPerson: function () {

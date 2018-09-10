@@ -225,7 +225,7 @@
             ]
           },
           {
-            title: '每公里收入（元/百公里）',
+            title: '百公里收入（元/百公里）',
             key: 'tbrc',
             width:100,
             align: 'center',

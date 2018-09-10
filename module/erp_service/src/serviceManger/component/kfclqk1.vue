@@ -90,6 +90,10 @@
             title: '其它',
             key: 'qtCount',
             align: 'center',
+          },{
+            title: '合计',
+            key: 'tshj',
+            align: 'center',
           },
         ],
         data11: [],

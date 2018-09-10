@@ -22,8 +22,8 @@
 </style>
 <template>
   <div>
-    <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;">
-      <h2> <span v-if="this.tip=='edit'">修改客服信息</span> <span v-else>添加客服信息</span>
+    <div style="border-bottom: 1px solid #eae9ec;padding-bottom: 10px;padding-top: 20px;">
+      <h2><span v-if="this.tip=='edit'">修改客服信息</span> <span v-else>添加客服信息</span>
         <router-link to="/kfxxList">
           <!--icon="chevron-left" -->
           <Button type="primary" size="small"><
@@ -36,10 +36,6 @@
     <Card style="padding-left: 15px;margin-top: 20px;">
       <Form :model="formItem" ref="formItem" :rules="ruleValidate" :label-width="100">
         <div class="search">
-          <FormItem label="投诉时间" style="margin-bottom: 25px" prop="tssj">
-            <DatePicker type="date" placeholder="投诉时间" :transfer="true" v-model="formItem.tssj"
-                        class="text_width"></DatePicker>
-          </FormItem>
           <FormItem label="线路" style="margin-bottom: 25px" prop="xl">
             <Select v-model="formItem.xl" :transfer="true" style="width: 195px;">
               <Option value="1路">1路</Option>
@@ -79,13 +75,13 @@
             </Select>
           </FormItem>
           <FormItem label="来电/来访" style="margin-bottom: 25px" prop="lfxs">
-            <Select v-model="formItem.lfxs" :transfer="true" style="width: 195px;" @on-change="changesLf">
+            <Select v-model="formItem.lfxs" :transfer="true" :disabled="this.tip=='edit'" style="width: 195px;" @on-change="changesLf">
               <Option value="0">来电</Option>
               <Option value="1">来访</Option>
             </Select>
           </FormItem>
           <FormItem label="事件类别" style="margin-bottom: 25px" v-show="this.formItem.lfxs!=1">
-            <Select v-model="formItem.sjlb" :transfer="true" style="width: 195px;" @on-change="changes">
+            <Select v-model="formItem.sjlb" :transfer="true" :disabled="this.tip=='edit'" style="width: 195px;" @on-change="changes">
               <Option value="0">责任性事件</Option>
               <Option value="1">疑难性事件</Option>
               <Option value="2">普通事件</Option>
@@ -114,14 +110,15 @@
                         class="text_width"></DatePicker>
           </FormItem>
           <FormItem label="反馈信息" v-show="this.formItem.sjlb==2">
-            <Input style="width: 470px;" v-model="formItem.cljg"  type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="填写反馈信息"></Input>
+            <Input style="width: 470px;" v-model="formItem.cljg" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+                   placeholder="填写反馈信息"></Input>
           </FormItem>
         </div>
       </Form>
     </Card>
     <div style="margin: 20px;">
       <Button type="primary" @click="update" v-if="this.tip=='edit'">修改</Button>
-      <Button type="primary" @click="save('formItem')" v-else="">下一步</Button>
+      <Button type="primary" @click="save('formItem')" v-else="">提交</Button>
       <router-link to="/kfxxList">
         <Button type="ghost" style="margin-left: 8px">返回</Button>
       </router-link>
@@ -133,13 +130,12 @@
     data () {
       return {
 //          注意：这块要根据选择的事件类型不同去判断所填的项目
-        formItem:{
+        formItem: {
           bm: "",
           bz: "",
           ch: "",
           cljg: "",
           fksj: "",
-          id: "",
           jlbm: "",
           jlr: "",
           lfxs: "",
@@ -148,71 +144,65 @@
           sy: "",
           tslb: "",
           tsr: "",
-          tssj: "",
           xl: "",
-          zt: 0
+          zt: ""
         },
-        tip:'',
+        tip: '',
         ruleValidate: {
-          tssj: [
-            { required: true, message: '必填项不能为空', trigger: 'blur',type:'date' }
-          ],
           jlr: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  xl: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  jlbm: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  ch: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  tsr: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  lxdh: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  tslb: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
-          ],  lfxs: [
-            { required: true, message: '必填项不能为空', trigger: 'blur' }
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], xl: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], jlbm: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], ch: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], tsr: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], lxdh: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], tslb: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
+          ], lfxs: [
+            {required: true, message: '必填项不能为空', trigger: 'blur'}
           ],
         }
       }
     },
     methods: {
-      changes:function (value) {
+      changes: function (value) {
         console.log(value)
-        if(value==2){
+        if (value == 2) {
           this.formItem.zt = ''
           this.formItem.bm = ''
-        }else {
+        } else {
           this.formItem.fksj = ''
           this.formItem.cljg = ''
         }
       },
-      changesLf:function (value) {
+      changesLf: function (value) {
         console.log(value);
-        if(value==1){
+        if (value == 1) {
           this.formItem.sjlb = '';
           this.formItem.zt = '';
           this.formItem.bm = ''
         }
       },
-      save:function (name) {
+      save: function (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.formItem.tssj = this.$formatDate(this.formItem.tssj).substring(0,10);
-            console.log(this.formItem.tssj);
-            if(this.formItem.fksj===''){
+            if (this.formItem.fksj === '') {
               this.formItem.fksj = ''
-            }else {
-              this.formItem.fksj = this.$formatDate(this.formItem.fksj).substring(0,7);
+            } else {
+              this.formItem.fksj = this.$formatDate(this.formItem.fksj).substring(0, 7);
             }
             console.log(this.formItem);
-            this.$post(this.$url.savekfxx,this.formItem)
+            this.$post(this.$url.savekfxx, this.formItem)
               .then(res => {
                 console.log(res);
-                if(res.success==true){
-                    this.$Message.info("添加成功")
-                }else {
+                if (res.success == true) {
+                  this.$Message.info("添加成功")
+                } else {
                   this.$Message.error("添加失败")
                 }
               })
@@ -222,29 +212,29 @@
         });
 
       },
-      update:function () {
-        this.$post(this.$url.updatekfxx,this.formItem)
+      update: function () {
+        this.$post(this.$url.updatekfxx, this.formItem)
           .then(res => {
             console.log(res);
-            if(res.success==true){
+            if (res.success == true) {
               this.$Message.info("修改成功");
               this.$router.push({path: '/kfxxList',})
-            }else {
+            } else {
               this.$Message.error("修改失败")
             }
           })
-      }
+      },
     },
-    mounted:function () {
+    mounted: function () {
       let tip = this.$route.query.tip;
       let row = this.$route.query.row;
+      console.log(row)
       this.tip = tip;
-      if(tip==='edit'){
+      if (tip === 'edit') {
         this.formItem = row
-      }else {
+      } else {
 
       }
-      console.log(tip)
     }
   }
 </script>

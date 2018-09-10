@@ -190,11 +190,11 @@
         this.$fetch(this.$url.qygl_ccxlsrtz_fgs, params)
         .then(res => {
           console.log(res);
+          this.fgsND = params.nd;
           if (res.success === true) {
             this.fgsTableData = res.data;
             if (res.data.length > 0) {
               let obj = res.data[0];
-              this.fgsND = obj.nd;
             }
           }else{
             this.$Message.error('获取数据失败, 请重试!');

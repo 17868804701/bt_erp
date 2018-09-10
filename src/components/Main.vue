@@ -172,11 +172,11 @@
         </div>
       </Header>
       <Layout>
-        <Sider ref="side1" width="140" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
+        <Sider ref="side1" width="160" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
                style="background: rgb(255,255,255,0.9);height: 90vh;margin-top: 1.5vh">
           <Menu :active-name="currentClassify" theme="light" width="140" :class="menuitemClasses"
                 @on-select="selectClassify">
-            <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid" :key="classify+index">
+            <MenuItem v-for="(classify, index) in this.appClassfiyList" class="menuStyle" :name="classify.cid" :key="classify+index" @click.native="collapsedSider_left">
               <Icon type="ios-keypad"/>
               <span>{{classify.cname}}</span>
             </MenuItem>
@@ -257,6 +257,11 @@
     methods: {
       collapsedSider () {
         this.$refs.side1.toggleCollapse();
+      },
+      collapsedSider_left(){
+          if(this.isCollapsed==true) {
+            this.$refs.side1.toggleCollapse();
+          }
       },
       logout() {
         console.log('退出登录');

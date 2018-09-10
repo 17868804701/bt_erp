@@ -33,7 +33,7 @@
             <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem5.nian"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search5" v-has="'jjzbwcqk_bwu_search'">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search5" v-has="'jjzbwcqk_bwu_chaxun'">查询</Button>
           <div class="btn">
             <Button type="primary" icon="android-download" @click="daochu5" v-has="'jjzbwcqk_bwu_daochu'">导出Excel</Button>
           </div>

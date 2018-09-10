@@ -51,6 +51,13 @@
         <div>
           <Form :model="add" ref="add" :rules="ruleValidate" :label-width="80">
             <div style="display: flex;flex-wrap: wrap">
+              <FormItem label="单位" prop="dw">
+                <Select v-model="add.dw" style="width: 195px;">
+                  <Option value="公交一公司">公交一公司</Option>
+                  <Option value="公交二公司">公交二公司</Option>
+                  <Option value="公交三公司">公交三公司</Option>
+                </Select>
+              </FormItem>
               <FormItem label="车牌号" prop="cph">
                 <Input v-model="add.cph" placeholder="请输入领料数量" style="width: 195px;"/>
               </FormItem>
@@ -73,9 +80,9 @@
               <FormItem label="领料时间" prop="llsj">
                 <DatePicker type="date" placeholder="选择领料时间" v-model="add.llsj" style="width: 195px;"></DatePicker>
               </FormItem>
-              <FormItem label="领料规格" prop="llgg">
-                <Input v-model="add.llgg" placeholder="领料规格" style="width: 195px;"/>
-              </FormItem>
+              <!--<FormItem label="领料规格" prop="llgg">-->
+                <!--<Input v-model="add.llgg" placeholder="领料规格" style="width: 195px;"/>-->
+              <!--</FormItem>-->
               <FormItem label="物品编号" prop="wpbh">
                 <Input v-model="add.wpbh" placeholder="物品编号" style="width: 195px;"/>
               </FormItem>
@@ -140,6 +147,7 @@
         },
         add: {
           cph: "",
+          dw:'',
           cx: "",
           wpmc: "",
           llsl: "",
@@ -153,13 +161,15 @@
           zt: "",
           llsj: '',
           wpbh: "",
-          llgg: ""
+          llgg: "--"
         },
         ruleValidate: {
           cph: [
             {required: true, message: '必填项必填', trigger: 'blur'}
           ],
           cx: [
+            {required: true, message: '必填项必填', trigger: 'blur'}
+          ],     dw: [
             {required: true, message: '必填项必填', trigger: 'blur'}
           ],
           wpmc: [
@@ -198,9 +208,9 @@
           wpbh: [
             {required: true, message: '必填项必填', trigger: 'blur'}
           ],
-          llgg: [
-            {required: true, message: '必填项必填', trigger: 'blur'}
-          ]
+//          llgg: [
+//            {required: true, message: '必填项必填', trigger: 'blur'}
+//          ]
         },
 //        车号、车型、物品名称（轮胎、润滑油）、领料数量、领料规格、供货单位、品牌型号、规格、计量单位、单价、金额、附记、状态（采购、下派）
         columns11: [
@@ -297,6 +307,7 @@
                   },
                   on: {
                     click: () => {
+                        console.log(params.row)
                       this.addPicking = true;
                       this.type = 'edit'
                       this.add = params.row
@@ -309,14 +320,17 @@
                     }
                   ],
                 }, '修改'),
-                h('Button', {
+                h('Poptip', {
                   props: {
+                    confirm: true,
                     type: 'error',
-                    size: 'small'
+                    transfer:true,
+                    size: 'large',
+                    title: '你确定要删除吗?'
                   },
                   on: {
-                    click: () => {
-                      console.log(params.row.id);
+                    'on-ok': () => {
+                      console.log(params.row);
                       let arr = []
                       arr.push(params.row.id)
                       console.log(arr)
@@ -332,14 +346,24 @@
 
                         })
                     }
-                  },
-                  directives: [
-                    {
-                      name: 'has',
-                      value: 'llgl_llgl_delete',
-                    }
-                  ],
-                }, '删除')
+                  }
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'llgl_llgl_delete',
+                      }
+                    ]
+                  },'删除')
+                ])
               ]);
             }
           }

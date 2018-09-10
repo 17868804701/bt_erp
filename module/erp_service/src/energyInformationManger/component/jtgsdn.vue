@@ -60,6 +60,12 @@
             width: 100,
           },
           {
+            title: '时间',
+            key: 'tjsj',
+            align: 'center',
+            width: 100,
+          },
+          {
             title: '路别',
             key: 'lb',
             align: 'center',
@@ -148,6 +154,14 @@
               this.data12 = res.data.records;
               this.totalPage1 = res.data.total;
             } else {
+              res.data.records.forEach(item=>{
+                console.log(item.tjsj)
+                if(item.tjsj==null){
+                  item.tjsj = '--'
+                }else {
+                  item.tjsj = this.$formatDate(item.tjsj).substring(0,10)
+                }
+              });
               this.data12 = res.data.records;
               this.totalPage1 = res.data.total;
             }

@@ -35,9 +35,9 @@
         <div class="search">
           <FormItem label="选择公司" style="margin: 0">
             <Select v-model="fgstsqkfl.bm" :transfer="true" style="width: 195px;">
-              <Option value="一公司">一公司</Option>
-              <Option value="二公司">二公司</Option>
-              <Option value="三公司">三公司</Option>
+              <Option value="公交一公司">公交一公司</Option>
+              <Option value="公交二公司">公交二公司</Option>
+              <Option value="公交三公司">公交三公司</Option>
             </Select>
           </FormItem>
           <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'kfclqktj_fgstsqkflhzb_search'">查询</Button>
@@ -104,6 +104,7 @@
       getList:function () {
         this.$fetch(this.$url.fgstsqkfl, this.fgstsqkfl)
           .then(res => {
+              console.log(res)
             if(res.success===true){
               if(res.data==null){
                 this.$Message.info('暂无数据');

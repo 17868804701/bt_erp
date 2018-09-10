@@ -261,7 +261,7 @@
           this.formItem1.nian = nian
           this.formItem1.yue = yue
         }
-        console.log(this.formItem1)
+        console.log(this.formItem1.nian)
         this.getList()
       },
       daochu1:function () {

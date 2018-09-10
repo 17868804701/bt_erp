@@ -46,6 +46,7 @@
               </FormItem>
               <FormItem label="选择公司" style="margin: 0">
                 <Select :transfer="true" v-model="formItem.dw" style="width: 195px;">
+                  <Option value="">全部</Option>
                   <Option value="公交一公司">公交一公司</Option>
                   <Option value="公交二公司">公交二公司</Option>
                   <Option value="公交三公司">公交三公司</Option>
@@ -88,7 +89,6 @@
           size: '10',
           dw: '',
           sj: '',
-          dcsm: ''
         },
         columns11: [
           {
@@ -100,6 +100,12 @@
           {
             title: '单位',
             key: 'dw',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '时间',
+            key: 'sj',
             align: 'center',
             width: 100,
           },
@@ -253,13 +259,21 @@
       List: function () {
         this.$fetch(this.$url.fgsxcyb, this.formItem)
           .then(res => {
-            console.log(res)
+            console.log(res,'分公司行车月报')
             if (res.data.total === 0) {
               this.$Message.info('暂无数据')
               this.totalPage = res.data.total;
               this.data10 = res.data.records;
             } else {
               this.totalPage = res.data.total;
+              res.data.records.forEach(item=>{
+                  console.log(item.sj);
+                if(item.sj===null){
+                      item.sj = '--'
+                }else {
+                    item.sj = this.$formatDate(item.sj).substring(0,10)
+                }
+              });
               this.data10 = res.data.records;
             }
           })

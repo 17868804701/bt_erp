@@ -85,7 +85,7 @@
             title: '投诉时间',
             key: 'tssj',
             align: 'center',
-            width: 120,
+            width: 160,
           }, {
             title: '线路',
             key: 'xl',
@@ -221,6 +221,9 @@
                   },
                   on: {
                     click: () => {
+                      console.log(params.row.zt.toString())
+                      params.row.zt = params.row.zt.toString()
+                      params.row.fksj =this.$formatDate(params.row.fksj);
                       this.$router.push({
                         path: '/addkfxx',
                         query: {row: params.row,tip:'edit'}
@@ -253,7 +256,7 @@
               this.totalPage = res.data.total;
             } else {
               res.data.records.forEach(item => {
-                item.tssj = DateTool.timesToDate(item.tssj)
+                item.tssj = this.$formatDate(item.tssj)
               });
               this.data10 = res.data.records;
               this.totalPage = res.data.total;
@@ -274,17 +277,18 @@
         }
       },
       search1: function () {
-        if (this.formItem.startTime[0] == '') {
-          this.formItem.startTime = '',
-            this.formItem.endTime = '',
-            this.getList()
+        if (this.formItem.startTime[0] == ''||this.formItem.startTime==''||this.formItem.endTime) {
+            this.formItem.startTime = '',
+            this.formItem.endTime = ''
         } else {
           let start = DateTool.timesToDate(this.formItem.startTime[0]);
           let end = DateTool.timesToDate(this.formItem.startTime[1]);
           this.formItem.startTime = start;
           this.formItem.endTime = end;
-          this.getList()
         }
+        console.log(this.formItem.startTime)
+        console.log(this.formItem.endTime)
+        this.getList()
       },
       setp: function (current) {
         this.totalPage = current;

@@ -19,7 +19,11 @@
         </Form>
       </Card>
       <Table :columns="columns12" :data="data12" ref="selection" border height="500" style="margin-top: 20px;"
-             size="small"></Table>
+             size="small">
+        <div slot="header" style="text-align: center">
+              <span style="font-size: 16px;">{{tjsj}}天然气月汇总</span>
+        </div>
+      </Table>
       <Page :total="totalPage1" show-total style="margin-top: 10px;" @on-change="setpPage2"></Page>
     </div>
   </div>
@@ -39,90 +43,104 @@
         },
         columns12: [
           {
-            title: '集团公司  2018年4月天然气月汇总表',
+            title: '二级单位',
+            key: 'ejdw',
             align: 'center',
-            children:[
+            width: 100,
+          },
+          {
+            title: '中燃',
+            key: 'zr',
+            align: 'center',
+            width: 150,
+            children: [
               {
-                title: '二级单位',
-                key: 'ejdw',
-                align: 'center',
-                width: 100,
-              },
-              {
-                title: '中燃',
-                key: 'zr',
-                align: 'center',
-                width: 150,
-                children: [
-                  {
-                    title: '气量',
-                    key: 'zrql',
-                    align: 'center',
-                    width: 150,
-                  },
-                  {
-                    title: '实际价',
-                    key: 'zrsjj',
-                    align: 'center',
-                    width: 150,
-                  }, {
-                    title: '计划价',
-                    key: 'zrjhj',
-                    align: 'center',
-                    width: 150,
-                  },
-                ]
-              },
-              {
-                title: '汇通',
-                key: 'zr',
+                title: '气量',
+                key: 'zrql',
                 align: 'center',
                 width: 150,
-                children: [
-                  {
-                    title: '气量',
-                    key: 'htql',
-                    align: 'center',
-                    width: 150,
-                  },
-                  {
-                    title: '实际价',
-                    key: 'htsjj',
-                    align: 'center',
-                    width: 150,
-                  }, {
-                    title: '计划价',
-                    key: 'htjhj',
-                    align: 'center',
-                    width: 150,
-                  },
-                ]
               },
               {
-                title: '合计',
-                key: 'zr',
+                title: '实际价',
+                key: 'zrsjj',
                 align: 'center',
                 width: 150,
-                children: [
-                  {
-                    title: '气量',
-                    key: 'hjql',
-                    align: 'center',
-                    width: 150,
-                  },
-                  {
-                    title: '实际价',
-                    key: 'hjsjj',
-                    align: 'center',
-                    width: 150,
-                  }, {
-                    title: '计划价',
-                    key: 'hjjhj',
-                    align: 'center',
-                    width: 150,
-                  },
-                ]
+              },     {
+                title: '实际单价',
+                key: 'zrsjdj',
+                align: 'center',
+                width: 150,
+              }, {
+                title: '计划价',
+                key: 'zrjhj',
+                align: 'center',
+                width: 150,
+              },   {
+                title: '计划单价',
+                key: 'zrjhdj',
+                align: 'center',
+                width: 150,
               }
+            ]
+          },
+          {
+            title: '汇通',
+            key: 'zr',
+            align: 'center',
+            width: 150,
+            children: [
+              {
+                title: '气量',
+                key: 'htql',
+                align: 'center',
+                width: 150,
+              },
+              {
+                title: '实际价',
+                key: 'htsjj',
+                align: 'center',
+                width: 150,
+              },    {
+                title: '实际单价',
+                key: 'htsjdj',
+                align: 'center',
+                width: 150,
+              },  {
+                title: '计划价',
+                key: 'htjhj',
+                align: 'center',
+                width: 150,
+              },    {
+                title: '实际单价',
+                key: 'htsjdj',
+                align: 'center',
+                width: 150,
+              },
+            ]
+          },
+          {
+            title: '合计',
+            key: 'zr',
+            align: 'center',
+            width: 150,
+            children: [
+              {
+                title: '气量',
+                key: 'hjql',
+                align: 'center',
+                width: 150,
+              },
+              {
+                title: '实际价',
+                key: 'hjsjj',
+                align: 'center',
+                width: 150,
+              }, {
+                title: '计划价',
+                key: 'hjjhj',
+                align: 'center',
+                width: 150,
+              },
             ]
           }
         ],
@@ -155,6 +173,7 @@
         }else {
           this.formItem1.tjsj = this.$formatDate(this.formItem1.tjsj).substring(0,7)
         }
+        this.tjsj = this.formItem1.tjsj
         console.log(this.formItem1)
         this.getList()
       },

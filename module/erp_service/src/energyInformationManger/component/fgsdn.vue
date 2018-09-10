@@ -10,6 +10,7 @@
             </FormItem>
             <FormItem label="选择线路" style="margin: 0">
               <Select v-model="formItem.lb" :transfer="true" style="width: 195px;">
+                <Option value="">全部</Option>
                 <Option value="1路">1路</Option>
                 <Option value="2路">2路</Option>
                 <Option value="3路">3路</Option>
@@ -17,9 +18,10 @@
             </FormItem>
             <FormItem label="选择公司" style="margin: 0">
               <Select v-model="formItem.dw" :transfer="true" style="width: 195px;">
-                <Option value="beijing">公交一公司</Option>
-                <Option value="shanghai">公交二公司</Option>
-                <Option value="shenzhen">公交三公司</Option>
+                <Option value="">全部</Option>
+                <Option value="公交一公司">公交一公司</Option>
+                <Option value="公交二公司">公交二公司</Option>
+                <Option value="公交三公司">公交三公司</Option>
               </Select>
             </FormItem>
             <FormItem label="车牌号" style="margin: 0">
@@ -56,6 +58,18 @@
           {
             title: '路别',
             key: 'lb',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '单位',
+            key: 'dw',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '时间',
+            key: 'tjsj',
             align: 'center',
             width: 100,
           },
@@ -154,6 +168,14 @@
               this.data10 = res.data.records;
               this.totalPage = res.data.total;
             } else {
+              res.data.records.forEach(item=>{
+                  console.log(item.tjsj)
+                  if(item.tjsj==null){
+                   item.tjsj = '--'
+                  }else {
+                    item.tjsj = this.$formatDate(item.tjsj).substring(0,10)
+                  }
+              });
               this.data10 = res.data.records;
               this.totalPage = res.data.total;
             }
@@ -179,6 +201,7 @@
         } else {
           this.formItem.tjsj = this.$formatDate(this.formItem.tjsj).substring(0, 7)
         }
+        console.log(this.formItem)
         this.$getExcel(process.env.BASE_URL + this.$url.daochufgsdnList + '?tjsj=' + this.formItem.tjsj+'&dw='+this.formItem.dw+'&lb='+this.formItem.lb+'&cph='+this.formItem.cph )
       }
     },

@@ -194,6 +194,20 @@
                   },
                 ]
               },
+              {
+                title: '车次/人次',
+                key: 'xccx',
+                align: 'center',
+                width: 120,
+                sortable: false
+              },
+              {
+                title: '合计',
+                key: 'kyl_hj',
+                align: 'center',
+                width: 120,
+                sortable: false
+              },
             ]
           },
           {
@@ -310,12 +324,15 @@
       getList: function () {
         this.$fetch(this.$url.getLineList, this.formItem1)
           .then(res => {
-            console.log(res);
+            console.log(res,'线路车次');
             if (res.data.total === 0) {
               this.$Message.info('暂无数据');
               this.totalPage1 = res.data.total;
               this.data10 = res.data.records;
             } else {
+              res.data.records.forEach(item=>{
+                item.sj = this.$formatDate(item.sj).substring(0,10)
+              });
               this.totalPage1 = res.data.total;
               this.data10 = res.data.records;
             }

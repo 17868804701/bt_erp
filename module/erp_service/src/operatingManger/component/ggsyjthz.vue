@@ -80,6 +80,18 @@
             width: 100,
           },
           {
+            title: '路别',
+            key: 'lb',
+            align: 'center',
+            width: 100,
+          },
+          {
+            title: '时间',
+            key: 'sj',
+            align: 'center',
+            width: 100,
+          },
+          {
             title: '车次完成情况',
             align: 'center',
             width: 120,
@@ -182,6 +194,21 @@
                   },
                 ]
               },
+              {
+                title: '人次/车次',
+                key: 'xccx',
+                align: 'center',
+                width: 120,
+                sortable: false
+              },
+              {
+                title: '合计',
+                key: 'kyl_hj',
+                align: 'center',
+                width: 120,
+                sortable: false
+              },
+
             ]
           },
           {
@@ -286,11 +313,15 @@
       getList: function () {
         this.$fetch(this.$url.getjthzList, this.formItem2)
           .then(res => {
+              console.log(res,'各公司与集团汇总')
             if (res.data.total === 0) {
               this.$Message.info('暂无数据')
               this.totalPage2 = res.data.total;
               this.data12 = res.data.records;
             } else {
+              res.data.records.forEach(item=>{
+                item.sj = this.$formatDate(item.sj).substring(0,7)
+              });
               this.totalPage2 = res.data.total;
               this.data12 = res.data.records;
             }

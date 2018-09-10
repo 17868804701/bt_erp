@@ -180,12 +180,12 @@
         this.$fetch(this.$url.qygl_nhlctz_jtgs, params)
         .then(res => {
           console.log(res);
+          this.jtgsND = params.nd;
           if (res.success === true) {
             this.jtgsTableData = res.data;
             if (res.data.length > 0) {
               let obj = res.data[0];
               this.jtgsjldw = obj.jldw;
-              this.jtgsND = obj.nd;
             }
           }else{
             this.$Message.error('获取数据失败, 请重试!');

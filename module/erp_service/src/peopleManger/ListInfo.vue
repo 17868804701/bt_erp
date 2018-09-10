@@ -451,12 +451,11 @@
               .then(res => {
                 if (res.success === true) {
                   this.$Message.info('添加成功');
-                  this.$router.push({path: '/'});
+                  this.$router.push({path: '/userinfo'});
                 } else {
                   this.$Message.error('添加失败')
                 }
               });
-            this.$Message.success('Success!');
           } else {
             this.$Message.error('必要字段必须填写');
           }

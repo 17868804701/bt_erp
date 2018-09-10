@@ -51,10 +51,10 @@
             v-model="modal1"
             width="320"
             @on-cancel="quxiao"
-            title="添加检测费用设定">
+            title="检测费用设定">
             <div slot="footer" style="height: 30px;">
               <Button type="primary" style="float: right;margin-right: 10px" v-show="this.madalType==='add'"
-                      @click='ok("addFysd")'>确定
+                      @click='ok("addFysd")'>新增
               </Button>
               <Button type="primary" style="float: right;margin-right: 10px" v-show="this.madalType==='update'"
                       @click='update'>修改

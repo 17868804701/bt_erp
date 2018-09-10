@@ -49,11 +49,11 @@
     <!--新增计划-->
     <Modal
       v-model="addProgram"
-      title="新增计划"
+      title="计划信息"
       @on-ok="ok"
       width="400"
       :mask-closable="false"
-      style="height: 500px;"
+      style="height:auto;"
       @on-cancel="cancel">
       <div slot="footer" style="height: 30px;">
         <Button type="primary" style="float: right;margin-right: 10px" v-if="this.type=='edit'" @click="update">修改
@@ -192,10 +192,8 @@
     },
     methods: {
       ok () {
-//        this.$Message.info('Clicked ok');
       },
       cancel () {
-//        this.$Message.info('Clicked cancel');
         this.type = ''
       },
       add: function () {
@@ -207,6 +205,8 @@
               this.$Message.info('添加成功')
               this.addProgram = false
               this.getList()
+            } else if(res.msg === '保存失败，本年改线路计划已存在'){
+              this.$Message.error('保存失败，本年改线路计划已存在')
             } else {
               this.$Message.error('添加失败')
             }

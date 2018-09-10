@@ -330,7 +330,7 @@
           })
       },
       list1: function () {
-        this.$fetch(this.$url.gpjcxqList, {currPage: 1, pageSize: 10})
+        this.$fetch(this.$url.gpjcxqList, {currPage: 1, pageSize: 10,id:this.gpid})
           .then(res => {
             console.log(res);
             if (res.msg === 'success') {
@@ -413,7 +413,7 @@
         }
       },
       czlist1:function () {
-        this.$post(this.$url.gpjcxqJL+'?currPage='+this.cz.currPage+'&pageSize='+this.cz.pageSize+'&type='+this.cz.type)
+        this.$post(this.$url.gpjcxqJL+'?currPage='+this.cz.currPage+'&pageSize='+this.cz.pageSize+'&type='+this.cz.type+'&id='+this.gpid)
           .then(res => {
 
             res.page.records.forEach(item=>{
@@ -428,7 +428,7 @@
           });
       },
       czlist2:function () {
-        this.$post(this.$url.gpjcxqJL+'?currPage='+this.cz1.currPage+'&pageSize='+this.cz1.pageSize+'&type='+this.cz1.type)
+        this.$post(this.$url.gpjcxqJL+'?currPage='+this.cz1.currPage+'&pageSize='+this.cz1.pageSize+'&type='+this.cz1.type+'&id='+this.gpid)
           .then(res => {
 
             res.page.records.forEach(item=>{

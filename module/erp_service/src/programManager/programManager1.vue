@@ -324,7 +324,40 @@
                       value: 'yyjhtzgl_yyjhtzgl_edit',
                     }
                   ],
-                }, '修改')
+                }, '修改'),
+                h('Poptip', {
+                  props: {
+                    confirm: true,
+                    type: 'error',
+                    size: 'large',
+                    transfer:true,
+                    title: '你确定要删除吗?'
+                  },
+                  on: {
+                    'on-ok': () => {
+                      this.$post(this.$url.yyjhtzDel + '?id=' + params.row.id)
+                        .then(res => {
+                          console.log(res);
+                          if (res.success === true) {
+                            this.$Message.info('删除成功');
+                            this.getList();
+                          } else {
+                            this.$Message.error('删除失败')
+                          }
+                        })
+                    }
+                  }
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                  },'删除')
+                ])
               ]);
             }
           }

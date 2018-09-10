@@ -156,6 +156,7 @@ const NetworkInterface = {
   fgsyyjhdc:'/erp-modules-jih/yyscjh/exportFgsjh',//导出分公司运营计划
   updatefgssrjh:'/erp-modules-jih/fsrjh/updateFsrjh',//修改分公司收入计划
   updateSnsrjh:'/erp-modules-jih/jtsrjh/updateJtsrjh',//修改分公司收入计划
+  yyjhtzDel:'/erp-modules-jih/yyjhtz/delete',//修改分公司收入计划
   // 钢瓶检测
   gpjcList:'/weix/cylinderInspection/fysz/list',   //检测费用设定列表
   addFysd:'/weix/cylinderInspection/fysz/save',   //添加费用设定

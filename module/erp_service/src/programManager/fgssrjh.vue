@@ -50,16 +50,16 @@
     <!--新增计划-->
     <Modal
       v-model="addProgram"
-      title="新增计划"
+      title="计划信息"
       @on-ok="ok"
       width="350"
       :mask-closable="false"
-      style="height: 500px;"
+      style="height:auto"
       @on-cancel="quxiao">
       <div slot="footer" style="height: 30px;">
         <Button type="primary" style="float: right;margin-right: 10px" @click="xiugai" v-if="this.type=='edit'">修改
         </Button>
-        <Button type="primary" style="float: right;margin-right: 10px" @click="save('formItem1')" v-else>确定
+        <Button type="primary" style="float: right;margin-right: 10px" @click="save('formItem1')" v-else>新增
         </Button>
         <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
       </div>
@@ -158,17 +158,15 @@
             key: 'cz',
             render: (h, params) => {
               return h('div', [
-                h('Button', {
+                h('Poptip', {
                   props: {
+                    confirm: true,
                     type: 'error',
-                    size: 'small',
-
-                  },
-                  style: {
-                    marginRight: '5px'
+                    size: 'large',
+                    title: '你确定要删除吗?'
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       console.log(params.row.id)
                       this.$fetch(this.$url.delFgssrjh, {id: params.row.id})
                         .then(res => {
@@ -180,15 +178,24 @@
                             this.$Message.error('删除失败')
                           }
                         })
-                    },
-                  },
-                  directives: [
-                    {
-                      name: 'has',
-                      value: 'srjhzd_fgssr_delete',
                     }
-                  ],
-                }, '删除'),
+                  }
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'srjhzd_fgssr_delete',
+                      }
+                    ],
+                  },'删除')]),
                 h('Button', {
                   props: {
                     type: 'primary',
@@ -224,7 +231,6 @@
         this.$Message.info('Clicked ok');
       },
       quxiao () {
-        this.$Message.error('操作失败');
         this.getList();
         this.type = '',
           this.formItem1 = {}

@@ -22,7 +22,7 @@
    <div style="width: 100%;border: 0px solid red;display: flex;flex-direction: column;justify-content: center;align-items: center;">
      <div style="text-align: center">
        <span style="font-size: 17px;">包头市公交运输集团有限责任公司</span> <br>
-       <span style="font-size: 17px;">公交一公司2018年4月经营业绩星级考核表</span>
+       <span style="font-size: 17px;">{{year}}年{{month}}月{{titles}}</span>
      </div>
      <div style="width: 630px;display: flex;justify-content: space-between;margin-top: 15px;">
        <span>填报部门:企业管理部门</span>
@@ -293,7 +293,10 @@
 <script>
   export default {
     props: {
-      scoreList: [],
+      scoreList:'',
+      year:'',
+      month:'',
+      titles:''
     },
     data () {
       return {

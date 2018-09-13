@@ -347,16 +347,17 @@
                     }
                   ],
                 }, '修改'),
-                h('Button', {
+
+                h('Poptip', {
                   props: {
+                    confirm: true,
                     type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
+                    size: 'large',
+                    transfer:false,
+                    title: '你确定要删除吗?'
                   },
                   on: {
-                    click: () => {
+                    'on-ok': () => {
                       this.$fetch(this.$url.delFgsjh + '?id=' + params.row.id)
                         .then(res => {
                           console.log(res)
@@ -368,14 +369,23 @@
                           }
                         })
                     }
-                  },
-                  directives: [
-                    {
-                      name: 'has',
-                      value: 'yyjhgl_fgsyyjh_delete',
-                    }
-                  ],
-                }, '删除')
+                  }
+                }, [
+                  h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small'
+                    },
+                    style: {
+                      marginRight: '5px'
+                    },
+                    directives: [
+                      {
+                        name: 'has',
+                        value: 'yyjhgl_fgsyyjh_delete',
+                      }
+                    ],
+                  }, '删除')]),
               ]);
             }
           }
@@ -436,7 +446,7 @@
       getList: function () {
         this.$fetch(this.$url.fgsyyList, this.searchItem)
           .then(res => {
-            console.log(res, '集团')
+            console.log(res)
             if (res.success === true) {
               if (res.data.total === 0) {
                 this.$Message.info('暂无信息');

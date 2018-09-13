@@ -377,10 +377,10 @@
     },
     methods: {
       search: function () {
-        if (this.formItem.kssj[0] == '') {
-          this.formItem.kssj = '',
+        if (this.formItem.kssj[0] == ''||this.formItem.kssj==''||this.formItem.jssj=='') {
+            this.formItem.kssj = '',
             this.formItem.jssj = ''
-          this.list()
+            this.list()
         } else {
           let start1 = this.$formatDate(this.formItem.kssj[0]).substring(0, 10);
           let end2 = this.$formatDate(this.formItem.kssj[1]).substring(0, 10);

@@ -96,9 +96,9 @@
             </div>
             <div class="head jbxx_right">
               <img class="head_img"
-                   :src="zpdz"
+                   :src="'http://106.12.19.134:8080/static/'+formItem.zpdz"
                    alt="">
-              <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess">
+              <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess" :show-upload-list="false">
                 <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
               </Upload>
             </div>
@@ -108,9 +108,8 @@
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">附件查看</p>
         <Icon type="document-text" class="file"></Icon>
-        <span class="a_pdf"
-              @click="modalPdf=true">附件：点击查看个人资料.pdf</span><br>
-        <Upload :headers="header" :action='uploadFile' :on-success="handleSuccessPdf">
+        <span class="a_pdf" @click="showPDF">附件：点击查看个人资料.pdf</span><br>
+        <Upload :headers="header" :action='uploadFile' :on-success="handleSuccessPdf" :show-upload-list="false">
           <Button type="primary" icon="ios-cloud-upload-outline" style="margin-top: 10px;">上传资料PDF</Button>
         </Upload>
       </Card>
@@ -128,7 +127,7 @@
             <Input :disabled="isEdit_gjj" v-model="formItem.gjjzh" placeholder="公积金账号" class="input_item"/>
           </FormItem>
           <FormItem :label-width="160" label="公积金开户时间">
-            <DatePicker :disabled="isEdit_gjj" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_gjj" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.gjjkhsj"></DatePicker>
           </FormItem>
           <FormItem :label-width="160" label="公积金缴存情况备注">
@@ -174,7 +173,12 @@
             <!--<Input :disabled="isEdit_dwxx" v-model="formItem.dw" placeholder="单位" class="input_item"/>-->
           </FormItem>
           <FormItem :label-width="120" label="部门">
-            <Input :disabled="isEdit_dwxx" v-model="formItem.bm" placeholder="部门" class="input_item"/>
+            <Select :disabled="isEdit_dwxx" v-model="formItem.bm" style="width: 170px;">
+              <Option value="企管部">企管部</Option>
+              <Option value="稽查部">稽查部</Option>
+              <Option value="运营部">运营部</Option>
+              <Option value="劳资部">劳资部</Option>
+            </Select>
           </FormItem>
           <FormItem :label-width="120" label="工号">
             <Input :disabled="isEdit_dwxx" v-model="formItem.gh" placeholder="工号" class="input_item"/>
@@ -183,7 +187,7 @@
             <Input :disabled="isEdit_dwxx" v-model="formItem.ztjszc" placeholder="专业技术职称" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="取得时间">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.qdsj"></DatePicker>
           </FormItem>
           <FormItem :label-width="120" label="退离类别">
@@ -246,23 +250,23 @@
             <Input :disabled="isEdit_dwxx" v-model="formItem.ylzh" placeholder="养老证号" class="input_item"/>
           </FormItem>
           <FormItem :label-width="120" label="工作时间">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.gzsj"></DatePicker>
           </FormItem>
           <FormItem :label-width="120" label="本单位工作时间">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.bdwgzsj"></DatePicker>
           </FormItem>
           <FormItem :label-width="120" label="退休时间">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.txsj"></DatePicker>
           </FormItem>
           <FormItem :label-width="120" label="合同自起">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.htkssj"></DatePicker>
           </FormItem>
           <FormItem :label-width="120" label="合同止">
-            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="Select date"
+            <DatePicker :disabled="isEdit_dwxx" type="date" style="width: 170px;" placeholder="选择时间"
                         v-model="formItem.htjssj"></DatePicker>
           </FormItem>
         </div>
@@ -271,9 +275,7 @@
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">人员变更记录</p>
         <div>
-          <FormItem :label-width="120" label="变更原因">
-            <Input v-model="formItem.bgyy" :disabled="true" placeholder="变更原因" class="input_item"/>
-          </FormItem>
+          <Table :columns="columns1" :data="data" :border="true"></Table>
         </div>
       </Card>
       <div style="width: 100%;text-align: center;padding: 20px;">
@@ -285,18 +287,18 @@
         v-model="modalPdf"
         width="70%"
         title="查看pdf">
-        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':this.$route.query.row.ygfz" :type="0"></vuePdfjs>
+        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':'http://106.12.19.134:8080/static/'+this.$route.query.row.ygfz" :type="0"></vuePdfjs>
       </Modal>
       <!--填写变更原因-->
       <Modal
-        v-model="bgyy"
+        v-model="bgyy1"
         title="填写变更原因"
         @on-ok="ok"
         @on-cancel="cancel"
       >
         <Form :model="formItem" :label-width="80">
           <FormItem label="变更原因">
-            <Input v-model="formItem.bgyy" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+            <Input v-model="bgyy" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                    placeholder="填写变更原因，70字以内"></Input>
           </FormItem>
         </Form>
@@ -317,16 +319,16 @@
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
+        imgUrl:'',
         personId: '',
         uploadFile: process.env.upload_BASE_URL + "file/upload",  //文件上传的接口地址
-        bgyy: false,
+        bgyy1: false,
+        bgyy:'',
         ruleValidate: {
           xm: [
             {required: true, message: '必填项不能为空', trigger: 'blur'}
           ],
         },
-        url: '',
-        zpdz: '',
         formItem: {
           xm: "",
           cym: "",
@@ -355,9 +357,9 @@
           gjjdh: "",
           gjjzt: "",
           rybh: "",
-          gh: "", //
-          sscj: "", //
-          wxbz: "", //
+          gh: "",
+          sscj: "",
+          wxbz: "",
           dw: "",
           bm: "",
           zyjszc: "",
@@ -382,8 +384,18 @@
           xmszm: "",
           ygfz: "",
           zpdz: "", // 照片地址
-          bgyy: ''
         },
+        columns1:[
+          {
+            title: '时间',
+            key: 'bgsj'
+          },
+          {
+            title: '变更内容',
+            key: 'bgyy'
+          }
+        ],
+        data:[],
         modalPdf: false,
         isshowpdf: false,
         value: '1',
@@ -393,21 +405,22 @@
       }
     },
     methods: {
-      handleSuccess: function (res, file) {
-        console.log(res)
+      handleSuccess: function (res) {
         if (res.success === true) {
           this.formItem.zpdz = res.path;
           this.update();
+          console.log(this.formItem.zpdz)
+          console.log(this.formItem.ygfz)
         } else {
           this.$Message.error('修改失败');
         }
       },
-      handleSuccessPdf: function (res, file) {
-        console.log(this.formItem.zpdz, '上传pdf时候打印')
-        console.log(res)
+      handleSuccessPdf: function (res) {
         if (res.success === true) {
           this.formItem.ygfz = res.path;
           this.update();
+          console.log(this.formItem.ygfz)
+          console.log(this.formItem.zpdz)
         } else {
           this.$Message.error('修改失败');
         }
@@ -424,23 +437,30 @@
       closepdf(){
         this.isshowpdf = false;
       },
+      showPDF(){
+        if(this.$route.query.row.ygfz===''){
+            this.$Message.info('你还没有上传资料，请上传后查看')
+        }else {
+          this.modalPdf=true
+        }
+      },
       gjj: function () {
         this.isEdit_gjj = !this.isEdit_gjj;
         if (this.isEdit_gjj === true) {
-          this.bgyy = true
+          this.bgyy1 = true
         }
 
       },
       jbxx: function () {
         this.isEdit_jbxx = !this.isEdit_jbxx;
         if (this.isEdit_jbxx === true) {
-          this.bgyy = true
+          this.bgyy1 = true
         }
       },
       dwxx: function () {
         this.isEdit_dwxx = !this.isEdit_dwxx;
         if (this.isEdit_dwxx === true) {
-          this.bgyy = true
+          this.bgyy1 = true
         }
       },
       save: function (name) {
@@ -462,28 +482,32 @@
         })
       },
       cancel: function () {
-        this.$Message.error('修改失败')
       },
       ok: function () {
         this.update();
       },
+
+
       update: function () {
-        this.$post(this.$url.userManager_updateUserInfo, this.formItem)
+        let url = this.$url.userManager_updateUserInfo + '?bgyy='+this.bgyy;
+        this.$post(url, this.formItem)
           .then(res => {
             if (res.success === true) {
               this.$Message.info('修改成功');
-//              this.$router.push({path: '/'});
             } else {
               this.$Message.error('修改失败')
+              this.formItem = this.$route.query.row || {};
             }
           })
       },
       getLog: function () {
-        this.$fetch(this.$url.userManager_userChangeList, {id: this.personId})
+        this.$fetch(this.$url.userManager_userChangeList, {id:this.$route.query.row.id})
           .then(res => {
-            console.log(res.data.records, '操作记录');
             if (res.success === true) {
-
+              res.data.records.forEach(item => {
+                item.bgsj = this.$formatDate(item.bgsj).substring(0, 10);
+              });
+                this.data = res.data.records;
             } else {
 
             }
@@ -494,8 +518,9 @@
       vuePdfjs
     },
     mounted () {
-//      this.getLog()
-//      this.personId = this.$route.query.row.id
+      this.getLog();
+      this.imgUrl = process.env.upload_BASE_URL
+      this.personId = this.$route.query.row.id;
       let tip = this.$route.query.tip;
       this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
@@ -503,7 +528,6 @@
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
-        this.zpdz = process.env.upload_BASE_URL + '/' + this.$route.query.row.zpdz;
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));
@@ -514,8 +538,6 @@
         this.formItem.htkssj = this.formatDate(new Date(new Date(this.$route.query.row.htkssj).getTime()));
         this.formItem.htjssj = this.formatDate(new Date(new Date(this.$route.query.row.htjssj).getTime()));
         this.formItem.csny = this.formatDate(new Date(new Date(this.$route.query.row.csny).getTime()));
-        console.log(this.zpdz);
-        console.log(this.formItem, '修改后的')
       }
     }
   }

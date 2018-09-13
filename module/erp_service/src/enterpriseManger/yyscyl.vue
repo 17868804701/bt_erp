@@ -34,16 +34,16 @@
     <h2>运营生产原始资料汇总</h2>
     </div>
     <Tabs v-model="tabValue" @on-click="clickTab">
-      <TabPane v-if="$showMenu('车次里程耗油季度汇总')" label="车次里程耗油季度汇总" name="name1">
-        <YYSCYL1></YYSCYL1>
+      <TabPane v-if="$showMenu('车次里程耗油季度汇总')" label="车次里程耗油季度汇总" name="YYSCYL1">
+        <YYSCYL1 ref="YYSCYL1"></YYSCYL1>
       </TabPane>
 
-      <TabPane v-if="$showMenu('客运量与总收入季度汇总')" label="客运量与总收入季度汇总" name="name2">
-        <YYSCYL2></YYSCYL2>
+      <TabPane v-if="$showMenu('客运量与总收入季度汇总')" label="客运量与总收入季度汇总" name="YYSCYL2">
+        <YYSCYL2 ref="YYSCYL2"></YYSCYL2>
       </TabPane>
 
-      <TabPane v-if="$showMenu('车次里程耗油月度分析')" label="车次里程耗油月度分析" name="name3">
-        <YYSCYL3></YYSCYL3>
+      <TabPane v-if="$showMenu('车次里程耗油月度分析')" label="车次里程耗油月度分析" name="YYSCYL3">
+        <YYSCYL3 ref="YYSCYL3"></YYSCYL3>
       </TabPane>
     </Tabs>
   </div>

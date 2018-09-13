@@ -61,6 +61,11 @@
             key: 'bm',
             align: 'center',
 
+          },   {
+            title: '转办件数',
+            key: 'ybjtshj',
+            align: 'center',
+
           }, {
             title: '分类及所占比例',
             key: 'jz',

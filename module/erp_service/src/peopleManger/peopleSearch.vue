@@ -107,99 +107,101 @@
         <Button type="dashed" icon="android-download"
                 style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载
         </Button>
-        <Upload action="//jsonplaceholder.typicode.com/posts/">
+        <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess" :show-upload-list="false">
           <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传
           </Button>
         </Upload>
       </div>
     </Modal>
-        <Card style="width:100%">
-          <p slot="title">员工列表查询</p>
-          <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
-                  @click="addPerson">
-            <Icon type="plus"></Icon>
-            新建
-          </Button>
-          <Button type="primary" size="default" slot="extra" @click="modal2 = true" style="margin-right: 10px;">列表字段扩展</Button>
-          <div>
-            <div>
-              <Form :model="cxItem" :label-width="120">
-                <div style="display: flex;flex-wrap: wrap">
-                  <FormItem label="首字母查询" style="margin-left: -50px;">
-                    <input v-model="cxItem.xmszm" type="text" @focus="focusChoose" placeholder="按照姓名首字母查询"
-                           class="select_name">
-                  </FormItem>
-                  <FormItem label="在职情况" style="margin-left: 10px;">
-                    <Select v-model="cxItem.zzqk" style="width:180px">
-                      <Option value="">全部</Option>
-                      <Option value="在职">在职</Option>
-                      <Option value="离职">离职</Option>
-                      <Option value="正式">正式</Option>
-                      <Option value="实习">实习</Option>
-                      <Option value="退休">退休</Option>
-                    </Select>
-                  </FormItem>
-                </div>
-                <div style="display: flex;flex-wrap: wrap">
-                  <FormItem label="合同自起" style="margin-left: -50px;">
-                    <DatePicker style="width: 180px;" v-model="cxItem.htkssj" type="date"
-                                placeholder="请选择合同自起时间"></DatePicker>
-                  </FormItem>
-                  <FormItem label="合同终止" style="margin-left: 10px;">
-                    <DatePicker style="width: 180px;" v-model="cxItem.htjssj" type="date"
-                                placeholder="请选择合同终止时间"></DatePicker>
-                  </FormItem>
-                </div>
-                <FormItem label="岗位状态" style="margin-left: -50px;">
-                  <CheckboxGroup v-model="cxItem.gwzt">
-                    <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
-                  </CheckboxGroup>
-                </FormItem>
-                <FormItem label="按单位查询" style="margin-left: -50px;">
-                  <CheckboxGroup v-model="cxItem.dw">
-                    <Checkbox label="集团公司"></Checkbox>
-                    <Checkbox label="公交一公司"></Checkbox>
-                    <Checkbox label="公交二公司"></Checkbox>
-                    <Checkbox label="公交三公司"></Checkbox>
-                    <Checkbox label="公交四公司"></Checkbox>
-                    <Checkbox label="公交五公司"></Checkbox>
-                    <Checkbox label="公交六公司"></Checkbox>
-                    <Checkbox label="长客公司"></Checkbox>
-                    <Checkbox label="点钞中心"></Checkbox>
-                    <Checkbox label="培训中心"></Checkbox>
-                    <Checkbox label="稽查大队"></Checkbox>
-                    <Checkbox label="站管中心"></Checkbox>
-                    <Checkbox label="维修公司"></Checkbox>
-                  </CheckboxGroup>
-                </FormItem>
-              </Form>
+    <Card style="width:100%">
+      <p slot="title">员工列表查询</p>
+      <Button slot="extra" type="primary" size="default" style="float: right;margin-right: 10px;"
+              @click="addPerson">
+        <Icon type="plus"></Icon>
+        新建
+      </Button>
+      <Button type="primary" size="default" slot="extra" @click="modal2 = true" style="margin-right: 10px;">列表字段扩展
+      </Button>
+      <div>
+        <div>
+          <Form :model="cxItem" :label-width="120">
+            <div style="display: flex;flex-wrap: wrap">
+              <FormItem label="首字母查询" style="margin-left: -50px;">
+                <input v-model="cxItem.xmszm" type="text" @focus="focusChoose" placeholder="按照姓名首字母查询"
+                       class="select_name">
+              </FormItem>
+              <FormItem label="在职情况" style="margin-left: 10px;">
+                <Select v-model="cxItem.zzqk" style="width:180px">
+                  <Option value="">全部</Option>
+                  <Option value="在职">在职</Option>
+                  <Option value="离职">离职</Option>
+                  <Option value="正式">正式</Option>
+                  <Option value="实习">实习</Option>
+                  <Option value="退休">退休</Option>
+                </Select>
+              </FormItem>
             </div>
-            <!--筛选结果-->
-            <div style="width: 100%; text-align: center;">
-              <ButtonGroup>
-                <Button type="primary" @click="search" v-has="'person_people_menu1_search'">
-                  <Icon type="search"></Icon>
-                  搜索
-                </Button>
-                <Button type="primary" size="default" @click="daochu" style="margin-right: 3px;margin-left: 3px;">
-                  <Icon type="android-download"></Icon>
-                  导出
-                </Button>
-                <Button type="primary" size="default"
-                        @click="exports=true">
-                  <Icon type="android-upload"></Icon>
-                  导入
-                </Button>
-              </ButtonGroup>
+            <div style="display: flex;flex-wrap: wrap">
+              <FormItem label="合同自起" style="margin-left: -50px;">
+                <DatePicker style="width: 180px;" v-model="cxItem.htkssj" type="date"
+                            placeholder="请选择合同自起时间"></DatePicker>
+              </FormItem>
+              <FormItem label="合同终止" style="margin-left: 10px;">
+                <DatePicker style="width: 180px;" v-model="cxItem.htjssj" type="date"
+                            placeholder="请选择合同终止时间"></DatePicker>
+              </FormItem>
             </div>
-          </div>
-        </Card>
-        <Table style="margin-top: 10px;" size="small" :data="tableData2" :columns="tableColumns2" border></Table>
-        <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
+            <FormItem label="岗位状态" style="margin-left: -50px;">
+              <CheckboxGroup v-model="cxItem.gwzt">
+                <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
+              </CheckboxGroup>
+            </FormItem>
+            <FormItem label="按单位查询" style="margin-left: -50px;">
+              <CheckboxGroup v-model="cxItem.dw">
+                <Checkbox label="集团公司"></Checkbox>
+                <Checkbox label="公交一公司"></Checkbox>
+                <Checkbox label="公交二公司"></Checkbox>
+                <Checkbox label="公交三公司"></Checkbox>
+                <Checkbox label="公交四公司"></Checkbox>
+                <Checkbox label="公交五公司"></Checkbox>
+                <Checkbox label="公交六公司"></Checkbox>
+                <Checkbox label="长客公司"></Checkbox>
+                <Checkbox label="点钞中心"></Checkbox>
+                <Checkbox label="培训中心"></Checkbox>
+                <Checkbox label="稽查大队"></Checkbox>
+                <Checkbox label="站管中心"></Checkbox>
+                <Checkbox label="维修公司"></Checkbox>
+              </CheckboxGroup>
+            </FormItem>
+          </Form>
+        </div>
+        <!--筛选结果-->
+        <div style="width: 100%; text-align: center;">
+          <ButtonGroup>
+            <Button type="primary" @click="search" v-has="'person_people_menu1_search'">
+              <Icon type="search"></Icon>
+              搜索
+            </Button>
+            <Button type="primary" size="default" @click="daochu" style="margin-right: 3px;margin-left: 3px;">
+              <Icon type="android-download"></Icon>
+              导出
+            </Button>
+            <Button type="primary" size="default"
+                    @click="exports=true">
+              <Icon type="android-upload"></Icon>
+              导入
+            </Button>
+          </ButtonGroup>
+        </div>
+      </div>
+    </Card>
+    <Table style="margin-top: 10px;" size="small" :data="tableData2" :columns="tableColumns2" border></Table>
+    <Page :total="totalPage" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
   </div>
 </template>
 <script>
   import UserStatistics from './UserStatistics.vue'
+  import VueCookie from 'vue-cookie'
   export default {
     components: {
       UserStatistics,
@@ -209,6 +211,7 @@
 //          查询区域
         exports: false,
         modal1: false,
+        uploadFile: process.env.upload_BASE_URL + "file/upload",  //文件上传的接口地址
         postList: ['全部', '公司领导', '二级', '三级', '主任科员', '一般管理', '辅助', '司机', '修理', '其他在岗', '内退', '病假', '产假', '女工长假', '下岗', '工伤', '待岗', '停薪', '外借', '其他不在岗',],
         getLetters: [],
         letterArray: ['全部', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '清除'],
@@ -221,6 +224,9 @@
           dw: [],
           current: 1,
           size: 10
+        },
+        header: {
+          'Authorization': 'bearer ' + VueCookie.get('access_token')
         },
 //        主内容
         tableData2: [],
@@ -269,11 +275,17 @@
       }
     },
     methods: {
-      changeTab() {
-        console.log(this.tabValue);
-      },
-      test() {
+//      人员信息导入
+      handleSuccess: function (res) {
+        if (res.success === true) {
+         console.log(res.path)
+          this.$fetch(this.$url.userManager_importExcel, this.cxItem)
+            .then(res => {
 
+            })
+        } else {
+          this.$Message.error('修改失败');
+        }
       },
       getTable2Columns () {
         const table2ColumnList = {
@@ -603,8 +615,9 @@
                   },
                   on: {
                     click: () => {
-                      params.row.ygfz = process.env.upload_BASE_URL+'/'+params.row.ygfz;
-                      console.log( params.row)
+//                      params.row.ygfz = process.env.upload_BASE_URL+params.row.ygfz;
+//                      params.row.zpdz = process.env.upload_BASE_URL+params.row.zpdz;
+                      console.log(params.row.ygfz);
                       this.$router.push({
                         path: '/ListInfo',
                         query: {row: params.row}
@@ -636,31 +649,32 @@
       getList: function () {
         this.$fetch(this.$url.userManager_userList, this.cxItem)
           .then(res => {
-              console.log(res)
-            if(res.data.total===0){
+            console.log(res.data.records[1].ygfz)
+            console.log(res.data.records[1].zpdz)
+            if (res.data.total === 0) {
               this.$Message.info('暂无数据');
               this.totalPage = res.data.total;
               this.tableData2 = res.data.records;
-            }else {
-              res.data.records.forEach(item=>{
-                item.gzsj = this.$formatDate(item.gzsj).substring(0,10);
-                item.lrsj = this.$formatDate(item.lrsj).substring(0,10);
-                item.rdsj = this.$formatDate(item.rdsj).substring(0,10);
-                item.gjjkhsj = this.$formatDate(item.gjjkhsj).substring(0,10);
-                item.qdsj = this.$formatDate(item.qdsj).substring(0,10);
-                item.bdwgzsj = this.$formatDate(item.bdwgzsj).substring(0,10);
-                item.txsj = this.$formatDate(item.txsj).substring(0,10);
-                item.htkssj = this.$formatDate(item.htkssj).substring(0,10);
-                item.htjssj = this.$formatDate(item.htjssj).substring(0,10);
-                item.csny = this.$formatDate(item.csny).substring(0,10);
+            } else {
+              res.data.records.forEach(item => {
+                item.gzsj = this.$formatDate(item.gzsj).substring(0, 10);
+                item.lrsj = this.$formatDate(item.lrsj).substring(0, 10);
+                item.rdsj = this.$formatDate(item.rdsj).substring(0, 10);
+                item.gjjkhsj = this.$formatDate(item.gjjkhsj).substring(0, 10);
+                item.qdsj = this.$formatDate(item.qdsj).substring(0, 10);
+                item.bdwgzsj = this.$formatDate(item.bdwgzsj).substring(0, 10);
+                item.txsj = this.$formatDate(item.txsj).substring(0, 10);
+                item.htkssj = this.$formatDate(item.htkssj).substring(0, 10);
+                item.htjssj = this.$formatDate(item.htjssj).substring(0, 10);
+                item.csny = this.$formatDate(item.csny).substring(0, 10);
               });
               this.totalPage = res.data.total;
               this.tableData2 = res.data.records;
             }
           })
       },
-      focusChoose:function () {
-        this.cxItem.xmszm  = ''
+      focusChoose: function () {
+        this.cxItem.xmszm = ''
         this.getLetters = []
         this.modal1 = true
       },
@@ -687,28 +701,7 @@
       },
 //      导出报表
       daochu: function () {
-          this.$getExcel(process.env.BASE_URL+this.$url.userManager_exportExcel+'?xmszm='+this.cxItem.xmszm+'&&dw='+this.cxItem.dw+'&&gwzt='+this.cxItem.gwzt+'&&zzqk='+this.cxItem.zzqk+'&&htkssj='+this.cxItem.htkssj+'&&htjssj='+this.cxItem.htjssj);
-      },
-//      临时退出
-      exit:function () {
-        this.$fetch('http://106.12.19.134:8702/login/logout?access_token='+this.$VueCookie.get('access_token'))
-          .then(res => {
-           console.log(res);
-            if(res.success===true){
-              this.$VueCookie.set('access_token','',-1);
-              window.top.location.href = process.env.BASE_URL+"/login?service=http://localhost:8080/#/";
-            }
-          })
-      },
-      validateAuth(menuName) {
-        let menuList = this.$store.state.userAuth.menuList;
-        for (let i = 0; i < menuList.length; i++) {
-          let menu = menuList[i];
-          if (menu.mname === menuName) {
-            return true;
-          }
-        }
-        return false;
+        this.$getExcel(process.env.BASE_URL + this.$url.userManager_exportExcel + '?xmszm=' + this.cxItem.xmszm + '&&dw=' + this.cxItem.dw + '&&gwzt=' + this.cxItem.gwzt + '&&zzqk=' + this.cxItem.zzqk + '&&htkssj=' + this.cxItem.htkssj + '&&htjssj=' + this.cxItem.htjssj);
       }
     },
     mounted () {

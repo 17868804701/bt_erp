@@ -28,7 +28,7 @@
         <Form :model="formItem" :label-width="110">
           <div style="display: flex;flex-wrap: wrap">
             <FormItem label="请选择报表" style="margin: 0">
-              <Select v-model="formItem.table_title" style="width:300px;">
+              <Select v-model="formItem.table_title" style="width:250px;">
                 <Option v-for="(item, index) in allReportTitle" :key="item+index" :value="item">{{item}}</Option>
               </Select>
             </FormItem>
@@ -36,43 +36,38 @@
               <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem.time"
                           class="text_width"></DatePicker>
             </FormItem>
-            <Button type="primary" icon="eye" style="margin-left: 120px;" @click="requestReportData" v-has="'xjpj_xjpj_view'">查看预览</Button>
             <Modal
               v-model="modal1"
               width="700"
               @on-ok="ok"
               title="预览表单">
               <div id="pdfDom">
-              <TPL1 v-show="this.formItem.table_title.indexOf('票款')==0" :scoreList="this.scoreList"></TPL1>
-              <TPL2 v-show="this.formItem.table_title.indexOf('公交')==0" :scoreList="this.scoreList"></TPL2>
-              <TPL3 v-show="this.formItem.table_title.indexOf('站务管理')==0" :scoreList="this.scoreList"></TPL3>
-              <TPL4 v-show="this.formItem.table_title.indexOf('职工培训')==0" :scoreList="this.scoreList"></TPL4>
-              <TPL5 v-show="this.formItem.table_title.indexOf('修理公司')==0" :scoreList="this.scoreList"></TPL5>
-              <TPL6 v-show="this.formItem.table_title.indexOf('稽查大队')==0" :scoreList="this.scoreList"></TPL6>
-              <TPL7 v-show="this.formItem.table_title.indexOf('吉运')==0" :scoreList="this.scoreList"></TPL7>
-
-              <TPL8 v-show="this.formItem.table_title.indexOf('长客')==0" :scoreList="this.scoreList"></TPL8>
-
-              <TPL9 v-show="this.formItem.table_title.indexOf('大自然')==0" :scoreList="this.scoreList"></TPL9>
-              <TPL10 v-show="this.formItem.table_title.indexOf('机关部室')==0" :scoreList="this.scoreList"></TPL10>
-              <TPL11 v-show="this.formItem.table_title.indexOf('经营业绩')==0" :scoreList="this.scoreList"></TPL11>
-              <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0" :scoreList="this.scoreList"></TPL12>
+                <TPL1 v-show="this.formItem.table_title.indexOf('票款')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL1>
+                <TPL2 v-show="this.formItem.table_title.indexOf('公交')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL2>
+                <TPL3 v-show="this.formItem.table_title.indexOf('站务管理')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL3>
+                <TPL4 v-show="this.formItem.table_title.indexOf('职工培训')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL4>
+                <TPL5 v-show="this.formItem.table_title.indexOf('修理公司')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL5>
+                <TPL6 v-show="this.formItem.table_title.indexOf('稽查大队')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL6>
+                <TPL7 v-show="this.formItem.table_title.indexOf('吉运')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL7>
+                <TPL8 v-show="this.formItem.table_title.indexOf('长客')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL8>
+                <TPL9 v-show="this.formItem.table_title.indexOf('大自然')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL9>
+                <TPL10 v-show="this.formItem.table_title.indexOf('机关部室')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL10>
+                <TPL11 v-show="this.formItem.table_title.indexOf('经营业绩')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL11>
+                <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL12>
               </div>
             </Modal>
-            <Button type="primary" icon="android-download" style="margin-left: 10px;" v-has="'xjpj_xjpj_export'">导出表格</Button>
+          </div>
+          <div style="display: flex;justify-content: center;margin-top: 15px;">
+            <ButtonGroup>
+              <Button type="primary" icon="eye" @click="requestReportData" v-has="'xjpj_xjpj_view'">查看预览</Button>
+              <Button type="primary" style="margin-left:1px;" icon="android-download" v-has="'xjpj_xjpj_export'">导出表格
+              </Button>
+            </ButtonGroup>
           </div>
         </Form>
       </Card>
-      <Card style="width:98%;margin-left: 1%;margin-top: 10px;">
-        <div style="margin-left:36px;">
-          打分时间
-          <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="dftime"
-                      style="margin-left: 10px;"></DatePicker>
-          <span style="font-size: 12px;margin-left: 10px;color: red">*打分之前务必选择给哪一个月打分</span>
-        </div>
-      </Card>
-
-      <Collapse style="width: 98%;margin-left: 1%;margin-top: 40px;">
+      <span style="font-size: 12px;color: red;margin-left: 20px;display: inline-block;margin-top: 20px;">*打分说明:在当前月7号之前(不包括7号)打分的默认是给上个月打分，7号之后打分的是给当前月打分</span>
+      <Collapse style="width: 98%;margin-left: 1%;margin-top: 20px;">
         <Panel v-for="(item, index) in userPJList" :name="item+index" :key="item+index">
           {{item.tableTitle}}
           <table slot="content">
@@ -91,7 +86,7 @@
                              style="width: 50px"></InputNumber>&nbsp;&nbsp;分
               </td>
               <td>
-                <Input v-model="subOption.kfsm" placeholder="说明扣分原因" style="width: 300px" />
+                <Input v-model="subOption.kfsm" placeholder="说明扣分原因" style="width: 300px"/>
               </td>
               <td>{{subOption.maxScore}}分</td>
             </tr>
@@ -141,17 +136,17 @@
       TPL12,//各二级单位领导2018年4月月新表
     },
     data () {
-
       return {
         modal1: false,
-        dftime: '',
         value1: 1,
-        scoreList:{},
+        scoreList: '',
         formItem: {
           table_title: '',
           time: ''
         },
-//        XJPJ_QG_DATA: XJPJData.XJPJ_QG_DATA,
+        title:'',
+        showMonth:'',
+        showYear:'',
         userPJList: [], // 用户打分的所有选项
         allReportTitle: [], // 所有报表名称
         TPLData: [], // 预览报表的数据
@@ -160,49 +155,63 @@
     methods: {
       // 提交分数
       commitPJWithReportIndex(index) {
-        if (this.dftime === '') {
-          this.$Message.error('请选择打分时间')
+        let date = new Date;
+        let year = (date.getFullYear()).toString();
+        let month = (date.getMonth() + 1).toString();
+//        let month = '12';
+        let day = (date.getDate()).toString();
+        month = (month < 10 ? "0" + month : month);
+        if (day > 7 || day === '7') {
+          if (day > 7 && month === '12') {
+            month = 1;
+            year = (parseInt(year) + 1).toString();
+            console.log('给' + year + '年' + month + '月打分');
+          } else {
+            month = (parseInt(month) + 1).toString();
+            console.log('给' + year + '年' + month + '月打分');
+          }
         } else {
-          let report = this.userPJList[index];
-          let subOptionsArray = report.options.subOptions;
-          let requestArray = [];
-          subOptionsArray.forEach(subOption => {
-            let params = {
-              khMonth: this.$formatDate(this.dftime).substring(5, 7),
-              khYear: this.$formatDate(this.dftime).substring(0, 4),
-              score: subOption.score,
-              kfsm: subOption.kfsm,
-              xmid: subOption.subOptionID,
-            };
-            console.log(params);
-            let request = this.$post(this.$url.commitPFWithID, params);
-            requestArray.push(request);
-          })
-          var that = this;
-          axios.all(requestArray)
-            .then(axios.spread(function (...res) {
-              console.log(...res);
-              let statusArray = [];
-              statusArray.push(...res);
-              let status = true;
-              statusArray.forEach(item => {
-                if (item.success === false) {
-                  status = false;
-                  that.$Message.error('提交失败!');
-                  return;
-                }
-              })
-              that.$Message.success('提交成功!');
-              // 重新加载模板
-              that.requestBaseData();
-            }));
-        }
+          console.log('给当前月打分')
+        };
+        let report = this.userPJList[index];
+        let subOptionsArray = report.options.subOptions;
+        let requestArray = [];
+        subOptionsArray.forEach(subOption => {
+          let params = {
+            khMonth: month,
+            khYear: year,
+            score: subOption.score,
+            kfsm: subOption.kfsm,
+            xmid: subOption.subOptionID,
+          };
+          console.log(params);
+          let request = this.$post(this.$url.commitPFWithID, params);
+          requestArray.push(request);
+        });
+        let that = this;
+        axios.all(requestArray)
+          .then(axios.spread(function (...res) {
+            console.log(...res);
+            let statusArray = [];
+            statusArray.push(...res);
+            let status = true;
+            statusArray.forEach(item => {
+              if (item.success === false) {
+                status = false;
+                that.$Message.error('提交失败!');
+                return;
+              }
+            })
+            that.$Message.success('提交成功!');
+            // 重新加载模板
+            that.requestBaseData();
+          }));
       },
 
       // 请求一张表的所有分值
       requestReportData() {
-        console.log(this.formItem.table_title)
-        console.log(this.formItem.table_title.indexOf('票款'))
+        console.log(this.formItem.table_title);
+        console.log(this.formItem.table_title.indexOf('票款'));
         if (typeof this.formItem.time === 'date' || this.formItem.time === null || this.formItem.time === '') {
           this.$Message.error('请先选择时间, 再进行操作!');
           return;
@@ -220,6 +229,9 @@
           khYear: year,
           khMonth: month,
         };
+        this.showMonth = this.formItem.time.getMonth() + 1;
+        this.showYear = this.formItem.time.getFullYear();
+        this.title = this.formItem.table_title;
         this.$fetch(this.$url.getReportData, params)
           .then(res => {
             console.log(res);
@@ -240,7 +252,7 @@
 
       // 请求当前用户的所有报表的打分选项
       requestBaseData() {
-        var that = this;
+        let that = this;
         this.$fetch(this.$url.getUserPFList)
           .then(res => {
             if (res.success === true) {
@@ -250,7 +262,7 @@
                 item.options.subOptions.forEach(subOptions => {
                   subOptions.score = 0; // 给每条数据增加一个用来双向绑定的分值
                 })
-              })
+              });
               that.userPJList = dataArray;
               console.log(dataArray);
             } else {

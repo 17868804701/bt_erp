@@ -277,7 +277,7 @@
         }
       },
       search1: function () {
-        if (this.formItem.startTime[0] == ''||this.formItem.startTime==''||this.formItem.endTime) {
+        if (this.formItem.startTime[0] == ''||this.formItem.startTime==''||this.formItem.endTime=='') {
             this.formItem.startTime = '',
             this.formItem.endTime = ''
         } else {

@@ -34,15 +34,16 @@
       <Form :model="formItem1" :label-width="80">
         <div class="search">
           <FormItem label="选择年份" style="margin: 0 0 0px 0">
-            <DatePicker type="date" placeholder="选择年份" :transfer="true" v-model="formItem1.years"
+            <DatePicker type="year" placeholder="选择年份" :transfer="true" v-model="formItem1.years"
                         class="text_width"></DatePicker>
           </FormItem>
           <FormItem label="季度" style="margin: 0 0 0px 0">
             <Select v-model="formItem1.quarter" :transfer="true" style="width: 195px;">
               <Option value="">全部</Option>
-              <Option value="第一季度">第一季度</Option>
-              <Option value="第二季度">第二季度</Option>
-              <Option value="第三季度">第三季度</Option>
+              <Option value="1">第一季度</Option>
+              <Option value="2">第二季度</Option>
+              <Option value="3">第三季度</Option>
+              <Option value="4">第四季度</Option>
             </Select>
           </FormItem>
           <FormItem label="车自编号" style="margin: 0 0 0px 0">
@@ -54,7 +55,10 @@
         </div>
         <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
           <ButtonGroup>
-            <Button type="primary" @click="search_jd" style="margin-right: 3px;"><Icon type="search" v-has="'jcfyjs_jdcfy_search'"></Icon>  搜索</Button>
+            <Button type="primary" @click="search_jd" style="margin-right: 3px;">
+              <Icon type="search" v-has="'jcfyjs_jdcfy_search'"></Icon>
+              搜索
+            </Button>
             <Button type="primary" @click="jdjcfydc" icon="android-download" v-has="'jcfyjs_jdcfy_daochu'"> 导出</Button>
           </ButtonGroup>
         </div>
@@ -118,24 +122,34 @@
     },
     methods: {
 //        季度检测费用结算
-      jdjcfydc:function () {
+      jdjcfydc: function () {
         if (this.formItem1.years == '') {
           this.formItem1.years = ''
         } else {
-          this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 10)
+          this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 5)
         }
 
-        this.$getExcel(process.env.BASE_URL + this.$url.jdjcfydc+'?years='+this.formItem1.years+'&quarter='+this.formItem1.quarter+'&cph='+this.formItem1.cph+'&zbh='+this.formItem1.zbh)
+        this.$getExcel(process.env.BASE_URL + this.$url.jdjcfydc + '?years=' + this.formItem1.years + '&quarter=' + this.formItem1.quarter + '&cph=' + this.formItem1.cph + '&zbh=' + this.formItem1.zbh)
       },
       search_jd: function () {
-        this.getList();
-      },
-      getList: function () {
-
         if (this.formItem1.years == '') {
           this.formItem1.years = ''
         } else {
-          this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 10)
+          this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 4)
+        }
+        console.log(this.formItem1.years)
+        console.log(this.formItem1.quarter)
+        if (this.formItem1.quarter != '' && this.formItem1.years == '') {
+          this.$Message.error('请先选则年份！')
+        } else {
+          this.getList();
+        }
+      },
+      getList: function () {
+        if (this.formItem1.years == '') {
+          this.formItem1.years = ''
+        } else {
+          this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 4)
         }
         console.log(this.formItem1);
         this.$fetch(this.$url.jdjcfyjs, this.formItem1)

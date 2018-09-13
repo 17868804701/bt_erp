@@ -64,35 +64,35 @@
           },
           {
             title: '到站不停车',
-            key: 'dzbtcCount',
+            key: 'DZBTC',
             align: 'center',
           },  {
             title: '拒载',
-            key: 'jzCount',
+            key: 'JZ',
             align: 'center',
           },  {
             title: '服务态度差',
-            key: 'fwtdcCount',
+            key: 'FWTDC',
             align: 'center',
           }, {
             title: '脱线运营',
-            key: 'txyyCount',
+            key: 'TXYY',
             align: 'center',
           }, {
             title: '摔夹事故',
-            key: 'sjsgCount',
+            key: 'SJSG',
             align: 'center',
           }, {
             title: '刷IC卡方面',
-            key: 'ickfmCount',
+            key: 'ICKFM',
             align: 'center',
           }, {
             title: '其它',
-            key: 'qtCount',
+            key: 'QT',
             align: 'center',
           },{
             title: '合计',
-            key: 'tshj',
+            key: 'sumcount',
             align: 'center',
           },
         ],
@@ -109,6 +109,10 @@
                       this.$Message.info('暂无数据');
                       this.data11 = res.data
                   }else {
+                      res.sumcount[0].bm = '集团公司总计';
+                      delete res.sumcount[0].jtzj;
+                      let zj = res.sumcount;
+                      res.data = res.data.concat(zj)
                       this.data11 = res.data
                   }
               }

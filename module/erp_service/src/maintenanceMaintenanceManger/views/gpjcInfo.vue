@@ -69,7 +69,7 @@
     </Card>
 
 
-    <!--更换钢瓶-->
+    <!--添加钢瓶-->
     <Modal
       v-model="modal1"
       width="320"
@@ -176,7 +176,6 @@
           cznr: "",
           czsj: "",
           gpxqId: "",
-          id: "",
           type: "",
           zj: ""
         },
@@ -330,7 +329,7 @@
           })
       },
       list1: function () {
-        this.$fetch(this.$url.gpjcxqList, {currPage: 1, pageSize: 10,id:this.gpid})
+        this.$fetch(this.$url.gpjcxqList, {currPage: 1, pageSize: 10,gpid:this.gpid})
           .then(res => {
             console.log(res);
             if (res.msg === 'success') {
@@ -384,7 +383,7 @@
       },
       changeGPJQ: function () {
         console.log(this.gpxqId);
-        this.changeGp.gpxqId = this.gpxqId;
+        this.changeGp.gpxqId = this.gpid
         if (this.changeGp.czsj == '') {
           this.changeGp.czsj = ''
         } else {

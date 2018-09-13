@@ -21,7 +21,7 @@
   <div style="width: 100%;border: 0px solid red;display: flex;flex-direction: column;justify-content: center;align-items: center;">
     <div style="text-align: center">
       <span style="font-size: 17px;">机关各部室及基层单位2018年4月</span> <br>
-      <span style="font-size: 17px;">经营业绩星级考核得分情况表</span>
+      <span style="font-size: 17px;">{{year}}年{{month}}月{{titles}}</span>
     </div>
     <div style="width: 630px;display: flex;justify-content: space-between;margin-top: 15px;">
       <span>填报部门:企业管理部门</span>
@@ -137,7 +137,10 @@
 <script>
   export default {
     props: {
-      scoreList: [],
+      scoreList: '',
+      month:'',
+      year:'',
+      titles:''
     },
     data () {
       return {

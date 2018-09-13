@@ -195,7 +195,7 @@
                         value: 'srjhzd_fgssr_delete',
                       }
                     ],
-                  },'删除')]),
+                  }, '删除')]),
                 h('Button', {
                   props: {
                     type: 'primary',
@@ -291,26 +291,26 @@
         console.log(this.formItem1)
         this.formItem1.nf = this.$formatDate(this.formItem1.nf).substring(0, 4)
         this.formItem1.jhsj = this.$formatDate(this.formItem1.jhsj).substring(0, 10)
-        this.$post(this.$url.updatefgssrjh,this.formItem1)
+        this.$post(this.$url.updatefgssrjh, this.formItem1)
           .then(res => {
             console.log(res)
             if (res.success === true) {
               this.$Message.info('修改成功');
               this.addProgram = false
               this.getList()
-            }else {
+            } else {
               this.$Message.error('修改失败')
             }
           })
       },
 
       daochu: function () {
-        if(this.formItem.nf==''){
-          this.formItem.nf=''
-        }else {
-          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0,4)
+        if (this.formItem.nf == '') {
+          this.formItem.nf = ''
+        } else {
+          this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
         }
-        this.$getExcel(process.env.BASE_URL + this.$url.fgssrjhdc+'?nf='+this.formItem.nf)
+        this.$getExcel(process.env.BASE_URL + this.$url.fgssrjhdc + '?nf=' + this.formItem.nf)
       },
     },
     mounted () {

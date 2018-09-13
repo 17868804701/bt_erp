@@ -191,7 +191,6 @@
             key: 'crksm',
             align: 'center',
             width: 220,
-            fixed: 'right',
             editable: true
           },
           {

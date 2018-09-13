@@ -3,9 +3,11 @@
   .container h2 {
     margin-left: 15px;
   }
+
   .text_width {
     width: 195px;
   }
+
   .search {
     display: flex;
     flex-wrap: wrap;
@@ -19,13 +21,13 @@
       <Form :model="formItem" :label-width="80">
         <div class="search">
           <FormItem label="选择时间" style="margin: 0 0 0px 0">
-            <DatePicker type="date" placeholder="选择时间" :transfer="true" v-model="formItem.year"
+            <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem.date"
                         class="text_width"></DatePicker>
           </FormItem>
-          <FormItem label="时间范围" style="margin: 0 0 0px 0">
-            <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.dateRange"
-                        class="text_width"></DatePicker>
-          </FormItem>
+          <!--<FormItem label="时间范围" style="margin: 0 0 0px 0">-->
+          <!--<DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.dateRange"-->
+          <!--class="text_width"></DatePicker>-->
+          <!--</FormItem>-->
           <FormItem label="车自编号" style="margin: 0 0 0px 0">
             <Input v-model="formItem.zbh" placeholder="车自编号" class="text_width"/>
           </FormItem>
@@ -35,7 +37,10 @@
         </div>
         <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
           <ButtonGroup>
-            <Button type="primary" @click="search_yf" style="margin-right: 3px;"><Icon type="search" v-has="'jcfyjs_yjcfy_search'"></Icon>  搜索</Button>
+            <Button type="primary" @click="search_yf" style="margin-right: 3px;">
+              <Icon type="search" v-has="'jcfyjs_yjcfy_search'"></Icon>
+              搜索
+            </Button>
             <Button type="primary" @click="yjcfydc" icon="android-download" v-has="'jcfyjs_yjcfy_daochu'">导出</Button>
           </ButtonGroup>
         </div>
@@ -54,11 +59,10 @@
         modal2: false,
         totalCount: 1,
         formItem: {
-          year: '',
           dateRange: '',
           cph: '',
+          date: '',
           zbh: '',
-          month: '',
           currPage: 1,
           pageSize: 10
         },
@@ -128,29 +132,13 @@
     },
     methods: {
 //        月检测费用导出
-      yjcfydc:function () {
-        let params = {};
-        for (let attr in this.formItem) {
-          params[attr] = this.formItem[attr];
+      yjcfydc: function () {
+        if(this.formItem.date == '' ){
+          this.formItem.date=''
+        }else {
+          this.formItem.date = this.$formatDate(this.formItem.date).substring(0,7)
         }
-        let timeArr = [];
-        if (params.year === '') {
-          params.year = '';
-          params.month = ''
-        } else {
-          params.year = this.$formatDate(params.year).substring(0, 10);
-          params.month = params.year;
-        }
-        if (params.dateRange[0] === '') {
-          params.dateRange = '';
-        } else {
-          params.dateRange.map((item) => {
-            timeArr.push(this.$formatDate(item).substring(0, 10));
-          });
-          params.dateRange = timeArr.toString();
-        }
-
-        this.$getExcel(process.env.BASE_URL + this.$url.yjcfydc+'?years='+params.years+'&month='+params.month+'&dateRange='+params.dateRange+'&cph='+params.cph+'&zbh='+params.zbh)
+        this.$getExcel(process.env.BASE_URL + this.$url.yjcfydc + '?date=' + this.formItem.date + '&cph=' + this.formItem.cph + '&zbh=' + this.formItem.zbh)
       },
       search_yf: function () {
         this.getList()
@@ -160,37 +148,25 @@
         this.getList();
       },
       getList: function () {
-        let params = {};
-        for (let attr in this.formItem) {
-          params[attr] = this.formItem[attr];
-        }
-        let timeArr = [];
-        if (params.year === '') {
-          params.year = ''
-          params.month = ''
-        } else {
-          params.year = this.$formatDate(params.year).substring(0, 10);
-          params.month = params.year;
-        }
-        if (params.dateRange[0] === '') {
-          params.dateRange = '';
-        } else {
-          params.dateRange.map((item) => {
-            timeArr.push(this.$formatDate(item).substring(0, 10));
-          });
-          params.dateRange = timeArr.toString();
-        }
-        this.$fetch(this.$url.yfjcfyjs, params)
+          if(this.formItem.date == '' ){
+              this.formItem.date=''
+          }else {
+              this.formItem.date = this.$formatDate(this.formItem.date).substring(0,7)
+          }
+        this.$fetch(this.$url.yfjcfyjs, this.formItem)
           .then(res => {
-//            console.log(res);
+            console.log(res, '月检测费用结算');
             if (res.msg === 'success') {
-              if (res.page.totalCount == 0) {
+              if (res.page.totalCount === 0) {
                 this.$Message.info('暂无信息')
+                res.page.list.forEach(item => {
+                  item.bcjcrq = this.$formatDate(item.bcjcrq).substring(0, 10)
+                });
                 this.data1 = res.page.list
                 this.totalCount = res.page.totalCount
               } else {
                 res.page.list.forEach(item => {
-                  item.bcjcrq = DateTool.timesToDate(item.bcjcrq)
+                  item.bcjcrq = this.$formatDate(item.bcjcrq).substring(0, 10)
                 });
                 this.data1 = res.page.list
                 this.totalCount = res.page.totalCount

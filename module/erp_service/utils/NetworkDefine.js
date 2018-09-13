@@ -228,7 +228,10 @@ const NetworkInterface = {
   qygl_yyscyszl_cclchyJDFX: '/qiy/cclchy/cclchyList',                             //车次里程耗油季度汇总列表
   qygl_yyscyszl_cclchyJDFX_export: baseURL+'/qiy/cclchy/exportCclchyExcel',       //导出车次里程耗油季度汇总列表
   qygl_yyscyszl_kylyzsr: '/qiy/kylzsrhz/kylzsrhzList',                            //客运量与总收入汇总
-  qygl_yyscyszl_kylyzsr_export: baseURL+'/kylzsrhz/exportKylzsrhzExcel',          //导出客运量与总收入汇总
+  qygl_yyscyszl_kylyzsr_export: baseURL+'/qiy/kylzsrhz/exportKylzsrhzExcel',          //导出客运量与总收入汇总
+  xlxyList:'/erp-modules-qiy/qiy/xlxyfx/getXlxyfxList',          //线路效益列表
+  xlxyDaochu:baseURL+'/erp-modules-qiy/qiy/xlxyfx/exportXlxyfx',          //线路效益导出
+
 
   ckgsList: '/qiy/jjzbFgs/jjzbCkgsList',                            //长客公司列表
   ckgsDaochu: '/qiy/jjzbFgs/exportJjzbCkgsExcel',                            //长客公司列表

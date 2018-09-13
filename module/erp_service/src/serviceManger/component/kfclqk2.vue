@@ -33,6 +33,10 @@
     <Card style="padding-left: 15px;">
       <Form :model="fgstsqkfl" :label-width="80">
         <div class="search">
+          <FormItem label="选择时间" style="margin: 0">
+            <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="fgstsqkfl.tssj"
+                        class="text_width"></DatePicker>
+          </FormItem>
           <FormItem label="选择公司" style="margin: 0">
             <Select v-model="fgstsqkfl.bm" :transfer="true" style="width: 195px;">
               <Option value="公交一公司">公交一公司</Option>
@@ -40,10 +44,14 @@
               <Option value="公交三公司">公交三公司</Option>
             </Select>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" @click="search2" v-has="'kfclqktj_fgstsqkflhzb_search'">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="search2"
+                  v-has="'kfclqktj_fgstsqkflhzb_search'">查询
+          </Button>
           <div class="btn">
             <!--<Button type="primary" icon="android-upload">导入</Button>-->
-            <Button type="primary" icon="android-download" @click="daochu2" v-has="'kfclqktj_fgstsqkflhzb_export'">导出Excel</Button>
+            <Button type="primary" icon="android-download" @click="daochu2" v-has="'kfclqktj_fgstsqkflhzb_export'">
+              导出Excel
+            </Button>
           </div>
         </div>
       </Form>
@@ -55,10 +63,10 @@
   export default {
     data () {
       return {
-        fgstsqkfl:{
-            bm:''
+        fgstsqkfl: {
+          bm: '',
+          tssj: ''
         },
-
         columns12: [
           {
             title: '路别/项目',
@@ -68,31 +76,35 @@
           },
           {
             title: '到站不停车',
-            key: 'dzbtcCount',
+            key: 'DZBTC',
             align: 'center',
-          },  {
+          }, {
             title: '拒载',
-            key: 'jzCount',
+            key: 'JZ',
             align: 'center',
-          },  {
+          }, {
             title: '服务态度差',
-            key: 'fwtdcCount',
+            key: 'FWTDC',
             align: 'center',
           }, {
             title: '脱线运营',
-            key: 'txyyCount',
+            key: 'TXYY',
             align: 'center',
           }, {
             title: '摔夹事故',
-            key: 'sjsgCount',
+            key: 'SJSG',
             align: 'center',
           }, {
             title: '刷IC卡方面',
-            key: 'ickfmCount',
+            key: 'ICKFM',
             align: 'center',
           }, {
             title: '其它',
-            key: 'qtCount',
+            key: 'QT',
+            align: 'center',
+          }, {
+            title: '合计',
+            key: 'sumcount',
             align: 'center',
           },
         ],
@@ -101,25 +113,40 @@
       }
     },
     methods: {
-      getList:function () {
+      getList: function () {
+        if (this.fgstsqkfl.tssj === '') {
+          this.fgstsqkfl.tssj = ''
+        } else {
+          this.fgstsqkfl.tssj = this.$formatDate(this.fgstsqkfl.tssj).substring(0,7)
+        }
         this.$fetch(this.$url.fgstsqkfl, this.fgstsqkfl)
           .then(res => {
-              console.log(res)
-            if(res.success===true){
-              if(res.data==null){
+            console.log(res)
+            if (res.success === true) {
+              if (res.data == null) {
                 this.$Message.info('暂无数据');
 //                this.data12 = res.data
-              }else {
+              } else {
+                res.sumcount[0].xl = '集团公司总计';
+                delete res.sumcount[0].hj;
+                let zj = res.sumcount;
+                res.data = res.data.concat(zj);
+                console.log(res.data)
                 this.data12 = res.data
               }
             }
           })
       },
-      search2:function () {
+      search2: function () {
         this.getList();
       },
-      daochu2:function () {
-        this.$getExcel(process.env.BASE_URL + this.$url.fgstsqkflExport + '?bm=' + this.fgstsqkfl.bm)
+      daochu2: function () {
+        if (this.fgstsqkfl.tssj === '') {
+          this.fgstsqkfl.tssj = ''
+        } else {
+          this.fgstsqkfl.tssj = this.$formatDate(this.fgstsqkfl.tssj).substring(0,7)
+        }
+        this.$getExcel(process.env.BASE_URL + this.$url.fgstsqkflExport + '?bm=' + this.fgstsqkfl.bm+'&tssj='+this.fgstsqkfl.tssj)
       },
     },
     mounted () {

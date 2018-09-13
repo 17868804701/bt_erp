@@ -30,33 +30,32 @@
 </style>
 <template>
   <div>
-    <Tabs v-model="currentTab" @on-click="clickTab">
-      <TabPane v-if="$showMenu('客运量与总收入季度汇总')" label="客运量与总收入季度汇总" name="name2">
-        <Card style="padding-left: 15px;">
-          <Form :model="formItem2" :label-width="80">
-            <div class="search">
-              <FormItem label="选择时间" style="margin: 0">
-                <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem2.date"
-                            class="text_width"></DatePicker>
-              </FormItem>
-              <FormItem label="选择季度" style="margin: 0">
-                <Select v-model="formItem2.select" :transfer="true" style="width: 195px;">
-                  <Option value="第一季度">第一季度</Option>
-                  <Option value="第二季度">第二季度</Option>
-                  <Option value="第三季度">第三季度</Option>
-                  <Option value="第四季度">第四季度</Option>
-                </Select>
-              </FormItem>
-              <Button type="primary" icon="ios-search" class="search_btn" @click="requestData" v-has="'yyscysyl_kylyzsrhz_search'">查询</Button>
-              <div class="btn">
-                <Button type="primary" icon="android-download" v-has="'yyscysyl_kylyzsrhz_daochu'">导出Excel</Button>
-              </div>
-            </div>
-          </Form>
-        </Card>
-        <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
-      </TabPane>
-    </Tabs>
+    <Card style="padding-left: 15px;">
+      <Form :model="formItem2" :label-width="80">
+        <div class="search">
+          <FormItem label="选择时间" style="margin: 0">
+            <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem2.nian"
+                        class="text_width" style="width: 170px;"></DatePicker>
+          </FormItem>
+          <FormItem label="选择季度" style="margin: 0">
+            <Select v-model="formItem2.jidu" :transfer="true" style="width: 170px;">
+              <Option value="">全部</Option>
+              <Option value="1">第一季度</Option>
+              <Option value="2">第二季度</Option>
+              <Option value="3">第三季度</Option>
+              <Option value="4">第四季度</Option>
+            </Select>
+          </FormItem>
+          <Button type="primary" icon="ios-search" class="search_btn" @click="getList"
+                  v-has="'yyscysyl_kylyzsrhz_search'">查询
+          </Button>
+          <div class="btn">
+            <Button type="primary" icon="android-download" v-has="'yyscysyl_kylyzsrhz_daochu'" @click="daochu">导出Excel</Button>
+          </div>
+        </div>
+      </Form>
+    </Card>
+    <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
   </div>
 </template>
 <script>
@@ -64,317 +63,140 @@
     data () {
       return {
         currentTab: 'name1',
-        formItem1: {
-          select: '',
-          startDate: '',
-          endDate: '',
-        },
         formItem2: {
-          select: '',
-          startDate: '',
-          endDate: '',
+          nian: '',
+          jidu: '',
         },
-        formItem3: {
-          select: '',
-          startDate: '',
-          endDate: '',
-        },
-        tab1Data: [],
-        tab2Data: [],
-        tab3Data: [],
-
-        columns11: [
-          {
-            title: '合计',
-            key: 'hj',
-            width:150,
-            align: 'center',
-            fixed: 'left',
-          },
-          {
-            title: '单位',
-            key: 'dw',
-            width:150,
-            align: 'center',
-          },     {
-            title: '运营车数',
-            key: 'yycs',
-            width:150,
-            align: 'center',
-          }, {
-            title: '月日历数',
-            key: 'yrls',
-            width:150,
-            align: 'center',
-          }, {
-            title: '运营车日',
-            key: 'yycr',
-            width:150,
-            align: 'center',
-          }, {
-            title: '占场车日',
-            key: 'zccr',
-            width:150,
-            align: 'center',
-          },{
-            title: '完好车日',
-            key: 'whcr',
-            width:150,
-            align: 'center',
-          },{
-            title: '工作车日',
-            key: 'gzcr',
-            width:150,
-            align: 'center',
-          },{
-            title: '完好车率',
-            key: 'whcl',
-            width:150,
-            align: 'center',
-          },{
-            title: '工作车率',
-            key: 'gzcl',
-            width:150,
-            align: 'center',
-          },{
-            title: '行车次数',
-            key: 'xccs',
-            width:150,
-            align: 'center',
-          },{
-            title: '行驶里程',
-            key: 'xslc',
-            width:150,
-            align: 'center',
-          },{
-            title: '非营业里程',
-            key: 'fyylc',
-            width:150,
-            align: 'center',
-          },{
-            title: '实耗油',
-            key: 'shy',
-            width:150,
-            align: 'center',
-          },{
-            title: '定额油',
-            key: 'dey',
-            width:150,
-            align: 'center',
-          },{
-            title: '较定额节超',
-            key: 'jdejc',
-            width:150,
-            align: 'center',
-          },{
-            title: '百公里实耗',
-            key: 'bglsh',
-            width:150,
-            align: 'center',
-          }
-        ],
-        data10: [],
-
-
         columns12: [
           {
-            title: '合计',
-            key: 'hj',
-            width:150,
-            align: 'center',
-            fixed: 'left',
-          },
-          {
             title: '单位',
             key: 'dw',
-            width:150,
-            align: 'center',
-          }, {
-            title: '投币人次',
-            key: 'tbrc',
-            width:150,
-            align: 'center',
-          },{
-            title: '团体包车',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '鹿城通IC卡人次',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '员工IC卡人次',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '敬老卡人次',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '其他IC卡人次',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: 'XX元月票IC卡人次',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '乘客人次合计',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '投币收入',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '团体包车收入',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '鹿城通IC卡收入',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: 'IC卡补贴收入',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '月票IC卡收入小计',
-            key: 'ttbc',
-            width:150,
-            align: 'center',
-          },{
-            title: '收入总计',
-            key: 'ttbc',
-            width:150,
+            width: 150,
             align: 'center',
           },
-        ],
-        data12: [],
-
-
-        columns13: [
           {
-            title: '单位',
+            title: '客运量（人次）',
             key: 'dw',
-            width:150,
+            width: 150,
             align: 'center',
-            fixed: 'left',
+            children: [
+              {
+                title: '投币人次',
+                key: 'kylTbrcSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '团体包车',
+                key: 'zsrTtbcsrSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '鹿城通IC卡人次',
+                key: 'kylLccickSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '员工IC卡人次',
+                key: 'kylYgickSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '敬老卡人次',
+                key: 'kylJlkSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '其他IC卡人次',
+                key: 'kylQtickSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '月票IC卡人次',
+                key: 'kylYpickSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '乘客人次合计',
+                key: 'kylCkrchjSum',
+                width: 150,
+                align: 'center',
+              },
+            ]
           },
           {
-            title: '运营里程',
-            key: 'yylc',
-            width:150,
+            title: '总收入',
+            width: 150,
             align: 'center',
-          }, {
-            title: '实耗油',
-            key: 'shy',
-            width:150,
-            align: 'center',
-          },{
-            title: '定额油',
-            key: 'dey',
-            width:150,
-            align: 'center',
-          },{
-            title: '节超',
-            key: 'jc',
-            width:150,
-            align: 'center',
-          },{
-            title: '实耗/百公里',
-            key: 'sh',
-            width:150,
-            align: 'center',
-          },{
-            title: '定额/百公里',
-            key: 'de',
-            width:150,
-            align: 'center',
-          },{
-            title: '国家定额油耗',
-            key: 'gjdeyh',
-            width:150,
-            align: 'center',
-          },{
-            title: '较国家定额油耗节油',
-            key: 'jgjdeyh',
-            width:150,
-            align: 'center',
+            children: [
+              {
+                title: '投币收入',
+                key: 'zsrTbsrSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '团体包车收入',
+                key: 'zsrTtbcsrSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '鹿城通IC卡收入',
+                key: 'zsrLcticksr',
+                width: 150,
+                align: 'center',
+              }, {
+                title: 'IC卡补贴收入',
+                key: 'zsrIckbtsrSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '月票IC卡收入小计',
+                key: 'zsrSrxjSum',
+                width: 150,
+                align: 'center',
+              }, {
+                title: '收入总计',
+                key: 'zsrSrzjSum',
+                width: 150,
+                align: 'center',
+              },
+            ],
           }
         ],
-        data13: []
+        data12: [],
       }
     },
     methods: {
-      clickDate() {
-        console.log('选择了时间!');
-        if (this.currentTab === 'name1') {
-          console.log(this.formItem1);
-        } else if (this.currentTab === 'name2') {
-          console.log(this.formItem2);
+      getList() {
+        if (this.formItem2.nian === '') {
+          this.formItem2.nian = ''
         } else {
-          console.log(this.formItem3);
+          this.formItem2.nian = this.$formatDate(this.formItem2.nian).substring(0, 4)
         }
+        this.$fetch(this.$url.qygl_yyscyszl_kylyzsr, this.formItem2)
+          .then(res => {
+            if (res.success === true) {
+              if (res.data.length === 0) {
+                this.$Message.info('暂无数据')
+                console.log(res);
+                console.log(res.data);
+                this.data12 = res.data
+              } else {
+                console.log(res);
+                console.log(res.data);
+                this.data12 = res.data
+              }
+            } else {
+              this.$Message.info('查询失败')
+            }
+          })
       },
-      clickTab() {
-        this.requestData();
-      },
-      requestTab1Data() {
-        let params = {
-          nian: '',
-          startYue: '',
-          endYue: '',
-          jidu: '',
-        }
-        this.$fetch(this.$url.qygl_yyscyszl_cclchyJDFX, params)
-        .then(res => {
-          console.log(res);
-        })
-      },
-      requestTab2Data() {
-        let params = {
-          nian: '',
-          startYue: '',
-          endYue: '',
-          jidu: '',
-        }
-        this.$fetch(this.$url.qygl_yyscyszl_kylyzsr, params)
-        .then(res => {
-          console.log(res);
-        })
-      },
-      requestTab3Data() {
-        let params = {
-          nian: '',
-          startYue: '',
-          endYue: '',
-          jidu: '',
-        }
-        this.$fetch(this.$url.qygl_yyscyszl_cclchyYDFX, params)
-        .then(res => {
-          console.log(res);
-        })
-      },
-      requestData() {
-        if (this.currentTab === 'name1') {
-          this.requestTab1Data();
-        } else if (this.currentTab === 'name2') {
-          this.requestTab2Data();
+      daochu(){
+        if (this.formItem2.nian === '') {
+          this.formItem2.nian = ''
         } else {
-          this.requestTab3Data();
+          this.formItem2.nian = this.$formatDate(this.formItem2.nian).substring(0, 4)
         }
+        this.$getExcel(this.$url.qygl_yyscyszl_kylyzsr_export+'?nian='+this.formItem2.nian+'&jidu='+this.formItem2.jidu )
       }
     },
     mounted () {

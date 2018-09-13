@@ -211,7 +211,7 @@
 //          查询区域
         exports: false,
         modal1: false,
-        uploadFile: process.env.upload_BASE_URL + "file/upload",  //文件上传的接口地址
+        uploadFile: process.env.BASE_URL + "/person/userInfo/importExcel",  //文件上传的接口地址
         postList: ['全部', '公司领导', '二级', '三级', '主任科员', '一般管理', '辅助', '司机', '修理', '其他在岗', '内退', '病假', '产假', '女工长假', '下岗', '工伤', '待岗', '停薪', '外借', '其他不在岗',],
         getLetters: [],
         letterArray: ['全部', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '清除'],
@@ -232,44 +232,61 @@
         tableData2: [],
         totalPage: 0,
         tableColumns2: [],
-        tableColumnsChecked: ['cym', 'xb', 'mz', 'xmdx', 'csny', 'jg', 'zzmm', 'gh', 'rybh', 'sfzh', 'bxdh', 'gjjzh', 'gjjdh', 'bm', 'zyjszc',
-          'qdsj',
+        tableColumnsChecked: [
+          'sfzh',
+          'bxdh',
+          'gjjzh',
+          'gjjdh',
+          'gjjzt',
+          'gjjjcbz',
+          'gjjkhsj',
+          'ylzh',
+          'fby',
+          'xmdx',
+          'xm',
+          'cym',
+          'xb',
+          'mz',
+          'csny',
+          'jg',
+          'zzmm',
+          'rdsj',
+          'gzsj',
+          'bdwgzsj',
+          'txsj',
+          'lxdh',
+          'dw',
+          'bm',
+          'zyjszc',
           'xl',
           'byyx',
-          'gjjjcbz',
           'sxzy',
-          'zc',
           'txlb',
           'gzzw',
           'gzzh',
           'zyzgjn',
           'jkzk',
           'gsbx',
-          'gwzt',
-          'rybgqk',
           'zgsf',
-          'poqk',
           'htkssj',
-          'gjjkhsj',
-          'ylbx',
-          'ylzh',
-          'fby',
-          'rdsj',
-          'gzsj',
-          'bdwgzsj',
-          'txsj',
-          'txdz',
-          'lxdh',
-          'gjjzt',
-          'dw',
           'htjssj',
           'lrsj',
           'bz',
           'ld',
+          'gh',
+          'rybh',
+          'qdsj',
+          'zc',
+          'gwzt',
+          'rybgqk',
+          'poqk',
+          'ylbx',
+          'txdz',
           'zzqk',
           'sscj',
           'cz',
-          'wxbz'],
+          'wxbz'
+        ],
         modal2: false,
         tabValue: 0
       }
@@ -277,18 +294,85 @@
     methods: {
 //      人员信息导入
       handleSuccess: function (res) {
+        console.log(res)
         if (res.success === true) {
-         console.log(res.path)
+          console.log(res.path)
           this.$fetch(this.$url.userManager_importExcel, this.cxItem)
             .then(res => {
 
             })
         } else {
-          this.$Message.error('修改失败');
+
         }
       },
       getTable2Columns () {
         const table2ColumnList = {
+          rybh: {
+            title: '人员编号',
+            key: 'rybh',
+            width: 150,
+            align:'center'
+          },
+          sfzh: {
+            title: '身份证号',
+            key: 'sfzh',
+            width: 150,
+            align:'center'
+          },
+          bxdh: {
+            title: '保险档号',
+            key: 'bxdh',
+            width: 150,
+            align:'center'
+          },
+          gjjzh: {
+            title: '公积金账号',
+            key: 'gjjzh',
+            width: 150,
+            align:'center'
+          },
+          gjjdh: {
+            title: '公积金档号',
+            key: 'gjjdh',
+            width: 150,
+            align:'center'
+          },
+          gjjzt: {
+            title: '公积金状态',
+            key: 'gjjzt',
+            width: 150,
+            align:'center'
+          },
+          gjjjcbz: {
+            title: '公积金缴存情况备注',
+            key: 'gjjjcbz',
+            width: 150,
+            align:'center'
+          },
+          gjjkhsj: {
+            title: '公积金开户时间',
+            key: 'gjjkhsj',
+            width: 150,
+            align:'center'
+          },
+          ylzh: {
+            title: '养老证号',
+            key: 'ylzh',
+            width: 150,
+            align:'center'
+          },
+          fby: {
+            title: '兵役状况',
+            key: 'fby',
+            width: 150,
+            align:'center'
+          },
+          xmdx: {
+            title: '姓名首字母',
+            key: 'xmszm',
+            width: 150,
+            align:'center'
+          },
           xm: {
             title: '姓名',
             key: 'xm',
@@ -298,307 +382,244 @@
             title: '曾用名',
             key: 'cym',
             width: 150,
-            sortable: true
+            align:'center'
           },
           xb: {
             title: '性别',
             key: 'xb',
             width: 150,
-            sortable: true
+            align:'center'
           },
           mz: {
             title: '民族',
             key: 'mz',
             width: 150,
-            sortable: true
-          },
-          xmdx: {
-            title: '姓名首字母',
-            key: 'xmszm',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           csny: {
             title: '出生年月',
             key: 'csny',
             width: 150,
-            sortable: true
+            align:'center'
           },
           jg: {
             title: '籍贯',
             key: 'jg',
             width: 150,
-            sortable: true
+            align:'center'
           },
           zzmm: {
             title: '政治面貌',
             key: 'zzmm',
             width: 150,
-            sortable: true
-          },
-          gh: {
-            title: '工号',
-            key: 'gh',
-            width: 150,
-            sortable: true
-          },
-          rybh: {
-            title: '人员编号',
-            key: 'rybh',
-            width: 150,
-            sortable: true
-          },
-          sfzh: {
-            title: '身份证号',
-            key: 'sfzh',
-            width: 150,
-            sortable: true
-          },
-          bxdh: {
-            title: '保险档号',
-            key: 'bxdh',
-            width: 150,
-            sortable: true
-          },
-          gjjzh: {
-            title: '公积金账号',
-            key: 'gjjzh',
-            width: 150,
-            sortable: true
-          },
-          gjjdh: {
-            title: '公积金档号',
-            key: 'gjjdh',
-            width: 150,
-            sortable: true
-          },
-          gjjzt: {
-            title: '公积金状态',
-            key: 'gjjzt',
-            width: 150,
-            sortable: true
-          },
-          gjjjcbz: {
-            title: '公积金缴存情况备注',
-            key: 'gjjjcbz',
-            width: 150,
-            sortable: true
-          },
-          gjjkhsj: {
-            title: '公积金开户时间',
-            key: 'gjjkhsj',
-            width: 150,
-            sortable: true
-          },
-          ylbx: {
-            title: '医疗保险',
-            key: 'ylbx',
-            width: 150,
-            sortable: true
-          },
-          ylzh: {
-            title: '养老证号',
-            key: 'ylzh',
-            width: 150,
-            sortable: true
-          },
-          fby: {
-            title: '服兵役',
-            key: 'fby',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           rdsj: {
             title: '入党时间',
             key: 'rdsj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           gzsj: {
             title: '工作时间',
             key: 'gzsj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           bdwgzsj: {
             title: '本单位工作时间',
             key: 'gzsj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           txsj: {
             title: '退休时间',
             key: 'txsj',
             width: 150,
-            sortable: true
-          },
-          txdz: {
-            title: '通讯地址',
-            key: 'txdz',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           lxdh: {
             title: '联系电话',
             key: 'lxdh',
             width: 150,
-            sortable: true
+            align:'center'
           },
           dw: {
             title: '单位',
             key: 'dw',
             width: 150,
-            sortable: true
+            align:'center'
           },
           bm: {
             title: '部门',
             key: 'bm',
             width: 150,
-            sortable: true
+            align:'center'
           },
           zyjszc: {
             title: '专业技术职称',
             key: 'zyjszc',
             width: 150,
-            sortable: true
-          },
-          qdsj: {
-            title: '取得时间',
-            key: 'qdsj',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           xl: {
             title: '学历',
             key: 'xl',
             width: 150,
-            sortable: true
+            align:'center'
           },
           byyx: {
             title: '毕业院校',
             key: 'byyx',
             width: 150,
-            sortable: true
+            align:'center'
           },
           sxzy: {
             title: '所学专业',
             key: 'sxzy',
             width: 150,
-            sortable: true
-          },
-          zc: {
-            title: '职称',
-            key: 'zc',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           txlb: {
-            title: '退休类别',
+            title: '退离类别',
             key: 'txlb',
             width: 150,
-            sortable: true
+            align:'center'
           },
           gzzw: {
             title: '工种职务',
             key: 'gzzw',
             width: 150,
-            sortable: true
+            align:'center'
           },
           gzzh: {
             title: '工作证号',
             key: 'gzzh',
             width: 150,
-            sortable: true
+            align:'center'
           },
           zyzgjn: {
             title: '职业资格技能',
             key: 'zyzgjn',
             width: 150,
-            sortable: true
+            align:'center'
           },
           jkzk: {
             title: '健康状况',
             key: 'jkzk',
             width: 150,
-            sortable: true
+            align:'center'
           },
           gsbx: {
             title: '工伤保险',
             key: 'gsbx',
             width: 150,
-            sortable: true
-          },
-          gwzt: {
-            title: '岗位状态',
-            key: 'gwzt',
-            width: 150,
-            sortable: true
-          },
-          rybgqk: {
-            title: '人员变更情况',
-            key: 'rybgqk',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           zgsf: {
             title: '职工身份',
             key: 'zgsf',
             width: 150,
-            sortable: true
-          },
-          poqk: {
-            title: '配偶情况',
-            key: 'poqk',
-            width: 150,
-            sortable: true
+            align:'center'
           },
           htkssj: {
             title: '合同开始时间',
             key: 'htkssj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           htjssj: {
             title: '合同结束时间',
             key: 'htjssj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           lrsj: {
             title: '录入时间',
             key: 'lrsj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           bz: {
             title: '备注',
             key: 'bz',
             width: 150,
-            sortable: true
+            align:'center'
           },
           ld: {
             title: '路队',
             key: 'ld',
             width: 150,
-            sortable: true
+            align:'center'
           },
+
+
           zzqk: {
             title: '在职情况',
             key: 'zzqk',
             width: 150,
-            sortable: true
+            align:'center'
           },
           sscj: {
             title: '所属车间',
             key: 'sscj',
             width: 150,
-            sortable: true
+            align:'center'
           },
           wxbz: {
             title: '维修班组',
             key: 'wxbz',
             width: 150,
-            sortable: true
+            align:'center'
+          },
+          qdsj: {
+            title: '取得时间',
+            key: 'qdsj',
+            width: 150,
+            align:'center'
+          },
+          zc: {
+            title: '职称',
+            key: 'zc',
+            width: 150,
+            align:'center'
+          },
+          gh: {
+            title: '工号',
+            key: 'gh',
+            width: 150,
+            align:'center'
+          },
+          ylbx: {
+            title: '医疗保险',
+            key: 'ylbx',
+            width: 150,
+            align:'center'
+          },
+
+          txdz: {
+            title: '通讯地址',
+            key: 'txdz',
+            width: 150,
+            align:'center'
+          },
+          gwzt: {
+            title: '岗位状态',
+            key: 'gwzt',
+            width: 150,
+            align:'center'
+          },
+          rybgqk: {
+            title: '人员变更情况',
+            key: 'rybgqk',
+            width: 150,
+            align:'center'
+          },
+          poqk: {
+            title: '配偶情况',
+            key: 'poqk',
+            width: 150,
+            align:'center'
           },
           cz: {
             title: '操作',
@@ -629,7 +650,7 @@
             }
           }
         };
-        let data = [table2ColumnList.xm];
+        let data = [table2ColumnList.rybh];
         this.tableColumnsChecked.forEach(col => data.push(table2ColumnList[col]));
         return data;
       },
@@ -649,8 +670,7 @@
       getList: function () {
         this.$fetch(this.$url.userManager_userList, this.cxItem)
           .then(res => {
-            console.log(res.data.records[1].ygfz)
-            console.log(res.data.records[1].zpdz)
+              console.log(res)
             if (res.data.total === 0) {
               this.$Message.info('暂无数据');
               this.totalPage = res.data.total;
@@ -696,8 +716,40 @@
 
       },
       search() {
-        console.log(this.cxItem);
-        this.getList();
+        console.log(this.cxItem.gwzt);
+        console.log(this.cxItem.dw);
+        this.$fetch(this.$url.userManager_userList, {
+          xmszm: this.cxItem.xmszm,
+          zzqk: this.cxItem.zzqk,
+          htkssj: this.cxItem.htkssj,
+          htjssj: this.cxItem.htjssj,
+          gwzt: this.cxItem.gwzt.toString(),
+          dw: this.cxItem.dw.toString(),
+          current: 1,
+          size: 10
+        })
+          .then(res => {
+            if (res.data.total === 0) {
+              this.$Message.info('暂无数据');
+              this.totalPage = res.data.total;
+              this.tableData2 = res.data.records;
+            } else {
+              res.data.records.forEach(item => {
+                item.gzsj = this.$formatDate(item.gzsj).substring(0, 10);
+                item.lrsj = this.$formatDate(item.lrsj).substring(0, 10);
+                item.rdsj = this.$formatDate(item.rdsj).substring(0, 10);
+                item.gjjkhsj = this.$formatDate(item.gjjkhsj).substring(0, 10);
+                item.qdsj = this.$formatDate(item.qdsj).substring(0, 10);
+                item.bdwgzsj = this.$formatDate(item.bdwgzsj).substring(0, 10);
+                item.txsj = this.$formatDate(item.txsj).substring(0, 10);
+                item.htkssj = this.$formatDate(item.htkssj).substring(0, 10);
+                item.htjssj = this.$formatDate(item.htjssj).substring(0, 10);
+                item.csny = this.$formatDate(item.csny).substring(0, 10);
+              });
+              this.totalPage = res.data.total;
+              this.tableData2 = res.data.records;
+            }
+          })
       },
 //      导出报表
       daochu: function () {

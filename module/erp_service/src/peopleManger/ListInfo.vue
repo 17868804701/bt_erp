@@ -97,7 +97,7 @@
             <div class="head jbxx_right">
               <img class="head_img"
                    :src="'http://106.12.19.134:8080/static/'+formItem.zpdz"
-                   alt="">
+                   alt="" style="border: 1px solid #eae9ec">
               <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess" :show-upload-list="false">
                 <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
               </Upload>
@@ -207,10 +207,10 @@
           </FormItem>
           <FormItem :label-width="120" label="所属车间">
             <Select :disabled="isEdit_dwxx" v-model="formItem.sscj" style="width: 170px;">
-              <Option value="正式">第一车间</Option>
-              <Option value="试用">第二车间</Option>
-              <Option value="退休">第三车间</Option>
-              <Option value="离职">第四车间</Option>
+              <Option value="第一车间">第一车间</Option>
+              <Option value="第二车间">第二车间</Option>
+              <Option value="第三车间">第三车间</Option>
+              <Option value="第四车间">第四车间</Option>
             </Select>
           </FormItem>
           <FormItem :label-width="120" label="在职情况">
@@ -223,18 +223,18 @@
           </FormItem>
           <FormItem :label-width="120" label="岗位状态">
             <Select :disabled="isEdit_dwxx" v-model="formItem.gwzt" style="width: 170px;">
-              <Option value="一般管理">一般管理</Option>
-              <Option value="辅助">辅助</Option>
+              <Option value="二级">二级</Option>
+              <Option value="三级">三级</Option>
               <Option value="司机">司机</Option>
               <Option value="修理">修理</Option>
             </Select>
           </FormItem>
           <FormItem :label-width="120" label="维修班组">
             <Select :disabled="isEdit_dwxx" v-model="formItem.wxbz" style="width: 170px;">
-              <Option value="正式">一组</Option>
-              <Option value="试用">二组</Option>
-              <Option value="退休">三组</Option>
-              <Option value="离职">四组</Option>
+              <Option value="一组">一组</Option>
+              <Option value="二组">二组</Option>
+              <Option value="三组">三组</Option>
+              <Option value="四组">四组</Option>
             </Select>
           </FormItem>
           <FormItem :label-width="120" label="职工身份">
@@ -287,7 +287,9 @@
         v-model="modalPdf"
         width="70%"
         title="查看pdf">
-        <vuePdfjs :url="this.$route.query.tip == 'add' ? ' ':'http://106.12.19.134:8080/static/'+this.$route.query.row.ygfz" :type="0"></vuePdfjs>
+        <vuePdfjs
+          :url="this.$route.query.tip == 'add' ? ' ':'http://106.12.19.134:8080/static/'+this.$route.query.row.ygfz"
+          :type="0"></vuePdfjs>
       </Modal>
       <!--填写变更原因-->
       <Modal
@@ -319,11 +321,11 @@
         isEdit_jbxx: true,
         isEdit_dwxx: true,
         isEdit_gjj: true,
-        imgUrl:'',
+        imgUrl: '',
         personId: '',
         uploadFile: process.env.upload_BASE_URL + "file/upload",  //文件上传的接口地址
         bgyy1: false,
-        bgyy:'',
+        bgyy: '',
         ruleValidate: {
           xm: [
             {required: true, message: '必填项不能为空', trigger: 'blur'}
@@ -385,17 +387,17 @@
           ygfz: "",
           zpdz: "", // 照片地址
         },
-        columns1:[
+        columns1: [
           {
             title: '时间',
             key: 'bgsj'
           },
           {
-            title: '变更内容',
+            title: '变更原因',
             key: 'bgyy'
           }
         ],
-        data:[],
+        data: [],
         modalPdf: false,
         isshowpdf: false,
         value: '1',
@@ -406,9 +408,17 @@
     },
     methods: {
       handleSuccess: function (res) {
+          console.log(res);
         if (res.success === true) {
-          this.formItem.zpdz = res.path;
-          this.update();
+          if (this.isEdit_jbxx === false) {
+            this.formItem.zpdz = res.path;
+            console.log('只是上传增加信息')
+            console.log(this.formItem.zpdz)
+          } else {
+            this.formItem.zpdz = res.path;
+            this.bgyy = '上传了照片';
+            this.update();
+          }
           console.log(this.formItem.zpdz)
           console.log(this.formItem.ygfz)
         } else {
@@ -416,9 +426,16 @@
         }
       },
       handleSuccessPdf: function (res) {
+          console.log(res)
         if (res.success === true) {
-          this.formItem.ygfz = res.path;
-          this.update();
+          if (this.isEdit_jbxx === false) {
+
+            this.formItem.ygfz = res.path;
+          } else {
+            this.formItem.ygfz = res.path;
+            this.bgyy = '上传了附件'
+            this.update();
+          }
           console.log(this.formItem.ygfz)
           console.log(this.formItem.zpdz)
         } else {
@@ -438,10 +455,10 @@
         this.isshowpdf = false;
       },
       showPDF(){
-        if(this.$route.query.row.ygfz===''){
-            this.$Message.info('你还没有上传资料，请上传后查看')
-        }else {
-          this.modalPdf=true
+        if (this.$route.query.row.ygfz === '') {
+          this.$Message.info('你还没有上传资料，请上传后查看')
+        } else {
+          this.modalPdf = true
         }
       },
       gjj: function () {
@@ -489,7 +506,7 @@
 
 
       update: function () {
-        let url = this.$url.userManager_updateUserInfo + '?bgyy='+this.bgyy;
+        let url = this.$url.userManager_updateUserInfo + '?bgyy=' + this.bgyy;
         this.$post(url, this.formItem)
           .then(res => {
             if (res.success === true) {
@@ -501,13 +518,13 @@
           })
       },
       getLog: function () {
-        this.$fetch(this.$url.userManager_userChangeList, {id:this.$route.query.row.id})
+        this.$fetch(this.$url.userManager_userChangeList, {id: this.$route.query.row.id})
           .then(res => {
             if (res.success === true) {
               res.data.records.forEach(item => {
                 item.bgsj = this.$formatDate(item.bgsj).substring(0, 10);
               });
-                this.data = res.data.records;
+              this.data = res.data.records;
             } else {
 
             }
@@ -518,9 +535,7 @@
       vuePdfjs
     },
     mounted () {
-      this.getLog();
-      this.imgUrl = process.env.upload_BASE_URL
-      this.personId = this.$route.query.row.id;
+      this.imgUrl = process.env.upload_BASE_URL;
       let tip = this.$route.query.tip;
       this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
@@ -528,6 +543,8 @@
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
+        this.personId = this.$route.query.row.id || '';
+        this.getLog();
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));
         this.formItem.lrsj = this.formatDate(new Date(new Date(this.$route.query.row.lrsj).getTime()));
         this.formItem.rdsj = this.formatDate(new Date(new Date(this.$route.query.row.rdsj).getTime()));

@@ -6,24 +6,24 @@
           <div class="search">
             <FormItem label="选择时间" style="margin: 0">
               <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem1.tjsj"
-                          class="text_width"></DatePicker>
+                          class="text_width" style="width: 150px;"></DatePicker>
             </FormItem>
             <FormItem label="选择线路" style="margin: 0">
-              <Select v-model="formItem1.lb" :transfer="true" style="width: 195px;">
+              <Select v-model="formItem1.lb" :transfer="true" style="width: 150px;">
                 <Option value="1路">1路</Option>
                 <Option value="2路">2路</Option>
                 <Option value="3路">3路</Option>
               </Select>
             </FormItem>
             <FormItem label="选择公司" style="margin: 0">
-              <Select v-model="formItem1.dw" :transfer="true" style="width: 195px;">
+              <Select v-model="formItem1.dw" :transfer="true" style="width: 150px;">
                 <Option value="公交一公司">公交一公司</Option>
                 <Option value="公交二公司">公交二公司</Option>
                 <Option value="公交三公司">公交三公司</Option>
               </Select>
             </FormItem>
             <FormItem label="车牌号" style="margin: 0">
-              <Input v-model="formItem1.cph" placeholder="车牌号" class="text_width"/>
+              <Input v-model="formItem1.cph" placeholder="车牌号" class="text_width" style="width: 150px;"/>
             </FormItem>
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">

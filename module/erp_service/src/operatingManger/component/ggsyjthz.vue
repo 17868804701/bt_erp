@@ -311,6 +311,7 @@
         this.$Message.error('导出失败')
       },
       getList: function () {
+          console.log(this.formItem2)
         this.$fetch(this.$url.getjthzList, this.formItem2)
           .then(res => {
               console.log(res,'各公司与集团汇总')

@@ -150,7 +150,7 @@
         params.pageSize = this.formItem.pageSize;
         this.$fetch(this.$url.maintain_BYGL_YSDGL_recordList, params)
         .then(res=>{
-          debugger;
+//          debugger;
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.scsj = DateTool.timesToDate(item.scsj);

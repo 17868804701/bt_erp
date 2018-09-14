@@ -81,7 +81,7 @@
 //          if (false){
 //            this.currentStep = 2;
 //          }
-          debugger;
+//          debugger;
           this.networkData = res;
         })
       },

@@ -11,14 +11,14 @@
         :mask-closable="false"
         :closable="false"
         style="height:auto;">
-        <Steps :current="0" direction="vertical">
+        <Steps :current="currentStep" direction="vertical">
           <Step title="第一步" content="下载导入报表模板"></Step>
           <Step title="第二步" content="上传报表"></Step>
           <Step title="第三部" content="系统自动导入"></Step>
         </Steps>
         <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
           <Button type="dashed" icon="android-download" style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载</Button>
-          <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess" :show-upload-list="false" :format ="['xlsx']">
+          <Upload :headers="header" :action='uploadFile' name="multipartFile" :on-success="handleSuccess" :show-upload-list="false" :format ="['xlsx']">
             <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传</Button>
           </Upload>
         </div>
@@ -68,6 +68,7 @@
             <Input v-model="formItem.wpmc" style="width: 120px;"></Input>
             <Button type="primary" icon="ios-search" @click="requestListData" v-has="'jcsjgl_pjxxgl_search'">搜索</Button>
             <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true" v-has="'jcsjgl_pjxxgl_add'">新增</Button>
+            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出</Button>
             <Button type="primary" size="default" style="float: right;margin-right: 10px;" @click="exportModal=true"><Icon type="android-upload"></Icon>导入</Button>
           </FormItem>
         </Form>
@@ -82,6 +83,7 @@
   import CommonSelect from '../../components/common/CommonSelect.vue';
   import * as DateTool from '../../../utils/DateTool';
   import VueCookie from 'vue-cookie';
+  import axios from 'axios';
   export default {
     components: {
       canEditTable,
@@ -89,6 +91,7 @@
     },
     data () {
       return {
+        currentStep: 1,
         formItem: {
           wpmc: '',
           currPage: 1,
@@ -96,7 +99,6 @@
         },
         header: {
           'Authorization': 'bearer ' + VueCookie.get('access_token'),
-          'Content-Type' : 'multipart/form-data'
         },
         uploadFile: process.env.BASE_URL + "/weix/dataDictionary/updatePJXX",
         totalSize: 0,
@@ -296,12 +298,10 @@
         })
       },
       deleteRow(params) {
-//        let p = {id : params.row.id};
         let url = this.$url.maintain_BYGL_DATA_PGXX_delete;
         url = url + '?id=' + params.row.id;
         this.$post(url)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
             this.$Message.success('删除成功!');
             this.requestListData();
@@ -311,8 +311,15 @@
         })
       },
       handleSuccess(res) {
-        debugger;
-        console.log(res);
+        if (res.code === 0) {
+          this.$Message.success('上传成功');
+          this.exportModal = false;
+        }
+      },
+      exportExcel() {
+        let url = this.$url.maintain_BYGL_DATA_PGXX_exportExcel;
+        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
+        this.$getExcel(url);
       }
     },
     mounted () {

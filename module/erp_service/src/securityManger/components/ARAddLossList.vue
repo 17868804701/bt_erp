@@ -36,8 +36,9 @@
       initTableColumns() {
         let coulumns = [
           {
+            title: '序号',
             type: 'index',
-            width: 60,
+            width: 80,
             align: 'center',
             fixed: 'left'
           },
@@ -46,20 +47,20 @@
           coulumns.push({
             title: this.columnsTitle[i],
             key: this.columnsCode[i],
-            width: 160,
-            sortable: true,
-            editable: ((this.columnsTitle[i] === '结案经损')||(this.columnsTitle[i] === '追加车内')||(this.columnsTitle[i] === '追加车损')||
-            (this.columnsTitle[i] === '三者')||(this.columnsTitle[i] === '合计追加')||(this.columnsTitle[i] === '追加扣分')||(this.columnsTitle[i] === '备注'))
+            width: 100,
+            align: 'center',
+//            editable: ((this.columnsTitle[i] === '结案经损')||(this.columnsTitle[i] === '追加车内')||(this.columnsTitle[i] === '追加车损')||
+//            (this.columnsTitle[i] === '三者')||(this.columnsTitle[i] === '合计追加')||(this.columnsTitle[i] === '追加扣分')||(this.columnsTitle[i] === '备注'))
           });
         }
-        coulumns.push({
-          title: '操作',
-          key: 'handle',
-          width: 200,
-          fixed: 'right',
-          align: 'center',
-          handle: ['edit'],
-        });
+//        coulumns.push({
+//          title: '操作',
+//          key: 'handle',
+//          width: 200,
+//          fixed: 'right',
+//          align: 'center',
+//          handle: ['edit'],
+//        });
 
         return coulumns;
       },
@@ -83,7 +84,6 @@
         var that = this;
         this.$post(this.$url.security_LASG_updateLoss, row)
         .then(res=>{
-          console.log(res);
           if (res.success === true) {
             this.$Message.success('修改成功!');
           }else{

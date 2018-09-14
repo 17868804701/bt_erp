@@ -253,9 +253,16 @@
       },
       // ********** network ********** //
       requestLASGZJSGListData() { // 立案事故追加信息列表
+        let that = this;
         this.$fetch(this.$url.security_LASG_lossList, {ajid: this.$route.query.rowData.id})
         .then(res=>{
-          this.lossListData = res.data.records;
+//          debugger;
+          if (res.success === true) {
+            res.data.records.forEach(item => {
+              item.zjgs = that.$store.state.dictData.parseDict.EJGS[item.zjgs];
+            })
+            this.lossListData = res.data.records;
+          }
         })
       },
       updateLASGZJSHGList() {

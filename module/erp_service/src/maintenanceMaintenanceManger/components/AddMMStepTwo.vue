@@ -367,7 +367,7 @@
               this.clItem = {
                 cph: "",
                 wpmc: "",
-                ghdw: "",
+                ghdw: "掌握公司",
                 jldw: "",
                 gg: "",
                 ppxh: "",
@@ -393,7 +393,7 @@
         this.clItem = {
           cph: "",
           wpmc: "",
-          ghdw: "",
+          ghdw: "掌握公司",
           jldw: "",
           gg: "",
           ppxh: "",

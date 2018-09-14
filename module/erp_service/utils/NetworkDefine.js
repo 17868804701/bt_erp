@@ -66,7 +66,8 @@ const NetworkInterface = {
   maintain_BYGL_DATA_PGXX_list: '/weix/dataDictionary/listPJXX',                                // 基础数据 - 配件信息列表
   maintain_BYGL_DATA_PGXX_saveOrUpdate: '/weix/dataDictionary/savePJXX',                        // 基础数据 - 配件信息新增或更新
   maintain_BYGL_DATA_PGXX_delete: '/weix/dataDictionary/deletePJXX',                            // 基础数据 - 配件信息删除
-
+  maintain_BYGL_DATA_PGXX_exportExcel: baseURL+'/weix/dataDictionary/exportPJXX',               // 基础数据 - 配件信息 - 列表导出excel
+  
   maintain_BYGL_CLBY_recordList: '/weix/maintenanceManagement/clby/list',                       // 车辆保养 - 列表数据
   maintain_BYGL_CLBY_saveRecord: '/weix/maintenanceManagement/clby/save',                       // 车辆保养 - 新增保养进场登记
   maintain_BYGL_CLBY_updateRecord: '/weix/maintenanceManagement/clby/update',                   // 车辆保养 - 更新保养进场登记
@@ -100,7 +101,7 @@ const NetworkInterface = {
   maintain_BYGL_FXGL_delete: '/weix/maintenanceManagement/fxgl/delete',                              // 返修管理 - 删除
   maintain_BYGL_FXGL_listDetail: '/weix/maintenanceManagement/fxgl/info',                            // 返修管理 - 列表查看详情
   maintain_BYGL_FXGL_exportExcel: baseURL+'/weix/maintenanceManagement/fxgl/listExport',             // 返修管理 - 列表导出excel
-
+  
   maintain_DEVICE_list: '/weix/equipmentMaintenanceRecord/list',                                       // 设备保养记录 - 设备管理列表
   maintain_DEVICE_save: '/weix/equipmentMaintenanceRecord/save',                                       // 设备保养记录 - 新增设备信息
   maintain_DEVICE_update: '/weix/equipmentMaintenanceRecord/update',                                   // 设备保养记录 - 更新设备信息

@@ -13,11 +13,16 @@
       <div>
         <Form :model="backItem" ref="backItem" :rules="ruleValidate" :label-width="100">
           <div style="display: flex;flex-wrap: wrap;justify-content: flex-start">
+            <FormItem label="车辆自编号:" style="margin-top: 0px;">
+              <Select ref="deviceSelect" v-model="backItem.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
+                <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index+item">{{ item }}</Option>
+              </Select>
+            </FormItem>
             <FormItem prop="ch" label="车号" style="margin-top: 0px;">
-              <Input v-model="backItem.ch" style="width:110px;"></Input>
+              <div style="width:110px;">{{backItem.ch}}</div>
             </FormItem>
             <FormItem prop="cx" label="车型" style="margin-top: 0px;">
-              <Input v-model="backItem.cx" style="width:110px;"></Input>
+              <div style="width:110px;">{{backItem.cx}}</div>
             </FormItem>
             <FormItem prop="fxjcsj" label="返修进厂时间" style="margin-top: 0px;">
               <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="backItem.fxjcsj" style="width:110px;"></DatePicker>
@@ -46,7 +51,7 @@
             <FormItem label="按返修进场时间查询" style="margin: 0;">
               <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
               <Button type="primary" icon="ios-search" @click="this.requestListData" v-has="'bygl_fxgl_search'">搜索</Button>
-              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'bygl_fxgl_daochu'">导出Excel</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'bygl_fxgl_daochu'">导出</Button>
               <Button type="primary" icon="plus" style="float: right;margin-right: 10px" @click="backModal=true" v-has="'bygl_fxgl_add'">新增</Button>
             </FormItem>
             </Col>
@@ -78,6 +83,8 @@
         totalSize: 0,
         tableData: [],
         backItem: {
+          id: '',
+          clzbh: '',
           ch: '',
           cx: '',
           fxjcsj: '',
@@ -143,13 +150,11 @@
             title: '返修原因',
             key: 'fxyy',
             align: 'center',
-            editable: true
           },
           {
             title: '备注',
             key: 'bz',
             align: 'center',
-            editable: true
           },
           {
             title: '操作',
@@ -182,7 +187,30 @@
                       }
                     ]
                   }, '删除')
-                ])
+                ]),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginLeft: '10px'
+                  },
+                  on: {
+                    click: () => {
+                      for (let attr in this.backItem) {
+                        this.backItem[attr] = params.row[attr];
+                      }
+                      this.backModal = true;
+                    }
+                  },
+                  directives: [
+                    {
+                      name: 'has',
+                      value: 'bygl_fxgl_delete',
+                    }
+                  ]
+                }, '编辑'),
               ]);
             }
           },
@@ -204,7 +232,7 @@
         params.pageSize = this.formItem.pageSize;
         this.$fetch(this.$url.maintain_BYGL_FXGL_recordList, params)
         .then(res=>{
-          debugger;
+//          debugger;
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.fxccsj = DateTool.timesToDate(item.fxccsj);
@@ -216,6 +244,11 @@
             this.$Message.error(res.message);
           }
         })
+      },
+      selectCLItem(value) {
+        let selectCL = this.$store.state.dictData.CLDict[value];
+        this.backItem.cph = selectCL.busNum;
+        this.basicData.cx = selectCL.busModelName;
       },
       confirmFX(name) {
         this.$refs[name].validate((valid) => {
@@ -233,13 +266,13 @@
         }
         params.fxjcsj = DateTool.yyyymmddFormatDate(params.fxjcsj);
         params.fxccsj = DateTool.yyyymmddFormatDate(params.fxccsj);
-        console.log(params);
+        let that = this;
         this.$post(this.$url.maintain_BYGL_FXGL_save, this.backItem)
         .then(res => {
           if (res.code === 0) {
-            this.$Message.success('保存成功, 请在列表查看!');
-            this.backModal = false;
-            this.backItem = {
+            let newBackItem = {
+              id: '',
+              clzbh: '',
               ch: '',
               cx: '',
               fxjcsj: '',
@@ -248,13 +281,30 @@
               fxyy: '',
               bz: '',
             };
-            this.requestListData();
+            clzbh.clzbh = this.basicData.clzbh;
+            that.backItem = newBackItem;
+            that.$Message.success('保存成功, 请在列表查看!');
+            that.backModal = false;
+            that.requestListData();
           }else{
-            this.$Message.error('保存失败, 请重试!');
+            that.$Message.error('保存失败, 请重试!');
           }
         })
       },
       cancle() {
+        let newBackItem = {
+          id: '',
+          clzbh: '',
+          ch: '',
+          cx: '',
+          fxjcsj: '',
+          fxccsj: '',
+          fxxm: '',
+          fxyy: '',
+          bz: '',
+        };
+        clzbh.clzbh = this.basicData.clzbh;
+        that.backItem = newBackItem;
         this.backModal = false;
       },
       deleteRow(params) {

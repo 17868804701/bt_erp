@@ -326,7 +326,7 @@
               bylb: '',
             };
             newData.clzbh = this.basicData.clzbh;
-            this.basicData = newData;
+            that.basicData = newData;
             that.$Message.success('登记成功, 请在列表查看!');
             that.newRecordModal = false;
             that.requestListData();

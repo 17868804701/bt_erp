@@ -165,13 +165,11 @@
           if (day > 7 && month === '12') {
             month = 1;
             year = (parseInt(year) + 1).toString();
-            console.log('给' + year + '年' + month + '月打分');
           } else {
-            month = (parseInt(month) + 1).toString();
-            console.log('给' + year + '年' + month + '月打分');
+            month = parseInt(month).toString();
           }
         } else {
-          console.log('给当前月打分')
+          month = (parseInt(month)-1).toString();
         };
         let report = this.userPJList[index];
         let subOptionsArray = report.options.subOptions;

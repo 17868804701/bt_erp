@@ -17,6 +17,7 @@ const Dict = {
       fetch(process.env.BASE_URL+'/auth/dic/getAllByCode')
       .then(res => {
 
+
         // 用于解析数据
         let dict = {};
         res.data.forEach(item => {
@@ -44,8 +45,12 @@ const Dict = {
         // 用于commonselect
         res.data.forEach(item => {
           state.allDict[item.code] = item.children;
+          item.children.forEach(subItem => {
+            if (subItem.children.length > 0) {
+              state.allDict[subItem.code] = subItem.children;
+            }
+          })
         })
-
       })
     },
     getAllCLList(state){  // 车辆数据

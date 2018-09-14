@@ -214,7 +214,7 @@
 
     },
     mounted () {
-      this.requestJTGSData();
+
     }
   }
 </script>

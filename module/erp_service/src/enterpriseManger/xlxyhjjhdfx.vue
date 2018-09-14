@@ -50,7 +50,7 @@
                 <Option value="4">第四季度</Option>
               </Select>
             </FormItem>
-            <FormItem label="选择单位i" style="margin: 0">
+            <FormItem label="选择单位" style="margin: 0">
               <Select v-model="formItem.dw" :transfer="true" style="width: 195px;">
                 <Option value="">全部</Option>
                 <Option value="公交一公司">公交一公司</Option>
@@ -67,7 +67,11 @@
           </div>
         </Form>
       </Card>
-      <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
+      <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small">
+        <div slot="header" style="text-align: center">
+          <span style="font-size: 16px;">{{nd}}{{jd}}{{dw}}市内各公交各条运营线路效益分析表</span>
+        </div>
+      </Table>
       <Page :total="total" show-total @on-change="setPage"/>
     </div>
   </div>
@@ -77,6 +81,9 @@
     data () {
       return {
         modal1:false,
+        nd: '',
+        jd: '',
+        dw: '',
         formItem: {
           nd: '',
           jd: '',
@@ -91,7 +98,6 @@
             key: 'dw',
             width:100,
             align: 'center',
-            fixed: 'left',
           },
           {
             title: '线路名称',
@@ -277,6 +283,24 @@
         } else {
           this.formItem.nd = this.$formatDate(this.formItem.nd).substring(0, 4)
         }
+
+
+
+        this.nd = this.formItem.nd
+        this.dw = this.formItem.dw
+        if(this.formItem.jd === '1'){
+          this.jd = '年第一季度'
+        }else if(this.formItem.jd === '2'){
+          this.jd = '年第二季度'
+        }else if(this.formItem.jd === '3'){
+          this.jd = '年第三季度'
+        }else if(this.formItem.jd === '4'){
+          this.jd = '年第四季度'
+        }else {
+          this.jd = ''
+        }
+
+
         this.$fetch(this.$url.xlxyList, this.formItem)
           .then(res => {
             if (res.success === true) {

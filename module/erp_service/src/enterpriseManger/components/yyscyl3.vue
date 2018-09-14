@@ -40,10 +40,10 @@
           <FormItem label="选择季度" style="margin: 0">
             <Select v-model="formItem3.jidu" :transfer="true" style="width: 170px;">
               <Option value="">全部</Option>
-              <Option value="第一季度">第一季度</Option>
-              <Option value="第二季度">第二季度</Option>
-              <Option value="第三季度">第三季度</Option>
-              <Option value="第四季度">第四季度</Option>
+              <Option value="1">第一季度</Option>
+              <Option value="2">第二季度</Option>
+              <Option value="3">第三季度</Option>
+              <Option value="4">第四季度</Option>
             </Select>
           </FormItem>
           <Button type="primary" icon="ios-search" class="search_btn" @click="getList"
@@ -55,7 +55,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns13" :data="data13" border height="500" style="margin-top: 10px;" size="small"></Table>
+    <Table :columns="columns13" :data="data13" border height="500" style="margin-top: 10px;" size="small">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px;">{{nian }}{{jidu}}车次里程耗油月度分析</span>
+      </div>
+    </Table>
   </div>
 </template>
 <script>
@@ -63,6 +67,8 @@
     data () {
       return {
         currentTab: 'name1',
+        nian: '',
+        jidu: '',
         formItem3: {
           nian: '',
           jidu: '',
@@ -73,7 +79,6 @@
             key: 'dw',
             width: 150,
             align: 'center',
-            fixed: 'left',
           },
           {
             title: '运营里程',
@@ -127,6 +132,21 @@
         } else {
           this.formItem3.nian = this.$formatDate(this.formItem3.nian).substring(0, 4)
         }
+
+        this.nian = this.formItem3.nian
+        if(this.formItem3.jidu === '1'){
+          this.jidu = '年第一季度'
+        }else if(this.formItem3.jidu === '2'){
+          this.jidu = '年第二季度'
+        }else if(this.formItem3.jidu === '3'){
+          this.jidu = '年第三季度'
+        }else if(this.formItem3.jidu === '4'){
+          this.jidu = '年第四季度'
+        }else {
+          this.jidu = ''
+        }
+
+
         this.$fetch(this.$url.qygl_yyscyszl_cclchyYDFX, this.formItem3)
           .then(res => {
             if (res.success === true) {

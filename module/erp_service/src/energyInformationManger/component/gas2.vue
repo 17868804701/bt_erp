@@ -21,7 +21,7 @@
       <Table :columns="columns12" :data="data12" ref="selection" border height="500" style="margin-top: 20px;"
              size="small">
         <div slot="header" style="text-align: center">
-              <span style="font-size: 16px;">{{tjsj}}天然气月汇总</span>
+              <span style="font-size: 16px;">{{title_tjsj}}天然气月汇总</span>
         </div>
       </Table>
       <Page :total="totalPage1" show-total style="margin-top: 10px;" @on-change="setpPage2"></Page>
@@ -36,6 +36,7 @@
         sjje:'',
         zrsjj:'',
         htsjj:'',
+        title_tjsj:'',
         formItem1:{
           tjsj:'',
           current:1,
@@ -168,12 +169,12 @@
           })
       },
       chaxun2:function () {
-        if(this.formItem1.tjsj==''){
+        if(this.formItem1.tjsj===''){
           this.formItem1.tjsj = ''
         }else {
           this.formItem1.tjsj = this.$formatDate(this.formItem1.tjsj).substring(0,7)
         }
-        this.tjsj = this.formItem1.tjsj
+        this.title_tjsj = this.formItem1.tjsj
         console.log(this.formItem1)
         this.getList()
       },

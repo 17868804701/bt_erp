@@ -48,8 +48,8 @@
     data () {
       return {
         formItem1: {
-          nian: '2018',
-          yue: '08'
+          nian: '',
+          yue: ''
         },
         columns11: [
           {
@@ -278,7 +278,12 @@
       },
     },
     mounted () {
-
+      let date = new Date;
+      let year = (date.getFullYear()).toString();
+      let month = (date.getMonth() + 1).toString();
+      month = (month < 10 ? "0" + month : month);
+      this.formItem1.nian = year;
+      this.formItem1.yue = month
     }
   }
 </script>

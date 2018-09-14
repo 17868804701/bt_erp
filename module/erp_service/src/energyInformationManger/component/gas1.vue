@@ -119,9 +119,19 @@
                 key: 'zrsjj',
                 align: 'center',
                 width: 150,
+              },    {
+                title: '实际单价',
+                key: 'zrsjdj',
+                align: 'center',
+                width: 150,
               }, {
                 title: '计划价',
                 key: 'zrjhj',
+                align: 'center',
+                width: 150,
+              }, {
+                title: '计划单价',
+                key: 'zrjhdj',
                 align: 'center',
                 width: 150,
               },
@@ -144,9 +154,19 @@
                 key: 'htsjj',
                 align: 'center',
                 width: 150,
+              },  {
+                title: '实际单价',
+                key: 'htsjdj',
+                align: 'center',
+                width: 150,
               }, {
                 title: '计划价',
                 key: 'htjhj',
+                align: 'center',
+                width: 150,
+              }, {
+                title: '计划单价',
+                key: 'htjhdj',
                 align: 'center',
                 width: 150,
               },

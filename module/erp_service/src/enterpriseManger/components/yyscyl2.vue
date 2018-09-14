@@ -55,7 +55,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small"></Table>
+    <Table :columns="columns12" :data="data12" border height="500" style="margin-top: 10px;" size="small">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px;">{{nian }}{{jidu}}客运量与总收入季度汇总</span>
+      </div>
+    </Table>
   </div>
 </template>
 <script>
@@ -63,6 +67,8 @@
     data () {
       return {
         currentTab: 'name1',
+        nian: '',
+        jidu: '',
         formItem2: {
           nian: '',
           jidu: '',
@@ -172,6 +178,20 @@
         } else {
           this.formItem2.nian = this.$formatDate(this.formItem2.nian).substring(0, 4)
         }
+
+        this.nian = this.formItem2.nian
+        if(this.formItem2.jidu === '1'){
+          this.jidu = '年第一季度'
+        }else if(this.formItem2.jidu === '2'){
+          this.jidu = '年第二季度'
+        }else if(this.formItem2.jidu === '3'){
+          this.jidu = '年第三季度'
+        }else if(this.formItem2.jidu === '4'){
+          this.jidu = '年第四季度'
+        }else {
+          this.jidu = ''
+        }
+
         this.$fetch(this.$url.qygl_yyscyszl_kylyzsr, this.formItem2)
           .then(res => {
             if (res.success === true) {

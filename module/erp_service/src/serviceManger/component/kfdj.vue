@@ -277,10 +277,13 @@
         }
       },
       search1: function () {
-        if (this.formItem.startTime[0] == ''||this.formItem.startTime==''||this.formItem.endTime=='') {
+
+        if(this.formItem.startTime[0] === '') {
+            console.log(111)
             this.formItem.startTime = '',
             this.formItem.endTime = ''
         } else {
+          console.log(222)
           let start = DateTool.timesToDate(this.formItem.startTime[0]);
           let end = DateTool.timesToDate(this.formItem.startTime[1]);
           this.formItem.startTime = start;
@@ -291,7 +294,7 @@
         this.getList()
       },
       setp: function (current) {
-        this.totalPage = current;
+        this.formItem.current = current;
         this.getList();
       },
     },

@@ -33,7 +33,7 @@
     <Card style="padding-left: 15px;">
       <Form :model="formItem1" :label-width="80">
         <div class="search">
-          <FormItem label="开始月份" style="margin: 0">
+          <FormItem label="选择时间" style="margin: 0">
             <DatePicker
               type="year"
               placeholder="选择时间"
@@ -60,7 +60,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small"></Table>
+    <Table :columns="columns11" :data="data10" border height="500" style="margin-top: 10px;" size="small">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px;">{{nian }}{{jidu}}车次里程耗油季度汇总</span>
+      </div>
+    </Table>
   </div>
 </template>
 <script>
@@ -68,6 +72,8 @@
     data () {
       return {
         currentTab: 'name1',
+        nian: '',
+        jidu: '',
         formItem1: {
           nian: '',
           jidu: '',
@@ -165,6 +171,20 @@
         } else {
           this.formItem1.nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
         }
+
+        this.nian = this.formItem1.nian
+        if(this.formItem1.jidu === '1'){
+          this.jidu = '年第一季度'
+        }else if(this.formItem1.jidu === '2'){
+          this.jidu = '年第二季度'
+        }else if(this.formItem1.jidu === '3'){
+          this.jidu = '年第三季度'
+        }else if(this.formItem1.jidu === '4'){
+          this.jidu = '年第四季度'
+        }else {
+            this.jidu = ''
+        }
+
         this.$fetch(this.$url.qygl_yyscyszl_cclchyJDFX, this.formItem1)
           .then(res => {
             if (res.success === true) {

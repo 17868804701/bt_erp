@@ -353,7 +353,7 @@
                     confirm: true,
                     type: 'error',
                     size: 'large',
-                    transfer:false,
+                    transfer:true,
                     title: '你确定要删除吗?'
                   },
                   on: {
@@ -374,7 +374,8 @@
                   h('Button', {
                     props: {
                       type: 'error',
-                      size: 'small'
+                      size: 'small',
+                      transfer:false,
                     },
                     style: {
                       marginRight: '5px'

@@ -21,8 +21,8 @@
                 <Input v-model="basicData.djbh" style="width: 140px;"></Input>
               </FormItem>
               <FormItem label="车辆自编号:" style="margin-top: 0px;">
-                <Select v-model="basicData.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
-                  <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index">{{ item }}</Option>
+                <Select ref="deviceSelect" v-model="basicData.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
+                  <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index+item">{{ item }}</Option>
                 </Select>
               </FormItem>
               <FormItem label="车牌号:" style="margin-top: 0px;">
@@ -93,7 +93,7 @@
         selectCLSelfNum: '',
         basicData: {
           djbh: '',
-          clzbh: '',
+          clzbh: "",
           cph: '',
           cx: '',
           xl: '',
@@ -280,18 +280,21 @@
       },
       cancle() {
         this.newRecordModal = false;
-        this.basicData = {
+        let newData = {
           djbh: '',
-            clzbh: '',
-            cph: '',
-            cx: '',
-            xl: '',
-            fgs: '',
-            jcsj: '',
-            sxr: '',
-            jyy: '',
-            bylb: '',
-        }
+          clzbh: '',
+          cph: '',
+          clxh: '',
+          cx: '',
+          xl: '',
+          gfs: '',
+          jcsj: '',
+          sxr: '',
+          jyy: '',
+          bylb: '',
+        };
+        newData.clzbh = this.basicData.clzbh;
+        this.basicData = newData;
       },
       saveRow() {
         let fgsDict = this.$store.state.dictData.parseDict.EJGS;
@@ -305,16 +308,11 @@
             params.fgs = attr;
           }
         }
-        debugger;
-        console.log(params);
         var that = this;
         this.$post(this.$url.maintain_BYGL_CLBY_saveRecord, params)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
-            this.newRecordModal = false;
-            this.$Message.success('登记成功, 请在列表查看!');
-            this.basicData = {
+            let newData = {
               djbh: '',
               clzbh: '',
               cph: '',
@@ -327,6 +325,10 @@
               jyy: '',
               bylb: '',
             };
+            newData.clzbh = this.basicData.clzbh;
+            this.basicData = newData;
+            that.$Message.success('登记成功, 请在列表查看!');
+            that.newRecordModal = false;
             that.requestListData();
           }else{
             this.$Message.error('登记失败, 请重试!');
@@ -379,13 +381,12 @@
         this.$getExcel(url);
       },
       selectCLItem(value) {
+
         this.selectCL = this.$store.state.dictData.CLDict[value];
-        this.basicData.clzbh = this.selectCL.selfNum;
         this.basicData.cph = this.selectCL.busNum;
         this.basicData.cx = this.selectCL.busModelName;
         this.basicData.xl = this.selectCL.lineName;
         this.basicData.fgs = this.selectCL.orgName;
-        debugger;
       }
     },
     mounted () {

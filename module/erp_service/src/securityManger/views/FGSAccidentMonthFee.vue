@@ -17,7 +17,7 @@
     </Card>
     <Table border style="margin-top: 10px;" :data="tableData" :columns="columns11" >
       <div slot="header" style="height: 50px;font-size: 18px;text-align: center">
-        {{this.getTableTitle}}
+        {{tableTitle}}
       </div>
     </Table>
   </div>
@@ -155,20 +155,22 @@
           },
         ],
         tableData: [],
+        tableTitle: '',
       }
     },
     computed: {
-      getTableTitle() {
-        let year = this.formItem.date.getFullYear();
-        let month = this.formItem.date.getMonth() + 1;
-        let title = year+'年'+month+'月交通事故报表';
-        return title;
-      },
+
     },
     methods:{
       initDate() {
         let now = new Date();
         return now;
+      },
+      getTableTitle() {
+        let year = this.formItem.date.getFullYear();
+        let month = this.formItem.date.getMonth() + 1;
+        let title = year+'年'+month+'月交通事故报表';
+        this.tableTitle = title;
       },
       requestListData() {
 
@@ -178,12 +180,13 @@
         let that = this;
         this.$fetch(this.$url.security_GFGSJTSG_list, params)
         .then(res => {
+          this.getTableTitle();
           if (res.success === true) {
             if (res.data.length > 0) {
               that.tableData = res.data;
             }
           }else{
-            that.$Message.error('数据获取失败, 请重试!');
+            that.$Message.error(res.message);
           }
         })
       },

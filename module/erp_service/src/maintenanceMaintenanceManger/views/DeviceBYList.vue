@@ -15,14 +15,11 @@
           <Form ref="deviceItem" :model="deviceItem" :rules="ruleValidate" :label-width="180">
             <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
               <FormItem prop="sbid" label="请根据设备编号选择设备:" style="margin-top: 0px;">
-                <Select v-model="deviceItem.sbid" placeholder="请选择设备" style="width: 120px;" filterable>
-                  <Option v-for="(item, index) in this.deviceData" :key="item+index" :value="item.id">{{item.sbbh}}</Option>
-                </Select>
+                <!--<Select :value="deviceItem.sbid" placeholder="请选择设备" style="width: 120px;" filterable @on-change="selectSB">-->
+                  <!--<Option v-for="(item, index) in deviceData" :key="item+index" :value="item.id">{{item.sbbh}}</Option>-->
+                <!--</Select>-->
+                <DeviceSelect :selectValue="deviceItem.sbid"></DeviceSelect>
               </FormItem>
-            </div>
-          </Form>
-          <Form ref="deviceItem" :model="deviceItem" :rules="ruleValidate" :label-width="100">
-            <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
               <FormItem prop="wxrq" label="养护日期:" style="margin-top: 0px;">
                 <DatePicker
                   style="width: 120px;"
@@ -88,11 +85,11 @@
           <Button type="primary" style="float: right;margin-right: 10px" @click="chooseDeviceModal=false">取消</Button>
         </div>
         <div>
-          <Form ref="chooseDeviceItem" :model="chooseDeviceItem" :rules="ruleValidate" :label-width="180">
+          <Form ref="chooseDeviceItem" v-model="chooseDeviceItem" :rules="ruleValidate" :label-width="180">
             <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
               <FormItem prop="sbbh" label="请根据设备编号选择设备:" style="margin-top: 0px;">
                 <Select v-model="chooseDeviceItem.sbbh" placeholder="请选择设备" style="width: 120px;" filterable>
-                  <Option v-for="(item, index) in this.deviceData" :key="item+index" :value="item.sbbh">{{item.sbbh}}</Option>
+                  <Option v-for="(item, index) in deviceData" :key="item+index" :value="item.sbbh">{{item.sbbh}}</Option>
                 </Select>
               </FormItem>
             </div>
@@ -128,10 +125,12 @@
   import canEditTable from '../../components/common/canEditTable.vue';
   import CommonSelect from '../../components/common/CommonSelect.vue';
   import * as DateTool from '../../../utils/DateTool';
+  import DeviceSelect from '../components/DeviceSelect.vue';
   export default {
     components: {
       canEditTable,
       CommonSelect,
+      DeviceSelect,
     },
     data () {
       return {
@@ -181,6 +180,7 @@
         chooseDeviceModal: false,
         columns: [
           {
+            title: '序号',
             type: 'index',
             align: 'center',
             width: 60,
@@ -388,22 +388,22 @@
         })
       },
       saveRow() { // 新增
-        console.log(this.deviceItem);
-        console.log('新增设备保养记录');
+        let that = this;
         this.$post(this.$url.maintain_DEVICEBY_save, this.deviceItem)
         .then(res => {
-          console.log(res);
           if (res.code === 0) {
-            this.addModal = false;
-            this.$Message.success('操作成功!');
-            this.deviceItem = {
+            that.addModal = false;
+            that.$Message.success('操作成功!');
+            let newDeviceItem = {
               id : '',
               wxnr: '',
               wxrq: '',
               wxry: '',
               sbid: '',
-            }
-            this.requestListData();
+            };
+            newDeviceItem.sbid = that.deviceItem.sbid;
+            that.deviceItem = newDeviceItem;
+            that.requestListData();
           }else{
             this.$Message.error('操作失败, 请重试!');
           }
@@ -419,13 +419,14 @@
       updateRow() {
         console.log(this.updateDeviceItem);
         console.log('更新设备保养记录');
+        let that = this;
         this.$post(this.$url.maintain_DEVICEBY_update, this.updateDeviceItem)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
-            this.updateModal = false;
-            this.$Message.success('操作成功!');
-            this.updateDeviceItem = {
+            that.updateModal = false;
+            that.$Message.success('操作成功!');
+            that.updateDeviceItem = {
               id : '',
               wxnr: '',
               wxrq: '',
@@ -433,11 +434,14 @@
               sbid: '',
               sbbh: '',
             }
-            this.requestListData();
+            that.requestListData();
           }else{
-            this.$Message.error('操作失败, 请重试!');
+            that.$Message.error('操作失败, 请重试!');
           }
         })
+      },
+      selectSB(value) {
+        this.deviceItem.sbid = value;
       },
       confirmUpdateDeviceBY(name) { // 更新保养记录
         this.$refs[name].validate((valid) => {

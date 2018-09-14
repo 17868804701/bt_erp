@@ -150,6 +150,7 @@
         params.pageSize = this.formItem.pageSize;
         this.$fetch(this.$url.maintain_BYGL_YSDGL_recordList, params)
         .then(res=>{
+          debugger;
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.scsj = DateTool.timesToDate(item.scsj);
@@ -158,7 +159,7 @@
             this.tableData = res.page.list;
             this.totalSize = res.page.totalCount;
           }else{
-            this.$Message.error('请求失败!');
+            this.$Message.error(res.message);
           }
         })
       },

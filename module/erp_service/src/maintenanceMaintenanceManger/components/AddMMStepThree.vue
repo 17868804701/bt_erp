@@ -371,7 +371,10 @@
       },
       addFDJ_QGYL_Data() {
         // 深拷贝数据
-        let deepCopyData = JSON.parse(JSON.stringify(this.fdjqgylList));
+        let deepCopyData = [];
+        if (this.fdjqgylList !== null && this.fdjqgylList.length > 0) {
+          deepCopyData = JSON.parse(JSON.stringify(this.fdjqgylList));
+        }
         deepCopyData.push(this.fdjqgylData);
         let params = this.configureFDJ_QGYL_Data(deepCopyData);
         this.updateFDJCC_QGYL(params);

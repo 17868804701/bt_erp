@@ -51,20 +51,20 @@
           legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['ios', 'android', 'pc', 'web', 'others']
+            data: ['一公司', '二公司', '三公司', '四公司', '五公司']
           },
           series: [
             {
-              name: '访问来源',
+              name: '收入完成占比',
               type: 'pie',
               radius: '66%',
               center: ['50%', '50%'],
               data: [
-                {value: 2103456, name: 'ios', itemStyle: {normal: {color: '#9bd598'}}},
-                {value: 1305923, name: 'android', itemStyle: {normal: {color: '#ffd58f'}}},
-                {value: 543250, name: 'pc', itemStyle: {normal: {color: '#abd5f2'}}},
-                {value: 798403, name: 'web', itemStyle: {normal: {color: '#ab8df2'}}},
-                {value: 302340, name: 'others', itemStyle: {normal: {color: '#e14f60'}}}
+                {value: 2103456, name: '一公司', itemStyle: {normal: {color: '#9bd598'}}},
+                {value: 1305923, name: '二公司', itemStyle: {normal: {color: '#ffd58f'}}},
+                {value: 543250, name: '三公司', itemStyle: {normal: {color: '#abd5f2'}}},
+                {value: 798403, name: '四公司', itemStyle: {normal: {color: '#ab8df2'}}},
+                {value: 302340, name: '五公司', itemStyle: {normal: {color: '#e14f60'}}}
               ],
               itemStyle: {
                 emphasis: {
@@ -91,20 +91,20 @@
           legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['ios', 'android', 'pc', 'web', 'others']
+            data: ['一公司', '二公司', '三公司', '四公司', '五公司']
           },
           series: [
             {
-              name: '访问来源',
+              name: '收入完成占比',
               type: 'pie',
               radius: '66%',
               center: ['50%', '50%'],
               data: [
-                {value: 2103456, name: 'ios', itemStyle: {normal: {color: '#9bd598'}}},
-                {value: 1305923, name: 'android', itemStyle: {normal: {color: '#ffd58f'}}},
-                {value: 543250, name: 'pc', itemStyle: {normal: {color: '#abd5f2'}}},
-                {value: 798403, name: 'web', itemStyle: {normal: {color: '#ab8df2'}}},
-                {value: 302340, name: 'others', itemStyle: {normal: {color: '#e14f60'}}}
+                {value: 2103456, name: '一公司', itemStyle: {normal: {color: '#9bd598'}}},
+                {value: 1305923, name: '二公司', itemStyle: {normal: {color: '#ffd58f'}}},
+                {value: 543250, name: '三公司', itemStyle: {normal: {color: '#abd5f2'}}},
+                {value: 798403, name: '四公司', itemStyle: {normal: {color: '#ab8df2'}}},
+                {value: 302340, name: '五公司', itemStyle: {normal: {color: '#e14f60'}}}
               ],
               itemStyle: {
                 emphasis: {

@@ -4,6 +4,25 @@
 
   <div>
     <div style="padding: 20px 10px 0 10px; height: 100%;width: 100%;border-bottom: 0px solid #f5f5f5">
+      <Modal
+        v-model="exportModal"
+        title="导入计划表"
+        width="50%"
+        :mask-closable="false"
+        :closable="false"
+        style="height:auto;">
+        <Steps :current="0" direction="vertical">
+          <Step title="第一步" content="下载导入报表模板"></Step>
+          <Step title="第二步" content="上传报表"></Step>
+          <Step title="第三部" content="系统自动导入"></Step>
+        </Steps>
+        <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
+          <Button type="dashed" icon="android-download" style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载</Button>
+          <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess" :show-upload-list="false" :format ="['xlsx']">
+            <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传</Button>
+          </Upload>
+        </div>
+      </Modal>
       <!--新增维修工-->
       <Modal
         v-model="addModal"
@@ -49,6 +68,7 @@
             <Input v-model="formItem.wpmc" style="width: 120px;"></Input>
             <Button type="primary" icon="ios-search" @click="requestListData" v-has="'jcsjgl_pjxxgl_search'">搜索</Button>
             <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true" v-has="'jcsjgl_pjxxgl_add'">新增</Button>
+            <Button type="primary" size="default" style="float: right;margin-right: 10px;" @click="exportModal=true"><Icon type="android-upload"></Icon>导入</Button>
           </FormItem>
         </Form>
       </Card>
@@ -61,6 +81,7 @@
   import canEditTable from '../../components/common/canEditTable.vue';
   import CommonSelect from '../../components/common/CommonSelect.vue';
   import * as DateTool from '../../../utils/DateTool';
+  import VueCookie from 'vue-cookie';
   export default {
     components: {
       canEditTable,
@@ -73,8 +94,14 @@
           currPage: 1,
           pageSize: 10,
         },
+        header: {
+          'Authorization': 'bearer ' + VueCookie.get('access_token'),
+          'Content-Type' : 'multipart/form-data'
+        },
+        uploadFile: process.env.BASE_URL + "/weix/dataDictionary/updatePJXX",
         totalSize: 0,
         addModal: false,
+        exportModal: false,
         pjxx: {
           id: "",
           dw: "",
@@ -106,6 +133,7 @@
         },
         columns: [
           {
+            title: '序号',
             type: 'index',
             align: 'center',
             width: 60,
@@ -282,6 +310,10 @@
           }
         })
       },
+      handleSuccess(res) {
+        debugger;
+        console.log(res);
+      }
     },
     mounted () {
 

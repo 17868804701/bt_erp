@@ -44,41 +44,41 @@
       },
       pieData() {
         var dataSourcePie = echarts.init(document.getElementById('data_source_con_2'));
-        let dwData = [];
-        let series = [];
-        for (let i = 0; i < this.tableData.length; i++) {
-          let countData = [];
-          countData.push(this.tableData[i].zj);
-          countData.push(this.tableData[i].bhtl);
-          countData.push(this.tableData[i].zgng);
-          countData.push(this.tableData[i].gsld);
-          countData.push(this.tableData[i].ej);
-          countData.push(this.tableData[i].sj);
-          countData.push(this.tableData[i].ybgl);
-          countData.push(this.tableData[i].fz);
-          countData.push(this.tableData[i].siji);
-          countData.push(this.tableData[i].xl);
-          countData.push(this.tableData[i].qtzg);
-          countData.push(this.tableData[i].qtbzg);
-          countData.push(this.tableData[i].nt);
-          countData.push(this.tableData[i].bj);
-          countData.push(this.tableData[i].cj);
-          countData.push(this.tableData[i].ngcj);
-          countData.push(this.tableData[i].xg);
-          countData.push(this.tableData[i].gs);
-          countData.push(this.tableData[i].dg);
-          countData.push(this.tableData[i].tx);
-          countData.push(this.tableData[i].wj);
-          countData.push(this.tableData[i].tl);
-          countData.push(this.tableData[i].sm);
-
-          dwData.push(this.tableData[i].dw);
-          series.push({
-            name:this.tableData[i].dw,
-            type:'line',
-            data:countData,
-          },);
-        }
+//        let dwData = [];
+//        let series = [];
+//        for (let i = 0; i < this.tableData.length; i++) {
+//          let countData = [];
+//          countData.push(this.tableData[i].zj);
+//          countData.push(this.tableData[i].bhtl);
+//          countData.push(this.tableData[i].zgng);
+//          countData.push(this.tableData[i].gsld);
+//          countData.push(this.tableData[i].ej);
+//          countData.push(this.tableData[i].sj);
+//          countData.push(this.tableData[i].ybgl);
+//          countData.push(this.tableData[i].fz);
+//          countData.push(this.tableData[i].siji);
+//          countData.push(this.tableData[i].xl);
+//          countData.push(this.tableData[i].qtzg);
+//          countData.push(this.tableData[i].qtbzg);
+//          countData.push(this.tableData[i].nt);
+//          countData.push(this.tableData[i].bj);
+//          countData.push(this.tableData[i].cj);
+//          countData.push(this.tableData[i].ngcj);
+//          countData.push(this.tableData[i].xg);
+//          countData.push(this.tableData[i].gs);
+//          countData.push(this.tableData[i].dg);
+//          countData.push(this.tableData[i].tx);
+//          countData.push(this.tableData[i].wj);
+//          countData.push(this.tableData[i].tl);
+//          countData.push(this.tableData[i].sm);
+//
+//          dwData.push(this.tableData[i].dw);
+//          series.push({
+//            name:this.tableData[i].dw,
+//            type:'line',
+//            data:countData,
+//          },);
+//        }
 
         const option = {
           title : {
@@ -95,10 +95,10 @@
           toolbox: {
             show : true,
             feature : {
-              mark : {show: true},
-              dataView : {show: true, readOnly: false},
-              magicType : {show: true, type: ['line', 'bar']},
-              restore : {show: true},
+              mark : {show: false},
+              dataView : {show: false, readOnly: false},
+              magicType : {show: false, type: ['line', 'bar']},
+              restore : {show: false},
               saveAsImage : {show: true}
             }
           },

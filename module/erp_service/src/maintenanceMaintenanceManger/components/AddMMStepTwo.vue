@@ -14,7 +14,7 @@
     <!--新增领料备料-->
     <Modal
       v-model="clModal"
-      title="新增领料备料"
+      title="领料备料"
       width="50%"
       :mask-closable="false"
       :closable="false">

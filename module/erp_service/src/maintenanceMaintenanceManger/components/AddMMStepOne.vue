@@ -119,7 +119,7 @@
               <Input v-model="dsj.name" placeholder="名称..." style="width: 100px"></Input>
             </FormItem>
             <FormItem label="数量:">
-              <Input v-model="dsj.sl" placeholder="数量..." style="width: 100px"></Input>
+              <Input type="number" v-model="dsj.sl" placeholder="数量..." style="width: 100px"></Input>
             </FormItem>
             <FormItem label="修配结果:">
               <Input v-model="dsj.content" placeholder="修配结果..." style="width: 100px"></Input>
@@ -145,7 +145,7 @@
     </Card>
     <Modal
       v-model="cyModal"
-      title="新增超养作业记录"
+      title="超养作业记录"
       width="50%"
       :mask-closable="false"
       :closable="false">
@@ -1020,10 +1020,12 @@
           this.fdjData[attr] = clbyFdjjcData[attr];
           tmpfdjData[attr] = clbyFdjjcData[attr];
         }
+        this.fdjData.jcsj = DateTool.timesToDate(this.fdjData.jcsj);
         let isHaveFDJData = false;
         delete tmpfdjData['byid'];
         delete tmpfdjData['id'];
         delete tmpfdjData['jcsj'];
+        delete tmpfdjData['fdjh'];
         for (let attr in tmpfdjData) {
           if(tmpfdjData[attr] !== null && tmpfdjData[attr] !== '') {
             isHaveFDJData = true;

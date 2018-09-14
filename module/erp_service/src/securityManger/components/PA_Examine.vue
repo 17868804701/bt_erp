@@ -102,6 +102,10 @@
           exportURL: ''
         };
         params.jidus = this.formItem.tab3Select;
+        if (params.jidus.length <= 0) {
+          this.$Message.error('请至少选择一个季度');
+          return;
+        }
         params.year = this.formItem.tab3Date.getFullYear();
         this.exportURL = this.$url.security_KHSGFB_exportExcel;
         params.exportURL = this.exportURL;

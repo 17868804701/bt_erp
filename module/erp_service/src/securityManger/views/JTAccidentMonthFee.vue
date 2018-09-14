@@ -105,8 +105,7 @@
         let that = this;
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
-          console.log(res);
-          if (res.data.records.length > 0 && res.data.records != null) {
+          if (res.success === true) {
             let allDict = this.$store.state.dictData.parseDict;
             res.data.records.forEach(item => {
               item.lasj = DateTool.timesToDate(item.lasj);
@@ -115,7 +114,7 @@
               item.sgxz = allDict.SGXZ[item.sgxz];
               item.dw = allDict.EJGS[item.dw];
               item.xczrsgfl = allDict.XCSGZRFL[item.xczrsgfl];
-              let sgsxArray = item.sgsx.split("、");
+              let sgsxArray = (item.sgsx !== null && item.sgsx.length > 0) ? item.sgsx.split("、") : [];
               let stringArray = [];
               sgsxArray.forEach(sgsxItem => {
                 stringArray.push(allDict.SGSX[sgsxItem]);
@@ -133,7 +132,6 @@
       },
       searchData() {
         if (this.formItem.date instanceof Date) {
-          console.log(this.formItem);
           let firstDay = DateTool.getFirstDay(this.formItem.date);
           let lastDay = DateTool.getLastDay(this.formItem.date);
           this.formItem.lasjStart = firstDay;

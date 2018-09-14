@@ -334,8 +334,6 @@
         }
         params.lasjStart = DateTool.yyyymmddFormatDate(this.searchOptions.date);
         params.lasjEnd = params.lasjStart;
-        console.log(params);
-
         let that = this;
         this.$fetch(this.$url.security_LASG_list, params)
         .then(res => {
@@ -349,7 +347,7 @@
               item.sgxz = allDict.SGXZ[item.sgxz];
               item.dw = allDict.EJGS[item.dw];
               item.xczrsgfl = allDict.XCSGZRFL[item.xczrsgfl];
-              let sgsxArray = item.sgsx.split("、");
+              let sgsxArray = (item.sgsx !== null && item.sgsx.length > 0) ? item.sgsx.split("、") : [];
               let stringArray = [];
               sgsxArray.forEach(sgsxItem => {
                 stringArray.push(allDict.SGSX[sgsxItem]);
@@ -383,7 +381,6 @@
 //        debugger;
         this.$post(this.$url.security_LASG_add, params)
         .then(res => {
-          console.log(res);
           if (res.success === true) {
             this.accidentModal = false;
             this.requestListData();
@@ -396,7 +393,6 @@
       deleteLASG(rowData) {
         this.$fetch(this.$url.security_LASG_delete, {id: rowData.id})
         .then(res => {
-          console.log(res);
           if (res.success === true) {
             this.requestListData();
             this.$Message.success('删除成功!');

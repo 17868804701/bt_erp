@@ -44,41 +44,41 @@
       },
       pieData() {
         var dataSourcePie = echarts.init(document.getElementById('data_source_con_1'));
-        let dwData = [];
-        let series = [];
-        for (let i = 0; i < this.tableData.length; i++) {
-          let countData = [];
-          countData.push(this.tableData[i].zj);
-          countData.push(this.tableData[i].bhtl);
-          countData.push(this.tableData[i].zgng);
-          countData.push(this.tableData[i].gsld);
-          countData.push(this.tableData[i].ej);
-          countData.push(this.tableData[i].sj);
-          countData.push(this.tableData[i].ybgl);
-          countData.push(this.tableData[i].fz);
-          countData.push(this.tableData[i].siji);
-          countData.push(this.tableData[i].xl);
-          countData.push(this.tableData[i].qtzg);
-          countData.push(this.tableData[i].qtbzg);
-          countData.push(this.tableData[i].nt);
-          countData.push(this.tableData[i].bj);
-          countData.push(this.tableData[i].cj);
-          countData.push(this.tableData[i].ngcj);
-          countData.push(this.tableData[i].xg);
-          countData.push(this.tableData[i].gs);
-          countData.push(this.tableData[i].dg);
-          countData.push(this.tableData[i].tx);
-          countData.push(this.tableData[i].wj);
-          countData.push(this.tableData[i].tl);
-          countData.push(this.tableData[i].sm);
-
-          dwData.push(this.tableData[i].dw);
-          series.push({
-            name:this.tableData[i].dw,
-            type:'line',
-            data:countData,
-          },);
-        }
+//        let dwData = [];
+//        let series = [];
+//        for (let i = 0; i < this.tableData.length; i++) {
+//          let countData = [];
+//          countData.push(this.tableData[i].zj);
+//          countData.push(this.tableData[i].bhtl);
+//          countData.push(this.tableData[i].zgng);
+//          countData.push(this.tableData[i].gsld);
+//          countData.push(this.tableData[i].ej);
+//          countData.push(this.tableData[i].sj);
+//          countData.push(this.tableData[i].ybgl);
+//          countData.push(this.tableData[i].fz);
+//          countData.push(this.tableData[i].siji);
+//          countData.push(this.tableData[i].xl);
+//          countData.push(this.tableData[i].qtzg);
+//          countData.push(this.tableData[i].qtbzg);
+//          countData.push(this.tableData[i].nt);
+//          countData.push(this.tableData[i].bj);
+//          countData.push(this.tableData[i].cj);
+//          countData.push(this.tableData[i].ngcj);
+//          countData.push(this.tableData[i].xg);
+//          countData.push(this.tableData[i].gs);
+//          countData.push(this.tableData[i].dg);
+//          countData.push(this.tableData[i].tx);
+//          countData.push(this.tableData[i].wj);
+//          countData.push(this.tableData[i].tl);
+//          countData.push(this.tableData[i].sm);
+//
+//          dwData.push(this.tableData[i].dw);
+//          series.push({
+//            name:this.tableData[i].dw,
+//            type:'line',
+//            data:countData,
+//          },);
+//        }
 
         const option = {
           tooltip : {
@@ -87,53 +87,53 @@
           toolbox: {
             show : true,
             feature : {
-              mark : {show: true},
-              dataView : {show: true, readOnly: false},
-              magicType: {show: true, type: ['line', 'bar']},
-              restore : {show: true},
+              mark : {show: false},
+              dataView : {show: false, readOnly: false},
+              magicType: {show: false, type: ['line', 'bar']},
+              restore : {show: false},
               saveAsImage : {show: true}
             }
           },
           calculable : true,
           legend: {
-            data:['蒸发量','降水量','平均温度']
+            data:['本期','上年同期','增减百分比']
           },
           xAxis : [
             {
               type : 'category',
-              data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+              data : ['1路','2路','3路','4路','5路','6路','7路','8路','9路','10路','11路','12路']
             }
           ],
           yAxis : [
             {
               type : 'value',
-              name : '水量',
+              name : '收入',
               axisLabel : {
-                formatter: '{value} ml'
+                formatter: '{value} 万元'
               }
             },
             {
               type : 'value',
-              name : '温度',
+              name : '增减百分比刻度',
               axisLabel : {
-                formatter: '{value} °C'
+                formatter: '{value} %'
               }
             }
           ],
           series : [
 
             {
-              name:'蒸发量',
+              name:'本期',
               type:'bar',
               data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
             },
             {
-              name:'降水量',
+              name:'上年同期',
               type:'bar',
               data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
             },
             {
-              name:'平均温度',
+              name:'增减百分比',
               type:'line',
               yAxisIndex: 1,
               data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]

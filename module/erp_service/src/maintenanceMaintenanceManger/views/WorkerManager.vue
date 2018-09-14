@@ -135,17 +135,12 @@
           },
           {
             title: '所属车间',
-            key: 'shcj',
-            align: 'center',
-          },
-          {
-            title: '所属车间',
-            key: 'shcj',
+            key: 'shcjText',
             align: 'center',
           },
           {
             title: '维修班组',
-            key: 'wxbz',
+            key: 'wxbzText',
             align: 'center',
           },
           {
@@ -230,14 +225,20 @@
         this.requestListData();
       },
       requestListData() {
+        let that = this;
+        let cjxxDict = that.$store.state.dictData.parseDict.CJXX;
+        let wxbzDict = that.$store.state.dictData.parseDict.WXBZ;
         this.$fetch(this.$url.maintain_BYGL_DATA_WXGXX_list, this.formItem)
         .then(res => {
-//          debugger;
           if (res.code === 0) {
+            res.page.records.forEach(item => {
+              item.shcjText = cjxxDict[item.shcj];
+              item.wxbzText = wxbzDict[item.wxbz];
+            })
             this.tableData = res.page.records;
             this.totalSize = res.page.total;
           }else{
-            this.$Message.error('请求失败!');
+            this.$Message.error(res.message);
           }
         })
       },
@@ -288,7 +289,6 @@
         })
       },
       deleteRow(params) {
-//        let p = {id : params.row.id};
         let url = this.$url.maintain_BYGL_DATA_WXGXX_delete;
         url += '?id=' + params.row.id;
         this.$post(url)

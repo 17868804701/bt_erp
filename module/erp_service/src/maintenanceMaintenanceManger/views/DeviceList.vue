@@ -283,14 +283,15 @@
       },
       deleteRow(params) {
         let p = {id : params.row.id};
+        let that = this;
         this.$fetch(this.$url.maintain_DEVICE_delete, p)
         .then(res => {
           console.log(res);
           if (res.code === 0) {
-            this.$Messgae.success('删除成功!');
-            this.requestListData();
+            that.$Message.success('删除成功!');
+            that.requestListData();
           } else {
-            this.$Message.error('删除失败, 请重试!');
+            that.$Message.error('删除失败, 请重试!');
           }
         })
       },

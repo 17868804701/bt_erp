@@ -3,6 +3,45 @@
 <template>
   <div>
     <Modal
+      v-model="updateModal"
+      title="更新返修记录"
+      width="50%">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="update('updateItem')">保存</Button>
+        <Button type="primary" style="float: right;margin-right: 10px" @click="cancleUpdate">取消</Button>
+      </div>
+      <div>
+        <Form :model="updateItem" ref="updateItem" :rules="updateRuleValidate" :label-width="120">
+          <div style="display: flex;flex-wrap: wrap;justify-content: flex-start">
+            <FormItem label="车辆自编号:" style="margin-top: 0px;">
+              <div style="width:110px;">{{updateItem.clzbh}}</div>
+            </FormItem>
+            <FormItem prop="ch" label="车号" style="margin-top: 0px;">
+              <div style="width:110px;">{{updateItem.ch}}</div>
+            </FormItem>
+            <FormItem prop="cx" label="车型" style="margin-top: 0px;">
+              <div style="width:110px;">{{updateItem.cx}}</div>
+            </FormItem>
+            <FormItem prop="fxjcsj" label="返修进厂时间" style="margin-top: 0px;">
+              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="updateItem.fxjcsj" style="width:110px;"></DatePicker>
+            </FormItem>
+            <FormItem prop="fxccsj" label="返修出厂时间" style="margin-top: 0px;">
+              <DatePicker type="date" placeholder="选择时间" :transfer="true" placement="bottom-end" v-model="updateItem.fxccsj" style="width:110px;"></DatePicker>
+            </FormItem>
+            <FormItem prop="fxxm" label="返修项目" style="margin-top: 0px;">
+              <Input v-model="updateItem.fxxm" style="width:110px;"></Input>
+            </FormItem>
+            <FormItem prop="fxyy" label="返修原因" style="margin-top: 0px;">
+              <Input v-model="updateItem.fxyy" style="width:110px;"></Input>
+            </FormItem>
+            <FormItem prop="bz" label="备注" style="margin-top: 0px;">
+              <Input v-model="updateItem.bz" style="width:110px;"></Input>
+            </FormItem>
+          </div>
+        </Form>
+      </div>
+    </Modal>
+    <Modal
       v-model="backModal"
       title="新增返修记录"
       width="50%">
@@ -11,7 +50,7 @@
         <Button type="primary" style="float: right;margin-right: 10px" @click="cancle">取消</Button>
       </div>
       <div>
-        <Form :model="backItem" ref="backItem" :rules="ruleValidate" :label-width="100">
+        <Form :model="backItem" ref="backItem" :rules="ruleValidate" :label-width="120">
           <div style="display: flex;flex-wrap: wrap;justify-content: flex-start">
             <FormItem label="车辆自编号:" style="margin-top: 0px;">
               <Select ref="deviceSelect" v-model="backItem.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
@@ -58,7 +97,7 @@
           </Row>
         </Form>
       </Card>
-      <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="columns" :editIncell="true" :hoverShow="true" @on-cell-change="handleCellChange">
+      <can-edit-table style="margin-top: 10px;" v-model="tableData" :columnsList="columns">
       </can-edit-table>
       <Page :total="totalSize" show-total style="margin-top: 10px;" @on-change="setPage"></Page>
     </div>
@@ -75,6 +114,7 @@
       return {
         // 车号、车型、返修进厂时间、返修出厂时间、返修项目以及返修原因、备注
         backModal: false,
+        updateModal: false,
         formItem: {
           date: '',
           currPage: 1,
@@ -93,6 +133,17 @@
           fxyy: '',
           bz: '',
         },
+        updateItem: {
+          id: '',
+          clzbh: '',
+          ch: '',
+          cx: '',
+          fxjcsj: '',
+          fxccsj: '',
+          fxxm: '',
+          fxyy: '',
+          bz: '',
+        },
         ruleValidate: {
           ch: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
@@ -100,6 +151,20 @@
           cx: [
             { required: true, message: '此项为必填字段', trigger: 'blur' },
           ],
+          fxjcsj: [
+            { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
+          ],
+          fxccsj: [
+            { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
+          ],
+          fxyy: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+          bz: [
+            { required: true, message: '此项为必填字段', trigger: 'blur' },
+          ],
+        },
+        updateRuleValidate: {
           fxjcsj: [
             { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
           ],
@@ -159,6 +224,7 @@
           {
             title: '操作',
             key: 'action',
+            width: 150,
             align: 'center',
             render: (h, params) => {
               return h('div', [
@@ -198,10 +264,12 @@
                   },
                   on: {
                     click: () => {
-                      for (let attr in this.backItem) {
-                        this.backItem[attr] = params.row[attr];
+                      for (let attr in this.updateItem) {
+                        this.updateItem[attr] = params.row[attr];
                       }
-                      this.backModal = true;
+//                      debugger
+//                      console.log(this.updateItem);
+                      this.updateModal = true;
                     }
                   },
                   directives: [
@@ -230,25 +298,28 @@
         params.date = DateTool.yyyymm01FormatDate(this.formItem.date);
         params.currPage = this.formItem.currPage;
         params.pageSize = this.formItem.pageSize;
+        let that = this;
         this.$fetch(this.$url.maintain_BYGL_FXGL_recordList, params)
         .then(res=>{
-//          debugger;
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.fxccsj = DateTool.timesToDate(item.fxccsj);
               item.fxjcsj = DateTool.timesToDate(item.fxjcsj);
             })
-            this.tableData = res.page.list;
-            this.totalSize = res.page.totalCount;
+            that.tableData = res.page.list;
+            that.totalSize = res.page.totalCount;
+//            debugger;
           }else{
-            this.$Message.error(res.message);
+            that.$Message.error(res.message);
           }
         })
       },
       selectCLItem(value) {
-        let selectCL = this.$store.state.dictData.CLDict[value];
-        this.backItem.cph = selectCL.busNum;
-        this.basicData.cx = selectCL.busModelName;
+        if (typeof value !== 'undefined' && value.length > 0) {
+          let selectCL = this.$store.state.dictData.CLDict[value];
+          this.backItem.ch = selectCL.busNum;
+          this.backItem.cx = selectCL.busModelName;
+        }
       },
       confirmFX(name) {
         this.$refs[name].validate((valid) => {
@@ -258,6 +329,26 @@
             this.$Message.error('请按照规则来填写内容!');
           }
         })
+      },
+      cancle() {
+        let newBackItem = {
+          id: '',
+          clzbh: '',
+          ch: '',
+          cx: '',
+          fxjcsj: '',
+          fxccsj: '',
+          fxxm: '',
+          fxyy: '',
+          bz: '',
+        };
+        if (typeof this.backItem.clzbh !== 'undefined' && this.backItem.clzbh.length > 0) {
+          newBackItem.clzbh = this.backItem.clzbh;
+          newBackItem.ch = this.backItem.ch;
+          newBackItem.cx = this.backItem.cx;
+        }
+        this.backItem = newBackItem;
+        this.backModal = false;
       },
       saveRow() {
         let params = {};
@@ -281,7 +372,11 @@
               fxyy: '',
               bz: '',
             };
-            clzbh.clzbh = this.basicData.clzbh;
+            if (typeof this.backItem.clzbh !== 'undefined' && this.backItem.clzbh.length > 0) {
+              newBackItem.clzbh = this.backItem.clzbh;
+              newBackItem.ch = this.backItem.ch;
+              newBackItem.cx = this.backItem.cx;
+            }
             that.backItem = newBackItem;
             that.$Message.success('保存成功, 请在列表查看!');
             that.backModal = false;
@@ -291,8 +386,10 @@
           }
         })
       },
-      cancle() {
-        let newBackItem = {
+
+
+      cancleUpdate() {
+        let newUpdateItem = {
           id: '',
           clzbh: '',
           ch: '',
@@ -303,9 +400,56 @@
           fxyy: '',
           bz: '',
         };
-        clzbh.clzbh = this.basicData.clzbh;
-        that.backItem = newBackItem;
-        this.backModal = false;
+        if (typeof this.updateItem.clzbh !== 'undefined' && this.updateItem.clzbh.length > 0) {
+          newUpdateItem.clzbh = this.updateItem.clzbh;
+          newUpdateItem.ch = this.updateItem.ch;
+          newUpdateItem.cx = this.updateItem.cx;
+        }
+        this.updateItem = newUpdateItem;
+        this.updateModal = false;
+      },
+      update(name) {
+        this.$refs[name].validate((valid) => {
+//          debugger;
+
+          if (valid) {
+            let params = {};
+            for (let attr in this.updateItem) {
+              params[attr] = this.updateItem[attr];
+            }
+//            debugger
+            params.fxjcsj = DateTool.yyyymmddFormatDate(params.fxjcsj);
+            params.fxccsj = DateTool.yyyymmddFormatDate(params.fxccsj);
+            var that = this;
+            this.$post(this.$url.maintain_BYGL_FXGL_update, params)
+            .then(res => {
+              if (res.code === 0) {
+                that.$Message.success('更新成功!');
+//                let newUpdateItem = {
+//                  id: '',
+//                  clzbh: '',
+//                  ch: '',
+//                  cx: '',
+//                  fxjcsj: '',
+//                  fxccsj: '',
+//                  fxxm: '',
+//                  fxyy: '',
+//                  bz: '',
+//                };
+//                if (typeof that.updateItem.clzbh !== 'undefined' && that.updateItem.clzbh.length > 0) {
+//                  newUpdateItem.clzbh = this.updateItem.clzbh;
+//                }
+//                that.updateItem = newUpdateItem;
+                that.updateModal = false;
+              } else{
+                that.$Message.error('修改失败!');
+              }
+              that.requestListData();
+            })
+          } else {
+            this.$Message.error('请按照规则来填写内容!');
+          }
+        })
       },
       deleteRow(params) {
         var that = this;
@@ -320,27 +464,6 @@
           }else{
             this.$Message.error('删除失败!');
           }
-        })
-      },
-      inputCallBack(data) {
-        console.log(data);
-      },
-      handleCellChange (val, index, key) {
-        let row = val[index];
-        this.updateRow(row);
-      },
-      updateRow(row) {
-        console.log(row);
-        var that = this;
-        this.$post(this.$url.maintain_BYGL_FXGL_update, row)
-        .then(res => {
-          console.log(res);
-          if (res.code === 0) {
-            this.$Message.success('修改成功!');
-          } else{
-            this.$Message.error('修改失败!');
-          }
-          this.requestListData();
         })
       },
       exportExcel() {

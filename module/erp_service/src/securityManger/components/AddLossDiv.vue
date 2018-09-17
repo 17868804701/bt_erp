@@ -6,7 +6,9 @@
 
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <FormItem prop="zjgs" label="追加公司">
+
           <CommonSelect type="EJGS" :selectValue="lossForm.zjgs"></CommonSelect>
+
         </FormItem>
         <FormItem label="合计追加">
           <div style="width: 110px;">{{HJZJ}}</div>

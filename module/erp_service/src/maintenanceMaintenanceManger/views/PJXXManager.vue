@@ -17,7 +17,7 @@
           <Step title="第三部" content="系统自动导入"></Step>
         </Steps>
         <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
-          <Button type="dashed" icon="android-download" style="margin-bottom: 10px;margin-top: -15px;width: 110px;">下载</Button>
+          <Button type="dashed" icon="android-download" style="margin-bottom: 10px;margin-top: -15px;width: 110px;" @click="download">下载</Button>
           <Upload :headers="header" :action='uploadFile' name="multipartFile" :on-success="handleSuccess" :show-upload-list="false" :format ="['xlsx']">
             <Button type="primary" icon="ios-cloud-upload-outline" style="width: 110px;margin-top: 17px;">上传</Button>
           </Upload>
@@ -319,6 +319,11 @@
       exportExcel() {
         let url = this.$url.maintain_BYGL_DATA_PGXX_exportExcel;
         url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
+        this.$getExcel(url);
+      },
+      download() {
+        let url = this.$url.maintain_BYGL_DATA_PGXX_download;
+        url = url+'?tmpName=PJXXGL';
         this.$getExcel(url);
       }
     },

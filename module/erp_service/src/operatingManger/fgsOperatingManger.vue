@@ -271,7 +271,7 @@
                 if(item.sj===null){
                       item.sj = '--'
                 }else {
-                    item.sj = this.$formatDate(item.sj).substring(0,10)
+                    item.sj = item.nd+'-'+item.yf
                 }
               });
               this.data10 = res.data.records;

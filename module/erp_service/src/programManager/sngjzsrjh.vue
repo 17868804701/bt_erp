@@ -30,7 +30,7 @@
       @on-ok="ok"
       width="400"
       :mask-closable="false"
-      style="height: 500px;"
+      style="height:auto"
       @on-cancel="cancel">
       <Steps :current="0" direction="vertical">
         <Step title="第一步" content="下载收入计划报表模板"></Step>
@@ -88,7 +88,7 @@
       </div>
     </Modal>
     <Table stripe :columns="columns1" :data="data1" size="small" style="margin-top: 10px;"></Table>
-    <!--<Page :total="100" show-total style="margin-top: 10px;"></Page>-->
+    <Page :total="total" show-total style="margin-top: 10px;" @on-change="step"></Page>
   </div>
 </template>
 <script>
@@ -98,6 +98,7 @@
         addProgram: false,
         exports: false,
         type: '',
+        total:'',
         formItem: {
           current: 1,
           size: 10,
@@ -196,6 +197,10 @@
       cancel () {
         this.type = ''
       },
+      step(current){
+        this.formItem.current = current
+        this.getList()
+      },
       add: function () {
         console.log(this.formItem1);
         this.$post(this.$url.saveSngj + '?lb=' + this.formItem1.lb + '&bqsj=' + this.formItem1.bqsj + '&mnyj=' + this.formItem1.mnyj + '&mnjhcc=' + this.formItem1.mnjhcc + '&bnkyl=' + this.formItem1.bnkyl)
@@ -241,13 +246,13 @@
               if (res.data.total === 0) {
                 this.$Message.info('暂无信息');
                 this.data1 = res.data.records;
-                this.totalPage = res.data.total
+                this.total = res.data.total
               } else {
                 res.data.records.forEach(item => {
                   item.nd = item.nd.toString()
                 })
                 this.data1 = res.data.records;
-                this.totalPage = res.data.total
+                this.total = res.data.total
               }
             }
           })

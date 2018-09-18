@@ -718,6 +718,21 @@
       search() {
         console.log(this.cxItem.gwzt);
         console.log(this.cxItem.dw);
+
+        this.$formatDate(this.cxItem.htkssj).substring(0,10)
+        this.$formatDate(this.cxItem.htjssj).substring(0,10)
+
+        if(this.cxItem.htkssj===''){
+          this.cxItem.htkssj = ''
+        }else {
+          this.cxItem.htkssj = this.$formatDate(this.cxItem.htkssj).substring(0,10)
+        }
+
+        if(this.cxItem.htjssj===''){
+          this.cxItem.htjssj=''
+        }else {
+          this.cxItem.htjssj = this.$formatDate(this.cxItem.htjssj).substring(0,10)
+        }
         this.$fetch(this.$url.userManager_userList, {
           xmszm: this.cxItem.xmszm,
           zzqk: this.cxItem.zzqk,

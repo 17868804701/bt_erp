@@ -10,6 +10,7 @@
             </FormItem>
             <FormItem label="选择线路" style="margin: 0">
               <Select v-model="formItem1.lb" :transfer="true" style="width: 150px;">
+                <Option value="">全部</Option>
                 <Option value="1路">1路</Option>
                 <Option value="2路">2路</Option>
                 <Option value="3路">3路</Option>
@@ -17,6 +18,7 @@
             </FormItem>
             <FormItem label="选择公司" style="margin: 0">
               <Select v-model="formItem1.dw" :transfer="true" style="width: 150px;">
+                <Option value="">全部</Option>
                 <Option value="公交一公司">公交一公司</Option>
                 <Option value="公交二公司">公交二公司</Option>
                 <Option value="公交三公司">公交三公司</Option>
@@ -159,7 +161,7 @@
                 if(item.tjsj==null){
                   item.tjsj = '--'
                 }else {
-                  item.tjsj = this.$formatDate(item.tjsj).substring(0,10)
+                  item.tjsj = this.$formatDate(item.tjsj).substring(0,7)
                 }
               });
               this.data12 = res.data.records;

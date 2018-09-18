@@ -25,7 +25,7 @@
      </div>
      <div style="width: 630px;display: flex;justify-content: space-between;margin-top: 15px;">
        <span>填报部门:企业管理部门</span>
-       <span>填报日期：2018-10-10</span>
+       <span>填报日期：{{year}}年{{month}}月</span>
      </div>
      <table border="1" cellspacing="0" style="margin-top: 10px;width:630px">
        <tr>
@@ -39,7 +39,9 @@
          <td>一、利润总额（万元）</td>
          <td></td>
          <td>18</td>
-         <td></td>
+         <td>
+           {{kfsmList['利润总额(万元)']}}
+         </td>
          <td>
            {{
            scoreList['利润总额(万元)']
@@ -50,7 +52,7 @@
          <td>二、货币资金缴交率</td>
          <td></td>
          <td>20</td>
-         <td></td>
+         <td>{{kfsmList['货币资金交缴率']}}</td>
          <td>
            {{
            scoreList['货币资金交缴率']
@@ -61,7 +63,7 @@
          <td>三、服务投诉</td>
          <td></td>
          <td>17</td>
-         <td></td>
+         <td>{{kfsmList['服务投诉']}}</td>
          <td>
            {{
            scoreList['服务投诉']
@@ -72,7 +74,7 @@
          <td>四、行车责任事故</td>
          <td></td>
          <td>13</td>
-         <td></td>
+         <td>{{kfsmList['行车责任事故']}}</td>
          <td>
            {{
            scoreList['行车责任事故']
@@ -98,37 +100,37 @@
          <td>1、“四防”工作</td>
          <td></td>
          <td>4</td>
-         <td></td>
+         <td>{{kfsmList['四防工作']}}</td>
        </tr>
        <tr>
          <td>2、现场管理</td>
          <td></td>
          <td>2</td>
-         <td></td>
+         <td>{{kfsmList['现场管理']}}</td>
        </tr>
        <tr>
          <td>3、人力资源管理</td>
          <td></td>
          <td>3</td>
-         <td></td>
+         <td>{{kfsmList['人力资源管理']}}</td>
        </tr>
        <tr>
          <td>4、基础管理</td>
          <td></td>
          <td>2</td>
-         <td></td>
+         <td>{{kfsmList['基础管理']}}</td>
        </tr>
        <tr>
          <td>5、计划生育</td>
          <td></td>
          <td>1</td>
-         <td></td>
+         <td>{{kfsmList['计划生育']}}</td>
        </tr>
        <tr>
          <td>七、党建工会工作</td>
          <td></td>
          <td>20</td>
-         <td></td>
+         <td>{{kfsmList['党建工会工作']}}</td>
          <td>
            {{
            scoreList['党建工会工作']
@@ -175,6 +177,7 @@
   export default {
     props: {
       scoreList: '',
+      kfsmList:'',
       month:'',
       year:'',
       titles:''

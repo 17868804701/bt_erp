@@ -31,7 +31,7 @@
             <!--添加-->
             <Modal
               v-model="addyyProgram"
-              title="新增计划"
+              title="调整计划详情"
               width="80%"
               :mask-closable="false"
               @on-cancel="quxiao"
@@ -99,7 +99,7 @@
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
             <ButtonGroup>
               <Button type="primary" @click="search" style="margin-right: 3px;" v-has="'yyjhtzgl_yyjhtzgl_search'"><Icon type="search"></Icon>  搜索</Button>
-              <Button type="primary" icon="android-download" @click="addyyProgram=true" style="margin-right: 3px;" v-has="'yyjhtzgl_yyjhtzgl_add'">新增计划</Button>
+              <Button type="primary" icon="android-download" @click="addyyProgram=true" style="margin-right: 3px;" v-has="'yyjhtzgl_yyjhtzgl_add'">新增调整</Button>
               <Button type="primary" @click="daochu" icon="android-download" v-has="'yyjhtzgl_yyjhtzgl_export'">导出</Button>
             </ButtonGroup>
           </div>
@@ -422,7 +422,6 @@
           })
       },
       quxiao: function () {
-        this.$Message.error('操作失败');
         this.getList();
         this.program = {};
         this.type = '',

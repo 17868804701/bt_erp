@@ -410,6 +410,7 @@
       handleSuccess: function (res) {
           console.log(res);
         if (res.success === true) {
+            this.$Message.info('上传成功')
           if (this.isEdit_jbxx === false) {
             this.formItem.zpdz = res.path;
             console.log('只是上传增加信息')
@@ -428,8 +429,8 @@
       handleSuccessPdf: function (res) {
           console.log(res)
         if (res.success === true) {
+          this.$Message.info('上传成功')
           if (this.isEdit_jbxx === false) {
-
             this.formItem.ygfz = res.path;
           } else {
             this.formItem.ygfz = res.path;

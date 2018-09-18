@@ -30,12 +30,12 @@
       <Form :model="formItem3" :label-width="80">
         <div class="search">
           <FormItem label="选择时间" style="margin: 0">
-            <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem3.date"
+            <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="time"
                         class="text_width"></DatePicker>
           </FormItem>
-          <Button type="primary" icon="ios-search" class="search_btn" v-has="'jjzbwcqk_bsan_search'">查询</Button>
+          <Button type="primary" icon="ios-search" class="search_btn" v-has="'jjzbwcqk_bsan_search'" @click="search3">查询</Button>
           <div class="btn">
-            <Button type="primary" icon="android-download" v-has="'jjzbwcqk_bsan_daochu'">导出Excel</Button>
+            <Button type="primary" icon="android-download" v-has="'jjzbwcqk_bsan_daochu'" @click="daochu3">导出Excel</Button>
           </div>
         </div>
       </Form>
@@ -48,12 +48,14 @@
     data () {
       return {
         formItem3:{
-
+            nian:'',
+            yue:''
         },
+        time:'',
         columns13: [
           {
             title: '单位',
-            key: 'xj_dw',
+            key: 'dw',
             align: 'center',
             fixed: 'left',
           },
@@ -63,15 +65,15 @@
             children: [
               {
                 title: '计划',
-                key: 'xj_jh',
+                key: 'krJh',
                 align: 'center',
               }, {
                 title: '实际',
-                key: 'xj_sj',
+                key: 'lrSj',
                 align: 'center',
               }, {
                 title: '±%',
-                key: 'xj_add',
+                key: 'lrZzl',
                 align: 'center',
               }
             ]
@@ -83,85 +85,72 @@
             children: [
               {
                 title: '本月',
-                key: 'xj_by',
+                key: 'dflBy',
                 align: 'center',
               },
               {
                 title: '月平均得分',
-                key: 'xj_avg',
+                key: 'ypjdf',
                 align: 'center',
               },
             ]
           },
         ],
-        data13: [
-          {
-            xj_dw: '一公司',
-            xj_jh: '-341.2',
-            xj_sj: '-292.3',
-            xj_add: '45.54',
-            xj_by: '99.6',
-            xj_avg: '95.06'
-          },
-          {
-            xj_dw: '二公司',
-            xj_jh: '-341.2',
-            xj_sj: '-292.3',
-            xj_add: '45.54',
-            xj_by: '99.6',
-            xj_avg: '95.06'
-          },
-          {
-            xj_dw: '三公司',
-            xj_jh: '-341.2',
-            xj_sj: '-292.3',
-            xj_add: '45.54',
-            xj_by: '99.6',
-            xj_avg: '95.06'
-          }
-        ],
+        data13: [],
       }
     },
     methods: {
       getList:function () {
-        this.$fetch(this.$url.gjfgsList, this.formItem1)
+        this.$fetch(this.$url.yejikaoheList, this.formItem3)
           .then(res => {
             console.log(res.data);
             if (res.success === true) {
-              this.data11= res.data
+              this.data13= res.data
             } else {
               this.$Message.error('获取数据失败, 请重试!');
             }
           })
       },
-      search1: function () {
-        if (this.formItem1.nian === '') {
-          this.formItem1.nian = ''
-          this.formItem1.yue = ''
-        } else {
-          let nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
-          let yue = this.$formatDate(this.formItem1.nian).substring(5, 7)
-          this.formItem1.nian = nian
-          this.formItem1.yue = yue
+      search3: function () {
+        if(this.time===''){
+          let date = new Date;
+          let year = (date.getFullYear()).toString();
+          let month = (date.getMonth() + 1).toString();
+          month = (month < 10 ? "0" + month : month);
+          this.formItem3.nian = year;
+          this.formItem3.yue = month
+        }else {
+          let nian = this.$formatDate(this.time).substring(0, 4)
+          let yue = this.$formatDate(this.time).substring(5, 7)
+          this.formItem3.nian = nian
+          this.formItem3.yue = yue
         }
-        console.log(this.formItem1)
         this.getList()
       },
-      daochu1:function () {
-        if (this.formItem1.nian === '') {
-          this.formItem1.nian = ''
-          this.formItem1.yue = ''
-        } else {
-          let nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
-          let yue = this.$formatDate(this.formItem1.nian).substring(5, 7)
-          this.formItem1.nian = nian
-          this.formItem1.yue = yue
+      daochu3:function () {
+        if(this.time===''){
+          let date = new Date;
+          let year = (date.getFullYear()).toString();
+          let month = (date.getMonth() + 1).toString();
+          month = (month < 10 ? "0" + month : month);
+          this.formItem3.nian = year;
+          this.formItem3.yue = month
+        }else {
+          let nian = this.$formatDate(this.time).substring(0, 4)
+          let yue = this.$formatDate(this.time).substring(5, 7)
+          this.formItem3.nian = nian
+          this.formItem3.yue = yue
         }
-        this.$getExcel(process.env.BASE_URL+this.$url.gjfgsDaochu+'?nian='+this.formItem1.nian+'&yue='+this.formItem1.yue);
+        this.$getExcel(process.env.BASE_URL+this.$url.yejikaoheDaochu+'?nian='+this.formItem3.nian+'&yue='+this.formItem3.yue);
       },
     },
     mounted () {
-      this.getList()
+      let date = new Date;
+      let year = (date.getFullYear()).toString();
+      let month = (date.getMonth() + 1).toString();
+      month = (month < 10 ? "0" + month : month);
+      this.formItem3.nian = year;
+      this.formItem3.yue = month
     }
   }
 </script>

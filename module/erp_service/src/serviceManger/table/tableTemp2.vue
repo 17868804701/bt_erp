@@ -26,7 +26,7 @@
      </div>
      <div style="width: 630px;display: flex;justify-content: space-between;margin-top: 15px;">
        <span>填报部门:企业管理部门</span>
-       <span>填报日期：2018-10-10</span>
+       <span>填报日期：{{year}}年{{month}}月</span>
      </div>
      <table border="1" cellspacing="0" style="margin-top: 10px;width:630px">
        <tr>
@@ -42,23 +42,20 @@
          <td>18</td>
          <td></td>
          <td rowspan="3">
-           {{
-           scoreList['利润总额(万元)']+
-           scoreList['可控成本控制率']
-           }}
+           {{scoreList['利润总额(万元)']+ scoreList['可控成本控制率']}}
          </td>
        </tr>
        <tr>
          <td>1、利润总额（万元）</td>
          <td></td>
          <td>8</td>
-         <td></td>
+         <td>{{kfsmList['利润总额(万元)']}}</td>
        </tr>
        <tr>
          <td>2、可控成本控制率</td>
          <td></td>
          <td>10</td>
-         <td></td>
+         <td>{{kfsmList['可控成本控制率']}}</td>
        </tr>
        <tr>
          <td>二、运营服务</td>
@@ -79,31 +76,31 @@
          <td>1、车厢服务合格率</td>
          <td></td>
          <td>7</td>
-         <td></td>
+         <td>{{kfsmList['车厢服务合格率']}}</td>
        </tr>
        <tr>
          <td>2、车厢整洁合格率</td>
          <td></td>
          <td>4</td>
-         <td></td>
+         <td>{{kfsmList['车辆整洁合格率']}}</td>
        </tr>
        <tr>
          <td>3、车次率</td>
          <td></td>
          <td>4</td>
-         <td></td>
+         <td>{{kfsmList['车次率']}}</td>
        </tr>
        <tr>
          <td>4、正点率</td>
          <td></td>
          <td>4</td>
-         <td></td>
+         <td>{{kfsmList['正点率']}}</td>
        </tr>
        <tr>
          <td>5、运营体系各类制度执行规范</td>
          <td></td>
          <td>6</td>
-         <td></td>
+         <td>{{kfsmList['运营体系各类制度执行规范']}}</td>
        </tr>
        <tr>
          <td>三、安全管理</td>
@@ -124,28 +121,28 @@
          <td>1、安全生产事故</td>
          <td></td>
          <td>2</td>
-         <td></td>
+         <td>{{kfsmList['安全生产事故']}}</td>
        </tr>
        <tr>
          <td>2、行车责任事故</td>
          <td></td>
          <td rowspan="4">13</td>
-         <td></td>
+         <td>{{kfsmList['行车责任事故']}}</td>
        </tr>
        <tr>
          <td>3、经损率（元/万公里）</td>
          <td></td>
-         <td></td>
+         <td>{{kfsmList['经损率(元/万公里)']}}</td>
        </tr>
        <tr>
          <td>4、结案率</td>
          <td></td>
-         <td></td>
+         <td>{{kfsmList['结案率']}}</td>
        </tr>
        <tr>
          <td>5、安全体系执行制度规范</td>
          <td></td>
-         <td></td>
+         <td>{{kfsmList['安全体系制度执行规范']}}</td>
        </tr>
        <tr>
          <td>四、技术管理</td>
@@ -163,12 +160,12 @@
          <td>1、各类技术定额、计划执行规范</td>
          <td></td>
          <td rowspan="2">10</td>
-         <td></td>
+         <td>{{kfsmList['各类技术定额、计划执行规范']}}</td>
        </tr>
        <tr>
          <td>2、机务管理</td>
          <td></td>
-         <td></td>
+         <td>{{kfsmList['机务管理']}}</td>
        </tr>
        <tr>
          <td>五、行政管理</td>
@@ -189,37 +186,37 @@
          <td>1、四防工作</td>
          <td></td>
          <td>4</td>
-         <td></td>
+         <td>{{kfsmList['四防工作']}}</td>
        </tr>
        <tr>
          <td>2、现场管理</td>
          <td></td>
          <td>2</td>
-         <td></td>
+         <td>{{kfsmList['现场管理']}}</td>
        </tr>
        <tr>
          <td>3、人力资源管理</td>
          <td></td>
          <td>3</td>
-         <td></td>
+         <td>{{kfsmList['人力资源管理']}}</td>
        </tr>
        <tr>
          <td>4、基础管理</td>
          <td></td>
          <td>2</td>
-         <td></td>
+         <td>{{kfsmList['基础管理']}}</td>
        </tr>
        <tr>
          <td>5、计划生育</td>
          <td></td>
          <td>1</td>
-         <td></td>
+         <td>{{kfsmList['计划生育']}}</td>
        </tr>
        <tr>
          <td>六、党建工会工作</td>
          <td></td>
          <td>20</td>
-         <td></td>
+         <td>{{kfsmList['党建工会工作']}}</td>
          <td>
            {{
            scoreList['党建工会工作']
@@ -294,6 +291,7 @@
   export default {
     props: {
       scoreList:'',
+      kfsmList:'',
       year:'',
       month:'',
       titles:''

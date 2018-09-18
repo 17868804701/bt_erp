@@ -63,7 +63,7 @@
       </div>
       <Form :model="formItem2" :label-width="100">
         <FormItem label="反馈信息">
-          <Input style="width: 350px;" v-model="formItem2.cljg" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+          <Input style="width: 350px;" v-model="cljg" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                  placeholder="填写反馈信息"></Input>
         </FormItem>
       </Form>
@@ -82,9 +82,9 @@
           endTime: ''
         },
         formItem2: {
-          cljg: '',
           ids: []
         },
+        cljg: '',
         modal1: false,
         totalPage: 0,
         totalPage1: 0,
@@ -288,8 +288,8 @@
           this.getList()
         }
       },
-      setp1: function () {
-        this.totalPage1 = current;
+      setp1: function (current) {
+        this.formItem1.current = current;
         this.getList();
       },
       selectAll: function (selection) {
@@ -298,18 +298,28 @@
       },
       plclSubmit: function () {
         console.log(this.formItem2);
-        this.$post(this.$url.plclkfxx, this.formItem2)
+        this.$post(this.$url.plclkfxx + '?cljg=' + this.cljg, this.formItem2.ids)
           .then(res => {
-            console.log(res)
+            if (res.success === true) {
+              this.$Message.info('操作成功')
+              this.modal1 = false
+              this.cljg = ''
+              this.getList()
+            } else {
+              this.$Message.error('操作失败')
+              this.modal1 = false
+              this.cljg = ''
+            }
           })
       },
       plcl: function () {
         let arr = []
+        console.log(this.selection.length)
         if (this.selection.length === 0) {
-          this.$Message.error('请选择数据')
+          this.$Message.error('请选择操作的项目')
         } else {
           this.selection.forEach(item => {
-              arr.push(item.id)
+            arr.push(item.id)
             this.formItem2.ids = arr
             console.log(this.formItem2.ids)
           });
@@ -317,14 +327,13 @@
         }
       },
       plclOk: function () {
-        if (this.formItem2.cljg === '') {
+        if (this.cljg === '') {
           this.$Message.error('请填写反馈信息')
         } else {
           this.plclSubmit()
         }
       },
       cancel: function () {
-        this.$Message.error('操作失败');
         this.modal1 = false;
         this.formItem2.cljg = ''
         this.formItem2.ids = []

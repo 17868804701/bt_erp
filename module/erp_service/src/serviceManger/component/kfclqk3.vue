@@ -45,7 +45,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns13" :data="data13" border height="470" style="margin-top: 10px;" size="small"></Table>
+    <Table :columns="columns13" :data="data13" border height="470" style="margin-top: 10px;" size="small">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px">{{nian}}{{yue}}客服处理情况报表统计</span>
+      </div>
+    </Table>
   </div>
 </template>
 <script>
@@ -55,6 +59,8 @@
         kfxxtj:{
             time:''
         },
+        nian:'',
+        yue:'',
         columns13: [
           {
             title: '单位/项目',
@@ -161,8 +167,12 @@
       search3:function () {
         if(this.kfxxtj.time===''){
           this.kfxxtj.time==''
+          this.nian = ''
+          this.yue  = ''
         }else {
           this.kfxxtj.time = this.$formatDate(this.kfxxtj.time).substring(0,7);
+          this.nian = this.$formatDate(this.kfxxtj.time).substring(0,4)
+          this.yue  = this.$formatDate(this.kfxxtj.time).substring(4,7)
         }
         this.getList()
       },

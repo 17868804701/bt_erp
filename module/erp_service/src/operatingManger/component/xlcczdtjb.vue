@@ -53,7 +53,11 @@
           </Form>
         </Modal>
       </Card>
-      <Table :columns="columns11" :data="data10" border height="520" size="small" style="margin-top: 10px;"></Table>
+      <Table :columns="columns11" :data="data10" border height="520" size="small" style="margin-top: 10px;">
+        <div slot="header" style="text-align: center">
+          <span style="font-size: 16px;">{{sj}}{{dw}}{{lb}}线路车次正点统计表</span>
+        </div>
+      </Table>
       <Page :total="totalPage1" show-total style="margin-top: 10px;" @on-change="setPage1"></Page>
     </div>
   </div>
@@ -72,6 +76,9 @@
           current: 1,
           size: 10
         },
+        dw: '',
+        sj: '',
+        lb:'',
         columns11: [
           {
             title: '单位',
@@ -319,6 +326,9 @@
         } else {
           this.formItem1.sj = this.$formatDate(this.formItem1.sj).substring(0, 7);
         }
+        this.sj = this.formItem1.sj
+        this.lb = this.formItem1.lb
+        this.dw = this.formItem1.dw
         this.getList();
       },
       getList: function () {
@@ -327,11 +337,14 @@
             console.log(res,'线路车次');
             if (res.data.total === 0) {
               this.$Message.info('暂无数据');
+              res.data.records.forEach(item=>{
+                item.sj = item.nd+'-'+item.yf
+              });
               this.totalPage1 = res.data.total;
               this.data10 = res.data.records;
             } else {
               res.data.records.forEach(item=>{
-                item.sj = this.$formatDate(item.sj).substring(0,10)
+                item.sj = item.nd+'-'+item.yf
               });
               this.totalPage1 = res.data.total;
               this.data10 = res.data.records;
@@ -340,7 +353,7 @@
       },
     },
     mounted () {
-      this.getList();
+
     }
   }
 </script>

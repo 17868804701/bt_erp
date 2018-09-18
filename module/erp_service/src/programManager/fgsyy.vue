@@ -46,9 +46,6 @@
         <FormItem label="路线长度">
           <Input v-model="formItem1.xlcd" placeholder="路线长度" style="width: 195px;"/>
         </FormItem>
-        <FormItem label="运营日里程">
-          <Input v-model="formItem1.rlc" placeholder="运营日里程" style="width: 195px;"/>
-        </FormItem>
         </div>
       </Form>
 
@@ -112,6 +109,7 @@
           </FormItem>
           <FormItem label="公司名" style="margin: 0">
             <Select v-model="searchItem.gsm" style="width: 195px;">
+              <Option value="">全部</Option>
               <Option value="四公司">四公司</Option>
             </Select>
           </FormItem>
@@ -126,6 +124,7 @@
       </Form>
     </Card>
     <Table :columns="columns11" :data="data10" border height="515" size="small" style="margin-top: 20px;"></Table>
+    <Page :total="total" show-total  style="margin-top: 10px;" @on-change="step"/>
   </div>
 </template>
 <script>
@@ -138,6 +137,7 @@
     },
     data () {
       return {
+        total:0,
         addProgram: false,
         editProgram: false,
         formItem1: {
@@ -281,6 +281,18 @@
                     key: 'rjqlc',
                     align: 'center',
                     width: 100,
+                  },
+                  {
+                    title: '年度加气里程',
+                    key: 'rjqndlc',
+                    align: 'center',
+                    width: 100,
+                  },
+                  {
+                    title: '非运营小计',
+                    key: 'fyyxj',
+                    align: 'center',
+                    width: 100,
                   }
                 ]
               },
@@ -292,7 +304,7 @@
               },
               {
                 title: '合计',
-                key: 'fyyxj',
+                key: 'fyyhj',
                 align: 'center',
                 width: 100,
               },
@@ -398,8 +410,13 @@
       ok () {
         this.$Message.info('Clicked ok');
       },
+      step(current){
+          this.searchItem.current = current
+          this.getList()
+      },
       cancel () {
-        this.$Message.info('取消');
+//        this.$Message.info('取消');
+        this.addProgram = false
         this.formItem1 = {}
         this.formItem2 = {}
       },
@@ -424,6 +441,8 @@
         if(this.formItem1.nf===''||this.formItem1.lb===''){
             this.$Message.error('请输入年份或者路别')
         }else {
+            this.formItem1.rlc = this.formItem1.rcc*this.formItem1.xlcd;
+            console.log(this.formItem1.rlc)
             this.formItem1.nf=this.$formatDate(this.formItem1.nf).substring(0,4)
             let obj = {
               yyscjh:this.formItem1,
@@ -452,10 +471,10 @@
               if (res.data.total === 0) {
                 this.$Message.info('暂无信息');
                 this.data10 = res.data.records;
-                this.totalPage = res.data.total
+                this.total = res.data.total
               } else {
                 this.data10 = res.data.records;
-                this.totalPage = res.data.total
+                this.total = res.data.total
               }
             }
           })

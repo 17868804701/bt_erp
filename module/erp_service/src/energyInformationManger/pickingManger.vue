@@ -10,9 +10,9 @@
             <Form :model="formItem" :label-width="110">
               <Row>
                 <Col span="24">
-                <FormItem label="选择月份或者状态" style="margin: 0;">
+                <FormItem label="选择时间" style="margin: 0;">
                   <DatePicker type="daterange" placeholder="选择时间段" :transfer="true" placement="bottom-end"
-                              v-model="formItem.kssj"></DatePicker>
+                              v-model="time"></DatePicker>
                   <Button type="primary" icon="ios-search" @click="search" v-has="'llgl_llgl_search'">搜索</Button>
                   <Button type="primary" icon="android-download"
                           style="float: right;margin-right: 10px" @click="daochuExcel" v-has="'llgl_llgl_export'">导出Excel
@@ -37,14 +37,14 @@
       <!--增加领料-->
       <Modal
         v-model="addPicking"
-        title="新增领料"
+        title="领料信息"
         width="60%"
         @on-cancel="cancel"
       >
         <div slot="footer" style="height: 30px;">
           <Button type="primary" style="float: right;margin-right: 10px" @click = 'update' v-if="this.type=='edit'">修改
           </Button>
-          <Button type="primary" style="float: right;margin-right: 10px" @click="save('add')" v-else>确定
+          <Button type="primary" style="float: right;margin-right: 10px" @click="save('add')" v-else>新增
           </Button>
           <Button type="primary" style="float: right;margin-right: 10px" @click="cancel">取消</Button>
         </div>
@@ -138,6 +138,7 @@
       return {
         addPicking: false,
         type:'',
+        time:'',
         totalPage: 0,
         formItem: {
           kssj: '',
@@ -377,17 +378,20 @@
     },
     methods: {
       search: function () {
-        if (this.formItem.kssj[0] == ''||this.formItem.kssj==''||this.formItem.jssj=='') {
-            this.formItem.kssj = '',
-            this.formItem.jssj = ''
-            this.list()
-        } else {
-          let start1 = this.$formatDate(this.formItem.kssj[0]).substring(0, 10);
-          let end2 = this.$formatDate(this.formItem.kssj[1]).substring(0, 10);
-          this.formItem.kssj = start1;
-          this.formItem.jssj = end2;
-          this.list()
+        this.formItem.kssj = this.time[0];
+        this.formItem.jssj = this.time[1];
+        if(this.formItem.kssj===''){
+          this.formItem.kssj=''
+        }else {
+          this.formItem.kssj = this.$formatDate(this.formItem.kssj).substring(0,10)
         }
+        if(this.formItem.jssj===''){
+          this.formItem.jssj=''
+        }else {
+          this.formItem.jssj = this.$formatDate(this.formItem.jssj).substring(0,10)
+        }
+
+        this.list();
         console.log(this.formItem.kssj)
       },
       list: function () {
@@ -412,6 +416,7 @@
         this.list()
       },
       cancel:function () {
+          this.addPicking = false
         this.add = {};
 //        this.$Message.info('操作失败');
         this.type = ''
@@ -452,22 +457,20 @@
           })
       },
       daochuExcel:function () {
-        if (this.formItem.kssj[0] == '') {
-          this.formItem.kssj = '',
-            this.formItem.jssj = ''
-          console.log(this.formItem.kssj)
-          console.log(this.formItem.jssj)
-          this.$getExcel(process.env.BASE_URL + this.$url.daochull + '?kssj=' + this.formItem.kssj+'&jssj='+this.formItem.jsdw )
-        } else {
-          let start1 = this.$formatDate(this.formItem.kssj[0]).substring(0, 10);
-          let end2 = this.$formatDate(this.formItem.kssj[1]).substring(0, 10);
-          this.formItem.kssj = start1;
-          this.formItem.jssj = end2;
-          console.log(this.formItem.kssj)
-          console.log(this.formItem.jssj)
-          this.$getExcel(process.env.BASE_URL + this.$url.daochull + '?kssj=' + this.formItem.kssj+'&jssj='+this.formItem.jsdw )
-        }
 
+        this.formItem.kssj = this.time[0];
+        this.formItem.jssj = this.time[1];
+        if(this.formItem.kssj===''){
+          this.formItem.kssj=''
+        }else {
+          this.formItem.kssj = this.$formatDate(this.formItem.kssj).substring(0,10)
+        }
+        if(this.formItem.jssj===''){
+          this.formItem.jssj=''
+        }else {
+          this.formItem.jssj = this.$formatDate(this.formItem.jssj).substring(0,10)
+        }
+        this.$getExcel(process.env.BASE_URL + this.$url.daochull + '?kssj=' + this.formItem.kssj+'&jssj='+this.formItem.jssj )
       }
     },
     mounted () {

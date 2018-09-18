@@ -25,7 +25,7 @@
     </div>
     <div style="width: 630px;display: flex;justify-content: space-between;margin-top: 15px;">
       <span>填报部门:企业管理部门</span>
-      <span>填报日期：2018-10-10</span>
+      <span>填报日期：{{year}}年{{month}}月</span>
     </div>
     <table border="1" cellspacing="0" style="margin-top: 10px;width:630px">
       <tr>
@@ -39,7 +39,7 @@
         <td>一、经费控制率</td>
         <td></td>
         <td>18</td>
-        <td></td>
+        <td>{{kfsmList['经费控制率']}}</td>
         <td>{{scoreList['经费控制率']}}</td>
       </tr>
       <tr>
@@ -61,29 +61,29 @@
         <td>1、规范服务合格率</td>
         <td></td>
         <td rowspan="3">10</td>
-        <td></td>
+        <td>{{kfsmList['规范服务合格率']}}</td>
       </tr>
       <tr>
         <td>2、站场调度考核</td>
         <td></td>
-        <td></td>
+        <td>{{kfsmList['站场调度考核']}}</td>
       </tr>
       <tr>
         <td>3、站场秩序合格率</td>
         <td></td>
-        <td></td>
+        <td>{{kfsmList['站场秩序合格率']}}</td>
       </tr>
       <tr>
         <td>4、安全生产事故</td>
         <td></td>
         <td>5</td>
-        <td></td>
+        <td>{{kfsmList['安全生产事故']}}</td>
       </tr>
       <tr>
         <td>5、行车责任事故</td>
         <td></td>
         <td>10</td>
-        <td></td>
+        <td>{{kfsmList['行车责任事故']}}</td>
       </tr>
       <tr>
         <td>三、站务设施管理</td>
@@ -101,12 +101,12 @@
         <td>1、站务设施完好</td>
         <td></td>
         <td rowspan="2">25</td>
-        <td></td>
+        <td>{{kfsmList['站务设施完好']}}</td>
       </tr>
       <tr>
         <td>2、线路标识准确、清楚</td>
         <td></td>
-        <td></td>
+        <td>{{kfsmList['线路标识准确、清楚']}}</td>
       </tr>
       <tr>
         <td>四、行政管理</td>
@@ -127,37 +127,37 @@
         <td>1、四防工作</td>
         <td></td>
         <td>4</td>
-        <td></td>
+        <td>{{kfsmList['四防工作']}}</td>
       </tr>
       <tr>
         <td>2、现场管理</td>
         <td></td>
         <td>2</td>
-        <td></td>
+        <td>{{kfsmList['现场管理']}}</td>
       </tr>
       <tr>
         <td>3、人力资源管理</td>
         <td></td>
         <td>3</td>
-        <td></td>
+        <td>{{kfsmList['人力资源管理']}}</td>
       </tr>
       <tr>
         <td>4、基础管理</td>
         <td></td>
         <td>2</td>
-        <td></td>
+        <td>{{kfsmList['基础管理']}}</td>
       </tr>
       <tr>
         <td>5、计划生育</td>
         <td></td>
         <td>1</td>
-        <td></td>
+        <td>{{kfsmList['计划生育']}}</td>
       </tr>
       <tr>
         <td>五、党建工会工作</td>
         <td></td>
         <td>20</td>
-        <td></td>
+        <td>{{kfsmList['党建工会工作']}}</td>
         <td>
           {{
           scoreList['党建工会工作']
@@ -222,6 +222,7 @@
   export default {
     props: {
       scoreList: '',
+      kfsmList:'',
       month:'',
       year:'',
       titles:''

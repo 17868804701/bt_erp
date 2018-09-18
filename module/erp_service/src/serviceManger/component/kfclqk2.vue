@@ -56,7 +56,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns12" :data="data12" border height="auto" style="margin-top: 10px;" size="small"></Table>
+    <Table :columns="columns12" :data="data12" border height="auto" style="margin-top: 10px;" size="small">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px">{{nian}}{{yue}}{{gs}}投诉情况分类汇总表</span>
+      </div>
+    </Table>
   </div>
 </template>
 <script>
@@ -67,6 +71,9 @@
           bm: '',
           tssj: ''
         },
+        nian:'',
+        yue:'',
+        gs:'',
         columns12: [
           {
             title: '路别/项目',
@@ -116,8 +123,14 @@
       getList: function () {
         if (this.fgstsqkfl.tssj === '') {
           this.fgstsqkfl.tssj = ''
+          this.nian =''
+          this.yue  = ''
+          this.gs  = this.fgstsqkfl.bm
         } else {
           this.fgstsqkfl.tssj = this.$formatDate(this.fgstsqkfl.tssj).substring(0,7)
+          this.nian = this.$formatDate(this.fgstsqkfl.tssj).substring(0,4)
+          this.yue  = this.$formatDate(this.fgstsqkfl.tssj).substring(4,7)
+          this.gs  = this.fgstsqkfl.bm
         }
         this.$fetch(this.$url.fgstsqkfl, this.fgstsqkfl)
           .then(res => {
@@ -127,7 +140,7 @@
                 this.$Message.info('暂无数据');
 //                this.data12 = res.data
               } else {
-                res.sumcount[0].xl = '集团公司总计';
+                res.sumcount[0].xl = '合计';
                 delete res.sumcount[0].hj;
                 let zj = res.sumcount;
                 res.data = res.data.concat(zj);

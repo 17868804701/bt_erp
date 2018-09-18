@@ -39,6 +39,7 @@
       </Form>
     </Modal>
     <Table border :columns="columns11" size="small" :data="data10" style="margin-top: 20px;"></Table>
+    <Page :total="total" show-total  style="margin-top: 10px;" @on-change="step"/>
   </div>
 </template>
 <script>
@@ -50,6 +51,7 @@
           current: 1,
           size: 10
         },
+        total:0,
         editCrksm:{
           crksm:'',
           id:''
@@ -231,6 +233,10 @@
       }
     },
     methods: {
+      step(current){
+        this.formItem.current = current
+        this.getList()
+      },
       getList: function () {
           console.log(this.formItem)
         this.$fetch(this.$url.jtgsList, this.formItem)
@@ -239,10 +245,10 @@
               if (res.data.total === 0) {
                 this.$Message.info('暂无信息');
                 this.data10 = res.data.records;
-                this.totalPage = res.data.total
+                this.total = res.data.total
               } else {
                 this.data10 = res.data.records;
-                this.totalPage = res.data.total
+                this.total = res.data.total
               }
             }
           })

@@ -41,27 +41,42 @@
               width="700"
               @on-ok="ok"
               title="预览表单">
+              <div slot="footer" style="height: 30px;">
+                <Button type="primary" style="float: right;margin-right: 10px" @click="ok">导出</Button>
+                <Button type="primary" style="float: right;margin-right: 10px" @click="quxiao">取消</Button>
+              </div>
               <div id="pdfDom">
-                <TPL1 v-show="this.formItem.table_title.indexOf('票款')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL1>
-                <TPL2 v-show="this.formItem.table_title.indexOf('公交')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL2>
-                <TPL3 v-show="this.formItem.table_title.indexOf('站务管理')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL3>
-                <TPL4 v-show="this.formItem.table_title.indexOf('职工培训')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL4>
-                <TPL5 v-show="this.formItem.table_title.indexOf('修理公司')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL5>
-                <TPL6 v-show="this.formItem.table_title.indexOf('稽查大队')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL6>
-                <TPL7 v-show="this.formItem.table_title.indexOf('吉运')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL7>
-                <TPL8 v-show="this.formItem.table_title.indexOf('长客')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL8>
-                <TPL9 v-show="this.formItem.table_title.indexOf('大自然')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL9>
-                <TPL10 v-show="this.formItem.table_title.indexOf('机关部室')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL10>
-                <TPL11 v-show="this.formItem.table_title.indexOf('经营业绩')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL11>
-                <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0" :titles="this.title" :scoreList="this.scoreList" :month="this.showMonth" :year="this.showYear"></TPL12>
+                <TPL1 v-show="this.formItem.table_title.indexOf('票款')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL1>
+                <TPL2 v-show="this.formItem.table_title.indexOf('公交')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL2>
+                <TPL3 v-show="this.formItem.table_title.indexOf('站务管理')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL3>
+                <TPL4 v-show="this.formItem.table_title.indexOf('职工培训')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL4>
+                <TPL5 v-show="this.formItem.table_title.indexOf('修理公司')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL5>
+                <TPL6 v-show="this.formItem.table_title.indexOf('稽查大队')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL6>
+                <TPL7 v-show="this.formItem.table_title.indexOf('吉运')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL7>
+                <TPL8 v-show="this.formItem.table_title.indexOf('长客')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL8>
+                <TPL9 v-show="this.formItem.table_title.indexOf('大自然')==0" :titles="this.title"
+                      :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL9>
+                <TPL10 v-show="this.formItem.table_title.indexOf('机关部室')==0" :titles="this.title"
+                       :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL10>
+                <TPL11 v-show="this.formItem.table_title.indexOf('经营业绩')==0" :titles="this.title"
+                       :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL11>
+                <TPL12 v-show="this.formItem.table_title.indexOf('各二级')==0" :titles="this.title"
+                       :scoreList="this.scoreList" :kfsmList="this.kfsmList " :month="this.showMonth" :year="this.showYear"></TPL12>
               </div>
             </Modal>
           </div>
           <div style="display: flex;justify-content: center;margin-top: 15px;">
             <ButtonGroup>
-              <Button type="primary" icon="eye" @click="requestReportData" v-has="'xjpj_xjpj_view'">查看预览</Button>
-              <Button type="primary" style="margin-left:1px;" icon="android-download" v-has="'xjpj_xjpj_export'">导出表格
-              </Button>
+              <Button type="primary" icon="eye" @click="requestReportData" v-has="'xjpj_xjpj_view'">预览导出</Button>
+              <!--<Button type="primary" style="margin-left:1px;" icon="android-download" v-has="'xjpj_xjpj_export'">导出表格</Button>-->
             </ButtonGroup>
           </div>
         </Form>
@@ -140,13 +155,14 @@
         modal1: false,
         value1: 1,
         scoreList: '',
+        kfsmList:'',
         formItem: {
           table_title: '',
           time: ''
         },
-        title:'',
-        showMonth:'',
-        showYear:'',
+        title: '',
+        showMonth: '',
+        showYear: '',
         userPJList: [], // 用户打分的所有选项
         allReportTitle: [], // 所有报表名称
         TPLData: [], // 预览报表的数据
@@ -169,8 +185,9 @@
             month = parseInt(month).toString();
           }
         } else {
-          month = (parseInt(month)-1).toString();
-        };
+          month = (parseInt(month) - 1).toString();
+        }
+        ;
         let report = this.userPJList[index];
         let subOptionsArray = report.options.subOptions;
         let requestArray = [];
@@ -236,11 +253,15 @@
             if (res.success === true) {
               this.TPLData = res.data;
               let arr = {};
+              let arr1 = {}
               res.data.forEach(item => {
                 arr[item['subOptionName']] = item['score']
+                arr1[item['subOptionName']] = item['kfsm']
               });
               console.log(arr);
+              console.log(arr1)
               this.scoreList = arr;
+              this.kfsmList = arr1;
               this.modal1 = true;
             } else {
               this.$Message.error('获取数据失败, 请重试!');
@@ -270,7 +291,12 @@
       },
       ok(){
         this.getPdf()
-      }
+        this.modal1 = false
+      },
+
+      quxiao(){
+        this.modal1 = false
+      },
     },
     mounted() {
       this.requestBaseData();

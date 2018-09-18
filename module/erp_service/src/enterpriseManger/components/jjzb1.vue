@@ -30,7 +30,7 @@
       <Form :model="formItem1" :label-width="80">
         <div class="search">
           <FormItem label="选择时间" style="margin: 0">
-            <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem1.nian"
+            <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="time"
                         class="text_width"></DatePicker>
           </FormItem>
           <Button type="primary" icon="ios-search" class="search_btn" @click="search1" v-has="'jjzbwcqk_by_search'">查询</Button>
@@ -51,6 +51,7 @@
           nian: '',
           yue: ''
         },
+        time:'',
         columns11: [
           {
             title: '单位/名称',
@@ -252,25 +253,33 @@
           })
       },
       search1: function () {
-        if (this.formItem1.nian === '') {
-          this.formItem1.nian = ''
-          this.formItem1.yue = ''
-        } else {
-          let nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
-          let yue = this.$formatDate(this.formItem1.nian).substring(5, 7)
-          this.formItem1.nian = nian
-          this.formItem1.yue = yue
-        }
-        console.log(this.formItem1.nian)
-        this.getList()
+          if(this.time===''){
+            let date = new Date;
+            let year = (date.getFullYear()).toString();
+            let month = (date.getMonth() + 1).toString();
+            month = (month < 10 ? "0" + month : month);
+            this.formItem1.nian = year;
+            this.formItem1.yue = month
+          }else {
+            let nian = this.$formatDate(this.time).substring(0, 4)
+            let yue = this.$formatDate(this.time).substring(5, 7)
+            this.formItem1.nian = nian
+            this.formItem1.yue = yue
+          }
+
+          this.getList()
       },
       daochu1:function () {
-        if (this.formItem1.nian === '') {
-          this.formItem1.nian = ''
-          this.formItem1.yue = ''
-        } else {
-          let nian = this.$formatDate(this.formItem1.nian).substring(0, 4)
-          let yue = this.$formatDate(this.formItem1.nian).substring(5, 7)
+        if(this.time===''){
+          let date = new Date;
+          let year = (date.getFullYear()).toString();
+          let month = (date.getMonth() + 1).toString();
+          month = (month < 10 ? "0" + month : month);
+          this.formItem1.nian = year;
+          this.formItem1.yue = month
+        }else {
+          let nian = this.$formatDate(this.time).substring(0, 4)
+          let yue = this.$formatDate(this.time).substring(5, 7)
           this.formItem1.nian = nian
           this.formItem1.yue = yue
         }

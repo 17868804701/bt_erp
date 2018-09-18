@@ -106,7 +106,7 @@
             <Input v-model="formItem.sy" placeholder="事由" style="width: 470px;"/>
           </FormItem>
           <FormItem label="反馈时间" style="margin-bottom: 25px" v-show="this.formItem.sjlb==2">
-            <DatePicker type="date" placeholder="投诉时间" :transfer="true" v-model="formItem.fksj"
+            <DatePicker type="date" placeholder="反馈时间" :transfer="true" v-model="formItem.fksj"
                         class="text_width"></DatePicker>
           </FormItem>
           <FormItem label="反馈信息" v-show="this.formItem.sjlb==2">
@@ -194,7 +194,7 @@
             if (this.formItem.fksj === '') {
               this.formItem.fksj = ''
             } else {
-              this.formItem.fksj = this.$formatDate(this.formItem.fksj).substring(0, 7);
+              this.formItem.fksj = this.formItem.fksj
             }
             console.log(this.formItem);
             this.$post(this.$url.savekfxx, this.formItem)

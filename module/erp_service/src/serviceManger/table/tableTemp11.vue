@@ -25,7 +25,7 @@
     </div>
     <div style="width: 630px;display: flex;justify-content: space-between;margin-top: 15px;">
       <span>填报部门:企业管理部门</span>
-      <span>填报日期：2018-10-10</span>
+      <span>填报日期：{{year}}年{{month}}月</span>
     </div>
     <table border="1" cellspacing="0" style="margin-top: 10px;width:630px">
       <tr>

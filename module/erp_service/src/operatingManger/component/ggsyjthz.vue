@@ -15,14 +15,6 @@
               <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
                           v-model="formItem2.sj"></DatePicker>
             </FormItem>
-            <FormItem label="路别" style="margin: 0">
-              <Select v-model="formItem2.lb" style="width: 195px;">
-                <Option value="">全部</Option>
-                <Option value="1路">1路</Option>
-                <Option value="2路">2路</Option>
-                <Option value="3路">3路</Option>
-              </Select>
-            </FormItem>
             <FormItem label="公司" style="margin: 0">
               <Select v-model="formItem2.dw" style="width: 195px;">
                 <Option value="">全部</Option>
@@ -45,15 +37,19 @@
           @on-ok="ok2"
           @on-cancel="cancel2"
         >
-          <Form :model="formItem2" :label-width="80">
+          <Form :model="formItem3" :label-width="80">
             <FormItem label="导出说明">
-              <Input v-model="formItem2.dcsm" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+              <Input v-model="formItem3.dcsm" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                      placeholder="请输入导出说明"></Input>
             </FormItem>
           </Form>
         </Modal>
       </Card>
-      <Table :columns="columns12" :data="data12" border height="520" size="small" style="margin-top: 10px;"></Table>
+      <Table :columns="columns12" :data="data12" border height="520" size="small" style="margin-top: 10px;">
+        <div slot="header" style="text-align: center">
+          <span style="font-size: 16px;">{{time}}各公司与集团汇总表</span>
+        </div>
+      </Table>
       <Page :total="totalPage2" show-total style="margin-top: 10px;" @on-change="setPage2"></Page>
     </div>
   </div>
@@ -67,21 +63,17 @@
         formItem2: {
           dw: '',
           sj: '',
-          dcsm: '',
-          lb: '',
           current: 1,
           size: 10
+        },
+        time:'',
+        formItem3:{
+          dcsm:''
         },
         columns12: [
           {
             title: '单位',
             key: 'dw',
-            align: 'center',
-            width: 100,
-          },
-          {
-            title: '路别',
-            key: 'lb',
             align: 'center',
             width: 100,
           },
@@ -305,10 +297,10 @@
         } else {
           time = this.$formatDate(this.formItem2.sj).substring(0, 7);
         }
-        this.$getExcel(process.env.BASE_URL + this.$url.yyJtexportFgsxcyb + '?sj=' + time + '&dw=' + this.formItem2.dw + '&dcsm=' + this.formItem2.dcsm)
+        this.$getExcel(process.env.BASE_URL + this.$url.yyJtexportFgsxcyb + '?sj=' + time + '&dw=' + this.formItem2.dw + '&dcsm=' + this.formItem3.dcsm)
       },
       cancel2: function () {
-        this.$Message.error('导出失败')
+
       },
       getList: function () {
           console.log(this.formItem2)
@@ -319,9 +311,12 @@
               this.$Message.info('暂无数据')
               this.totalPage2 = res.data.total;
               this.data12 = res.data.records;
+              res.data.records.forEach(item=>{
+                item.sj = item.nd+'-'+item.yf
+              });
             } else {
               res.data.records.forEach(item=>{
-                item.sj = this.$formatDate(item.sj).substring(0,7)
+                item.sj = item.nd+'-'+item.yf
               });
               this.totalPage2 = res.data.total;
               this.data12 = res.data.records;
@@ -338,11 +333,18 @@
         } else {
           this.formItem2.sj = this.$formatDate(this.formItem2.sj).substring(0, 7);
         }
+        let year = this.formItem2.sj.substring(0,4)
+        let month = this.formItem2.sj.substring(5,7)
+        this.time = year+'年'+month+'月'
         this.getList();
       },
     },
     mounted () {
-      this.getList();
+      let date = new Date;
+      let year = (date.getFullYear()).toString();
+      let month = (date.getMonth() + 1).toString();
+      month = (month < 10 ? "0" + month : month)-1;
+      this.time = year+'年'+month+'月'
     }
   }
 </script>

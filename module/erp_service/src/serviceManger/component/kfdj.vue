@@ -35,21 +35,30 @@
       <Form :model="formItem" :label-width="110">
         <div class="search">
           <FormItem label="选择时间" style="margin: 0">
-            <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="formItem.startTime"
+            <DatePicker type="daterange" placeholder="选择时间" :transfer="true" v-model="time"
                         class="text_width"></DatePicker>
           </FormItem>
           <FormItem label="事件类别" style="margin-bottom: 0px">
-            <Select v-model="formItem.sjlb" :transfer="true" style="width: 195px;">
+            <Select v-model="formItem.tslb" :transfer="true" style="width: 195px;">
               <Option value="">全部</Option>
-              <Option value="0">责任性事件</Option>
-              <Option value="1">疑难性事件</Option>
-              <Option value="2">普通事件</Option>
+              <Option value="DZBTC">到站不停车</Option>
+              <Option value="JZ">拒载</Option>
+              <Option value="DJG">大间隔</Option>
+              <Option value="FWTDC">服务态度差 </Option>
+              <Option value="TXYY">脱线运营</Option>
+              <Option value="SJSG">摔夹事故</Option>
+              <Option value="ICKFM">刷IC卡方面</Option>
+              <Option value="QT">其他</Option>
             </Select>
           </FormItem>
           <div style="margin-left: 30px;">
             <ButtonGroup>
-              <Button type="primary" @click="search1" style="margin-right: 3px;"><Icon type="search" v-has="'kfxxlbym_kfxxdjlb_search'"></Icon>  搜索</Button>
-              <Button type="primary" @click="daochu" icon="android-download" v-has="'kfxxlbym_kfxxdjlb_export'">导出</Button>
+              <Button type="primary" @click="search1" style="margin-right: 3px;">
+                <Icon type="search" v-has="'kfxxlbym_kfxxdjlb_search'"></Icon>
+                搜索
+              </Button>
+              <Button type="primary" @click="daochu" icon="android-download" v-has="'kfxxlbym_kfxxdjlb_export'">导出
+              </Button>
             </ButtonGroup>
           </div>
           <router-link to="/addKfxx">
@@ -73,10 +82,11 @@
         formItem: {
           current: 1,
           size: 10,
-          sjlb: '',
+          tslb: '',
           startTime: '',
           endTime: ''
         },
+        time: [],
         modal1: false,
         totalPage: 0,
         selection: [],
@@ -223,10 +233,10 @@
                     click: () => {
                       console.log(params.row.zt.toString())
                       params.row.zt = params.row.zt.toString()
-                      params.row.fksj =this.$formatDate(params.row.fksj);
+                      params.row.fksj = this.$formatDate(params.row.fksj);
                       this.$router.push({
                         path: '/addkfxx',
-                        query: {row: params.row,tip:'edit'}
+                        query: {row: params.row, tip: 'edit'}
                       })
                     }
                   },
@@ -264,33 +274,37 @@
           })
       },
       daochu: function () {
-        if (this.formItem.startTime[0] == '') {
-          this.formItem.startTime = '',
-            this.formItem.endTime = '',
-            this.$getExcel(process.env.BASE_URL + this.$url.daochukfxx + '?sjlb=' + this.formItem.sjlb + '&startTime = ' + this.formItem.startTime + '&endTime = ' + this.formItem.endTime)
+        this.formItem.startTime = this.time[0];
+        this.formItem.endTime = this.time[1];
+        if (this.formItem.startTime === '') {
+          this.formItem.startTime = ''
         } else {
-          let start = DateTool.timesToDate(this.formItem.startTime[0]);
-          let end = DateTool.timesToDate(this.formItem.startTime[1]);
-          this.formItem.startTime = start;
-          this.formItem.endTime = end;
-          this.$getExcel(process.env.BASE_URL + this.$url.daochukfxx + '?sjlb=' + this.formItem.sjlb + '&startTime = ' + this.formItem.startTime + '&endTime = ' + this.formItem.endTime)
+          this.formItem.startTime = this.$formatDate(this.formItem.startTime).substring(0, 10)
         }
+        if (this.formItem.endTime === '') {
+          this.formItem.endTime = ''
+        } else {
+          this.formItem.endTime = this.$formatDate(this.formItem.endTime).substring(0, 10)
+        }
+
+        console.log(this.formItem.endTime)
+        console.log(this.formItem.startTime)
+        this.$getExcel(process.env.BASE_URL+this.$url.daochukfxx+'?tslb='+this.formItem.tslb + '&startTime='+this.formItem.startTime + '&endTime='+this.formItem.endTime)
       },
       search1: function () {
-
-        if(this.formItem.startTime[0] === '') {
-            console.log(111)
-            this.formItem.startTime = '',
-            this.formItem.endTime = ''
+        console.log(this.time)
+        this.formItem.startTime = this.time[0];
+        this.formItem.endTime = this.time[1];
+        if (this.formItem.startTime === '') {
+          this.formItem.startTime = ''
         } else {
-          console.log(222)
-          let start = DateTool.timesToDate(this.formItem.startTime[0]);
-          let end = DateTool.timesToDate(this.formItem.startTime[1]);
-          this.formItem.startTime = start;
-          this.formItem.endTime = end;
+          this.formItem.startTime = this.$formatDate(this.formItem.startTime).substring(0, 10)
         }
-        console.log(this.formItem.startTime)
-        console.log(this.formItem.endTime)
+        if (this.formItem.endTime === '') {
+          this.formItem.endTime = ''
+        } else {
+          this.formItem.endTime = this.$formatDate(this.formItem.endTime).substring(0, 10)
+        }
         this.getList()
       },
       setp: function (current) {

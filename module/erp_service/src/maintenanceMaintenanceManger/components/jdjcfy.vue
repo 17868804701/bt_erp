@@ -64,7 +64,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns2" :data="data2" size="small" border style="margin-top: 10px;"></Table>
+    <Table :columns="columns2" :data="data2" size="small" border style="margin-top: 10px;">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px;">{{year}}{{jidu}}检测费用结算</span>
+      </div>
+    </Table>
   </div>
 </template>
 <script>
@@ -75,6 +79,8 @@
         modal1: false,
         modal2: false,
         totalCount: 1,
+        year:'',
+        jidu:'',
         formItem1: {
           quarter: '',
           currPage: 1,
@@ -137,13 +143,31 @@
         } else {
           this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 4)
         }
-        console.log(this.formItem1.years)
-        console.log(this.formItem1.quarter)
-        if (this.formItem1.quarter != '' && this.formItem1.years == '') {
-          this.$Message.error('请先选则年份！')
-        } else {
-          this.getList();
+        if(this.formItem1.years==''){
+            this.year = ''
+        }else {
+            this.year = this.$formatDate(this.formItem1.years).substring(0,4)
         }
+        if(this.formItem1.quarter==1){
+          this.jidu = '第一季度'
+        }else if(this.formItem1.quarter==2){
+          this.jidu = '第二季度'
+        }else if(this.formItem1.quarter==3){
+          this.jidu = '第三季度'
+        }else if(this.formItem1.quarter==4){
+          this.jidu = '第四季度'
+        }else {
+            this.jidu = ''
+        }
+        this.getList();
+
+//        console.log(this.formItem1.years)
+//        console.log(this.formItem1.quarter)
+//        if (this.formItem1.quarter != '' && this.formItem1.years == '') {
+//          this.$Message.error('请先选则年份！')
+//        } else {
+//          this.getList();
+//        }
       },
       getList: function () {
         if (this.formItem1.years == '') {

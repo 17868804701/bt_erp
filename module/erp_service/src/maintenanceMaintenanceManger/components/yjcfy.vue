@@ -46,7 +46,11 @@
         </div>
       </Form>
     </Card>
-    <Table :columns="columns1" :data="data1" size="small" border style="margin-top: 10px;"></Table>
+    <Table :columns="columns1" :data="data1" size="small" border style="margin-top: 10px;">
+      <div slot="header" style="text-align: center">
+        <span style="font-size: 16px;">{{time}}检测费用结算</span>
+      </div>
+    </Table>
     <Page :total="totalCount" show-total style="margin-top: 10px;" @on-change="setpPage"></Page>
   </div>
 </template>
@@ -57,6 +61,7 @@
       return {
         modal1: false,
         modal2: false,
+        time:'',
         totalCount: 1,
         formItem: {
           dateRange: '',
@@ -141,6 +146,11 @@
         this.$getExcel(process.env.BASE_URL + this.$url.yjcfydc + '?date=' + this.formItem.date + '&cph=' + this.formItem.cph + '&zbh=' + this.formItem.zbh)
       },
       search_yf: function () {
+        if(this.formItem.date===''){
+              this.time = ''
+        }else {
+          this.time = this.$formatDate(this.formItem.date).substring(0,7)
+        }
         this.getList()
       },
       setpPage: function (current) {

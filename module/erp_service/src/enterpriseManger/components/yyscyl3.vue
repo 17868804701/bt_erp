@@ -34,17 +34,8 @@
       <Form :model="formItem3" :label-width="80">
         <div class="search">
           <FormItem label="选择时间" style="margin: 0">
-            <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem3.nian"
+            <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem3.sj"
                         class="text_width" style="width: 170px;"></DatePicker>
-          </FormItem>
-          <FormItem label="选择季度" style="margin: 0">
-            <Select v-model="formItem3.jidu" :transfer="true" style="width: 170px;">
-              <Option value="">全部</Option>
-              <Option value="1">第一季度</Option>
-              <Option value="2">第二季度</Option>
-              <Option value="3">第三季度</Option>
-              <Option value="4">第四季度</Option>
-            </Select>
           </FormItem>
           <Button type="primary" icon="ios-search" class="search_btn" @click="getList"
                   v-has="'yyscysyl_cclcydhz_search'">查询
@@ -57,7 +48,7 @@
     </Card>
     <Table :columns="columns13" :data="data13" border height="500" style="margin-top: 10px;" size="small">
       <div slot="header" style="text-align: center">
-        <span style="font-size: 16px;">{{nian }}{{jidu}}车次里程耗油月度分析</span>
+        <span style="font-size: 16px;">{{sj }}车次里程耗油月度分析</span>
       </div>
     </Table>
   </div>
@@ -67,11 +58,9 @@
     data () {
       return {
         currentTab: 'name1',
-        nian: '',
-        jidu: '',
+        sj:'',
         formItem3: {
-          nian: '',
-          jidu: '',
+         sj:''
         },
         columns13: [
           {
@@ -127,25 +116,13 @@
     },
     methods: {
       getList() {
-        if (this.formItem3.nian === '') {
-          this.formItem3.nian = ''
+        if (this.formItem3.sj === '') {
+          this.formItem3.sj = ''
         } else {
-          this.formItem3.nian = this.$formatDate(this.formItem3.nian).substring(0, 4)
+          this.formItem3.sj = this.$formatDate(this.formItem3.sj).substring(0, 7)
         }
-
-        this.nian = this.formItem3.nian
-        if(this.formItem3.jidu === '1'){
-          this.jidu = '年第一季度'
-        }else if(this.formItem3.jidu === '2'){
-          this.jidu = '年第二季度'
-        }else if(this.formItem3.jidu === '3'){
-          this.jidu = '年第三季度'
-        }else if(this.formItem3.jidu === '4'){
-          this.jidu = '年第四季度'
-        }else {
-          this.jidu = ''
-        }
-
+        console.log(this.formItem3.sj)
+        this.sj = this.formItem3.sj
 
         this.$fetch(this.$url.qygl_yyscyszl_cclchyYDFX, this.formItem3)
           .then(res => {

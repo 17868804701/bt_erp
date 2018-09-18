@@ -179,9 +179,9 @@
       },
       exportExcel() {
         let url = this.$url.maintain_BYGL_JYDGL_exportExcel;
-        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
+//        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
         if (this.formItem.date instanceof Date) {
-          url = url + '&date=' + this.formItem.date;
+          url = url + '?date=' + this.formItem.date;
         }
         this.$getExcel(url);
       },

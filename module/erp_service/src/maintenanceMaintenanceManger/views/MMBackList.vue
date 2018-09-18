@@ -301,6 +301,7 @@
         let that = this;
         this.$fetch(this.$url.maintain_BYGL_FXGL_recordList, params)
         .then(res=>{
+//          debugger
           if (res.code === 0) {
             res.page.list.forEach(item => {
               item.fxccsj = DateTool.timesToDate(item.fxccsj);
@@ -468,9 +469,8 @@
       },
       exportExcel() {
         let url = this.$url.maintain_BYGL_FXGL_exportExcel;
-        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
         if (this.formItem.date instanceof Date) {
-          url = url + '&date=' + this.formItem.date;
+          url = url + '?date=' + this.formItem.date;
         }
         this.$getExcel(url);
       },

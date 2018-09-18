@@ -516,9 +516,9 @@
 
         var that = this;
         if (typeof this.editRow['id'] === 'undefined' || this.editRow['id'] === null || this.editRow['id']=="") {
-          console.log('没有id, 新增保存');
+//          console.log('没有id, 新增保存');
           params.khsj = DateTool.yyyymm01FormatDate(this.formItem.date);
-          console.log(params);
+//          console.log(params);
           this.$post(this.$url.security_AQGLYKH_save, params)
           .then(res => {
             if (res.success === true) {
@@ -526,23 +526,23 @@
               that.editModal = false;
               that.requestListData();
             }else{
-              this.$Message.error('保存失败!');
+              that.$Message.error('保存失败!');
             }
           })
         }else{
           params.khsj = DateTool.yyyymm01FormatDate(this.formItem.date);
           params.gxsj = DateTool.yyyymm01FormatDate(this.formItem.date);
-          console.log('有id, 更新');
-          console.log(params);
+//          console.log('有id, 更新');
+//          console.log(params);
           params.id = this.editRow.id;
           this.$post(this.$url.security_AQGLYKH_update, params)
           .then(res => {
             if (res.success === true) {
-              this.$Message.success('更新成功!');
+              that.$Message.success('更新成功!');
               that.editModal = false;
               that.requestListData();
             }else{
-              this.$Message.error('更新失败!');
+              that.$Message.error('更新失败!');
             }
           })
         }
@@ -560,19 +560,17 @@
           month: month
         }
         this.getTableTitle();
+        let that = this;
         this.$fetch(this.$url.security_AQGLYKH_list, params)
         .then(res => {
           if (res.success === true) {
-            if (res.data.length > 0) {
-
-              res.data.forEach(item => {
-                item.gxsj = DateTool.timesToDate(item.gxsj);
-                item.khsj = DateTool.timesToDate(item.khsj);
-              })
-              this.tableData = res.data;
-            }
+            res.data.forEach(item => {
+              item.gxsj = DateTool.timesToDate(item.gxsj);
+              item.khsj = DateTool.timesToDate(item.khsj);
+            })
+            that.tableData = res.data;
           }else{
-            this.$Message.error('数据获取失败, 请重试!');
+            that.$Message.error('数据获取失败, 请重试!');
           }
         })
       },

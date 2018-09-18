@@ -137,23 +137,20 @@
           current: this.formItem.current,
           size: this.formItem.size,
         };
-        console.log('追加事故经损说明管理请求数据');
-        console.log(params);
+//        console.log('追加事故经损说明管理请求数据');
+//        console.log(params);
+        let that = this;
         this.$fetch(this.$url.security_ZJSGJSSM_list, params)
         .then(res => {
-          console.log(res);
+//          console.log(res);
           if (res.success === true) {
-            if (res.data.records.length > 0) {
-
-              res.data.records.forEach(item => {
-                item.lasj = DateTool.timesToDate(item.lasj);
-              })
-
-              this.tableData = res.data.records;
-              this.totalSize = res.data.total;
-            }
+            res.data.records.forEach(item => {
+              item.lasj = DateTool.timesToDate(item.lasj);
+            })
+            that.tableData = res.data.records;
+            that.totalSize = res.data.total;
           }else{
-            this.$Message.error('数据获取失败, 请重试!');
+            that.$Message.error('数据获取失败, 请重试!');
           }
         })
       },

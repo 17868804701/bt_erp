@@ -11,6 +11,8 @@
       <Modal
         v-model="accidentModal"
         title="新增立案事故登记"
+        :mask-closable="false"
+        :closable="false"
         width="50%">
         <div slot="footer" style="height: 30px;">
           <Button type="primary" style="float: right;margin-right: 10px" @click="confirmAddAccident">保存</Button>
@@ -81,7 +83,7 @@
     data () {
       return {
         //   jafy 结案费用   swrs 死亡人数  ssrs  受伤人数  kf  扣分  xczrsgfl ??
-        columnsTitle: ['单位','自编号', '路别', '立案时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案状态','备注'],
+        columnsTitle: ['单位','自编号', '路别', '时间', '地点', '驾驶员姓名', '报案人', '事故属性', '事故性质', '立案日期', '勘查人', '立案状态','备注'],
         columnsCode: ['dw','zbh','lb','lasj','dd','jsyxm','bar','sgsx','sgxz','larq','kcr','lalx','bz'],
         gsColumnsTitle: ['公积金车损', '公积金车内', '公积金三者', '公积金定损金额合计', '交强险损失', '事故总损失'],
         gsColumnsCode: [ 'gjjcs', 'gjjcn', 'gjjsz', 'gjjhj', 'jqxss', 'sgzss'],
@@ -366,7 +368,6 @@
         this.requestListData();
       },
       addLASG() {
-
         var params = {};
         for (let attr in this.formValidate) {
           params[attr] = this.formValidate[attr];
@@ -376,8 +377,9 @@
         params.gjjhj = params.gjjsz+params.gjjcn+params.gjjcs;
         params.sgzss = params.gjjhj+params.jqxss;
         params.sgxz = this.SGXZ();
-
-//        console.log(params);
+        params.lasj = DateTool.yyyymmddFormatDate(params.lasj);
+        params.larq = DateTool.yyyymmddFormatDate(params.larq);
+        //        console.log(params);
 //        debugger;
         this.$post(this.$url.security_LASG_add, params)
         .then(res => {
@@ -431,11 +433,11 @@
       },
       exportExcel() {
         let url = this.$url.security_LASG_exportExcel;
-        url = url + '?current='+this.searchOptions.current+'&&size='+this.searchOptions.size;
+//        url = url + '?current='+this.searchOptions.current+'&&size='+this.searchOptions.size;
         if (this.searchOptions.date instanceof Date) {
           let firstDay = DateTool.getFirstDay(this.searchOptions.date);
           let lastDay = DateTool.getLastDay(this.searchOptions.date);
-          url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
+          url = url + '?lasjStart=' + firstDay + '&lasjEnd=' + lastDay;
         }
         this.$getExcel(url);
       },

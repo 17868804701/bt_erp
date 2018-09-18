@@ -4,9 +4,6 @@
     <Form ref="addAccident" :model="formValidate" :rules="ruleValidate" :label-width="150">
 
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
-        <!--<FormItem prop="larq" label="立案日期">-->
-          <!--<div style="width: 120px">{{formValidate.larq}}</div>-->
-        <!--</FormItem>-->
         <FormItem label="事故性质">
           <div style="width: 120px">{{SGXZ}}</div>
         </FormItem>
@@ -17,10 +14,10 @@
           <div style="width: 120px">{{GJJHJ}}</div>
         </FormItem>
         <FormItem prop="sgsx" label="事故属性">
-          <CommonSelect iviewType="checkbox" type="SGSX" :selectValue="formValidate.sgsx"></CommonSelect>
+          <CommonSelect iviewType="checkbox" type="SGSX" :selectValue="formValidate.sgsx" ></CommonSelect>
         </FormItem>
         <FormItem prop="xczrsgfl" label="行车责任">
-          <CommonSelect type="XCSGZRFL" :selectValue="formValidate.xczrsgfl" @update=""></CommonSelect>
+          <CommonSelect type="XCSGZRFL" :selectValue="formValidate.xczrsgfl" style="width: 120px;"></CommonSelect>
         </FormItem>
         <FormItem prop="jafy" label="结案费用">
           <Input v-model="formValidate.jafy" placeholder="结案费用..." style="width: 120px"></Input>
@@ -28,17 +25,21 @@
       </div>
 
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
+        <FormItem prop="lasj" label="立案时间">
+          <DatePicker v-model="formValidate.lasj" type="date" placeholder="Select date" style="width: 120px"></DatePicker>
+        </FormItem>
+        <FormItem prop="larq" label="立案日期">
+          <DatePicker v-model="formValidate.larq" type="date" placeholder="Select date" style="width: 120px"></DatePicker>
+        </FormItem>
         <FormItem prop="dw" label="登记单位">
-          <CommonSelect type="EJGS" :selectValue="formValidate.dw"></CommonSelect>
+          <CommonSelect type="EJGS" :selectValue="formValidate.dw" style="width: 120px;"></CommonSelect>
         </FormItem>
         <FormItem prop="zbh" label="自编号">
           <Select v-model="formValidate.zbh" filterable @on-change="selectCLItem" style="width: 120px;" placeholder="请选择">
             <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index">{{ item }}</Option>
           </Select>
-          <!--<Input v-model="formValidate.zbh" placeholder="请输入车辆自编号..." style="width: 120px"></Input>-->
         </FormItem>
         <FormItem label="牌照">
-          <!--<Input v-model="formValidate.pz" placeholder="请输入牌照..." style="width: 120px"></Input>-->
           <div style="width: 120px">
             {{formValidate.pz}}
           </div>
@@ -47,18 +48,13 @@
           <div style="width: 120px">
             {{formValidate.lb}}
           </div>
-          <!--<Input v-model="formValidate.lb" placeholder="请输入路别..." style="width: 120px"></Input>-->
         </FormItem>
         <FormItem prop="jsyxm" label="驾驶员姓名">
           <Input v-model="formValidate.jsyxm" placeholder="驾驶员姓名..." style="width: 120px"></Input>
         </FormItem>
-
         <FormItem prop="dd" label="地点">
           <Input v-model="formValidate.dd" placeholder="地点..." style="width: 120px"></Input>
         </FormItem>
-        <!--<FormItem prop="lasj" label="立案时间">-->
-          <!--<DatePicker v-model="formValidate.lasj" type="date" placeholder="Select date" style="width: 120px"></DatePicker>-->
-        <!--</FormItem>-->
         <FormItem prop="lalx" label="立案状态">
           <div style="width: 120px">{{formValidate.lalx}}</div>
         </FormItem>
@@ -111,6 +107,8 @@
     name: 'AddAccidentDiv',
     props: {
       formValidate: {
+        lasj: String,
+        larq: String,
         dw: String,
         pz: String,
         dd: String,
@@ -162,9 +160,12 @@
           zbh: [
             { required: true, message: '此项不能为空', trigger: 'blur' }
           ],
-//          lasj: [
-//            { required: true, message: '此项不能为空', trigger: 'blur',type: 'date' }
-//          ],
+          lasj: [
+            { required: true, message: '此项不能为空', trigger: 'blur',type: 'date' }
+          ],
+          larq: [
+            { required: true, message: '此项不能为空', trigger: 'blur',type: 'date' }
+          ],
           jsyxm: [
             { required: true, message: '此项不能为空', trigger: 'blur' }
           ],

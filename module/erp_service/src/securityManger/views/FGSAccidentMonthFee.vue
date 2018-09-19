@@ -174,17 +174,21 @@
       },
       requestListData() {
 
+        let year = this.formItem.date.getFullYear();
+        let month = this.formItem.date.getMonth() + 1;
+        if(month<10){
+          month = '0'+month
+        }
         let params = {
-          time: DateTool.yyyyddFormatDate(this.formItem.date)
+          nf: year,
+          yf: month,
         }
         let that = this;
         this.$fetch(this.$url.security_GFGSJTSG_list, params)
         .then(res => {
           this.getTableTitle();
           if (res.success === true) {
-            if (res.data.length > 0) {
-              that.tableData = res.data;
-            }
+            that.tableData = res.data;
           }else{
             that.$Message.error(res.message);
           }
@@ -201,8 +205,12 @@
         // 按当前月份查询下载
         let url = this.$url.security_GFGSJTSG_exportExcel;
         if (this.formItem.date instanceof Date) {
-          let time = DateTool.yyyyddFormatDate(this.formItem.date);
-          url = url + '?time=' + time;
+          let year = this.formItem.date.getFullYear();
+          let month = this.formItem.date.getMonth() + 1;
+          if(month<10){
+            month = '0'+month
+          }
+          url = url + '?nf=' + year + '&yf=' + month;
           this.$getExcel(url);
         }else{
           this.$Message.error('请先选择月份!');

@@ -213,7 +213,7 @@
                   on: {
                     click: () => {
                       this.editProgram = true;
-                      console.log(params.row.crksm);
+                      //console.log(params.row.crksm);
                       this.editCrksm.crksm = params.row.crksm;
                       this.editCrksm.id = params.row.id;
                     }
@@ -238,7 +238,7 @@
         this.getList()
       },
       getList: function () {
-          console.log(this.formItem)
+          //console.log(this.formItem)
         this.$fetch(this.$url.jtgsList, this.formItem)
           .then(res => {
             if (res.success === true) {
@@ -281,7 +281,7 @@
           }else {
               this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0,4)
           }
-          console.log(this.formItem.nf)
+          //console.log(this.formItem.nf)
           this.$getExcel(process.env.BASE_URL + this.$url.daochujtyyjh+'?nf='+this.formItem.nf)
       },
       cancel:function () {

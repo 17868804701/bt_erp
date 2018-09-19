@@ -236,9 +236,9 @@
                   },
                   on: {
                     click: () => {
-                      console.log(params.row.id);
+                      //console.log(params.row.id);
                       this.formItem2.ids.push(params.row.id)
-                      console.log(this.formItem2.ids)
+                      //console.log(this.formItem2.ids)
                       this.modal1 = true;
                     }
                   },
@@ -261,7 +261,7 @@
       getList: function () {
         this.$fetch(this.$url.dwclkfxx, this.formItem1)
           .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.data.total === 0) {
               this.$Message.info('暂无数据');
               this.data12 = res.data.records;
@@ -294,10 +294,10 @@
       },
       selectAll: function (selection) {
         this.selection = selection
-        console.log(this.selection)
+        //console.log(this.selection)
       },
       plclSubmit: function () {
-        console.log(this.formItem2);
+        //console.log(this.formItem2);
         this.$post(this.$url.plclkfxx + '?cljg=' + this.cljg, this.formItem2.ids)
           .then(res => {
             if (res.success === true) {
@@ -314,14 +314,14 @@
       },
       plcl: function () {
         let arr = []
-        console.log(this.selection.length)
+        //console.log(this.selection.length)
         if (this.selection.length === 0) {
           this.$Message.error('请选择操作的项目')
         } else {
           this.selection.forEach(item => {
             arr.push(item.id)
             this.formItem2.ids = arr
-            console.log(this.formItem2.ids)
+            //console.log(this.formItem2.ids)
           });
           this.modal1 = true;
         }

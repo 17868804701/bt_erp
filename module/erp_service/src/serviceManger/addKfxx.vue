@@ -171,7 +171,7 @@
     },
     methods: {
       changes: function (value) {
-        console.log(value)
+        //console.log(value)
         if (value == 2) {
           this.formItem.zt = ''
           this.formItem.bm = ''
@@ -181,7 +181,7 @@
         }
       },
       changesLf: function (value) {
-        console.log(value);
+        //console.log(value);
         if (value == 1) {
           this.formItem.sjlb = '';
           this.formItem.zt = '';
@@ -196,10 +196,10 @@
             } else {
               this.formItem.fksj = this.formItem.fksj
             }
-            console.log(this.formItem);
+            //console.log(this.formItem);
             this.$post(this.$url.savekfxx, this.formItem)
               .then(res => {
-                console.log(res);
+                //console.log(res);
                 if (res.success == true) {
                   this.$Message.info("添加成功")
                 } else {
@@ -215,7 +215,7 @@
       update: function () {
         this.$post(this.$url.updatekfxx, this.formItem)
           .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.success == true) {
               this.$Message.info("修改成功");
               this.$router.push({path: '/kfxxList',})
@@ -228,7 +228,7 @@
     mounted: function () {
       let tip = this.$route.query.tip;
       let row = this.$route.query.row;
-      console.log(row)
+      //console.log(row)
       this.tip = tip;
       if (tip === 'edit') {
         this.formItem = row

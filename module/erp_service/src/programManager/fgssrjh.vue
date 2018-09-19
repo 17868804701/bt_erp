@@ -168,10 +168,10 @@
                   },
                   on: {
                     'on-ok': () => {
-                      console.log(params.row.id)
+                      //console.log(params.row.id)
                       this.$fetch(this.$url.delFgssrjh, {id: params.row.id})
                         .then(res => {
-                          console.log(res)
+                          //console.log(res)
                           if (res.success === true) {
                             this.$Message.info('删除成功')
                             this.getList()
@@ -207,7 +207,7 @@
                   },
                   on: {
                     click: () => {
-                      console.log(params.row);
+                      //console.log(params.row);
                       this.type = 'edit';
                       this.addProgram = true;
                       this.formItem1 = params.row
@@ -244,7 +244,7 @@
       getList: function () {
         this.$fetch(this.$url.fgssrjhList, this.formItem)
           .then(res => {
-            console.log(res,'***********************')
+            //console.log(res,'***********************')
             if (res.success === true) {
               if (res.data.total === 0) {
                 this.$Message.info('暂无信息');
@@ -267,10 +267,10 @@
           if (valid) {
             this.formItem1.nf = this.$formatDate(this.formItem1.nf).substring(0, 4)
             this.formItem1.jhsj = this.$formatDate(this.formItem1.jhsj).substring(0, 10)
-            console.log(this.formItem1);
+            //console.log(this.formItem1);
             this.$post(this.$url.saveFgssrjh, this.formItem1)
               .then(res => {
-                console.log(res)
+                //console.log(res)
                 if (res.success === true) {
                   this.$Message.info('添加成功')
                   this.getList();
@@ -289,16 +289,16 @@
         } else {
           this.formItem.nf = this.$formatDate(this.formItem.nf).substring(0, 4)
         }
-        console.log(this.formItem)
+        //console.log(this.formItem)
         this.getList()
       },
       xiugai: function () {
-        console.log(this.formItem1)
+        //console.log(this.formItem1)
         this.formItem1.nf = this.$formatDate(this.formItem1.nf).substring(0, 4)
         this.formItem1.jhsj = this.$formatDate(this.formItem1.jhsj).substring(0, 10)
         this.$post(this.$url.updatefgssrjh, this.formItem1)
           .then(res => {
-            console.log(res)
+            //console.log(res)
             if (res.success === true) {
               this.$Message.info('修改成功');
               this.addProgram = false

@@ -134,7 +134,7 @@
         }
         this.$fetch(this.$url.fgstsqkfl, this.fgstsqkfl)
           .then(res => {
-            console.log(res)
+            //console.log(res)
             if (res.success === true) {
               if (res.data == null) {
                 this.$Message.info('暂无数据');
@@ -144,7 +144,7 @@
                 delete res.sumcount[0].hj;
                 let zj = res.sumcount;
                 res.data = res.data.concat(zj);
-                console.log(res.data)
+                //console.log(res.data)
                 this.data12 = res.data
               }
             }

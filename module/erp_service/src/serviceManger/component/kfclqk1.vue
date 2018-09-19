@@ -109,7 +109,7 @@
         getList:function () {
           this.$fetch(this.$url.tsqkfl, this.tsqkfl)
             .then(res => {
-              console.log(res);
+              //console.log(res);
               if(res.success===true){
                   if(res.data.length==0){
                       this.$Message.info('暂无数据');

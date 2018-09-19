@@ -161,8 +161,8 @@
         }
         this.getList();
 
-//        console.log(this.formItem1.years)
-//        console.log(this.formItem1.quarter)
+//        //console.log(this.formItem1.years)
+//        //console.log(this.formItem1.quarter)
 //        if (this.formItem1.quarter != '' && this.formItem1.years == '') {
 //          this.$Message.error('请先选则年份！')
 //        } else {
@@ -175,10 +175,10 @@
         } else {
           this.formItem1.years = this.$formatDate(this.formItem1.years).substring(0, 4)
         }
-        console.log(this.formItem1);
+        //console.log(this.formItem1);
         this.$fetch(this.$url.jdjcfyjs, this.formItem1)
           .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.msg === 'success') {
               if (res.page.totalCount == 0) {
                 this.$Message.info('暂无信息')

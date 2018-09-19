@@ -96,7 +96,7 @@
       getList:function () {
         this.$fetch(this.$url.xlgsList, this.formItem2)
           .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             if (res.success === true) {
               this.data12= res.data
             } else {

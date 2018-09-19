@@ -96,7 +96,7 @@
       getList:function () {
         this.$fetch(this.$url.ckgsList, this.formItem5)
           .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             if (res.success === true) {
                this.data15 = res.data
             } else {
@@ -118,7 +118,7 @@
           this.formItem5.nian = nian
           this.formItem5.yue = yue
         }
-        console.log(this.formItem5)
+        //console.log(this.formItem5)
         this.getList()
       },
       daochu5:function () {
@@ -135,8 +135,8 @@
           this.formItem5.nian = nian
           this.formItem5.yue = yue
         }
-        console.log(this.formItem5.nian)
-        console.log(this.formItem5.yue)
+        //console.log(this.formItem5.nian)
+        //console.log(this.formItem5.yue)
         this.$getExcel(process.env.BASE_URL+this.$url.ckgsDaochu+'?nian='+this.formItem5.nian+'&yue='+this.formItem5.yue);
       }
     },

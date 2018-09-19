@@ -408,26 +408,26 @@
     },
     methods: {
       handleSuccess: function (res) {
-          console.log(res);
+          //console.log(res);
         if (res.success === true) {
             this.$Message.info('上传成功')
           if (this.isEdit_jbxx === false) {
             this.formItem.zpdz = res.path;
-            console.log('只是上传增加信息')
-            console.log(this.formItem.zpdz)
+            //console.log('只是上传增加信息')
+            //console.log(this.formItem.zpdz)
           } else {
             this.formItem.zpdz = res.path;
             this.bgyy = '上传了照片';
             this.update();
           }
-          console.log(this.formItem.zpdz)
-          console.log(this.formItem.ygfz)
+          //console.log(this.formItem.zpdz)
+          //console.log(this.formItem.ygfz)
         } else {
           this.$Message.error('修改失败');
         }
       },
       handleSuccessPdf: function (res) {
-          console.log(res)
+          //console.log(res)
         if (res.success === true) {
           this.$Message.info('上传成功')
           if (this.isEdit_jbxx === false) {
@@ -437,8 +437,8 @@
             this.bgyy = '上传了附件'
             this.update();
           }
-          console.log(this.formItem.ygfz)
-          console.log(this.formItem.zpdz)
+          //console.log(this.formItem.ygfz)
+          //console.log(this.formItem.zpdz)
         } else {
           this.$Message.error('修改失败');
         }
@@ -484,7 +484,7 @@
       save: function (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            console.log('结果', this.formItem);
+            //console.log('结果', this.formItem);
             this.$post(this.$url.userManager_saveUserInfo, this.formItem)
               .then(res => {
                 if (res.success === true) {

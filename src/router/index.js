@@ -18,7 +18,7 @@ let api = process.env.BASE_URL;
 let url = api+'/login/replylogin';
 router.beforeEach((to, from, next) => {
   let acessToken =VueCookie.get('access_token');
-  console.log(acessToken);
+  //console.log(acessToken);
   if(acessToken===null||acessToken===''){
     proxylogin(url,{
       callback:function(data){

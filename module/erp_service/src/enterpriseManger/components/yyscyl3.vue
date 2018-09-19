@@ -121,7 +121,7 @@
         } else {
           this.formItem3.sj = this.$formatDate(this.formItem3.sj).substring(0, 7)
         }
-        console.log(this.formItem3.sj)
+        //console.log(this.formItem3.sj)
         this.sj = this.formItem3.sj
 
         this.$fetch(this.$url.qygl_yyscyszl_cclchyYDFX, this.formItem3)
@@ -129,12 +129,12 @@
             if (res.success === true) {
               if (res.data.length === 0) {
                 this.$Message.info('暂无数据')
-                console.log(res);
-                console.log(res.data);
+                //console.log(res);
+                //console.log(res.data);
                 this.data13 = res.data
               } else {
-                console.log(res);
-                console.log(res.data);
+                //console.log(res);
+                //console.log(res.data);
                 this.data13= res.data
               }
             } else {

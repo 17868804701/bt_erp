@@ -96,7 +96,7 @@
       getList:function () {
         this.$fetch(this.$url.gjhjList, this.formItem4)
           .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             if (res.success === true) {
               this.data14= res.data
             } else {

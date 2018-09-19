@@ -231,7 +231,7 @@
                   },
                   on: {
                     click: () => {
-                      console.log(params.row.zt.toString())
+                      //console.log(params.row.zt.toString())
                       params.row.zt = params.row.zt.toString()
                       params.row.fksj = this.$formatDate(params.row.fksj);
                       this.$router.push({
@@ -259,7 +259,7 @@
       getList: function () {
         this.$fetch(this.$url.kfxxList, this.formItem)
           .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.data.total === 0) {
               this.$Message.info('暂无数据');
               this.data10 = res.data.records;
@@ -287,12 +287,12 @@
           this.formItem.endTime = this.$formatDate(this.formItem.endTime).substring(0, 10)
         }
 
-        console.log(this.formItem.endTime)
-        console.log(this.formItem.startTime)
+        //console.log(this.formItem.endTime)
+        //console.log(this.formItem.startTime)
         this.$getExcel(process.env.BASE_URL+this.$url.daochukfxx+'?tslb='+this.formItem.tslb + '&startTime='+this.formItem.startTime + '&endTime='+this.formItem.endTime)
       },
       search1: function () {
-        console.log(this.time)
+        //console.log(this.time)
         this.formItem.startTime = this.time[0];
         this.formItem.endTime = this.time[1];
         if (this.formItem.startTime === '') {

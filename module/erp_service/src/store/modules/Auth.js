@@ -14,7 +14,7 @@ const userAuth = {
         fetch(process.env.BASE_URL+'/auth/app/getResrouce')
         .then(res => {
           state.authButtons = res.data;
-          console.log(state.authButtons);
+          //console.log(state.authButtons);
         })
       }
     },

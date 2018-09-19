@@ -103,7 +103,7 @@
       getList:function () {
         this.$fetch(this.$url.yejikaoheList, this.formItem3)
           .then(res => {
-            console.log(res.data);
+            //console.log(res.data);
             if (res.success === true) {
               this.data13= res.data
             } else {

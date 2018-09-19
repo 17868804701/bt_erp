@@ -202,10 +202,10 @@
         this.getList()
       },
       add: function () {
-        console.log(this.formItem1);
+        //console.log(this.formItem1);
         this.$post(this.$url.saveSngj + '?lb=' + this.formItem1.lb + '&bqsj=' + this.formItem1.bqsj + '&mnyj=' + this.formItem1.mnyj + '&mnjhcc=' + this.formItem1.mnjhcc + '&bnkyl=' + this.formItem1.bnkyl)
           .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.success === true) {
               this.$Message.info('添加成功')
               this.addProgram = false
@@ -220,7 +220,7 @@
       update: function () {
         this.$post(this.$url.updateSnsrjh, this.formItem1)
           .then(res => {
-            console.log(res);
+            //console.log(res);
             if (res.success === true) {
               this.$Message.info('修改成功')
               this.addProgram = false

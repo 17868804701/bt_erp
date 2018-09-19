@@ -533,6 +533,9 @@
         let request2 = this.$fetch(this.$url.common_getAllDictListDataWithCode, {code : 'YSXM'});
         axios.all([request1, request2])
         .then(axios.spread(function(res1, res2){
+
+          debugger
+
           if (res1.success === true) {
             let data = res1.data[0].children;
             data.forEach(item => {
@@ -582,6 +585,7 @@
               that.ysdBindData.push([]);
             }
           }
+
         }))
       },
       // *********  初始化数据   ********** //

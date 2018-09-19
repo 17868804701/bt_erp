@@ -296,7 +296,7 @@
             })
           });
 
-        let allAppURL = process.env.BASE_URL + '/auth/app/getAllApp';
+        let allAppURL = process.env.BASE_URL + '/auth/app/getApp';
         this.$fetch(allAppURL)
           .then(res => {
             res.data.forEach(item => {

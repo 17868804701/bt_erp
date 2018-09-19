@@ -442,6 +442,9 @@
           let fdjccqgylTmpData = this.fdjccData.qgds;
           let tmpArray = JSON.parse(fdjccqgylTmpData);
           this.fdjqgylList = JSON.parse(JSON.stringify(tmpArray));
+          if (this.fdjqgylList === null || this.fdjqgylList.length <= 0) {
+            this.fdjqgylList = [];
+          }
         }
 
       }

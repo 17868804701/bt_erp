@@ -119,7 +119,7 @@
               <Input v-model="dsj.name" placeholder="名称..." style="width: 100px"></Input>
             </FormItem>
             <FormItem label="数量:">
-              <Input type="number" v-model="dsj.sl" placeholder="数量..." style="width: 100px"></Input>
+              <Input  v-model="dsj.sl" placeholder="数量..." style="width: 100px"></Input>
             </FormItem>
             <FormItem label="修配结果:">
               <Input v-model="dsj.content" placeholder="修配结果..." style="width: 100px"></Input>

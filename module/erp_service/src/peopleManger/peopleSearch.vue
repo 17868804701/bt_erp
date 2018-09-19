@@ -156,22 +156,23 @@
                 <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
               </CheckboxGroup>
             </FormItem>
-            <FormItem label="按单位查询" style="margin-left: -50px;">
-              <CheckboxGroup v-model="cxItem.dw">
-                <Checkbox label="集团公司"></Checkbox>
-                <Checkbox label="公交一公司"></Checkbox>
-                <Checkbox label="公交二公司"></Checkbox>
-                <Checkbox label="公交三公司"></Checkbox>
-                <Checkbox label="公交四公司"></Checkbox>
-                <Checkbox label="公交五公司"></Checkbox>
-                <Checkbox label="公交六公司"></Checkbox>
-                <Checkbox label="长客公司"></Checkbox>
-                <Checkbox label="点钞中心"></Checkbox>
-                <Checkbox label="培训中心"></Checkbox>
-                <Checkbox label="稽查大队"></Checkbox>
-                <Checkbox label="站管中心"></Checkbox>
-                <Checkbox label="维修公司"></Checkbox>
-              </CheckboxGroup>
+            <FormItem prop="dw" label="按单位查询" style="margin-left: -50px;">
+              <!--<CheckboxGroup v-model="cxItem.dw">-->
+                <!--<Checkbox label="集团公司"></Checkbox>-->
+                <!--<Checkbox label="公交一公司"></Checkbox>-->
+                <!--<Checkbox label="公交二公司"></Checkbox>-->
+                <!--<Checkbox label="公交三公司"></Checkbox>-->
+                <!--<Checkbox label="公交四公司"></Checkbox>-->
+                <!--<Checkbox label="公交五公司"></Checkbox>-->
+                <!--<Checkbox label="公交六公司"></Checkbox>-->
+                <!--<Checkbox label="长客公司"></Checkbox>-->
+                <!--<Checkbox label="点钞中心"></Checkbox>-->
+                <!--<Checkbox label="培训中心"></Checkbox>-->
+                <!--<Checkbox label="稽查大队"></Checkbox>-->
+                <!--<Checkbox label="站管中心"></Checkbox>-->
+                <!--<Checkbox label="维修公司"></Checkbox>-->
+              <!--</CheckboxGroup>-->
+              <CommonSelect type="EJGS" iviewType="checkbox" :selectValue="cxItem.dw"></CommonSelect>
             </FormItem>
           </Form>
         </div>
@@ -202,9 +203,11 @@
 <script>
   import UserStatistics from './UserStatistics.vue'
   import VueCookie from 'vue-cookie'
+  import CommonSelect from '../components/common/CommonSelect.vue'
   export default {
     components: {
       UserStatistics,
+      CommonSelect,
     },
     data () {
       return {
@@ -718,6 +721,11 @@
       search() {
         console.log(this.cxItem.gwzt);
         console.log(this.cxItem.dw);
+        let newDw = [];
+        this.cxItem.dw.forEach(item => {
+          let itemTitle = this.$store.state.dictData.parseDict.EJGS[item];
+          newDw.push(itemTitle);
+        })
 
         this.$formatDate(this.cxItem.htkssj).substring(0,10)
         this.$formatDate(this.cxItem.htjssj).substring(0,10)

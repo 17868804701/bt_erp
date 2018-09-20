@@ -37,17 +37,19 @@
       <Form :model="formItem" ref="formItem" :rules="ruleValidate" :label-width="100">
         <div class="search">
           <FormItem label="线路" style="margin-bottom: 25px" prop="xl">
-            <Select v-model="formItem.xl" :transfer="true" style="width: 195px;">
-              <Option value="1路">1路</Option>
-              <Option value="2路">2路</Option>
-              <Option value="3路">3路</Option>
-            </Select>
+            <!--<Select v-model="formItem.xl" :transfer="true" style="width: 195px;">-->
+              <!--<Option value="1路">1路</Option>-->
+              <!--<Option value="2路">2路</Option>-->
+              <!--<Option value="3路">3路</Option>-->
+            <!--</Select>-->
+            <CommonSelect type="LB"  :selectValue="formItem.xl" style="width: 195px;"></CommonSelect>
           </FormItem>
           <FormItem label="记录部门" style="margin-bottom: 25px" prop="jlbm">
-            <Select v-model="formItem.jlbm" :transfer="true" style="width: 195px;">
-              <Option value="运营部">运营部</Option>
-              <Option value="责任公司">责任公司</Option>
-            </Select>
+            <!--<Select v-model="formItem.jlbm" :transfer="true" style="width: 195px;">-->
+              <!--<Option value="运营部">运营部</Option>-->
+              <!--<Option value="责任公司">责任公司</Option>-->
+            <!--</Select>-->
+            <CommonSelect type="EJBM"  :selectValue="formItem.jlbm" style="width: 195px;"></CommonSelect>
           </FormItem>
           <FormItem label="记录人" style="margin-bottom: 25px" prop="jlr">
             <Input v-model="formItem.jlr" placeholder="记录人" class="text_width"/>
@@ -93,11 +95,12 @@
               <Option value="2">处理完成</Option>
             </Select>
           </FormItem>
-          <FormItem label="提交部门" style="margin-bottom: 25px" v-show="this.formItem.sjlb!=2&&this.formItem.lfxs!=1">
-            <Select v-model="formItem.bm" :transfer="true" style="width: 195px;">
-              <Option value="公交一公司">公交一公司</Option>
-              <Option value="公交二公司">公交二公司</Option>
-            </Select>
+          <FormItem label="提交部门" style="margin-bottom: 25px" v-show="this.formItem.sjlb!=2&&this.formItem.lfxs!=1" prop="bm">
+            <!--<Select v-model="formItem.bm" :transfer="true" style="width: 195px;">-->
+              <!--<Option value="公交一公司">公交一公司</Option>-->
+              <!--<Option value="公交二公司">公交二公司</Option>-->
+            <!--</Select>-->
+            <CommonSelect type="EJBM"  :selectValue="formItem.bm" style="width: 195px;"></CommonSelect>
           </FormItem>
           <FormItem label="备注" style="margin-bottom: 25px">
             <Input v-model="formItem.bz" placeholder="备注" class="text_width"/>
@@ -126,7 +129,11 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
 //          注意：这块要根据选择的事件类型不同去判断所填的项目
@@ -197,6 +204,10 @@
               this.formItem.fksj = this.formItem.fksj
             }
             //console.log(this.formItem);
+            // this.formItem.xl = this.$store.state.dictData.parseDict.LB[ this.formItem._xl];
+            // this.formItem.bm = this.$store.state.dictData.parseDict.EJBM[ this.formItem._bm];
+            // this.formItem.jlbm = this.$store.state.dictData.parseDict.EJBM[ this.formItem._jlbm];
+            console.log(this.formItem)
             this.$post(this.$url.savekfxx, this.formItem)
               .then(res => {
                 //console.log(res);

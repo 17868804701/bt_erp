@@ -158,6 +158,18 @@
                     key: 'rjqlc',
                     align: 'center',
                     width: 100,
+                  },
+                  {
+                    title: '年度加气里程',
+                    key: 'rjqndlc',
+                    align: 'center',
+                    width: 100,
+                  },
+                  {
+                    title: '非运营小计',
+                    key: 'fyyxj',
+                    align: 'center',
+                    width: 100,
                   }
                 ]
               },
@@ -169,7 +181,7 @@
               },
               {
                 title: '合计',
-                key: 'fyyxj',
+                key: 'fyyhj',
                 align: 'center',
                 width: 100,
               },

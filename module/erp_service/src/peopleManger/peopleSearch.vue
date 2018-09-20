@@ -130,15 +130,16 @@
                 <input v-model="cxItem.xmszm" type="text" @focus="focusChoose" placeholder="按照姓名首字母查询"
                        class="select_name">
               </FormItem>
-              <FormItem label="在职情况" style="margin-left: 10px;">
-                <Select v-model="cxItem.zzqk" style="width:180px">
-                  <Option value="">全部</Option>
-                  <Option value="在职">在职</Option>
-                  <Option value="离职">离职</Option>
-                  <Option value="正式">正式</Option>
-                  <Option value="实习">实习</Option>
-                  <Option value="退休">退休</Option>
-                </Select>
+              <FormItem label="在职情况" style="margin-left: 10px;" prop="zzqk">
+                <!--<Select v-model="cxItem.zzqk" style="width:180px">-->
+                  <!--<Option value="">全部</Option>-->
+                  <!--<Option value="在职">在职</Option>-->
+                  <!--<Option value="离职">离职</Option>-->
+                  <!--<Option value="正式">正式</Option>-->
+                  <!--<Option value="实习">实习</Option>-->
+                  <!--<Option value="退休">退休</Option>-->
+                <!--</Select>-->
+                <CommonSelect type="RYXX_ZZQK"  :selectValue="cxItem.zzqk" style="width: 180px;"></CommonSelect>
               </FormItem>
             </div>
             <div style="display: flex;flex-wrap: wrap">
@@ -151,27 +152,10 @@
                             placeholder="请选择合同终止时间"></DatePicker>
               </FormItem>
             </div>
-            <FormItem label="岗位状态" style="margin-left: -50px;">
-              <CheckboxGroup v-model="cxItem.gwzt">
-                <Checkbox v-for="(item, index) in postList" :key="item" :label="item"></Checkbox>
-              </CheckboxGroup>
+            <FormItem label="岗位状态" style="margin-left: -50px;" prop="gwzt" >
+              <CommonSelect type="RYXX_GWZT" iviewType="checkbox" :selectValue="cxItem.gwzt"></CommonSelect>
             </FormItem>
             <FormItem prop="dw" label="按单位查询" style="margin-left: -50px;">
-              <!--<CheckboxGroup v-model="cxItem.dw">-->
-                <!--<Checkbox label="集团公司"></Checkbox>-->
-                <!--<Checkbox label="公交一公司"></Checkbox>-->
-                <!--<Checkbox label="公交二公司"></Checkbox>-->
-                <!--<Checkbox label="公交三公司"></Checkbox>-->
-                <!--<Checkbox label="公交四公司"></Checkbox>-->
-                <!--<Checkbox label="公交五公司"></Checkbox>-->
-                <!--<Checkbox label="公交六公司"></Checkbox>-->
-                <!--<Checkbox label="长客公司"></Checkbox>-->
-                <!--<Checkbox label="点钞中心"></Checkbox>-->
-                <!--<Checkbox label="培训中心"></Checkbox>-->
-                <!--<Checkbox label="稽查大队"></Checkbox>-->
-                <!--<Checkbox label="站管中心"></Checkbox>-->
-                <!--<Checkbox label="维修公司"></Checkbox>-->
-              <!--</CheckboxGroup>-->
               <CommonSelect type="EJGS" iviewType="checkbox" :selectValue="cxItem.dw"></CommonSelect>
             </FormItem>
           </Form>
@@ -719,13 +703,18 @@
 
       },
       search() {
-        console.log(this.cxItem.gwzt);
-        console.log(this.cxItem.dw);
         let newDw = [];
+        let newGwzt = [];
+        let zzqk = '';
         this.cxItem.dw.forEach(item => {
           let itemTitle = this.$store.state.dictData.parseDict.EJGS[item];
           newDw.push(itemTitle);
         })
+        this.cxItem.gwzt.forEach(item => {
+          let itemTitle1 = this.$store.state.dictData.parseDict.RYXX.RYXX_GWZT[item];
+          newGwzt.push(itemTitle1);
+        });
+        zzqk = this.$store.state.dictData.parseDict.RYXX.RYXX_ZZQK[ this.cxItem.zzqk];
 
         this.$formatDate(this.cxItem.htkssj).substring(0,10)
         this.$formatDate(this.cxItem.htjssj).substring(0,10)
@@ -743,11 +732,11 @@
         }
         this.$fetch(this.$url.userManager_userList, {
           xmszm: this.cxItem.xmszm,
-          zzqk: this.cxItem.zzqk,
+          zzqk: zzqk,
           htkssj: this.cxItem.htkssj,
           htjssj: this.cxItem.htjssj,
-          gwzt: this.cxItem.gwzt.toString(),
-          dw: this.cxItem.dw.toString(),
+          gwzt:newGwzt.toString(),
+          dw: newDw.toString(),
           current: 1,
           size: 10
         })

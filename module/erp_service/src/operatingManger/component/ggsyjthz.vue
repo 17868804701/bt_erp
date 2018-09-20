@@ -15,13 +15,14 @@
               <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
                           v-model="formItem2.sj"></DatePicker>
             </FormItem>
-            <FormItem label="公司" style="margin: 0">
-              <Select v-model="formItem2.dw" style="width: 195px;">
-                <Option value="">全部</Option>
-                <Option value="公交一公司">公交一公司</Option>
-                <Option value="公交二公司">公交二公司</Option>
-                <Option value="公交三公司">公交三公司</Option>
-              </Select>
+            <FormItem label="公司" style="margin: 0" prop="_dw">
+              <!--<Select v-model="formItem2.dw" style="width: 195px;">-->
+                <!--<Option value="">全部</Option>-->
+                <!--<Option value="公交一公司">公交一公司</Option>-->
+                <!--<Option value="公交二公司">公交二公司</Option>-->
+                <!--<Option value="公交三公司">公交三公司</Option>-->
+              <!--</Select>-->
+              <CommonSelect type="EJGS" :selectValue="formItem2._dw" style="width: 195px;"></CommonSelect>
             </FormItem>
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
@@ -55,7 +56,11 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         modal2: false,
@@ -63,6 +68,7 @@
         formItem2: {
           dw: '',
           sj: '',
+          _dw:'',
           current: 1,
           size: 10
         },
@@ -292,6 +298,7 @@
       //各公司与集团汇总
       ok2: function () {
         let time = '';
+        this.formItem2.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem2._dw];
         if (this.formItem2.sj === '') {
           time = ''
         } else {
@@ -328,6 +335,7 @@
         this.getList();
       },
       search2: function () {
+        this.formItem2.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem2._dw];
         if (this.formItem2.sj === '') {
           this.formItem2.sj = ''
         } else {

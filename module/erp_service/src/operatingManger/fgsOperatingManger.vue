@@ -44,13 +44,14 @@
                 <DatePicker type="month" placeholder="选择时间" :transfer="true"
                             class="text_width" v-model="formItem.sj"></DatePicker>
               </FormItem>
-              <FormItem label="选择公司" style="margin: 0">
-                <Select :transfer="true" v-model="formItem.dw" style="width: 195px;">
-                  <Option value="">全部</Option>
-                  <Option value="公交一公司">公交一公司</Option>
-                  <Option value="公交二公司">公交二公司</Option>
-                  <Option value="公交三公司">公交三公司</Option>
-                </Select>
+              <FormItem label="选择公司" style="margin: 0" prop="_dw">
+                <!--<Select :transfer="true" v-model="formItem.dw" style="width: 195px;">-->
+                  <!--<Option value="">全部</Option>-->
+                  <!--<Option value="公交一公司">公交一公司</Option>-->
+                  <!--<Option value="公交二公司">公交二公司</Option>-->
+                  <!--<Option value="公交三公司">公交三公司</Option>-->
+                <!--</Select>-->
+                <CommonSelect type="EJGS" :selectValue="formItem._dw" style="width: 195px;"></CommonSelect>
               </FormItem>
               <Button type="primary" v-has="'yygl_fgsxcyb_search'" icon="ios-search" @click="search" class="search_btn">查询</Button>
               <div class="btn">
@@ -79,7 +80,11 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         modal1: false,
@@ -89,6 +94,7 @@
           size: '10',
           dw: '',
           sj: '',
+          _dw:''
         },
         columns11: [
           {
@@ -267,7 +273,6 @@
             } else {
               this.totalPage = res.data.total;
               res.data.records.forEach(item=>{
-                  console.log(item.sj);
                 if(item.sj===null){
                       item.sj = '--'
                 }else {
@@ -284,6 +289,7 @@
       },
       ok: function () {
         let time = '';
+        this.formItem.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
         if (this.formItem.sj === '') {
           time = ''
         } else {
@@ -292,9 +298,11 @@
         this.$getExcel(process.env.BASE_URL + this.$url.exportFgsxcyb + '?sj=' + time + '&dw=' + this.formItem.dw + '&dcsm=' + this.formItem.dcsm)
       },
       cancel: function () {
-        this.$Message.error('导出失败')
+        // this.$Message.error('导出失败')
       },
       search: function () {
+        this.formItem.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        console.log(this.$store.state.dictData.parseDict.EJGS)
         if (this.formItem.sj === '') {
           this.formItem.sj = ''
         } else {

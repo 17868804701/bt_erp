@@ -34,7 +34,7 @@
                 </Select>
               </FormItem>
               <FormItem :label-width="120" label="出生年月">
-                <DatePicker type="date" style="width: 170px;" :disabled="isEdit_jbxx" placeholder="Select date"
+                <DatePicker type="date" style="width: 170px;" :disabled="isEdit_jbxx" placeholder="出生年月"
                             v-model="formItem.csny"></DatePicker>
               </FormItem>
               <FormItem :label-width="120" label="籍贯">
@@ -50,10 +50,12 @@
                 <Select v-model="formItem.zzmm" :disabled="isEdit_jbxx" style="width: 170px;">
                   <Option value="共青团员">共青团员</Option>
                   <Option value="中共党员">中共党员</Option>
+                  <Option value="群众">群众</Option>
                 </Select>
               </FormItem>
-              <FormItem :label-width="120" label="学历">
-                <Input :disabled="isEdit_jbxx" v-model="formItem.xl" placeholder="学历" class="input_item"/>
+              <FormItem :label-width="120" label="学历" prop="xl">
+                <Input v-show="isEdit_jbxx" :disabled="isEdit_jbxx" v-model="formItem.xl" placeholder="学历" class="input_item"/>
+                <CommonSelect type="RYXX_XLDM"  v-show="!isEdit_jbxx" :aria-disabled="true" :selectValue="formItem.xl"  class="input_item"></CommonSelect>
               </FormItem>
               <FormItem :label-width="120" label="毕业院校">
                 <Input :disabled="isEdit_jbxx" v-model="formItem.byyx" placeholder="毕业院校" class="input_item"/>
@@ -68,7 +70,7 @@
                 <Input :disabled="isEdit_jbxx" v-model="formItem.zyzgjn" placeholder="职业资格技能" class="input_item"/>
               </FormItem>
               <FormItem :label-width="120" label="录入时间">
-                <DatePicker type="date" style="width: 170px;" :disabled="isEdit_jbxx" placeholder="Select date"
+                <DatePicker type="date" style="width: 170px;" :disabled="isEdit_jbxx" placeholder="录入时间"
                             v-model="formItem.lrsj"></DatePicker>
               </FormItem>
               <FormItem :label-width="120" label="配偶情况">
@@ -87,7 +89,7 @@
                 <Input :disabled="isEdit_jbxx" v-model="formItem.txdz" placeholder="通讯地址" class="input_item"/>
               </FormItem>
               <FormItem :label-width="120" label="入党时间">
-                <DatePicker type="date" :disabled="isEdit_jbxx" style="width: 170px;" placeholder="Select date"
+                <DatePicker type="date" :disabled="isEdit_jbxx" style="width: 170px;" placeholder="入党时间"
                             v-model="formItem.rdsj"></DatePicker>
               </FormItem>
               <FormItem :label-width="120" label="备注">
@@ -154,31 +156,34 @@
           <FormItem :label-width="120" label="人员编号">
             <Input :disabled="isEdit_dwxx" v-model="formItem.rybh" placeholder="人员编号" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="单位">
-            <Select :disabled="isEdit_dwxx" v-model="formItem.dw" style="width: 170px;">
-              <Option value="集团公司">集团公司</Option>
-              <Option value="公交一公司">公交一公司</Option>
-              <Option value="公交二公司">公交二公司</Option>
-              <Option value="公交三公司">公交三公司</Option>
-              <Option value="公交四公司">公交四公司</Option>
-              <Option value="公交五公司">公交五公司</Option>
-              <Option value="公交六公司">公交六公司</Option>
-              <Option value="长客公司">长客公司</Option>
-              <Option value="点钞中心">点钞中心</Option>
-              <Option value="培训中心">培训中心</Option>
-              <Option value="稽查大队">稽查大队</Option>
-              <Option value="站管中心">站管中心</Option>
-              <Option value="维修公司">维修公司</Option>
-            </Select>
-            <!--<Input :disabled="isEdit_dwxx" v-model="formItem.dw" placeholder="单位" class="input_item"/>-->
+          <FormItem :label-width="120" label="单位" prop="dw">
+            <!--<Select :disabled="isEdit_dwxx" v-model="formItem.dw" style="width: 170px;">-->
+              <!--<Option value="集团公司">集团公司</Option>-->
+              <!--<Option value="公交一公司">公交一公司</Option>-->
+              <!--<Option value="公交二公司">公交二公司</Option>-->
+              <!--<Option value="公交三公司">公交三公司</Option>-->
+              <!--<Option value="公交四公司">公交四公司</Option>-->
+              <!--<Option value="公交五公司">公交五公司</Option>-->
+              <!--<Option value="公交六公司">公交六公司</Option>-->
+              <!--<Option value="长客公司">长客公司</Option>-->
+              <!--<Option value="点钞中心">点钞中心</Option>-->
+              <!--<Option value="培训中心">培训中心</Option>-->
+              <!--<Option value="稽查大队">稽查大队</Option>-->
+              <!--<Option value="站管中心">站管中心</Option>-->
+              <!--<Option value="维修公司">维修公司</Option>-->
+            <!--</Select>-->
+            <Input v-show="isEdit_dwxx" :disabled="isEdit_dwxx" v-model="formItem.dw" placeholder="单位" class="input_item"/>
+            <CommonSelect type="EJGS"  v-show="!isEdit_dwxx" :aria-disabled="true" :selectValue="formItem.dw"  class="input_item"></CommonSelect>
           </FormItem>
-          <FormItem :label-width="120" label="部门">
-            <Select :disabled="isEdit_dwxx" v-model="formItem.bm" style="width: 170px;">
-              <Option value="企管部">企管部</Option>
-              <Option value="稽查部">稽查部</Option>
-              <Option value="运营部">运营部</Option>
-              <Option value="劳资部">劳资部</Option>
-            </Select>
+          <FormItem :label-width="120" label="部门" prop="bm">
+            <!--<Select :disabled="isEdit_dwxx" v-model="formItem.bm" style="width: 170px;">-->
+              <!--<Option value="企管部">企管部</Option>-->
+              <!--<Option value="稽查部">稽查部</Option>-->
+              <!--<Option value="运营部">运营部</Option>-->
+              <!--<Option value="劳资部">劳资部</Option>-->
+            <!--</Select>-->
+            <Input v-show="isEdit_dwxx" :disabled="isEdit_dwxx" v-model="formItem.bm" placeholder="部门" class="input_item"/>
+            <CommonSelect type="EJBM"  v-show="!isEdit_dwxx" :aria-disabled="true" :selectValue="formItem.bm"  class="input_item"></CommonSelect>
           </FormItem>
           <FormItem :label-width="120" label="工号">
             <Input :disabled="isEdit_dwxx" v-model="formItem.gh" placeholder="工号" class="input_item"/>
@@ -205,37 +210,45 @@
           <FormItem :label-width="120" label="工伤保险">
             <Input :disabled="isEdit_dwxx" v-model="formItem.gsbx" placeholder="工伤保险" class="input_item"/>
           </FormItem>
-          <FormItem :label-width="120" label="所属车间">
-            <Select :disabled="isEdit_dwxx" v-model="formItem.sscj" style="width: 170px;">
-              <Option value="第一车间">第一车间</Option>
-              <Option value="第二车间">第二车间</Option>
-              <Option value="第三车间">第三车间</Option>
-              <Option value="第四车间">第四车间</Option>
-            </Select>
+          <FormItem :label-width="120" label="所属车间" prop="sscj">
+            <!--<Select :disabled="isEdit_dwxx" v-model="formItem.sscj" style="width: 170px;">-->
+              <!--<Option value="第一车间">第一车间</Option>-->
+              <!--<Option value="第二车间">第二车间</Option>-->
+              <!--<Option value="第三车间">第三车间</Option>-->
+              <!--<Option value="第四车间">第四车间</Option>-->
+            <!--</Select>-->
+            <Input v-show="isEdit_dwxx" :disabled="isEdit_dwxx" v-model="formItem.sscj" placeholder="所属车间" class="input_item"/>
+            <CommonSelect type="CJXX"  v-show="!isEdit_dwxx" :aria-disabled="true" :selectValue="formItem.sscj"  class="input_item"></CommonSelect>
           </FormItem>
-          <FormItem :label-width="120" label="在职情况">
-            <Select :disabled="isEdit_dwxx" v-model="formItem.zzqk" style="width: 170px;">
-              <Option value="正式">正式</Option>
-              <Option value="试用">试用</Option>
-              <Option value="退休">退休</Option>
-              <Option value="离职">离职</Option>
-            </Select>
+          <FormItem :label-width="120" label="在职情况" prop="zzqk">
+            <!--<Select :disabled="isEdit_dwxx" v-model="formItem.zzqk" style="width: 170px;">-->
+              <!--<Option value="正式">正式</Option>-->
+              <!--<Option value="试用">试用</Option>-->
+              <!--<Option value="退休">退休</Option>-->
+              <!--<Option value="离职">离职</Option>-->
+            <!--</Select>-->
+            <Input v-show="isEdit_dwxx" :disabled="isEdit_dwxx" v-model="formItem.zzqk" placeholder="在职情况" class="input_item"/>
+            <CommonSelect type="RYXX_ZZQK"  v-show="!isEdit_dwxx" :aria-disabled="true" :selectValue="formItem.zzqk"  class="input_item"></CommonSelect>
           </FormItem>
-          <FormItem :label-width="120" label="岗位状态">
-            <Select :disabled="isEdit_dwxx" v-model="formItem.gwzt" style="width: 170px;">
-              <Option value="二级">二级</Option>
-              <Option value="三级">三级</Option>
-              <Option value="司机">司机</Option>
-              <Option value="修理">修理</Option>
-            </Select>
+          <FormItem :label-width="120" label="岗位状态" prop="gwzt">
+            <!--<Select :disabled="isEdit_dwxx" v-model="formItem.gwzt" style="width: 170px;">-->
+              <!--<Option value="二级">二级</Option>-->
+              <!--<Option value="三级">三级</Option>-->
+              <!--<Option value="司机">司机</Option>-->
+              <!--<Option value="修理">修理</Option>-->
+            <!--</Select>-->
+            <Input v-show="isEdit_dwxx" :disabled="isEdit_dwxx" v-model="formItem.gwzt" placeholder="岗位状态" class="input_item"/>
+            <CommonSelect type="RYXX_GWZT"  v-show="!isEdit_dwxx" :aria-disabled="true" :selectValue="formItem.gwzt"  class="input_item"></CommonSelect>
           </FormItem>
-          <FormItem :label-width="120" label="维修班组">
-            <Select :disabled="isEdit_dwxx" v-model="formItem.wxbz" style="width: 170px;">
-              <Option value="一组">一组</Option>
-              <Option value="二组">二组</Option>
-              <Option value="三组">三组</Option>
-              <Option value="四组">四组</Option>
-            </Select>
+          <FormItem :label-width="120" label="维修班组" prop="wxbz">
+            <!--<Select :disabled="isEdit_dwxx" v-model="formItem.wxbz" style="width: 170px;">-->
+              <!--<Option value="一组">一组</Option>-->
+              <!--<Option value="二组">二组</Option>-->
+              <!--<Option value="三组">三组</Option>-->
+              <!--<Option value="四组">四组</Option>-->
+            <!--</Select>-->
+            <Input v-show="isEdit_dwxx" :disabled="isEdit_dwxx" v-model="formItem.wxbz" placeholder="维修班组" class="input_item"/>
+            <CommonSelect type="WXBZ"  v-show="!isEdit_dwxx" :aria-disabled="true" :selectValue="formItem.wxbz"  class="input_item"></CommonSelect>
           </FormItem>
           <FormItem :label-width="120" label="职工身份">
             <Input :disabled="isEdit_dwxx" v-model="formItem.zgsf" placeholder="职工身份" class="input_item"/>
@@ -309,9 +322,14 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../components/common/CommonSelect.vue'
   import vuePdfjs from 'vue-pdfjs'
   import VueCookie from 'vue-cookie'
   export default {
+    components: {
+      CommonSelect,
+      vuePdfjs
+    },
     data () {
       return {
         nations: ["汉族", "蒙古族", "回族", "藏族", "维吾尔族", "苗族", "彝族", "壮族", "布依族", "朝鲜族", "满族", "侗族", "瑶族", "白族", "土家族",
@@ -485,6 +503,14 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             //console.log('结果', this.formItem);
+            this.formItem.xl = this.$store.state.dictData.parseDict.RYXX.RYXX_XLDM[this.formItem.xl];
+            this.formItem.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem.dw];
+            this.formItem.bm = this.$store.state.dictData.parseDict.EJBM[this.formItem.bm];
+            this.formItem.sscj = this.$store.state.dictData.parseDict.CJXX[this.formItem.sscj];
+            this.formItem.zzqk = this.$store.state.dictData.parseDict.RYXX.RYXX_ZZQK[this.formItem.zzqk];
+            this.formItem.gwzt = this.$store.state.dictData.parseDict.RYXX.RYXX_GWZT[this.formItem.gwzt];
+            this.formItem.wxbz = this.$store.state.dictData.parseDict.WXBZ[this.formItem.wxbz];
+            console.log(this.formItem);
             this.$post(this.$url.userManager_saveUserInfo, this.formItem)
               .then(res => {
                 if (res.success === true) {
@@ -508,6 +534,14 @@
 
       update: function () {
         let url = this.$url.userManager_updateUserInfo + '?bgyy=' + this.bgyy;
+        this.formItem.xl = this.$store.state.dictData.parseDict.RYXX.RYXX_XLDM[this.formItem.xl];
+        this.formItem.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem.dw];
+        this.formItem.bm = this.$store.state.dictData.parseDict.EJBM[this.formItem.bm];
+        this.formItem.sscj = this.$store.state.dictData.parseDict.CJXX[this.formItem.sscj];
+        this.formItem.zzqk = this.$store.state.dictData.parseDict.RYXX.RYXX_ZZQK[this.formItem.zzqk];
+        this.formItem.gwzt = this.$store.state.dictData.parseDict.RYXX.RYXX_GWZT[this.formItem.gwzt];
+        this.formItem.wxbz = this.$store.state.dictData.parseDict.WXBZ[this.formItem.wxbz];
+        console.log(this.formItem);
         this.$post(url, this.formItem)
           .then(res => {
             if (res.success === true) {
@@ -531,9 +565,6 @@
             }
           })
       }
-    },
-    components: {
-      vuePdfjs
     },
     mounted () {
       this.imgUrl = process.env.upload_BASE_URL;

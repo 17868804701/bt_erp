@@ -71,7 +71,15 @@ const Dict = {
     getOriganzation(state) {
       fetch(process.env.BASE_URL+'/auth/group/trees')
       .then(res => {
+        debugger
         if (res.success === true) {
+
+          let ejbmarr = [];
+          let ejbmdict = {};
+          let jtgsarr = [];
+          let jtgsdict = {};
+          let sjbmarr = [];
+          let sjbmdict = {};
           res.data.forEach(item => {
             if (item.grouptype === 'EJGS') {
               item.title = item.groupname;
@@ -79,10 +87,38 @@ const Dict = {
               state.orginazationArray.push(item);
               state.orginazationDict[item.groupcode] = item.groupname;
             }
-          })
 
+            if (item.grouptype === 'EJBM') {
+              item.title = item.groupname;
+              item.code = item.groupcode;
+              ejbmarr.push(item);
+              ejbmdict[item.groupcode] = item.groupname;
+            }
+
+            if (item.grouptype === 'JTGS') {
+              item.title = item.groupname;
+              item.code = item.groupcode;
+              jtgsarr.push(item);
+              jtgsdict[item.groupcode] = item.groupname;
+            }
+
+            if (item.grouptype === 'SJBM') {
+              item.title = item.groupname;
+              item.code = item.groupcode;
+              sjbmarr.push(item);
+              sjbmdict[item.groupcode] = item.groupname;
+            }
+
+          })
+          state.allDict.EJBM = ejbmarr;
+          state.parseDict.EJBM = ejbmdict;
+          state.allDict.JTGS = jtgsarr;
+          state.parseDict.JTGS = jtgsdict;
+          state.allDict.SJBM = sjbmarr;
+          state.parseDict.SJBM = sjbmdict;
           state.allDict.EJGS = state.orginazationArray;
           state.parseDict.EJGS = state.orginazationDict;
+
         }
       })
     }

@@ -50,13 +50,14 @@
                 <Option value="4">第四季度</Option>
               </Select>
             </FormItem>
-            <FormItem label="选择单位" style="margin: 0">
-              <Select v-model="formItem.dw" :transfer="true" style="width: 195px;">
-                <Option value="">全部</Option>
-                <Option value="公交一公司">公交一公司</Option>
-                <Option value="公交二公司">公交二公司</Option>
-                <Option value="公交三公司">公交三公司</Option>
-              </Select>
+            <FormItem label="选择单位" style="margin: 0" prop="_dw">
+              <!--<Select v-model="formItem.dw" :transfer="true" style="width: 195px;">-->
+                <!--<Option value="">全部</Option>-->
+                <!--<Option value="公交一公司">公交一公司</Option>-->
+                <!--<Option value="公交二公司">公交二公司</Option>-->
+                <!--<Option value="公交三公司">公交三公司</Option>-->
+              <!--</Select>-->
+              <CommonSelect type="EJGS" :selectValue="formItem._dw" style="width: 195px;"></CommonSelect>
             </FormItem>
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
@@ -77,7 +78,11 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         modal1:false,
@@ -88,6 +93,7 @@
           nd: '',
           jd: '',
           dw: '',
+          _dw:'',
           current:1,
           size:10
         },
@@ -278,6 +284,7 @@
     },
     methods: {
       getList() {
+        this.formItem.dw =  this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
         if (this.formItem.nd === '') {
           this.formItem.nd = ''
         } else {
@@ -327,7 +334,8 @@
         } else {
           this.formItem.nd = this.$formatDate(this.formItem.nd).substring(0, 4)
         }
-        this.$getExcel(this.$url.xlxyDaochu+'?nd='+this.formItem.nd+'&jd='+this.formItem.jd)
+        this.formItem.dw =  this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        this.$getExcel(this.$url.xlxyDaochu+'?nd='+this.formItem.nd+'&jd='+this.formItem.jd+'&dw='+this.formItem.dw)
       },
       setPage: function (current) {
           console.log(current)

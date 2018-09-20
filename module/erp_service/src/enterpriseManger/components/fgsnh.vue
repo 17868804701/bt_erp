@@ -37,13 +37,14 @@
             <DatePicker type="year" placeholder="选择时间" :transfer="true" v-model="formItem.fgsDate"
                         class="text_width"></DatePicker>
           </FormItem>
-          <FormItem label="单位" style="margin: 0">
-            <Select v-model="formItem.select" style="width: 120px;">
-              <Option value="公交一公司">公交一公司</Option>
-              <Option value="公交二公司">公交二公司</Option>
-              <Option value="公交三公司">公交三公司</Option>
-              <Option value="公交四公司">公交四公司</Option>
-            </Select>
+          <FormItem label="单位" style="margin: 0" prop="select">
+            <!--<Select v-model="formItem.select" style="width: 120px;">-->
+              <!--<Option value="公交一公司">公交一公司</Option>-->
+              <!--<Option value="公交二公司">公交二公司</Option>-->
+              <!--<Option value="公交三公司">公交三公司</Option>-->
+              <!--<Option value="公交四公司">公交四公司</Option>-->
+            <!--</Select>-->
+            <CommonSelect type="EJGS" :selectValue="formItem.select" style="width: 195px;"></CommonSelect>
           </FormItem>
           <Button type="primary" icon="ios-search" class="search_btn" @click="getList" v-has="'nhlctz_fgs_search'">查询</Button>
           <div class="btn">
@@ -62,14 +63,18 @@
 </template>
 <script>
   import * as DateTool from '../../../utils/DateTool'
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         fgsTableData: [],
         fgsND: '',
         fgsjldw: '',
         formItem: {
-          select: '公交一公司',
+          select: 'YGS',
           fgsDate: this.initDate(),
           jtgsDate: this.initDate(),
         },
@@ -177,6 +182,7 @@
       },
       getList() {
         let params = {};
+        let gsm = this.$store.state.dictData.parseDict.EJGS[this.formItem.select];
         if (this.formItem.fgsDate === null || this.formItem.fgsDate === '') {
           params.nd = '';
           this.$Message.error('请先选择年份!');
@@ -184,9 +190,9 @@
         }else{
           params.nd = this.formItem.fgsDate.getFullYear();
         }
-        params.dw = this.formItem.select;
+        params.dw = gsm;
         console.log(params);
-        this.$fetch(this.$url.qygl_nhlctz_fgs, )
+        this.$fetch(this.$url.qygl_nhlctz_fgs,params)
         .then(res => {
           console.log(res);
           this.fgsND = params.nd;
@@ -206,7 +212,8 @@
           this.$Message.error('请先选择年份!');
           return;
         }
-        let url = this.$url.qygl_nhlctz_fgs_export + '?nd=' + this.formItem.fgsDate.getFullYear() + '&dw=' + this.formItem.select;
+        let gs = this.$store.state.dictData.parseDict.EJGS[this.formItem.select];
+        let url = this.$url.qygl_nhlctz_fgs_export + '?nd=' + this.formItem.fgsDate.getFullYear() + '&dw=' + gs;
         this.$getExcel(url);
       }
     },

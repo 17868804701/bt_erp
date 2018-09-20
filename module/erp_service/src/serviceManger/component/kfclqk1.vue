@@ -97,7 +97,7 @@
             key: 'QT',
             align: 'center',
           },{
-            title: '合计',
+            title: '项目合计',
             key: 'sumcount',
             align: 'center',
           },

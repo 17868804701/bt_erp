@@ -15,21 +15,23 @@
               <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
                           v-model="formItem1.sj"></DatePicker>
             </FormItem>
-            <FormItem label="路别" style="margin: 0">
-              <Select v-model="formItem1.lb" style="width: 195px;">
-                <Option value="">全部</Option>
-                <Option value="1路">1路</Option>
-                <Option value="2路">2路</Option>
-                <Option value="3路">3路</Option>
-              </Select>
+            <FormItem label="路别" style="margin: 0" prop="_lb">
+              <!--<Select v-model="formItem1.lb" style="width: 195px;">-->
+                <!--<Option value="">全部</Option>-->
+                <!--<Option value="1路">1路</Option>-->
+                <!--<Option value="2路">2路</Option>-->
+                <!--<Option value="3路">3路</Option>-->
+              <!--</Select>-->
+              <CommonSelect type="LB" :selectValue="formItem1._lb" style="width: 195px;"></CommonSelect>
             </FormItem>
-            <FormItem label="公司" style="margin: 0">
-              <Select v-model="formItem1.dw" style="width: 195px;">
-                <Option value="">全部</Option>
-                <Option value="公交一公司">公交一公司</Option>
-                <Option value="公交二公司">公交二公司</Option>
-                <Option value="公交三公司">公交三公司</Option>
-              </Select>
+            <FormItem label="公司" style="margin: 0" prop="_dw">
+              <!--<Select v-model="formItem1.dw" style="width: 195px;">-->
+                <!--<Option value="">全部</Option>-->
+                <!--<Option value="公交一公司">公交一公司</Option>-->
+                <!--<Option value="公交二公司">公交二公司</Option>-->
+                <!--<Option value="公交三公司">公交三公司</Option>-->
+              <!--</Select>-->
+              <CommonSelect type="EJGS" :selectValue="formItem1._dw" style="width: 195px;"></CommonSelect>
             </FormItem>
           </div>
           <div style="width: 100%;justify-content: center;display: flex;margin-top: 10px;">
@@ -63,7 +65,11 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         modal1: false,
@@ -73,6 +79,8 @@
           sj: '',
           dcsm: '',
           lb: '',
+          _dw:'',
+          _lb:'',
           current: 1,
           size: 10
         },
@@ -306,12 +314,14 @@
       //线路车次正点统计
       ok1: function () {
         let time = '';
+        this.formItem1.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem1._dw];
+        this.formItem1.lb = this.$store.state.dictData.parseDict.LB[this.formItem1._lb];
         if (this.formItem1.sj === '') {
           time = ''
         } else {
           time = this.$formatDate(this.formItem1.sj).substring(0, 7);
         }
-        this.$getExcel(process.env.BASE_URL + this.$url.yyexportFgsxcyb + '?sj=' + time + '&dw=' + this.formItem1.dw + '&dcsm=' + this.formItem1.dcsm)
+        this.$getExcel(process.env.BASE_URL + this.$url.yyexportFgsxcyb + '?sj=' + time + '&dw=' + this.formItem1.dw + '&dcsm=' + this.formItem1.dcsm+'&lb='+this.formItem1.lb)
       },
       cancel1: function () {
         this.$Message.error('导出失败')
@@ -321,6 +331,8 @@
         this.getList();
       },
       search1: function () {
+        this.formItem1.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem1._dw];
+        this.formItem1.lb = this.$store.state.dictData.parseDict.LB[this.formItem1._lb];
         if (this.formItem1.sj === '') {
           this.formItem1.sj = ''
         } else {

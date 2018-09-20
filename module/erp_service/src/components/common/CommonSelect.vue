@@ -1,6 +1,6 @@
 <!--公用组件 下拉框  必须在formitem中使用-->
 <template>
-    <Select v-if="isSelect" :value="selectValue" style="width: 110px;" @on-change="selectOption">
+    <Select v-if="isSelect" :value="selectValue" style="width: 110px;" @on-change="selectOption" :clearable="true">
       <Option v-for="(item, index) in sourceData" :key="item+index" :value="item.code">{{item.title}}</Option>
     </Select>
     <CheckboxGroup v-else :value="selectValue" @on-change="check">
@@ -42,11 +42,9 @@
         this.$parent.form.model[this.$parent._props.prop] = val;
       },
       check(val) {
-        debugger
         this.$parent.form.model[this.$parent._props.prop] = val;
       },
       requestDictData() {
-
         let allDict = this.$store.state.dictData.allDict;
         let type = this.type;
         let origanazation = this.$store.state.dictData.orginazationArray;

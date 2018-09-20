@@ -10,12 +10,13 @@
                 <DatePicker type="month" placeholder="选择时间" :transfer="true" placement="bottom-end"
                             v-model="formItem.tjsj"></DatePicker>
               </FormItem>
-              <FormItem label="公司" style="margin: 0">
-                <Select v-model="formItem.ejdw" style="width: 195px;">
-                  <Option value="">全部</Option>
-                  <Option value="公交一公司">公交一公司</Option>
-                  <Option value="公交二公司">公交二公司</Option>
-                </Select>
+              <FormItem label="公司" style="margin: 0 " prop="_ejdw">
+                <!--<Select v-model="formItem.ejdw" style="width: 195px;">-->
+                  <!--<Option value="">全部</Option>-->
+                  <!--<Option value="公交一公司">公交一公司</Option>-->
+                  <!--<Option value="公交二公司">公交二公司</Option>-->
+                <!--</Select>-->
+                <CommonSelect type="EJGS"  :selectValue="formItem._ejdw" style="width: 180px;"></CommonSelect>
               </FormItem>
 
               <FormItem label="燃料来源" style="margin: 0">
@@ -24,6 +25,7 @@
                   <Option value="中燃">中燃</Option>
                   <Option value="汇通">汇通</Option>
                 </Select>
+                <span style="color: red">*燃料来源这个只做导出用</span>
               </FormItem>
             </div>
             </Col>
@@ -52,7 +54,11 @@
 
 </template>
 <script>
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         totalPage:0,
@@ -64,6 +70,7 @@
         rlly:'全部',
         formItem: {
           ejdw: '',
+          _ejdw: '',
           tjsj: '',
           rlly:'',
           current:1,
@@ -200,6 +207,7 @@
         this.getList()
       },
       chaxun1:function () {
+        this.formItem.ejdw  = this.$store.state.dictData.parseDict.EJGS[ this.formItem._ejdw];
         if(this.formItem.tjsj==''){
           this.formItem.tjsj = ''
         }else {
@@ -211,6 +219,7 @@
         this.getList()
       },
       daochu1:function () {
+        this.formItem.ejdw  = this.$store.state.dictData.parseDict.EJGS[ this.formItem._ejdw];
         if(this.formItem.tjsj==''){
           this.formItem.tjsj = ''
         }else {

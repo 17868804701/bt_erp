@@ -37,12 +37,13 @@
             <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="fgstsqkfl.tssj"
                         class="text_width"></DatePicker>
           </FormItem>
-          <FormItem label="选择公司" style="margin: 0">
-            <Select v-model="fgstsqkfl.bm" :transfer="true" style="width: 195px;">
-              <Option value="公交一公司">公交一公司</Option>
-              <Option value="公交二公司">公交二公司</Option>
-              <Option value="公交三公司">公交三公司</Option>
-            </Select>
+          <FormItem label="选择公司" style="margin: 0" prop="_bm">
+            <!--<Select v-model="fgstsqkfl.bm" :transfer="true" style="width: 195px;">-->
+              <!--<Option value="公交一公司">公交一公司</Option>-->
+              <!--<Option value="公交二公司">公交二公司</Option>-->
+              <!--<Option value="公交三公司">公交三公司</Option>-->
+            <!--</Select>-->
+            <CommonSelect type="EJGS"  :selectValue="fgstsqkfl._bm" style="width: 180px;"></CommonSelect>
           </FormItem>
           <Button type="primary" icon="ios-search" class="search_btn" @click="search2"
                   v-has="'kfclqktj_fgstsqkflhzb_search'">查询
@@ -64,16 +65,21 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         fgstsqkfl: {
           bm: '',
-          tssj: ''
+          tssj: '',
+          _bm:'',
         },
         nian:'',
         yue:'',
-        gs:'',
+        gs:'公交一公司',
         columns12: [
           {
             title: '路别/项目',
@@ -110,7 +116,7 @@
             key: 'QT',
             align: 'center',
           }, {
-            title: '合计',
+            title: '项目合计',
             key: 'sumcount',
             align: 'center',
           },
@@ -151,9 +157,11 @@
           })
       },
       search2: function () {
+        this.fgstsqkfl.bm  = this.$store.state.dictData.parseDict.EJGS[ this.fgstsqkfl._bm];
         this.getList();
       },
       daochu2: function () {
+        this.fgstsqkfl.bm  = this.$store.state.dictData.parseDict.EJGS[ this.fgstsqkfl._bm];
         if (this.fgstsqkfl.tssj === '') {
           this.fgstsqkfl.tssj = ''
         } else {

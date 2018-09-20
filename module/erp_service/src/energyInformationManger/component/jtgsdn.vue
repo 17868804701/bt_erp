@@ -8,21 +8,23 @@
               <DatePicker type="month" placeholder="选择时间" :transfer="true" v-model="formItem1.tjsj"
                           class="text_width" style="width: 150px;"></DatePicker>
             </FormItem>
-            <FormItem label="选择线路" style="margin: 0">
-              <Select v-model="formItem1.lb" :transfer="true" style="width: 150px;">
-                <Option value="">全部</Option>
-                <Option value="1路">1路</Option>
-                <Option value="2路">2路</Option>
-                <Option value="3路">3路</Option>
-              </Select>
+            <FormItem label="选择线路" style="margin: 0" prop="_lb">
+              <!--<Select v-model="formItem1.lb" :transfer="true" style="width: 150px;">-->
+                <!--<Option value="">全部</Option>-->
+                <!--<Option value="1路">1路</Option>-->
+                <!--<Option value="2路">2路</Option>-->
+                <!--<Option value="3路">3路</Option>-->
+              <!--</Select>-->
+              <CommonSelect type="LB"  :selectValue="formItem1._lb" style="width: 180px;"></CommonSelect>
             </FormItem>
-            <FormItem label="选择公司" style="margin: 0">
-              <Select v-model="formItem1.dw" :transfer="true" style="width: 150px;">
-                <Option value="">全部</Option>
-                <Option value="公交一公司">公交一公司</Option>
-                <Option value="公交二公司">公交二公司</Option>
-                <Option value="公交三公司">公交三公司</Option>
-              </Select>
+            <FormItem label="选择公司" style="margin: 0" prop="_dw">
+              <!--<Select v-model="formItem1.dw" :transfer="true" style="width: 150px;" >-->
+                <!--<Option value="">全部</Option>-->
+                <!--<Option value="公交一公司">公交一公司</Option>-->
+                <!--<Option value="公交二公司">公交二公司</Option>-->
+                <!--<Option value="公交三公司">公交三公司</Option>-->
+              <!--</Select>-->
+              <CommonSelect type="EJGS"  :selectValue="formItem1._dw" style="width: 180px;"></CommonSelect>
             </FormItem>
             <FormItem label="车牌号" style="margin: 0">
               <Input v-model="formItem1.cph" placeholder="车牌号" class="text_width" style="width: 150px;"/>
@@ -42,7 +44,11 @@
   </div>
 </template>
 <script>
+  import CommonSelect from '../../components/common/CommonSelect.vue'
   export default {
+    components: {
+      CommonSelect,
+    },
     data () {
       return {
         totalPage1: 1,
@@ -51,7 +57,9 @@
           size: 10,
           tjsj: '',
           dw: '',
+          _dw: '',
           lb: '',
+          _lb: '',
           cph: ''
         },
         columns12: [
@@ -179,6 +187,8 @@
 
       chaxun2:function () {
         console.log(this.formItem1)
+        this.formItem1.dw  = this.$store.state.dictData.parseDict.EJGS[ this.formItem1._dw];
+        this.formItem1.lb  = this.$store.state.dictData.parseDict.LB[ this.formItem1._lb];
         if(this.formItem1.tjsj==''){
             this.formItem1.tjsj=''
         }else {
@@ -194,6 +204,8 @@
         }
       },
       daochu2:function () {
+        this.formItem1.dw  = this.$store.state.dictData.parseDict.EJGS[ this.formItem1._dw];
+        this.formItem1.lb  = this.$store.state.dictData.parseDict.LB[ this.formItem1._lb];
         if (this.formItem1.tjsj == '') {
           this.formItem1.tjsj = ''
         } else {

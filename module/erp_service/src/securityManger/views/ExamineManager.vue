@@ -577,9 +577,13 @@
       exportExcel() {
         let url = this.$url.security_AQGLYKH_exportExcel;
         if (this.formItem.date instanceof Date) {
-          let firstDay = DateTool.getFirstDay(this.formItem.date);
-          let lastDay = DateTool.getLastDay(this.formItem.date);
-          url = url + '?startTime=' + firstDay + '&&endTime=' + lastDay;
+          let year = this.formItem.date.getFullYear();
+          let month = this.formItem.date.getMonth()+1;
+          let params = {
+            year: year,
+            month: month
+          }
+          url = url + '?year=' + year + '&month=' + month;
         }
         this.$getExcel(url);
       }

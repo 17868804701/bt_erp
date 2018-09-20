@@ -118,6 +118,7 @@
         params.date = DateTool.yyyymm01FormatDate(this.formItem.date);
         params.currPage = this.formItem.currPage;
         params.pageSize = this.formItem.pageSize;
+        let that = this;
         this.$fetch(this.$url.maintain_BYGL_WXLLGL_recordList, params)
         .then(res=>{
 //          debugger;
@@ -125,8 +126,9 @@
             res.page.list.forEach(item => {
               item.rq = DateTool.timesToDate(item.rq);
             })
-            this.tableData = res.page.list;
-            this.totalSize = res.page.totalCount;
+            that.currPage = 1;
+            that.tableData = res.page.list;
+            that.totalSize = res.page.totalCount;
           }else{
             this.$Message.error(res.message);
           }
@@ -136,7 +138,8 @@
         let url = this.$url.maintain_BYGL_WXLLGL_exportExcel;
 //        url = url + '?currPage='+this.formItem.currPage+'&pageSize='+this.formItem.pageSize;
         if (this.formItem.date instanceof Date) {
-          url = url + '?date=' + this.formItem.date;
+          let date = DateTool.yyyymm01FormatDate(this.formItem.date);
+          url = url + '?date=' + date;
         }
         this.$getExcel(url);
       },

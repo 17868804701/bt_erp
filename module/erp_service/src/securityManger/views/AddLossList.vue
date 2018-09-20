@@ -140,13 +140,16 @@
 //        console.log('追加事故经损说明管理请求数据');
 //        console.log(params);
         let that = this;
+        let allDict = this.$store.state.dictData.parseDict;
         this.$fetch(this.$url.security_ZJSGJSSM_list, params)
         .then(res => {
 //          console.log(res);
           if (res.success === true) {
             res.data.records.forEach(item => {
               item.lasj = DateTool.timesToDate(item.lasj);
+              item.zjgs = allDict.EJGS[item.zjgs];
             })
+            that.current = 1;
             that.tableData = res.data.records;
             that.totalSize = res.data.total;
           }else{
@@ -156,11 +159,10 @@
       },
       expertExcel() {
         let url = this.$url.security_ZJSGJSSM_exportExcel;
-        url = url + '?current='+this.formItem.current+'&&size='+this.formItem.size;
         if (this.formItem.date instanceof Date) {
           let firstDay = DateTool.getFirstDay(this.formItem.date);
           let lastDay = DateTool.getLastDay(this.formItem.date);
-          url = url + '&&lasjStart=' + firstDay + '&&lasjEnd=' + lastDay;
+          url = url + '?lasjStart=' + firstDay + '&lasjEnd=' + lastDay;
         }
         this.$getExcel(url);
       }

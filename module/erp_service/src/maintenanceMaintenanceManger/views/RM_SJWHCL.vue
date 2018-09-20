@@ -40,9 +40,9 @@
             align: 'center'
           },
           {
-            title: '车号',
+            title: '车牌号',
             align: 'center',
-            key: 'ch'
+            key: 'cph'
           },
           {
             title: '车型',

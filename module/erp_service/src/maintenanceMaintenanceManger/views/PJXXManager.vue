@@ -11,10 +11,12 @@
         :mask-closable="false"
         :closable="false"
         style="height:auto;">
+        <div slot="footer" style="height: 30px;">
+          <Button type="primary" style="float: right;margin-right: 10px" @click="exportModal = false">关闭</Button>
+        </div>
         <Steps :current="currentStep" direction="vertical">
           <Step title="第一步" content="下载导入报表模板"></Step>
           <Step title="第二步" content="上传报表"></Step>
-          <Step title="第三部" content="系统自动导入"></Step>
         </Steps>
         <div style="display: flex;flex-direction: column;position: absolute;top:90px;margin-left: 240px;">
           <Button type="dashed" icon="android-download" style="margin-bottom: 10px;margin-top: -15px;width: 110px;" @click="download">下载</Button>

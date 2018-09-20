@@ -14,7 +14,7 @@
         <Form :model="updateItem" ref="updateItem" :rules="updateRuleValidate" :label-width="120">
           <div style="display: flex;flex-wrap: wrap;justify-content: flex-start">
             <FormItem label="车辆自编号:" style="margin-top: 0px;">
-              <div style="width:110px;">{{updateItem.clzbh}}</div>
+              <div style="width:110px;">{{updateItem.zbh}}</div>
             </FormItem>
             <FormItem prop="ch" label="车号" style="margin-top: 0px;">
               <div style="width:110px;">{{updateItem.ch}}</div>
@@ -53,7 +53,7 @@
         <Form :model="backItem" ref="backItem" :rules="ruleValidate" :label-width="120">
           <div style="display: flex;flex-wrap: wrap;justify-content: flex-start">
             <FormItem label="车辆自编号:" style="margin-top: 0px;">
-              <Select ref="deviceSelect" v-model="backItem.clzbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
+              <Select ref="deviceSelect" v-model="backItem.zbh" filterable @on-change="selectCLItem" style="width: 140px;" placeholder="请选择">
                 <Option v-for="(item, index) in $store.state.dictData.CLArray" :value="item" :key="index+item">{{ item }}</Option>
               </Select>
             </FormItem>
@@ -124,7 +124,7 @@
         tableData: [],
         backItem: {
           id: '',
-          clzbh: '',
+          zbh: '',
           ch: '',
           cx: '',
           fxjcsj: '',
@@ -135,7 +135,7 @@
         },
         updateItem: {
           id: '',
-          clzbh: '',
+          zbh: '',
           ch: '',
           cx: '',
           fxjcsj: '',
@@ -184,6 +184,11 @@
             type: 'index',
             align: 'center',
             width: 60,
+          },
+          {
+            title: '自编号',
+            key: 'zbh',
+            align: 'center',
           },
           {
             title: '车号',
@@ -307,6 +312,7 @@
               item.fxccsj = DateTool.timesToDate(item.fxccsj);
               item.fxjcsj = DateTool.timesToDate(item.fxjcsj);
             })
+            that.currPage = 1;
             that.tableData = res.page.list;
             that.totalSize = res.page.totalCount;
 //            debugger;
@@ -334,7 +340,7 @@
       cancle() {
         let newBackItem = {
           id: '',
-          clzbh: '',
+          zbh: '',
           ch: '',
           cx: '',
           fxjcsj: '',
@@ -343,8 +349,8 @@
           fxyy: '',
           bz: '',
         };
-        if (typeof this.backItem.clzbh !== 'undefined' && this.backItem.clzbh.length > 0) {
-          newBackItem.clzbh = this.backItem.clzbh;
+        if (typeof this.backItem.zbh !== 'undefined' && this.backItem.zbh.length > 0) {
+          newBackItem.zbh = this.backItem.zbh;
           newBackItem.ch = this.backItem.ch;
           newBackItem.cx = this.backItem.cx;
         }
@@ -364,7 +370,7 @@
           if (res.code === 0) {
             let newBackItem = {
               id: '',
-              clzbh: '',
+              zbh: '',
               ch: '',
               cx: '',
               fxjcsj: '',
@@ -373,8 +379,8 @@
               fxyy: '',
               bz: '',
             };
-            if (typeof this.backItem.clzbh !== 'undefined' && this.backItem.clzbh.length > 0) {
-              newBackItem.clzbh = this.backItem.clzbh;
+            if (typeof this.backItem.zbh !== 'undefined' && this.backItem.zbh.length > 0) {
+              newBackItem.zbh = this.backItem.zbh;
               newBackItem.ch = this.backItem.ch;
               newBackItem.cx = this.backItem.cx;
             }
@@ -392,7 +398,7 @@
       cancleUpdate() {
         let newUpdateItem = {
           id: '',
-          clzbh: '',
+          zbh: '',
           ch: '',
           cx: '',
           fxjcsj: '',
@@ -401,8 +407,8 @@
           fxyy: '',
           bz: '',
         };
-        if (typeof this.updateItem.clzbh !== 'undefined' && this.updateItem.clzbh.length > 0) {
-          newUpdateItem.clzbh = this.updateItem.clzbh;
+        if (typeof this.updateItem.zbh !== 'undefined' && this.updateItem.zbh.length > 0) {
+          newUpdateItem.zbh = this.updateItem.zbh;
           newUpdateItem.ch = this.updateItem.ch;
           newUpdateItem.cx = this.updateItem.cx;
         }
@@ -428,7 +434,7 @@
                 that.$Message.success('更新成功!');
 //                let newUpdateItem = {
 //                  id: '',
-//                  clzbh: '',
+//                  zbh: '',
 //                  ch: '',
 //                  cx: '',
 //                  fxjcsj: '',
@@ -437,8 +443,8 @@
 //                  fxyy: '',
 //                  bz: '',
 //                };
-//                if (typeof that.updateItem.clzbh !== 'undefined' && that.updateItem.clzbh.length > 0) {
-//                  newUpdateItem.clzbh = this.updateItem.clzbh;
+//                if (typeof that.updateItem.zbh !== 'undefined' && that.updateItem.zbh.length > 0) {
+//                  newUpdateItem.zbh = this.updateItem.zbh;
 //                }
 //                that.updateItem = newUpdateItem;
                 that.updateModal = false;
@@ -470,7 +476,8 @@
       exportExcel() {
         let url = this.$url.maintain_BYGL_FXGL_exportExcel;
         if (this.formItem.date instanceof Date) {
-          url = url + '?date=' + this.formItem.date;
+          let date = DateTool.yyyymm01FormatDate(this.formItem.date);
+          url = url + '?date=' + date;
         }
         this.$getExcel(url);
       },

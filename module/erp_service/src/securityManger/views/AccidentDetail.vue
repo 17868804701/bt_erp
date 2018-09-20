@@ -256,7 +256,6 @@
         let that = this;
         this.$fetch(this.$url.security_LASG_lossList, {ajid: this.$route.query.rowData.id})
         .then(res=>{
-//          debugger;
           if (res.success === true) {
             res.data.records.forEach(item => {
               item.zjgs = that.$store.state.dictData.parseDict.EJGS[item.zjgs];

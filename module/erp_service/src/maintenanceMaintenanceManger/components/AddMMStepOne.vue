@@ -9,7 +9,7 @@
       </p>
       <Button slot="extra" type="primary" size="small" style="margin-right: 10px;" :icon="editIcon" @click="clickEditBasicData">{{editText}}</Button>
       <Button v-if="basicDataIsEdit" slot="extra" type="success" size="small" style="margin-right: 10px;" icon="checkmark" @click="saveBasicData">保存</Button>
-      <Form v-model="basicData" :label-width="100">
+      <Form :model="basicData" :label-width="100">
         <div style="display: flex;flex-wrap: wrap;">
           <FormItem label="登记编号:" style="margin-top: 0px;">
             <Input v-if="basicDataIsEdit" v-model="basicData.djbh" style="width:120px;"></Input>
@@ -50,9 +50,10 @@
             <Input v-if="basicDataIsEdit" v-model="basicData.jyy" style="width:120px;"></Input>
             <div style="width: 120px;" v-else>{{basicData.jyy}}</div>
           </FormItem>
-          <FormItem label="保养类别:" style="margin-top: 0px;">
-            <Input v-if="basicDataIsEdit" v-model="basicData.bylb" style="width:120px;"></Input>
-            <div style="width: 120px;" v-else>{{basicData.bylb}}</div>
+          <FormItem prop="bylb" label="保养类别:" style="margin-top: 0px;">
+            <!--<Input v-if="basicDataIsEdit" v-model="basicData.bylb" style="width:120px;"></Input>-->
+            <CommonSelect v-if="basicDataIsEdit" type="BYLB" iviewType="checkbox" :selectValue="basicData.bylb"></CommonSelect>
+            <div style="width: 120px;" v-else>{{BYLBString}}</div>
           </FormItem>
         </div>
 
@@ -248,6 +249,7 @@
 </template>
 <script>
   import canEditTable from '../../components/common/canEditTable.vue';
+  import CommonSelect from  '../../components/common/CommonSelect.vue';
   import FDJData from './StepOneTableData';
   import AddFDJQZView from './AddFDJQZView.vue';
   import AddFDJQGView from './AddFDJQGView.vue';
@@ -257,7 +259,8 @@
     components: {
       canEditTable,
       AddFDJQZView,
-      AddFDJQGView
+      AddFDJQGView,
+      CommonSelect
     },
     props: {
       sourceData: Object,
@@ -708,6 +711,23 @@
       },
       isHaveCY() {
         return this.basicData.cySwitchValue ? '是' : '否';
+      },
+      BYLBString() {
+        let clbyBasicData = this.sourceData.clby;
+//        debugger
+        if (typeof clbyBasicData !== 'undefined' && typeof clbyBasicData.bylb !== 'undefined') {
+          let allDict = this.$store.state.dictData.parseDict;
+          let array = (clbyBasicData.bylb !== null && clbyBasicData.bylb.length > 0) ? clbyBasicData.bylb.split("、") : [];
+          let stringArray = [];
+          array.forEach(bylbItem => {
+            stringArray.push(allDict.BYLB[bylbItem]);
+          })
+
+          let bylbString = stringArray.join("、");
+          return bylbString;
+        }else{
+          return '';
+        }
       }
     },
     methods: {
@@ -738,6 +758,8 @@
             params.fgs = attr;
           }
         }
+        params.bylb = params.bylb.join('、');
+        debugger
         this.$post(this.$url.maintain_BYGL_CLBY_updateRecord, params)
         .then(res => {
           if (res.code === 0) {
@@ -1013,6 +1035,9 @@
         this.basicData.jcsj = DateTool.timesToDate(this.basicData.jcsj);
         let fgsDict = this.$store.state.dictData.parseDict.EJGS;
         this.basicData.fgs = fgsDict[this.basicData.fgs];
+
+        let array = (clbyBasicData.bylb !== null && clbyBasicData.bylb.length > 0) ? clbyBasicData.bylb.split("、") : [];
+        this.basicData.bylb = array;
 
         // 处理发动机进场记录
         let tmpfdjData = {}; // 用来判断是否有发动机进场记录的object

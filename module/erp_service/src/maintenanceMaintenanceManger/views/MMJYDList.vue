@@ -6,9 +6,11 @@
       v-model="showDetailModal"
       title="查看检验项目"
       width="50%"
-      @on-ok="showDetailModal = false"
       :mask-closable="false"
       :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="showDetailModal=false">关闭</Button>
+      </div>
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <div v-for="(item, itemIndex) in jydDetailData" :key="itemIndex">
           <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">
@@ -133,6 +135,7 @@
     methods: {
       showDetail(row) {
         let params = {id : row.byid};
+        let that = this;
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordDetail, params)
         .then(res => {
           // 检验单数据
@@ -145,10 +148,12 @@
               tmpData.push(selectValues);
             }
             if (typeof tmpData === 'object' && tmpData !== null && tmpData.length > 0) {
-              this.jydDetailData = JSON.parse(JSON.stringify(tmpData));
+              that.jydDetailData = JSON.parse(JSON.stringify(tmpData));
             }
-            console.log(this.jydDetailData);
-            this.showDetailModal = true;
+//            console.log(this.jydDetailData);
+            that.showDetailModal = true;
+          }else{
+            that.$Message.info('目前还未检验项目!');
           }
         })
       },

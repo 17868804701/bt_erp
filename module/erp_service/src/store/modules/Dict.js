@@ -71,7 +71,6 @@ const Dict = {
     getOriganzation(state) {
       fetch(process.env.BASE_URL+'/auth/group/trees')
       .then(res => {
-        debugger
         if (res.success === true) {
 
           let ejbmarr = [];

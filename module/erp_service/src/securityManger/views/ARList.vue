@@ -145,6 +145,7 @@
           zjkf: 0,
           zjsz: 0,
           bz: 0,
+          lasj: ''
         },
       }
     },
@@ -203,7 +204,7 @@
                 },
                 on: {
                   'on-ok': () => {
-                    console.log('确认删除');
+//                    console.log('确认删除');
                     this.deleteLASG(params.row);
                   }
                 },
@@ -254,6 +255,7 @@
                 on: {
                   click: () => {
                     this.lossForm.laid = params.row.id;
+                    this.lossForm.lasj = params.row.lasj;
                     this.lossForm.jsyxm = params.row.jsyxm;
                     this.lossForm.lb = params.row.lb;
                     this.lossForm.pz = params.row.pz;
@@ -413,6 +415,7 @@
             that.lossForm = {
               jsyxm: "",
               laid: "",
+              lasj: '',
               lb: "",
               pz: "",
               jajs: 0,

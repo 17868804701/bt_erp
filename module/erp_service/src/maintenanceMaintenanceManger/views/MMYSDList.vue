@@ -7,8 +7,10 @@
       title="查看验收项目"
       width="50%"
       :mask-closable="false"
-      :closable="false"
-      @on-ok="showDetailModal = false">
+      :closable="false">
+      <div slot="footer" style="height: 30px;">
+        <Button type="primary" style="float: right;margin-right: 10px" @click="showDetailModal=false">关闭</Button>
+      </div>
       <div style="display: flex;flex-wrap: wrap;justify-content: flex-start;">
         <div v-for="(item, itemIndex) in ysdDetailData" :key="itemIndex">
           <Tooltip v-for="(subItem, subItemIndex) in item" :key="subItem+subItemIndex">
@@ -128,15 +130,18 @@
     methods: {
       showDetail(row) {
         let params = {id: row.byid}
+        let that = this;
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordDetail, params)
         .then(res => {
           // 验收单数据
           let ysdData = res.pageYsd.ysxmmc;
           let ysdArray = JSON.parse(ysdData);
           if (typeof ysdArray === 'object' && ysdArray != null && ysdArray.length > 0)  {
-            this.ysdDetailData = JSON.parse(JSON.stringify(ysdArray));
+            that.ysdDetailData = JSON.parse(JSON.stringify(ysdArray));
+            that.showDetailModal = true;
+          }else{
+            that.$Message.info('目前还未验收项目!');
           }
-          this.showDetailModal = true;
         })
       },
       setPage(page) {

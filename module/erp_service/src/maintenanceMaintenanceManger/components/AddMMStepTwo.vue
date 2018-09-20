@@ -385,7 +385,7 @@
               this.$Message.error('保存失败!');
             }
           })
-          console.log('添加领料备料记录');
+//          console.log('添加领料备料记录');
         }
       },
       cancleAddLLBL() {
@@ -411,7 +411,7 @@
         let params = {id: row.id};
         this.$fetch(this.$url.maintain_BYGL_CLBY_CL_delete, params)
         .then(res => {
-          console.log(res);
+//          console.log(res);
           if (res.code === 0) {
             this.$Message.success('删除成功!');
             this.$emit('updateInfo');
@@ -425,7 +425,7 @@
 
       // *********  检验单   ********** //
       addJYSM() {  // 当用户交互checkbox, 双向绑定的数据发生改变, 点击确定保存成功后, ui展示的数据this.jydData应该和绑定的数据相同
-        console.log('确认添加维修养护过程检验项目记录');
+//        console.log('确认添加维修养护过程检验项目记录');
         let itemStringArr = [];
         // 深拷贝数组
         let deepCopyArray = JSON.parse(JSON.stringify(this.jydBindData));
@@ -444,7 +444,7 @@
         }
 
         let result = JSON.stringify(itemStringArr);
-        console.log(result);
+//        console.log(result);
 
         let params = {
           ysxmmc: result,
@@ -452,7 +452,7 @@
         };
         this.$post(this.$url.maintain_BYGL_CLBY_JYD_saveOrUpdate, params)
         .then(res => {
-          console.log(res);
+//          console.log(res);
           if (res.code === 0) {
             this.jysmModal = false;
             this.jydData = JSON.parse(JSON.stringify(this.jydBindData));
@@ -472,7 +472,8 @@
       // *********  验收单   ********** //
       checkYSXM() {
 //        console.log('选择了验收项目');
-        console.log(this.ysdBindData);
+//        console.log(this.ysdBindData);
+//        debugger
         let ysdSelectValues = JSON.stringify(this.ysdBindData);
         let params = {
           ysxmmc: ysdSelectValues,
@@ -533,9 +534,6 @@
         let request2 = this.$fetch(this.$url.common_getAllDictListDataWithCode, {code : 'YSXM'});
         axios.all([request1, request2])
         .then(axios.spread(function(res1, res2){
-
-          debugger
-
           if (res1.success === true) {
             let data = res1.data[0].children;
             data.forEach(item => {

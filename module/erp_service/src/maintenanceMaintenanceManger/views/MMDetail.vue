@@ -71,6 +71,7 @@
         }
       },
       requestDetailData() {
+
         let params = {id: this.$route.query.row.id}
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordDetail, params)
         .then(res => {

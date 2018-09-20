@@ -6,7 +6,7 @@
         <Row>
           <Col span="24">
           <FormItem label="按年份查询" style="margin: 0;">
-            <DatePicker type="year" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
+            <DatePicker type="month" placeholder="选择年份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
             <Button type="primary" icon="ios-search" @click="searchData" v-has="'aqglykhbgl_zjsgjssmgl_search'">搜索</Button>
             <Button type="primary" icon="android-download" style="position: absolute;right: 0" @click="expertExcel" v-has="'aqglykhbgl_zjsgjssmgl_export'">导出excel</Button>
           </FormItem>
@@ -132,13 +132,20 @@
         this.requestListData();
       },
       requestListData() {
+        let year = '';
+        let month = '';
+        if (this.formItem.date instanceof Date) {
+          year = this.formItem.date.getFullYear();
+          month = this.formItem.date.getMonth() + 1;
+        }
         let params = {
-          time: this.formItem.date.getFullYear(),
+          year: year,
+          month: month,
           current: this.formItem.current,
           size: this.formItem.size,
         };
-//        console.log('追加事故经损说明管理请求数据');
-//        console.log(params);
+        //        console.log('追加事故经损说明管理请求数据');
+        //        console.log(params);
         let that = this;
         let allDict = this.$store.state.dictData.parseDict;
         this.$fetch(this.$url.security_ZJSGJSSM_list, params)
@@ -160,9 +167,9 @@
       expertExcel() {
         let url = this.$url.security_ZJSGJSSM_exportExcel;
         if (this.formItem.date instanceof Date) {
-          let firstDay = DateTool.getFirstDay(this.formItem.date);
-          let lastDay = DateTool.getLastDay(this.formItem.date);
-          url = url + '?lasjStart=' + firstDay + '&lasjEnd=' + lastDay;
+          let year = this.formItem.date.getFullYear();
+          let month = this.formItem.date.getMonth() + 1;
+          url = url + '?year=' + year + '&month=' + month;
         }
         this.$getExcel(url);
       }

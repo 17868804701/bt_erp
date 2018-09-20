@@ -59,16 +59,6 @@
             align: 'center',
             key: 'fdjclf'
           },
-          {
-            title: '费用合计',
-            align: 'center',
-            key: 'fyhj'
-          },
-          {
-            title: '维修台数合计',
-            align: 'center',
-            key: 'tshj'
-          },
         ],
         tableData: [],
       }

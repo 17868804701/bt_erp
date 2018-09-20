@@ -77,18 +77,29 @@
         }
         params.month = DateTool.yyyymm01FormatDate(params.month);
         let url = this.$url.maintain_BBGL_SJBYTZ_list;
+        let that = this;
+        let allDict = this.$store.state.dictData.parseDict;
         this.$fetch(url, params)
         .then(res => {
           if (res.code === 0) {
-            this.tableData = res.page.list;
-            this.totalSize = res.page.totalCount;
+            res.page.list.forEach(item => {
+              let array = (item.bylb !== null && item.bylb.length > 0) ? item.bylb.split("、") : [];
+              let stringArray = [];
+              array.forEach(bylbItem => {
+                stringArray.push(allDict.BYLB[bylbItem]);
+              })
+              item.bylb = stringArray.join("、");
+            })
+            that.form1Item.currPage = 1;
+            that.tableData = res.page.list;
+            that.totalSize = res.page.totalCount;
           }else{
             this.$Message.error('请求失败!');
           }
         })
       },
       exportExcel() {
-        let params = this.form1Item;;
+        let params = this.form1Item;
         let url = this.$url.maintain_BBGL_SJBYTZ_exportExcel;
 
         if (params.month instanceof Date) {

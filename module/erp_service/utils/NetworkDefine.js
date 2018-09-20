@@ -39,7 +39,7 @@ const NetworkInterface = {
   security_AQGLYKH_save: '/erp-modules-yygl/lasg/saveAqkh', // 安全管理月考核表， 添加安全相关分数
   security_AQGLYKH_update: '/erp-modules-yygl/lasg/updateAqkh', // 安全管理月考核表， 更新安全相关分数
   security_ZJSGJSSM_exportExcel: baseURL+'/erp-modules-yygl/lasg/exportZjsgjsExcel', // 追加事故经损说明管理
-  security_ZJSGJSSM_list: '/erp-modules-yygl//lasg/zjsgjsList', // 追加事故经损说明管理列表数据
+  security_ZJSGJSSM_list: '/erp-modules-yygl/lasg/zjsgjsList', // 追加事故经损说明管理列表数据
   security_AQSCFGS_list: '/erp-modules-yygl/lasg/fgsAqsczbList', // 分公司数据
   security_AQSCJTGS_list: '/erp-modules-yygl/lasg/hzAqsczbList', // 集团公司数据
   security_AQQKFX_exportExcel: baseURL+'/erp-modules-yygl/lasg/exportAqsczbQkfxExcel', // 安全情况分析 --- 报表导出

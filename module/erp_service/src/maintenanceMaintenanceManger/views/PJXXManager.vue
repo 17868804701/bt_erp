@@ -313,9 +313,12 @@
         })
       },
       handleSuccess(res) {
+//        debugger
         if (res.code === 0) {
           this.$Message.success('上传成功');
           this.exportModal = false;
+        }else{
+          this.$Message.error(res.message);
         }
       },
       exportExcel() {

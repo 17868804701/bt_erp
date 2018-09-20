@@ -454,8 +454,8 @@
                       },
                       on: {
                         click: () => {
-                          console.log('编辑运营安全体系执行规范');
-                          console.log(params.row);
+//                          console.log('编辑运营安全体系执行规范');
+//                          console.log(params.row);
                           this.editRow = params.row;
                           this.editModal = true;
                         }

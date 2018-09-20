@@ -62,19 +62,19 @@
             <div style="width: 120px;" v-else>{{dwString}}</div>
           </FormItem>
 
-          <FormItem prop="pz" label="牌照:">
-            <Input v-if="isEdit" v-model="formValidate.pz" placeholder="请输入牌照..." style="width: 120px"></Input>
-            <div style="width: 120px;" v-else>{{formValidate.pz}}</div>
+          <FormItem prop="zbh" label="自编号:">
+            <!--<Input v-if="isEdit" v-model="formValidate.zbh" placeholder="请输入车辆自编号..." style="width: 120px"></Input>-->
+            <div style="width: 120px;">{{formValidate.zbh}}</div>
           </FormItem>
 
-          <FormItem prop="zbh" label="自编号:">
-            <Input v-if="isEdit" v-model="formValidate.zbh" placeholder="请输入车辆自编号..." style="width: 120px"></Input>
-            <div style="width: 120px;" v-else>{{formValidate.zbh}}</div>
+          <FormItem prop="pz" label="牌照:">
+            <!--<Input v-if="isEdit" v-model="formValidate.pz" placeholder="请输入牌照..." style="width: 120px"></Input>-->
+            <div style="width: 120px;">{{formValidate.pz}}</div>
           </FormItem>
 
           <FormItem prop="lb" label="路别:">
-            <Input v-if="isEdit" v-model="formValidate.lb" placeholder="请输入路别..." style="width: 120px"></Input>
-            <div style="width: 120px;" v-else>{{formValidate.lb}}</div>
+            <!--<Input v-if="isEdit" v-model="formValidate.lb" placeholder="请输入路别..." style="width: 120px"></Input>-->
+            <div style="width: 120px;">{{formValidate.lb}}</div>
           </FormItem>
 
           <FormItem prop="jsyxm" label="驾驶员姓名:">
@@ -275,12 +275,9 @@
         }
         delete params._index;
         delete params._rowKey;
-
-
         params.sgsx = params.sgsx.join('、');
         params.sgxz = this.SGXZCode;
-        console.log(params);
-
+//        console.log(params);
         let that = this;
         this.$refs['updateDiv'].validate(valid=>{
           if (valid) {
@@ -300,7 +297,6 @@
           }
         })
       },
-
     },
     computed: {
       sgsxString() {

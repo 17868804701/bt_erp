@@ -54,7 +54,8 @@
                 <Input v-model="basicData.jyy" style="width: 140px;"></Input>
               </FormItem>
               <FormItem prop="bylb" label="保养类别:" style="margin-top: 0px;">
-                <Input v-model="basicData.bylb" style="width: 140px;"></Input>
+                <!--<Input v-model="basicData.bylb" style="width: 140px;"></Input>-->
+                <CommonSelect type="BYLB" iviewType="checkbox" :selectValue="basicData.bylb"></CommonSelect>
               </FormItem>
             </div>
           </Form>
@@ -101,7 +102,7 @@
           jcsj: '',
           sxr: '',
           jyy: '',
-          bylb: '',
+          bylb: [],
         },
         ruleValidate: {
           djbh: [
@@ -132,7 +133,7 @@
             { required: true, message: '此项为必填字段', trigger: 'blur' },
           ],
           bylb: [
-            { required: true, message: '此项为必填字段', trigger: 'blur' },
+            { required: true, type: 'array', min: 1, message: '请至少选择一个', trigger: 'change' },
           ],
         },
         columns: [
@@ -253,7 +254,7 @@
             }
           },
         ],
-
+        sourceData: [],
         tableData:[],
         formItem: {
           date: '',
@@ -308,6 +309,10 @@
             params.fgs = attr;
           }
         }
+        if (params.bylb.length > 0) {
+          params.bylb = params.bylb.join('、');
+        }
+
         var that = this;
         this.$post(this.$url.maintain_BYGL_CLBY_saveRecord, params)
         .then(res => {
@@ -357,16 +362,25 @@
         params.date = DateTool.yyyymm01FormatDate(this.formItem.date);
         params.currPage = this.formItem.currPage;
         params.pageSize = this.formItem.pageSize;
+        let that = this;
         this.$fetch(this.$url.maintain_BYGL_CLBY_recordList, params)
         .then(res => {
           if (res.code === 0) {
+            that.sourceData = JSON.parse(JSON.stringify(res.page.list));
             let allDict = this.$store.state.dictData.parseDict;
             res.page.list.forEach(item => {
               item.jcsj = DateTool.timesToDate(item.jcsj);
               item.fgs = allDict.EJGS[item.fgs];
+              let array = (item.bylb !== null && item.bylb.length > 0) ? item.bylb.split("、") : [];
+              let stringArray = [];
+              array.forEach(bylbItem => {
+                stringArray.push(allDict.BYLB[bylbItem]);
+              })
+              item.bylb = stringArray.join("、");
             })
-            this.tableData = res.page.list;
-            this.totalSize = res.page.totalCount;
+            that.currPage = 1;
+            that.tableData = res.page.list;
+            that.totalSize = res.page.totalCount;
           }else{
             this.$Message.error('获取数据失败!');
           }

@@ -314,8 +314,16 @@
       //线路车次正点统计
       ok1: function () {
         let time = '';
-        this.formItem1.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem1._dw];
-        this.formItem1.lb = this.$store.state.dictData.parseDict.LB[this.formItem1._lb];
+        if(this.formItem1._dw==''){
+          this.formItem1.dw = ''
+        }else {
+          this.formItem1.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem1._dw];
+        }
+        if(this.formItem1._lb ==''){
+          this.formItem1.lb = ''
+        }else {
+          this.formItem1.lb = this.$store.state.dictData.parseDict.LB[this.formItem1._lb];
+        }
         if (this.formItem1.sj === '') {
           time = ''
         } else {

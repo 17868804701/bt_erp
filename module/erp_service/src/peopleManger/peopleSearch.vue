@@ -747,16 +747,16 @@
               this.tableData2 = res.data.records;
             } else {
               res.data.records.forEach(item => {
-                item.gzsj = this.$formatDate(item.gzsj).substring(0, 10);
-                item.lrsj = this.$formatDate(item.lrsj).substring(0, 10);
-                item.rdsj = this.$formatDate(item.rdsj).substring(0, 10);
-                item.gjjkhsj = this.$formatDate(item.gjjkhsj).substring(0, 10);
-                item.qdsj = this.$formatDate(item.qdsj).substring(0, 10);
-                item.bdwgzsj = this.$formatDate(item.bdwgzsj).substring(0, 10);
-                item.txsj = this.$formatDate(item.txsj).substring(0, 10);
-                item.htkssj = this.$formatDate(item.htkssj).substring(0, 10);
-                item.htjssj = this.$formatDate(item.htjssj).substring(0, 10);
-                item.csny = this.$formatDate(item.csny).substring(0, 10);
+                item.gzsj = item.gzsj===null?item.gzsj='':this.$formatDate(item.gzsj).substring(0, 10);
+                item.lrsj = item.lrsj===null?item.lrsj='':this.$formatDate(item.lrsj).substring(0, 10);
+                item.rdsj = item.rdsj===null?item.rdsj='':this.$formatDate(item.rdsj).substring(0, 10);
+                item.gjjkhsj = item.gjjkhsj===null?item.gjjkhsj='':this.$formatDate(item.gjjkhsj).substring(0, 10);
+                item.qdsj = item.qdsj===null?item.qdsj='':this.$formatDate(item.qdsj).substring(0, 10);
+                item.bdwgzsj = item.bdwgzsj===null?item.bdwgzsj='':this.$formatDate(item.bdwgzsj).substring(0, 10);
+                item.txsj = item.txsj===null?item.txsj='':this.$formatDate(item.txsj).substring(0, 10);
+                item.htkssj = item.htkssj==null?item.htkssj='':this.$formatDate(item.htkssj).substring(0, 10);
+                item.htjssj = item.htjssj===null?item.htjssj='':this.$formatDate(item.htjssj).substring(0, 10);
+                item.csny = item.csny===null?item.csny='':this.$formatDate(item.csny).substring(0, 10);
               });
               this.totalPage = res.data.total;
               this.tableData2 = res.data.records;

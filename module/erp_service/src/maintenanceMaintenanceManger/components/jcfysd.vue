@@ -170,14 +170,14 @@
           },
           {
             title: '操作',
-            align: 'center',
+            // align: 'center',
             key: 'time',
             render: (h, params) => {
               return h('div', [
                 h('Poptip', {
                   props: {
                     confirm: true,
-                    type: 'error',
+                    // type: 'error',
                     title: '你确定要删除吗?'
                   },
                   on: {

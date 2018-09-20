@@ -206,8 +206,17 @@
         this.getList()
       },
       daochu1: function () {
-        this.formItem.dw  = this.$store.state.dictData.parseDict.EJGS[ this.formItem._dw];
-        this.formItem.lb  = this.$store.state.dictData.parseDict.LB[ this.formItem._lb];
+        if(this.formItem._dw==''){
+          this.formItem.dw = ''
+        }else {
+          this.formItem.dw  = this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        }
+
+        if(this.formItem._lb==''){
+          this.formItem.lb = ''
+        }else {
+          this.formItem.lb  = this.$store.state.dictData.parseDict.LB[this.formItem._lb];
+        }
         if (this.formItem.tjsj == '') {
           this.formItem.tjsj = ''
         } else {

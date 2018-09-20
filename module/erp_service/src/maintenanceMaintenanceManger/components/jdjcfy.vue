@@ -159,15 +159,15 @@
         }else {
             this.jidu = ''
         }
-        this.getList();
+        // this.getList();
 
-//        //console.log(this.formItem1.years)
-//        //console.log(this.formItem1.quarter)
-//        if (this.formItem1.quarter != '' && this.formItem1.years == '') {
-//          this.$Message.error('请先选则年份！')
-//        } else {
-//          this.getList();
-//        }
+       //console.log(this.formItem1.years)
+       //console.log(this.formItem1.quarter)
+       if (this.formItem1.quarter != '' && this.formItem1.years == '') {
+         this.$Message.error('请先选则年份！')
+       } else {
+         this.getList();
+       }
       },
       getList: function () {
         if (this.formItem1.years == '') {

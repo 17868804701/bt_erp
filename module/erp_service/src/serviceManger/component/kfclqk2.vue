@@ -161,7 +161,11 @@
         this.getList();
       },
       daochu2: function () {
-        this.fgstsqkfl.bm  = this.$store.state.dictData.parseDict.EJGS[ this.fgstsqkfl._bm];
+        if(this.fgstsqkfl._bm==''){
+          this.fgstsqkfl.bm = ''
+        }else {
+          this.fgstsqkfl.bm  = this.$store.state.dictData.parseDict.EJGS[this.fgstsqkfl._bm];
+        }
         if (this.fgstsqkfl.tssj === '') {
           this.fgstsqkfl.tssj = ''
         } else {

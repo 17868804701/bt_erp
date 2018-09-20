@@ -34,11 +34,11 @@
       <h2>检测登记</h2>
     </div>
     <Tabs :value="tabValue" @on-click="changes">
-      <TabPane v-if="$showMenu('检测费用设定')" label="检测费用设定" name="JCFYSD">
-        <JCFYSD ref="JCFYSD"></JCFYSD>
-      </TabPane>
       <TabPane v-if="$showMenu('钢瓶检测登记')" label="钢瓶检测登记" name="GPJCDJ">
         <GPJCDJ ref="GPJCDJ"></GPJCDJ>
+      </TabPane>
+      <TabPane v-if="$showMenu('检测费用设定')" label="检测费用设定" name="JCFYSD">
+        <JCFYSD ref="JCFYSD"></JCFYSD>
       </TabPane>
     </Tabs>
   </div>
@@ -54,7 +54,7 @@
     },
     data () {
       return {
-        tabValue: ''
+        tabValue: 'GPJCDJ'
       }
     },
     methods: {

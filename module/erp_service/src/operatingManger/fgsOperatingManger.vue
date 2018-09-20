@@ -94,6 +94,7 @@
           size: '10',
           dw: '',
           sj: '',
+          dcsm:'',
           _dw:''
         },
         columns11: [
@@ -289,7 +290,11 @@
       },
       ok: function () {
         let time = '';
-        this.formItem.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        if(this.formItem._dw==''){
+          this.formItem.dw = ''
+        }else {
+          this.formItem.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        }
         if (this.formItem.sj === '') {
           time = ''
         } else {

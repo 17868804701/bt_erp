@@ -298,7 +298,11 @@
       //各公司与集团汇总
       ok2: function () {
         let time = '';
-        this.formItem2.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem2._dw];
+        if(this.formItem2._dw==''){
+          this.formItem2.dw = ''
+        }else {
+          this.formItem2.dw = this.$store.state.dictData.parseDict.EJGS[this.formItem2._dw];
+        }
         if (this.formItem2.sj === '') {
           time = ''
         } else {

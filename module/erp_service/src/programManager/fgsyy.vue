@@ -312,7 +312,7 @@
           },
           {
             title: '出入库台数',
-            key: 'jqts',
+            key: 'crkts',
             align: 'center',
             width: 80,
           },

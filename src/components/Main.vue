@@ -283,7 +283,7 @@
         let appClassifyURL = process.env.BASE_URL + '/auth/app/getClassify';
         this.$fetch(appClassifyURL)
           .then(res => {
-            console.log(res);
+            console.log(res.data,'分类');
             let obj = {
               cicon: "",
               cid: 'all',
@@ -299,12 +299,12 @@
         let allAppURL = process.env.BASE_URL + '/auth/app/getApp';
         this.$fetch(allAppURL)
           .then(res => {
+            console.log(res.data,'应用')
             res.data.forEach(item => {
               item.apath = process.env.iframe_BASE_URL + item.apath,
                 item.aicon = process.env.upload_BASE_URL + item.aicon
             });
             that.allAppList = res.data;
-            console.log(res);
           })
       },
       selectClassify(value) {
@@ -325,6 +325,7 @@
     mounted(){
       this.URL = process.env.iframe_BASE_URL;
       this.getUserSetting();
+      console.log(this.fenlei)
     },
     created() {
 

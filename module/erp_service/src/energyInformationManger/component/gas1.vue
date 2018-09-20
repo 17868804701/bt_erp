@@ -219,7 +219,11 @@
         this.getList()
       },
       daochu1:function () {
-        this.formItem.ejdw  = this.$store.state.dictData.parseDict.EJGS[ this.formItem._ejdw];
+        if(this.formItem._ejdw==''){
+          this.formItem.ejdw = ''
+        }else {
+          this.formItem.ejdw  = this.$store.state.dictData.parseDict.EJGS[this.formItem._ejdw];
+        }
         if(this.formItem.tjsj==''){
           this.formItem.tjsj = ''
         }else {

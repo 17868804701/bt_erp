@@ -177,7 +177,7 @@
           },
           {
             title: '操作',
-            align: 'center',
+            // align: 'center',
             key: 'time',
             render: (h, params) => {
               return h('div', [

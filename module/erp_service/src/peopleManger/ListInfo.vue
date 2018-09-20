@@ -101,7 +101,7 @@
                    :src="'http://106.12.19.134:8080/static/'+formItem.zpdz"
                    alt="" style="border: 1px solid #eae9ec">
               <Upload :headers="header" :action='uploadFile' :on-success="handleSuccess" :show-upload-list="false">
-                <Button type="primary" icon="ios-cloud-upload-outline">更改头像</Button>
+                <Button type="primary" icon="ios-cloud-upload-outline">上传头像</Button>
               </Upload>
             </div>
           </div>
@@ -109,8 +109,9 @@
       </Card>
       <Card class="card_file" style="margin-top: 10px;">
         <p slot="title">附件查看</p>
-        <Icon type="document-text" class="file"></Icon>
-        <span class="a_pdf" @click="showPDF">附件：点击查看个人资料.pdf</span><br>
+        <Icon type="document-text" class="file" v-show="this.$route.query.tip!=='add'"></Icon>
+        <span class="a_pdf" @click="showPDF" v-show="this.$route.query.tip!=='add'">附件：点击查看个人资料.pdf</span><br>
+        <span v-show="this.$route.query.tip==='add'" style="position: absolute;margin-top: -20px;margin-left: 5px;">请上传个人资料</span>
         <Upload :headers="header" :action='uploadFile' :on-success="handleSuccessPdf" :show-upload-list="false">
           <Button type="primary" icon="ios-cloud-upload-outline" style="margin-top: 10px;">上传资料PDF</Button>
         </Upload>
@@ -426,26 +427,21 @@
     },
     methods: {
       handleSuccess: function (res) {
-          //console.log(res);
+        let that = this
         if (res.success === true) {
             this.$Message.info('上传成功')
           if (this.isEdit_jbxx === false) {
             this.formItem.zpdz = res.path;
-            //console.log('只是上传增加信息')
-            //console.log(this.formItem.zpdz)
           } else {
             this.formItem.zpdz = res.path;
             this.bgyy = '上传了照片';
             this.update();
           }
-          //console.log(this.formItem.zpdz)
-          //console.log(this.formItem.ygfz)
         } else {
           this.$Message.error('修改失败');
         }
       },
       handleSuccessPdf: function (res) {
-          //console.log(res)
         if (res.success === true) {
           this.$Message.info('上传成功')
           if (this.isEdit_jbxx === false) {
@@ -455,8 +451,6 @@
             this.bgyy = '上传了附件'
             this.update();
           }
-          //console.log(this.formItem.ygfz)
-          //console.log(this.formItem.zpdz)
         } else {
           this.$Message.error('修改失败');
         }
@@ -474,7 +468,7 @@
         this.isshowpdf = false;
       },
       showPDF(){
-        if (this.$route.query.row.ygfz === '') {
+        if (this.$route.query.row.ygfz === null) {
           this.$Message.info('你还没有上传资料，请上传后查看')
         } else {
           this.modalPdf = true
@@ -569,12 +563,12 @@
     mounted () {
       this.imgUrl = process.env.upload_BASE_URL;
       let tip = this.$route.query.tip;
-      this.formItem = this.$route.query.row || {};
       if (tip === 'add') {
           this.isEdit_jbxx = false,
           this.isEdit_dwxx = false,
           this.isEdit_gjj = false
       } else {
+        this.formItem = this.$route.query.row;
         this.personId = this.$route.query.row.id || '';
         this.getLog();
         this.formItem.gzsj = this.formatDate(new Date(new Date(this.$route.query.row.gzsj).getTime()));

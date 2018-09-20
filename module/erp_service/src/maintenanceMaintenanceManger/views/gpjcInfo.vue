@@ -15,7 +15,7 @@
   <div>
     <div class="container">
       <h2>钢瓶检测详情
-        <router-link to="/GPCheckList">
+        <router-link  :to="{path:'/GPCheckList', query:{type:'back'}}">
           <Button type="primary" size="small"><
             <返回列表
           </Button>

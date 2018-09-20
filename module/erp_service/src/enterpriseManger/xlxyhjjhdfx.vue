@@ -334,7 +334,11 @@
         } else {
           this.formItem.nd = this.$formatDate(this.formItem.nd).substring(0, 4)
         }
-        this.formItem.dw =  this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        if(this.formItem._dw==''){
+          this.formItem.dw = ''
+        }else {
+          this.formItem.dw =  this.$store.state.dictData.parseDict.EJGS[this.formItem._dw];
+        }
         this.$getExcel(this.$url.xlxyDaochu+'?nd='+this.formItem.nd+'&jd='+this.formItem.jd+'&dw='+this.formItem.dw)
       },
       setPage: function (current) {

@@ -9,7 +9,7 @@
           <FormItem label="按月查询" style="margin: 0;">
             <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
             <Button type="primary" icon="ios-search" @click="searchData" v-has="'sgqkhz_fgsjtsgybb_search'">搜索</Button>
-            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'sgqkhz_fgsjtsgybb_export'">导出Excel</Button>
+              <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'sgqkhz_fgsjtsgybb_export'">导出Excel</Button>
           </FormItem>
           </Col>
         </Row>

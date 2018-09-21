@@ -459,7 +459,13 @@
                           this.editRow = params.row;
                           this.editModal = true;
                         }
-                      }
+                      },
+                      directives: [
+                        {
+                          name: 'has',
+                          value: 'aqglykhbgl_aqglykhb_update',
+                        }
+                      ],
                     }, '编辑')
                   ]);
                 }

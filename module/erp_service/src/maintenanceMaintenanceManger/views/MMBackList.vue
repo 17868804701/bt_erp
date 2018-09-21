@@ -280,7 +280,7 @@
                   directives: [
                     {
                       name: 'has',
-                      value: 'bygl_fxgl_delete',
+                      value: 'bygl_fxgl_update',
                     }
                   ]
                 }, '编辑'),
@@ -317,7 +317,7 @@
             that.totalSize = res.page.totalCount;
 //            debugger;
           }else{
-            that.$Message.error(res.message);
+            that.$Message.error(res.msg);
           }
         })
       },

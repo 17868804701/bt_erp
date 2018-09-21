@@ -70,8 +70,8 @@
             <Input v-model="formItem.wpmc" style="width: 120px;"></Input>
             <Button type="primary" icon="ios-search" @click="requestListData" v-has="'jcsjgl_pjxxgl_search'">搜索</Button>
             <Button type="primary" icon="plus" style="float: right;margin-right: 10px;" @click="addModal=true" v-has="'jcsjgl_pjxxgl_add'">新增</Button>
-            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel">导出</Button>
-            <Button type="primary" size="default" style="float: right;margin-right: 10px;" @click="exportModal=true"><Icon type="android-upload"></Icon>导入</Button>
+            <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'jcsjgl_pjxxgl_export'">导出</Button>
+            <Button type="primary" size="default" style="float: right;margin-right: 10px;" @click="exportModal=true" v-has="'jcsjgl_pjxxgl_upload'"><Icon type="android-upload"></Icon>导入</Button>
           </FormItem>
         </Form>
       </Card>
@@ -244,14 +244,16 @@
         this.requestListData();
       },
       requestListData() {
+        let that = this;
         this.$fetch(this.$url.maintain_BYGL_DATA_PGXX_list, this.formItem)
         .then(res => {
 //          console.log(res);
           if (res.code === 0) {
-            this.tableData = res.page.records;
-            this.totalSize = res.page.total;
+            that.formItem.currPage = 1;
+            that.tableData = res.page.records;
+            that.totalSize = res.page.total;
           }else{
-            this.$Message.error('请求失败!');
+            that.$Message.error('请求失败!');
           }
         })
       },
@@ -277,14 +279,15 @@
         }
       },
       saveOrUpdate() {
-        console.log(this.pjxx);
+//        console.log(this.pjxx);
+        let that = this;
         this.$post(this.$url.maintain_BYGL_DATA_PGXX_saveOrUpdate, this.pjxx)
         .then(res => {
-          console.log(res);
+//          console.log(res);
           if (res.code === 0) {
-            this.$Message.success('保存成功!');
-            this.addModal = false;
-            this.pjxx = {
+            that.$Message.success('保存成功!');
+            that.addModal = false;
+            that.pjxx = {
               id: "",
               dw: "",
               gys: "",
@@ -293,22 +296,23 @@
               wpflmc: "",
               wpmc: ""
             }
-            this.requestListData();
+            that.requestListData();
           }else{
-            this.$Message.error('保存失败, 请重试!');
+            that.$Message.error('保存失败, 请重试!');
           }
         })
       },
       deleteRow(params) {
         let url = this.$url.maintain_BYGL_DATA_PGXX_delete;
         url = url + '?id=' + params.row.id;
+        let that = this;
         this.$post(url)
         .then(res => {
           if (res.code === 0) {
-            this.$Message.success('删除成功!');
-            this.requestListData();
+            that.$Message.success('删除成功!');
+            that.requestListData();
           } else {
-            this.$Message.error('删除失败, 请重试!');
+            that.$Message.error('删除失败, 请重试!');
           }
         })
       },
@@ -318,7 +322,7 @@
           this.$Message.success('上传成功');
           this.exportModal = false;
         }else{
-          this.$Message.error(res.message);
+          this.$Message.error(res.msg);
         }
       },
       exportExcel() {

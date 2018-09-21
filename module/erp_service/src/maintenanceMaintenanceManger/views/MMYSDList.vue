@@ -166,7 +166,7 @@
             that.tableData = res.page.list;
             that.totalSize = res.page.totalCount;
           }else{
-            this.$Message.error(res.message);
+            this.$Message.error(res.msg);
           }
         })
       },

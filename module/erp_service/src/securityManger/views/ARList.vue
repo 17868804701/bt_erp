@@ -32,7 +32,7 @@
       </Modal>
       <Card style="width:100%; margin-top: 20px;">
         <div slot="title">搜索查询</div>
-        <Button slot="extra" size="small" type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true">新增</Button>
+        <Button slot="extra" size="small" type="primary" icon="plus" style="margin-right: 10px;" @click="accidentModal=true" v-has="'lasggl_lasggl_add'">新增</Button>
         <div>
           <div>
             <Form :model="searchOptions" :label-width="80">
@@ -204,7 +204,7 @@
                 },
                 on: {
                   'on-ok': () => {
-//                    console.log('确认删除');
+                    console.log('确认删除');
                     this.deleteLASG(params.row);
                   }
                 },
@@ -407,6 +407,7 @@
       },
       addLASGZJSG() {
         let that = this;
+        debugger
         this.$post(this.$url.security_LASG_addLoss, this.lossForm)
         .then(res => {
           if (res.success === true) {

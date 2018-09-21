@@ -382,7 +382,7 @@
             that.tableData = res.page.list;
             that.totalSize = res.page.totalCount;
           }else{
-            this.$Message.error('获取数据失败!');
+            that.$Message.error('获取数据失败!');
           }
         })
       },

@@ -27,7 +27,7 @@
             <Col span="24">
             <FormItem label="按检验时间进行查询" style="margin: 0;">
               <DatePicker type="month" placeholder="选择月份" :transfer="true" placement="bottom-end" v-model="formItem.date"></DatePicker>
-              <Button type="primary" icon="ios-search" @click="this.requestListData" v-has="'bygl_jydgl_search'">搜索</Button>
+              <Button type="primary" icon="ios-search" @click="requestListData" v-has="'bygl_jydgl_search'">搜索</Button>
               <Button type="primary" icon="android-download" style="float: right;margin-right: 10px" @click="exportExcel" v-has="'bygl_jydgl_daochu'">导出Excel</Button>
             </FormItem>
             </Col>
@@ -169,9 +169,7 @@
         let that = this;
         this.$fetch(this.$url.maintain_BYGL_JYDGL_recordList, params)
         .then(res=>{
-//          debugger;
           if (res.code === 0) {
-
             res.page.list.forEach(item => {
               item.jjcsj = DateTool.timesToDate(item.jjcsj);
               item.scsj = DateTool.timesToDate(item.scsj);
@@ -180,7 +178,7 @@
             that.tableData = res.page.list;
             that.totalSize = res.page.totalCount;
           }else{
-            this.$Message.error(res.message);
+            that.$Message.error(res.msg);
           }
         })
       },
@@ -201,7 +199,7 @@
         .then(res => {
           if (res.success === true) {
             let data = res.data[0].children;
-            console.log(data);
+//            console.log(data);
             // 简化数据
             data.forEach(item => {
               let obj = {

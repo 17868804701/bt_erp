@@ -66,7 +66,7 @@
       <Card>
         <Form :model="formItem">
           <div>
-            <Button type="primary" v-has="'sbbygl_sbxxgl_search'" icon="plus" style="margin-right: 10px" @click="addModal=true">新增</Button>
+            <Button type="primary" v-has="'sbbygl_sbxxgl_search'" icon="plus" style="margin-right: 10px" @click="addModal=true" >新增</Button>
             <Button type="primary" v-has="'sbbygl_sbxxgl_daochu'" icon="android-download" @click="exportExcel">导出Excel</Button>
           </div>
         </Form>

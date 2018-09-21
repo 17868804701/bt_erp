@@ -9,7 +9,7 @@ axios.defaults.baseURL =process.env.BASE_URL;//服务器
 //http request 拦截器
 axios.interceptors.request.use(
   config => {
-    iView.LoadingBar.start();
+    // iView.LoadingBar.start();
     iView.Spin.show();
     config.data = JSON.stringify(config.data);
     config.headers = {
@@ -30,14 +30,14 @@ axios.interceptors.request.use(
 //http response 拦截器
 axios.interceptors.response.use(
   response => {
-    iView.LoadingBar.finish();
+    // iView.LoadingBar.finish();
     iView.Spin.hide();
     if(response.data.errCode === 2){
     }
     return response;
   },
   error => {
-    iView.LoadingBar.error();
+    // iView.LoadingBar.error();
     iView.Spin.hide();
     if (error.response) {
       switch (error.response.status) {

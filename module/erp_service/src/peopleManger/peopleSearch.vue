@@ -167,12 +167,12 @@
               <Icon type="search"></Icon>
               搜索
             </Button>
-            <Button type="primary" size="default" @click="daochu" style="margin-right: 3px;margin-left: 3px;">
+            <Button type="primary" size="default" @click="daochu" style="margin-right: 3px;margin-left: 3px;" v-has="	'person_people_menu1_exportExcel'">
               <Icon type="android-download"></Icon>
               导出
             </Button>
             <Button type="primary" size="default"
-                    @click="exports=true">
+                    @click="exports=true" v-has="'person_people_menu1_daoru'">
               <Icon type="android-upload"></Icon>
               导入
             </Button>
